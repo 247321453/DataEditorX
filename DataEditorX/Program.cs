@@ -23,8 +23,10 @@ namespace DataEditorX
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new MainForm());
-		}
-		
+			if(args.Length==1)
+				Application.Run(new MainForm(args[0]));
+			else
+				Application.Run(new MainForm());
+		}	 
 	}
 }

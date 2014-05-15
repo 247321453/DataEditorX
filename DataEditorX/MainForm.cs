@@ -17,15 +17,26 @@ namespace DataEditorX
 	/// </summary>
 	public partial class MainForm : Form
 	{
+		string m_filename;
+		string m_title;
+		public MainForm(string filename)
+		{
+			InitFromData();
+			OpenFile(filename);
+		}
 		public MainForm()
 		{
-			//
-			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
+			InitFromData();
+		}
+		void InitFromData()
+		{
 			InitializeComponent();
-			
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
+			m_title=this.Text;
+		}
+		void OpenFile(string filename)
+		{
+			m_filename=filename;
+			this.Text=filename+" - "+m_title;
 			//
 		}
 	}
