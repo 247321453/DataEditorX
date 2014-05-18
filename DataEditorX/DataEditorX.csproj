@@ -55,21 +55,18 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\UI" />
+    <Folder Include="Data\ygopro" />
     <Folder Include="Interface" />
     <Folder Include="Data" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\setname.txt" />
-    <None Include="Data\UI\card-attribute.txt" />
-    <None Include="Data\UI\card-level.txt" />
-    <None Include="Data\UI\card-race.txt" />
-    <None Include="Data\UI\card-category.txt" />
-    <None Include="Data\UI\card-rule.txt" />
-    <None Include="Data\UI\card-type.txt" />
-    <None Include="Data\UI\from-editor.txt" />
-    <None Include="Data\UI\from-manage.txt" />
-    <None Include="Data\UI\message.txt" />
+    <None Include="Data\ygopro\card-attribute.txt" />
+    <None Include="Data\ygopro\card-level.txt" />
+    <None Include="Data\ygopro\card-race.txt" />
+    <None Include="Data\ygopro\card-category.txt" />
+    <None Include="Data\ygopro\card-rule.txt" />
+    <None Include="Data\ygopro\card-type.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
