@@ -17,27 +17,35 @@ namespace DataEditorX
     /// </summary>
     public partial class MainForm : Form
     {
-        string m_filename;
-        string m_title;
+        DataEditForm editForm;
+        string datadir=".\\data\\";
         public MainForm(string filename)
         {
-            InitFromData();
-            OpenFile(filename);
+            Init(filename);
         }
         public MainForm()
         {
-            InitFromData();
+            Init(null);
         }
-        void InitFromData()
-		{
-            InitializeComponent();
-            m_title=this.Text;
-		}
-        void OpenFile(string filename)
+        
+        void Init(string filename)
         {
-            m_filename=filename;
-            this.Text=filename+" - "+m_title;
-            //
+            if(filename==null)
+                editForm=new DataEditForm();
+            else
+                editForm=new DataEditForm(filename);
+            InitializeComponent();
+            timer1.Interval=2000;
+            timer1.Enabled=true;
+            editForm.InitForm(datadir);
+        }
+        
+        void Timer1Tick(object sender, EventArgs e)
+        {
+            timer1.Enabled=false;
+            this.Hide();
+            editForm.ShowDialog();
+            this.Close();
         }
     }
 }
