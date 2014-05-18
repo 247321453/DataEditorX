@@ -67,6 +67,7 @@
     <None Include="Data\ygopro\card-category.txt" />
     <None Include="Data\ygopro\card-rule.txt" />
     <None Include="Data\ygopro\card-type.txt" />
+    <None Include="Data\ygopro\setname.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
