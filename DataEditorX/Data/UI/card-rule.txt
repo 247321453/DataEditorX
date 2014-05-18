@@ -1,0 +1,4 @@
+﻿1 OCG专有
+2 TCG专有
+3 OCG&TCG
+4 Anime/DIY
