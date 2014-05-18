@@ -6,16 +6,15 @@
  * 
  */
 using System;
+using DataEditorX.Core;
 
 namespace DataEditorX.Interface
 {
-    /// <summary>
-    /// Description of ICardView.
-    /// </summary>
-    public class ICardView
+    public interface ICardView
     {
-        public ICardView()
-        {
-        }
+        Card m_oldcard{set;get;}
+        
+        Card GetCard();
+        bool SetCard();
     }
 }

@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Card.cs" />
+    <Compile Include="Core\CDB.cs" />
     <Compile Include="Interface\ICardView.cs" />
     <Compile Include="Interface\IEditor.cs" />
     <Compile Include="MainForm.cs" />
@@ -58,6 +60,7 @@
     <Folder Include="Data\ygopro" />
     <Folder Include="Interface" />
     <Folder Include="Data" />
+    <Folder Include="Core" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\ygopro\card-attribute.txt" />
