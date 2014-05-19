@@ -35,47 +35,25 @@ namespace DataEditorX
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menuitem_file = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_open = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_new = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuitem_save = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuitem_saveas = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_copyto = new System.Windows.Forms.ToolStripMenuItem();
             this.tsep1 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuitem_inport = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuitem_export = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsep2 = new System.Windows.Forms.ToolStripSeparator();
             this.menuitem_readydk = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_readimages = new System.Windows.Forms.ToolStripMenuItem();
             this.tsep3 = new System.Windows.Forms.ToolStripSeparator();
             this.menuitem_quit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_edit = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuitem_undo = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuitem_redo = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsep4 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuitem_add = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuitem_mod = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuitem_del = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsep5 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuitem_search = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuitem_reset = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsep6 = new System.Windows.Forms.ToolStripSeparator();
             this.menuitem_showimage = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuitem_openscript = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuitem_opengame = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_help = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_about = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_checkupdate = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuitem_github = new System.Windows.Forms.ToolStripMenuItem();
             this.lv_cardlist = new System.Windows.Forms.DListView();
             this.ch_cardcode = new System.Windows.Forms.ColumnHeader();
             this.ch_cardname = new System.Windows.Forms.ColumnHeader();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyToToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cb_cardattribute = new System.Windows.Forms.ComboBox();
             this.tb_cardname = new System.Windows.Forms.TextBox();
             this.cb_cardrule = new System.Windows.Forms.ComboBox();
@@ -115,8 +93,6 @@ namespace DataEditorX
             this.label6 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.btn_redo = new System.Windows.Forms.Button();
-            this.btn_undo = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
@@ -124,7 +100,6 @@ namespace DataEditorX
             this.pl_cardtype = new System.Windows.Forms.DFlowLayoutPanel();
             this.pl_category = new System.Windows.Forms.DFlowLayoutPanel();
             this.menuStrip1.SuspendLayout();
-            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -144,13 +119,8 @@ namespace DataEditorX
             this.menuitem_file.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
                                     this.menuitem_open,
                                     this.menuitem_new,
-                                    this.menuitem_save,
-                                    this.menuitem_saveas,
                                     this.menuitem_copyto,
                                     this.tsep1,
-                                    this.menuitem_inport,
-                                    this.menuitem_export,
-                                    this.tsep2,
                                     this.menuitem_readydk,
                                     this.menuitem_readimages,
                                     this.tsep3,
@@ -162,199 +132,79 @@ namespace DataEditorX
             // menuitem_open
             // 
             this.menuitem_open.Name = "menuitem_open";
-            this.menuitem_open.Size = new System.Drawing.Size(124, 22);
+            this.menuitem_open.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.menuitem_open.Size = new System.Drawing.Size(165, 22);
             this.menuitem_open.Text = "打开(&O)";
             this.menuitem_open.Click += new System.EventHandler(this.Menuitem_openClick);
             // 
             // menuitem_new
             // 
             this.menuitem_new.Name = "menuitem_new";
-            this.menuitem_new.Size = new System.Drawing.Size(124, 22);
+            this.menuitem_new.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.menuitem_new.Size = new System.Drawing.Size(165, 22);
             this.menuitem_new.Text = "新建(&N)";
             this.menuitem_new.Click += new System.EventHandler(this.Menuitem_newClick);
-            // 
-            // menuitem_save
-            // 
-            this.menuitem_save.Name = "menuitem_save";
-            this.menuitem_save.Size = new System.Drawing.Size(124, 22);
-            this.menuitem_save.Text = "保存(&S)";
-            this.menuitem_save.Click += new System.EventHandler(this.Menuitem_saveClick);
-            // 
-            // menuitem_saveas
-            // 
-            this.menuitem_saveas.Name = "menuitem_saveas";
-            this.menuitem_saveas.Size = new System.Drawing.Size(124, 22);
-            this.menuitem_saveas.Text = "另存为";
-            this.menuitem_saveas.Click += new System.EventHandler(this.Menuitem_saveasClick);
             // 
             // menuitem_copyto
             // 
             this.menuitem_copyto.Name = "menuitem_copyto";
-            this.menuitem_copyto.Size = new System.Drawing.Size(124, 22);
-            this.menuitem_copyto.Text = "复制到";
+            this.menuitem_copyto.Size = new System.Drawing.Size(165, 22);
+            this.menuitem_copyto.Text = "复制到(&C)";
             this.menuitem_copyto.Click += new System.EventHandler(this.Menuitem_copytoClick);
             // 
             // tsep1
             // 
             this.tsep1.Name = "tsep1";
-            this.tsep1.Size = new System.Drawing.Size(121, 6);
-            // 
-            // menuitem_inport
-            // 
-            this.menuitem_inport.Name = "menuitem_inport";
-            this.menuitem_inport.Size = new System.Drawing.Size(124, 22);
-            this.menuitem_inport.Text = "导出";
-            this.menuitem_inport.Click += new System.EventHandler(this.Menuitem_inportClick);
-            // 
-            // menuitem_export
-            // 
-            this.menuitem_export.Name = "menuitem_export";
-            this.menuitem_export.Size = new System.Drawing.Size(124, 22);
-            this.menuitem_export.Text = "导入";
-            this.menuitem_export.Click += new System.EventHandler(this.Menuitem_exportClick);
-            // 
-            // tsep2
-            // 
-            this.tsep2.Name = "tsep2";
-            this.tsep2.Size = new System.Drawing.Size(121, 6);
+            this.tsep1.Size = new System.Drawing.Size(162, 6);
             // 
             // menuitem_readydk
             // 
             this.menuitem_readydk.Name = "menuitem_readydk";
-            this.menuitem_readydk.Size = new System.Drawing.Size(124, 22);
-            this.menuitem_readydk.Text = "读取ydk";
+            this.menuitem_readydk.Size = new System.Drawing.Size(165, 22);
+            this.menuitem_readydk.Text = "读取ydk(&Y)";
             this.menuitem_readydk.Click += new System.EventHandler(this.Menuitem_readydkClick);
             // 
             // menuitem_readimages
             // 
             this.menuitem_readimages.Name = "menuitem_readimages";
-            this.menuitem_readimages.Size = new System.Drawing.Size(124, 22);
-            this.menuitem_readimages.Text = "读取图片";
+            this.menuitem_readimages.Size = new System.Drawing.Size(165, 22);
+            this.menuitem_readimages.Text = "读取图片(&I)";
             this.menuitem_readimages.Click += new System.EventHandler(this.Menuitem_readimagesClick);
             // 
             // tsep3
             // 
             this.tsep3.Name = "tsep3";
-            this.tsep3.Size = new System.Drawing.Size(121, 6);
+            this.tsep3.Size = new System.Drawing.Size(162, 6);
             // 
             // menuitem_quit
             // 
             this.menuitem_quit.Name = "menuitem_quit";
-            this.menuitem_quit.Size = new System.Drawing.Size(124, 22);
-            this.menuitem_quit.Text = "退出";
+            this.menuitem_quit.Size = new System.Drawing.Size(165, 22);
+            this.menuitem_quit.Text = "退出(&Q)";
             this.menuitem_quit.Click += new System.EventHandler(this.Menuitem_quitClick);
             // 
             // menuitem_edit
             // 
             this.menuitem_edit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                                    this.menuitem_undo,
-                                    this.menuitem_redo,
-                                    this.tsep4,
-                                    this.menuitem_add,
-                                    this.menuitem_mod,
-                                    this.menuitem_del,
-                                    this.tsep5,
-                                    this.menuitem_search,
-                                    this.menuitem_reset,
-                                    this.tsep6,
-                                    this.menuitem_showimage,
-                                    this.menuitem_openscript,
-                                    this.menuitem_opengame});
+                                    this.menuitem_showimage});
             this.menuitem_edit.Name = "menuitem_edit";
             this.menuitem_edit.Size = new System.Drawing.Size(59, 21);
-            this.menuitem_edit.Text = "编辑(&E)";
-            // 
-            // menuitem_undo
-            // 
-            this.menuitem_undo.Name = "menuitem_undo";
-            this.menuitem_undo.Size = new System.Drawing.Size(152, 22);
-            this.menuitem_undo.Text = "撤销";
-            this.menuitem_undo.Click += new System.EventHandler(this.Menuitem_undoClick);
-            // 
-            // menuitem_redo
-            // 
-            this.menuitem_redo.Name = "menuitem_redo";
-            this.menuitem_redo.Size = new System.Drawing.Size(152, 22);
-            this.menuitem_redo.Text = "还原";
-            this.menuitem_redo.Click += new System.EventHandler(this.Menuitem_redoClick);
-            // 
-            // tsep4
-            // 
-            this.tsep4.Name = "tsep4";
-            this.tsep4.Size = new System.Drawing.Size(149, 6);
-            // 
-            // menuitem_add
-            // 
-            this.menuitem_add.Name = "menuitem_add";
-            this.menuitem_add.Size = new System.Drawing.Size(152, 22);
-            this.menuitem_add.Text = "添加";
-            this.menuitem_add.Click += new System.EventHandler(this.Menuitem_addClick);
-            // 
-            // menuitem_mod
-            // 
-            this.menuitem_mod.Name = "menuitem_mod";
-            this.menuitem_mod.Size = new System.Drawing.Size(152, 22);
-            this.menuitem_mod.Text = "修改";
-            this.menuitem_mod.Click += new System.EventHandler(this.Menuitem_modClick);
-            // 
-            // menuitem_del
-            // 
-            this.menuitem_del.Name = "menuitem_del";
-            this.menuitem_del.Size = new System.Drawing.Size(152, 22);
-            this.menuitem_del.Text = "删除";
-            this.menuitem_del.Click += new System.EventHandler(this.Menuitem_delClick);
-            // 
-            // tsep5
-            // 
-            this.tsep5.Name = "tsep5";
-            this.tsep5.Size = new System.Drawing.Size(149, 6);
-            // 
-            // menuitem_search
-            // 
-            this.menuitem_search.Name = "menuitem_search";
-            this.menuitem_search.Size = new System.Drawing.Size(152, 22);
-            this.menuitem_search.Text = "搜索";
-            this.menuitem_search.Click += new System.EventHandler(this.Menuitem_searchClick);
-            // 
-            // menuitem_reset
-            // 
-            this.menuitem_reset.Name = "menuitem_reset";
-            this.menuitem_reset.Size = new System.Drawing.Size(152, 22);
-            this.menuitem_reset.Text = "重置";
-            this.menuitem_reset.Click += new System.EventHandler(this.Menuitem_resetClick);
-            // 
-            // tsep6
-            // 
-            this.tsep6.Name = "tsep6";
-            this.tsep6.Size = new System.Drawing.Size(149, 6);
+            this.menuitem_edit.Text = "设置(&T)";
             // 
             // menuitem_showimage
             // 
             this.menuitem_showimage.CheckOnClick = true;
             this.menuitem_showimage.Name = "menuitem_showimage";
-            this.menuitem_showimage.Size = new System.Drawing.Size(152, 22);
-            this.menuitem_showimage.Text = "显示卡片图像";
+            this.menuitem_showimage.Size = new System.Drawing.Size(163, 22);
+            this.menuitem_showimage.Text = "显示卡片图像(&S)";
             this.menuitem_showimage.Click += new System.EventHandler(this.Menuitem_showimageClick);
-            // 
-            // menuitem_openscript
-            // 
-            this.menuitem_openscript.Name = "menuitem_openscript";
-            this.menuitem_openscript.Size = new System.Drawing.Size(152, 22);
-            this.menuitem_openscript.Text = "打开脚本";
-            this.menuitem_openscript.Click += new System.EventHandler(this.Menuitem_openscriptClick);
-            // 
-            // menuitem_opengame
-            // 
-            this.menuitem_opengame.Name = "menuitem_opengame";
-            this.menuitem_opengame.Size = new System.Drawing.Size(152, 22);
-            this.menuitem_opengame.Text = "启动游戏";
-            this.menuitem_opengame.Click += new System.EventHandler(this.Menuitem_opengameClick);
             // 
             // menuitem_help
             // 
             this.menuitem_help.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
                                     this.menuitem_about,
-                                    this.menuitem_checkupdate});
+                                    this.menuitem_checkupdate,
+                                    this.menuitem_github});
             this.menuitem_help.Name = "menuitem_help";
             this.menuitem_help.Size = new System.Drawing.Size(61, 21);
             this.menuitem_help.Text = "帮助(&H)";
@@ -362,16 +212,24 @@ namespace DataEditorX
             // menuitem_about
             // 
             this.menuitem_about.Name = "menuitem_about";
-            this.menuitem_about.Size = new System.Drawing.Size(124, 22);
+            this.menuitem_about.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.menuitem_about.Size = new System.Drawing.Size(152, 22);
             this.menuitem_about.Text = "关于";
             this.menuitem_about.Click += new System.EventHandler(this.Menuitem_aboutClick);
             // 
             // menuitem_checkupdate
             // 
             this.menuitem_checkupdate.Name = "menuitem_checkupdate";
-            this.menuitem_checkupdate.Size = new System.Drawing.Size(124, 22);
+            this.menuitem_checkupdate.Size = new System.Drawing.Size(152, 22);
             this.menuitem_checkupdate.Text = "检查更新";
             this.menuitem_checkupdate.Click += new System.EventHandler(this.Menuitem_checkupdateClick);
+            // 
+            // menuitem_github
+            // 
+            this.menuitem_github.Name = "menuitem_github";
+            this.menuitem_github.Size = new System.Drawing.Size(152, 22);
+            this.menuitem_github.Text = "程序源码";
+            this.menuitem_github.Click += new System.EventHandler(this.Menuitem_githubClick);
             // 
             // lv_cardlist
             // 
@@ -380,7 +238,6 @@ namespace DataEditorX
             this.lv_cardlist.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
                                     this.ch_cardcode,
                                     this.ch_cardname});
-            this.lv_cardlist.ContextMenuStrip = this.contextMenuStrip1;
             this.lv_cardlist.FullRowSelect = true;
             this.lv_cardlist.GridLines = true;
             this.lv_cardlist.HideSelection = false;
@@ -393,6 +250,7 @@ namespace DataEditorX
             this.lv_cardlist.UseCompatibleStateImageBehavior = false;
             this.lv_cardlist.View = System.Windows.Forms.View.Details;
             this.lv_cardlist.SelectedIndexChanged += new System.EventHandler(this.Lv_cardlistSelectedIndexChanged);
+            this.lv_cardlist.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Lv_cardlistKeyDown);
             // 
             // ch_cardcode
             // 
@@ -403,40 +261,6 @@ namespace DataEditorX
             // 
             this.ch_cardname.Text = "卡片名称";
             this.ch_cardname.Width = 140;
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                                    this.importToolStripMenuItem,
-                                    this.exportToolStripMenuItem,
-                                    this.copyToToolStripMenuItem,
-                                    this.deleteToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(122, 92);
-            // 
-            // importToolStripMenuItem
-            // 
-            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
-            this.importToolStripMenuItem.Text = "Import";
-            // 
-            // exportToolStripMenuItem
-            // 
-            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
-            this.exportToolStripMenuItem.Text = "Export";
-            // 
-            // copyToToolStripMenuItem
-            // 
-            this.copyToToolStripMenuItem.Name = "copyToToolStripMenuItem";
-            this.copyToToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
-            this.copyToToolStripMenuItem.Text = "CopyTo";
-            // 
-            // deleteToolStripMenuItem
-            // 
-            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
-            this.deleteToolStripMenuItem.Text = "Delete";
             // 
             // cb_cardattribute
             // 
@@ -533,25 +357,25 @@ namespace DataEditorX
             // 
             // lb_scripttext
             // 
+            this.lb_scripttext.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lb_scripttext.FormattingEnabled = true;
             this.lb_scripttext.IntegralHeight = false;
             this.lb_scripttext.ItemHeight = 12;
             this.lb_scripttext.Location = new System.Drawing.Point(532, 357);
             this.lb_scripttext.Name = "lb_scripttext";
             this.lb_scripttext.ScrollAlwaysVisible = true;
-            this.lb_scripttext.Size = new System.Drawing.Size(281, 120);
+            this.lb_scripttext.Size = new System.Drawing.Size(281, 138);
             this.lb_scripttext.TabIndex = 6;
             this.lb_scripttext.SelectedIndexChanged += new System.EventHandler(this.Lb_scripttextSelectedIndexChanged);
             // 
             // tb_edittext
             // 
             this.tb_edittext.HideSelection = false;
-            this.tb_edittext.Location = new System.Drawing.Point(533, 478);
+            this.tb_edittext.Location = new System.Drawing.Point(533, 499);
             this.tb_edittext.MaxLength = 2000;
-            this.tb_edittext.Multiline = true;
             this.tb_edittext.Name = "tb_edittext";
             this.tb_edittext.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tb_edittext.Size = new System.Drawing.Size(279, 41);
+            this.tb_edittext.Size = new System.Drawing.Size(279, 21);
             this.tb_edittext.TabIndex = 4;
             this.tb_edittext.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Tb_edittextKeyPress);
             // 
@@ -611,7 +435,7 @@ namespace DataEditorX
             this.tb_page.Name = "tb_page";
             this.tb_page.Size = new System.Drawing.Size(34, 21);
             this.tb_page.TabIndex = 8;
-            this.tb_page.Text = "0";
+            this.tb_page.Text = "1";
             this.tb_page.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tb_page.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Tb_pageKeyPress);
             // 
@@ -624,7 +448,7 @@ namespace DataEditorX
             this.tb_pagenum.ReadOnly = true;
             this.tb_pagenum.Size = new System.Drawing.Size(34, 21);
             this.tb_pagenum.TabIndex = 8;
-            this.tb_pagenum.Text = "0";
+            this.tb_pagenum.Text = "1";
             this.tb_pagenum.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // btn_PageUp
@@ -653,9 +477,9 @@ namespace DataEditorX
             // 
             this.btn_add.Location = new System.Drawing.Point(532, 524);
             this.btn_add.Name = "btn_add";
-            this.btn_add.Size = new System.Drawing.Size(68, 26);
+            this.btn_add.Size = new System.Drawing.Size(78, 27);
             this.btn_add.TabIndex = 5;
-            this.btn_add.Text = "添加";
+            this.btn_add.Text = "添加卡片";
             this.btn_add.UseVisualStyleBackColor = true;
             this.btn_add.Click += new System.EventHandler(this.Btn_addClick);
             // 
@@ -729,39 +553,39 @@ namespace DataEditorX
             // 
             // btn_mod
             // 
-            this.btn_mod.Location = new System.Drawing.Point(603, 524);
+            this.btn_mod.Location = new System.Drawing.Point(616, 524);
             this.btn_mod.Name = "btn_mod";
-            this.btn_mod.Size = new System.Drawing.Size(68, 26);
+            this.btn_mod.Size = new System.Drawing.Size(78, 27);
             this.btn_mod.TabIndex = 5;
-            this.btn_mod.Text = "修改";
+            this.btn_mod.Text = "修改卡片";
             this.btn_mod.UseVisualStyleBackColor = true;
             this.btn_mod.Click += new System.EventHandler(this.Btn_modClick);
             // 
             // btn_del
             // 
             this.btn_del.ForeColor = System.Drawing.Color.DarkRed;
-            this.btn_del.Location = new System.Drawing.Point(743, 524);
+            this.btn_del.Location = new System.Drawing.Point(445, 523);
             this.btn_del.Name = "btn_del";
-            this.btn_del.Size = new System.Drawing.Size(68, 26);
+            this.btn_del.Size = new System.Drawing.Size(78, 27);
             this.btn_del.TabIndex = 5;
-            this.btn_del.Text = "删除";
+            this.btn_del.Text = "删除卡片";
             this.btn_del.UseVisualStyleBackColor = true;
             this.btn_del.Click += new System.EventHandler(this.Btn_delClick);
             // 
             // btn_lua
             // 
             this.btn_lua.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.btn_lua.Location = new System.Drawing.Point(673, 524);
+            this.btn_lua.Location = new System.Drawing.Point(715, 523);
             this.btn_lua.Name = "btn_lua";
-            this.btn_lua.Size = new System.Drawing.Size(68, 26);
+            this.btn_lua.Size = new System.Drawing.Size(94, 27);
             this.btn_lua.TabIndex = 5;
-            this.btn_lua.Text = "脚本";
+            this.btn_lua.Text = "打开Lua脚本";
             this.btn_lua.UseVisualStyleBackColor = true;
             this.btn_lua.Click += new System.EventHandler(this.Btn_luaClick);
             // 
             // btn_reset
             // 
-            this.btn_reset.Location = new System.Drawing.Point(307, 523);
+            this.btn_reset.Location = new System.Drawing.Point(312, 523);
             this.btn_reset.Name = "btn_reset";
             this.btn_reset.Size = new System.Drawing.Size(78, 27);
             this.btn_reset.TabIndex = 5;
@@ -832,26 +656,6 @@ namespace DataEditorX
             this.label7.Text = "卡片信息";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // btn_redo
-            // 
-            this.btn_redo.Location = new System.Drawing.Point(390, 522);
-            this.btn_redo.Name = "btn_redo";
-            this.btn_redo.Size = new System.Drawing.Size(68, 26);
-            this.btn_redo.TabIndex = 5;
-            this.btn_redo.Text = "还原";
-            this.btn_redo.UseVisualStyleBackColor = true;
-            this.btn_redo.Click += new System.EventHandler(this.Btn_redoClick);
-            // 
-            // btn_undo
-            // 
-            this.btn_undo.Location = new System.Drawing.Point(460, 522);
-            this.btn_undo.Name = "btn_undo";
-            this.btn_undo.Size = new System.Drawing.Size(68, 26);
-            this.btn_undo.TabIndex = 5;
-            this.btn_undo.Text = "撤销";
-            this.btn_undo.UseVisualStyleBackColor = true;
-            this.btn_undo.Click += new System.EventHandler(this.Btn_undoClick);
-            // 
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(530, -168);
@@ -890,6 +694,7 @@ namespace DataEditorX
             // 
             // pl_cardtype
             // 
+            this.pl_cardtype.AutoScroll = true;
             this.pl_cardtype.Location = new System.Drawing.Point(220, 219);
             this.pl_cardtype.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.pl_cardtype.Name = "pl_cardtype";
@@ -899,11 +704,12 @@ namespace DataEditorX
             // 
             // pl_category
             // 
+            this.pl_category.AutoScroll = true;
             this.pl_category.Location = new System.Drawing.Point(220, 353);
             this.pl_category.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.pl_category.Name = "pl_category";
             this.pl_category.Padding = new System.Windows.Forms.Padding(2);
-            this.pl_category.Size = new System.Drawing.Size(310, 169);
+            this.pl_category.Size = new System.Drawing.Size(310, 166);
             this.pl_category.TabIndex = 13;
             // 
             // DataEditForm
@@ -940,9 +746,7 @@ namespace DataEditorX
             this.Controls.Add(this.btn_lua);
             this.Controls.Add(this.btn_serach);
             this.Controls.Add(this.btn_del);
-            this.Controls.Add(this.btn_undo);
             this.Controls.Add(this.btn_mod);
-            this.Controls.Add(this.btn_redo);
             this.Controls.Add(this.btn_add);
             this.Controls.Add(this.btn_PageDown);
             this.Controls.Add(this.textBox2);
@@ -960,30 +764,25 @@ namespace DataEditorX
             this.Controls.Add(this.cb_cardattribute);
             this.Controls.Add(this.lv_cardlist);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
             this.Name = "DataEditForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DataEditor";
             this.Load += new System.EventHandler(this.DataEditFormLoad);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+        private System.Windows.Forms.ToolStripMenuItem menuitem_github;
         private System.Windows.Forms.ToolStripMenuItem menuitem_new;
-        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem copyToToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem menuitem_showimage;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button btn_undo;
-        private System.Windows.Forms.Button btn_redo;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label3;
@@ -1031,30 +830,13 @@ namespace DataEditorX
         private System.Windows.Forms.ToolStripMenuItem menuitem_checkupdate;
         private System.Windows.Forms.ToolStripMenuItem menuitem_about;
         private System.Windows.Forms.ToolStripMenuItem menuitem_help;
-        private System.Windows.Forms.ToolStripMenuItem menuitem_opengame;
-        private System.Windows.Forms.ToolStripMenuItem menuitem_openscript;
-        private System.Windows.Forms.ToolStripSeparator tsep6;
-        private System.Windows.Forms.ToolStripMenuItem menuitem_reset;
-        private System.Windows.Forms.ToolStripMenuItem menuitem_search;
-        private System.Windows.Forms.ToolStripSeparator tsep5;
-        private System.Windows.Forms.ToolStripMenuItem menuitem_del;
-        private System.Windows.Forms.ToolStripMenuItem menuitem_mod;
-        private System.Windows.Forms.ToolStripMenuItem menuitem_add;
-        private System.Windows.Forms.ToolStripSeparator tsep4;
-        private System.Windows.Forms.ToolStripMenuItem menuitem_redo;
-        private System.Windows.Forms.ToolStripMenuItem menuitem_undo;
         private System.Windows.Forms.ToolStripMenuItem menuitem_edit;
         private System.Windows.Forms.ToolStripMenuItem menuitem_quit;
         private System.Windows.Forms.ToolStripSeparator tsep3;
         private System.Windows.Forms.ToolStripMenuItem menuitem_readimages;
         private System.Windows.Forms.ToolStripMenuItem menuitem_readydk;
-        private System.Windows.Forms.ToolStripSeparator tsep2;
-        private System.Windows.Forms.ToolStripMenuItem menuitem_export;
-        private System.Windows.Forms.ToolStripMenuItem menuitem_inport;
         private System.Windows.Forms.ToolStripSeparator tsep1;
         private System.Windows.Forms.ToolStripMenuItem menuitem_copyto;
-        private System.Windows.Forms.ToolStripMenuItem menuitem_saveas;
-        private System.Windows.Forms.ToolStripMenuItem menuitem_save;
         private System.Windows.Forms.ToolStripMenuItem menuitem_open;
         private System.Windows.Forms.ToolStripMenuItem menuitem_file;
         private System.Windows.Forms.MenuStrip menuStrip1;

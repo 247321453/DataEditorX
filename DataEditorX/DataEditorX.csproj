@@ -9,6 +9,9 @@
     <AssemblyName>DataEditorX</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
+    <StartupObject>DataEditorX.Program</StartupObject>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <NoWin32Manifest>False</NoWin32Manifest>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>

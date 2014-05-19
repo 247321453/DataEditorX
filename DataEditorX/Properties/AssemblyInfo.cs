@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("DataEditorX")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("E-mail:247321452@qq.com")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("DataEditorX")]

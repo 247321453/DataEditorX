@@ -50,7 +50,7 @@ namespace DataEditorX.Core
         /// 创建数据库
         /// </summary>
         /// <param name="Db">新数据库路径</param>
-        public static void Create(string Db)
+        public static bool Create(string Db)
         {
             if ( File.Exists(Db) )
                 File.Delete(Db);
@@ -62,7 +62,9 @@ namespace DataEditorX.Core
             {
                 File.AppendAllText("System.Data.SQLite.log", exc.Source+"\n"+
                                    exc.TargetSite+"\n"+exc.Message+"\n"+exc.ToString());
+                return false;
             }
+            return true;
         }
         #endregion
 
@@ -326,7 +328,9 @@ namespace DataEditorX.Core
             if(c.id>0 && c.alias<0)
                 sb.Append(" and datas.id >= "+c.id.ToString());
             else if(c.id>0 && c.alias>0)
-                sb.Append(" and datas.id >= "+c.id.ToString()+" and datas.alias >="+c.alias.ToString());
+                sb.Append(" and datas.id >= "+c.id.ToString()+" and datas.id <="+c.alias.ToString());
+            else if(c.id<0 && c.alias>0)
+                sb.Append(" and datas.id <= "+c.alias.ToString());
             else if(c.id>0)
                 sb.Append(" and datas.id="+c.id.ToString());
             else if(c.alias>0)
@@ -348,7 +352,7 @@ namespace DataEditorX.Core
             if(ignore)
                 st.Append("INSERT or ignore into datas values(");
             else
-                st.Append("INSERT into datas values(");
+                st.Append("INSERT or replace into datas values(");
             st.Append(c.id.ToString()); st.Append(",");
             st.Append(c.ot.ToString()); st.Append(",");
             st.Append(c.alias.ToString()); st.Append(",");
@@ -360,7 +364,10 @@ namespace DataEditorX.Core
             st.Append(c.race.ToString()); st.Append(",");
             st.Append(c.attribute.ToString()); st.Append(",");
             st.Append(c.category.ToString()); st.Append(")");
-            st.Append(";INSERT or ignore into texts values(");
+            if(ignore)
+                st.Append(";INSERT or ignore into texts values(");
+            else
+                st.Append(";INSERT or replace into texts values(");
             st.Append(c.id.ToString()); st.Append(",'");
             st.Append(c.name.Replace("'", "''")); st.Append("','");
             st.Append(c.desc.Replace("'", "''"));
