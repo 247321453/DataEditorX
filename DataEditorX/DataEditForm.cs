@@ -71,7 +71,7 @@ namespace DataEditorX
             GAMEPATH=Application.StartupPath;
             if(File.Exists(Path.Combine(GAMEPATH,"DataEditorX.txt")))
             {
-                string[] lines=File.ReadAllLines(Path.Combine(GAMEPATH,"DataEditorX.txt"),Encoding.Default);
+                string[] lines=File.ReadAllLines(Path.Combine(GAMEPATH,"DataEditorX.txt"),Encoding.UTF8);
                 GAMEPATH=(lines.Length>0)?lines[0]:Application.StartupPath;
                 UPDATEURL=(lines.Length>1)?lines[1]:"http://247321453@ys168.com";
                 GITURL=(lines.Length>2)?lines[2]:"https://github.com/247321453/DataEditorX";

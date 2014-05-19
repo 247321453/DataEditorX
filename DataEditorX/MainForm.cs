@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace DataEditorX
@@ -18,7 +19,7 @@ namespace DataEditorX
     public partial class MainForm : Form
     {
         DataEditForm editForm;
-        string datadir=".\\data\\";
+        string datadir="";
         public MainForm(string filename)
         {
             Init(filename);
@@ -37,6 +38,7 @@ namespace DataEditorX
             InitializeComponent();
             timer1.Interval=2000;
             timer1.Enabled=true;
+            datadir=Path.Combine(Application.StartupPath,"data");
             editForm.InitForm(datadir);
         }
         
