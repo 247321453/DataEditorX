@@ -24,9 +24,9 @@ namespace DataEditorX
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             if(args.Length==1)
-                Application.Run(new MainForm(args[0]));
+                Application.Run(new DataEditForm(args[0]));
             else
-                Application.Run(new MainForm());
+                Application.Run(new DataEditForm());
         }     
     }
 }
