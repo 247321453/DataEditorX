@@ -41,15 +41,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Card.cs" />
-    <Compile Include="Core\CDB.cs" />
-    <Compile Include="Core\CheckPanel.cs" />
+    <Compile Include="Core\DataBase.cs" />
     <Compile Include="Core\DataManager.cs" />
+    <Compile Include="Core\DoubleContorl.cs" />
     <Compile Include="DataEditForm.cs" />
     <Compile Include="DataEditForm.Designer.cs">
       <DependentUpon>DataEditForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Interface\ICardView.cs" />
-    <Compile Include="Interface\IEditor.cs" />
+    <Compile Include="ImageForm.cs" />
+    <Compile Include="ImageForm.Designer.cs">
+      <DependentUpon>ImageForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs" />
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -61,12 +63,14 @@
     <EmbeddedResource Include="DataEditForm.resx">
       <DependentUpon>DataEditForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ImageForm.resx">
+      <DependentUpon>ImageForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Interface" />
     <Folder Include="Data" />
     <Folder Include="Core" />
   </ItemGroup>

@@ -15,12 +15,13 @@ namespace DataEditorX.Core
         /// </summary>
         /// <param name="cardCode">密码</param>
         /// <param name="cardName">名字</param>
-        public Card(int cardCode,string cardName)
+        public Card(int cardCode)
         {
+            int i;
             this.id = cardCode;
+            this.name="";
             this.ot = 0;
             this.alias = 0;
-            this.name = cardName;
             this.setcode = 0;
             this.type = 0;
             this.atk = 0;
@@ -31,65 +32,39 @@ namespace DataEditorX.Core
             this.category = 0;
             this.desc = "";
             this.str = new string[0x10];
+            for(i=0;i<0x10;i++)
+                str[i]="";
         }
         #endregion
 
         #region 成员
-        /// <summary>
-        /// 卡片密码
-        /// </summary>
-        public int id;
-        /// <summary>
-        /// 卡片规则
-        /// </summary>
+        /// <summary>卡片密码</summary>
+        public long id;
+        /// <summary>卡片规则</summary>
         public int ot;
-        /// <summary>
-        /// 卡片同名卡
-        /// </summary>
-        public int alias;
-        /// <summary>
-        /// 卡片系列号
-        /// </summary>
-        public ulong setcode;
-        /// <summary>
-        /// 卡片种类
-        /// </summary>
+        /// <summary>卡片同名卡</summary>
+        public long alias;
+        /// <summary>卡片系列号</summary>
+        public long setcode;
+        /// <summary>卡片种类</summary>
         public long type;
-        /// <summary>
-        /// 攻击力
-        /// </summary>
+        /// <summary>攻击力</summary>
         public int atk;
-        /// <summary>
-        /// 防御力
-        /// </summary>
+        /// <summary>防御力</summary>
         public int def;
-        /// <summary>
-        /// 卡片等级
-        /// </summary>
-        public int level;
-        /// <summary>
-        /// 卡片种族
-        /// </summary>
-        public int race;
-        /// <summary>
-        /// 卡片属性
-        /// </summary>
+        /// <summary>卡片等级</summary>
+        public long level;
+        /// <summary>卡片种族</summary>
+        public long race;
+        /// <summary>卡片属性</summary>
         public int attribute;
-        /// <summary>
-        /// 效果种类
-        /// </summary>
+        /// <summary>效果种类</summary>
         public long category;
-        /// <summary>
-        /// 卡片名称
-        /// </summary>
+        /// <summary>卡片名称</summary>
         public string name;
-        /// <summary>
-        /// 描述文本
-        /// </summary>
+        /// <summary>描述文本</summary>
         public string desc;
-        /// <summary>
-        /// 脚本文件组
-        /// </summary>
+        /// <summary>脚本文件组</summary>
         public string[] str;
         #endregion
 
@@ -187,156 +162,7 @@ namespace DataEditorX.Core
         {
             return !left.Equals(right);
         }
-        /// <summary>
-        /// 左边接近右边
-        /// </summary>
-        /// <param name="left">卡片1</param>
-        /// <param name="right">卡片2</param>
-        /// <returns></returns>
-        public static bool operator >(Card left, Card right)
-        {
-            return left.Like(right);
-        }      
-        /// <summary>
-        /// 左边接近右边
-        /// </summary>
-        /// <param name="left">卡片1</param>
-        /// <param name="right">卡片2</param>
-        /// <returns></returns>
-        public static bool operator >=(Card left, Card right)
-        {
-            return left.Like(right);
-        }
-        /// <summary>
-        /// 左边不接近右边
-        /// </summary>
-        /// <param name="left">卡片1</param>
-        /// <param name="right">卡片2</param>
-        /// <returns></returns>
-        public static bool operator <(Card left, Card right)
-        {
-            return !left.Like(right);
-        }
-        /// <summary>
-        /// 左边不接近右边
-        /// </summary>
-        /// <param name="left">卡片1</param>
-        /// <param name="right">卡片2</param>
-        /// <returns></returns>
-        public static bool operator <=(Card left, Card right)
-        {
-            return !left.Like(right);
-        }
         #endregion
 
-        #region 卡片过滤
-        /// <summary>
-        /// 卡片是否符合searchCard卡片？
-        /// 0请用-1代替
-        /// ？用-2代替
-        /// 密码大于0，同名小于0=搜索密码大于密码
-        /// 密码大于0，同名等于0=搜索密码等于密码
-        /// 密码小于0，同名大于0=搜索同名大于同名
-        /// 密码等于0，同名大于0=搜索同名等于同名
-        /// 密码大于0，同名大于0=搜索密码大于密码，小于同名
-        /// </summary>
-        /// <param name="searchCard">过滤卡片</param>
-        /// <returns>是否符合</returns>
-        public bool Like(Card searchCard)
-        {
-            if (!CheckCode(this.id, this.alias, searchCard.id, searchCard.alias))
-                return false;
-            if (!CheckString(this.name, searchCard.name))
-                return false;
-            if (!CheckString(this.desc, searchCard.desc))
-                return false;
-            if (!CheckNumber(this.atk, searchCard.atk))
-                return false;
-            if (!CheckNumber(this.def, searchCard.def))
-                return false;
-            if (!CheckNumber(this.ot, searchCard.ot))
-                return false;
-            if (!CheckNumber(this.attribute, searchCard.attribute))
-                return false;
-            if (!CheckNumber(this.race, searchCard.race))
-                return false;
-            if (!CheckNumber(this.level&0xff, searchCard.level&0xff))
-                return false;
-            if (!CheckNumber2(this.type, searchCard.type))
-                return false;
-            if (!CheckNumber2(this.category, searchCard.category))
-                return false;
-            if (!CheckSetcode(this.setcode, searchCard.setcode))
-                return false;
-            return true;
-        }
-       private  bool CheckString(string str1, string str2)
-        {
-            if (str2 == null || str2.Length == 0)
-                return true;
-            else if (str1.IndexOf(str2) >= 0)
-                return true;
-            else
-                return false;
-        }
-       private bool CheckNumber(int num1, int num2)
-        {
-            if (num2 == 0)//default
-                return true;
-            else if (num2 == -1 && num1 == 0)//search 0
-                return true;
-            else if (num1 == num2)//search -2 && >0
-                return true;
-            else
-                return false;
-        }
-       private bool CheckSetcode(ulong num1,ulong num2)
-        {
-            if (num2 <= 0)//default
-                return true;
-            else if (num1 == 0 && num2 > 0)
-                return false;
-            //setcode1[0-3]==setcode2[0-3]
-            else if ((num1 & 0xffff) == num2 && num2 < 0xffff)
-                return true;
-            //setcode1[4-7]==setcode2[4-7]
-            else if ((num1 >> 0x10) == num2 && num2 < 0xffff)
-                return true;
-            else if (num1 == num2)
-                return true;
-            else if (((num1 & 0xffff) == (num2 >> 0x10)) &&
-                ((num1 >> 0x10) == (num2 & 0xffff)))
-                return true;
-            else
-                return false;
-        }
-       private bool CheckNumber2(long num1, long num2)
-        {
-            if (num2 == 0)
-                return true;
-            else if ((num1 & num2) == num2)
-                return true;
-            else
-                return false;
-        }
-       private bool CheckCode(int code1, int alias1, int code2, int alias2)
-        {
-            if (alias2 == 0 && code2 == 0)
-                return true;
-            else if (alias2 == 0 && code1 == code2)//code1=code2
-                return true;
-            else if (alias2 < 0 && code1 >= code2)//code1>=code2
-                return true;
-            else if (code2 == 0 && (alias1 == alias2 || code1 == alias2))//alias1==alias2
-                return true;
-            else if (code2 < 0 && code1 <= alias2)//alias1>=alias2
-                return true;
-            //cod1>=code2 && code1<=alias2
-            else if (code2 > 0 && alias2 > 0 && code1 >= code2 && code1 <= alias2)
-                return true;
-            else
-                return false;
-        }
-        #endregion
     }
 }
