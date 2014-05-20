@@ -39,6 +39,7 @@ namespace DataEditorX
             this.menuitem_file = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_open = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_new = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuitem_copyselectto = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_copyto = new System.Windows.Forms.ToolStripMenuItem();
             this.tsep1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuitem_readydk = new System.Windows.Forms.ToolStripMenuItem();
@@ -99,7 +100,6 @@ namespace DataEditorX
             this.label9 = new System.Windows.Forms.Label();
             this.pl_cardtype = new System.Windows.Forms.DFlowLayoutPanel();
             this.pl_category = new System.Windows.Forms.DFlowLayoutPanel();
-            this.menuitem_copyselectto = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -146,6 +146,13 @@ namespace DataEditorX
             this.menuitem_new.Size = new System.Drawing.Size(169, 22);
             this.menuitem_new.Text = "新建(&N)";
             this.menuitem_new.Click += new System.EventHandler(this.Menuitem_newClick);
+            // 
+            // menuitem_copyselectto
+            // 
+            this.menuitem_copyselectto.Name = "menuitem_copyselectto";
+            this.menuitem_copyselectto.Size = new System.Drawing.Size(169, 22);
+            this.menuitem_copyselectto.Text = "复制选中卡片到...";
+            this.menuitem_copyselectto.Click += new System.EventHandler(this.Menuitem_copyselecttoClick);
             // 
             // menuitem_copyto
             // 
@@ -215,21 +222,21 @@ namespace DataEditorX
             // 
             this.menuitem_about.Name = "menuitem_about";
             this.menuitem_about.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.menuitem_about.Size = new System.Drawing.Size(124, 22);
+            this.menuitem_about.Size = new System.Drawing.Size(152, 22);
             this.menuitem_about.Text = "关于";
             this.menuitem_about.Click += new System.EventHandler(this.Menuitem_aboutClick);
             // 
             // menuitem_checkupdate
             // 
             this.menuitem_checkupdate.Name = "menuitem_checkupdate";
-            this.menuitem_checkupdate.Size = new System.Drawing.Size(124, 22);
-            this.menuitem_checkupdate.Text = "检查更新";
+            this.menuitem_checkupdate.Size = new System.Drawing.Size(152, 22);
+            this.menuitem_checkupdate.Text = "下载新版本";
             this.menuitem_checkupdate.Click += new System.EventHandler(this.Menuitem_checkupdateClick);
             // 
             // menuitem_github
             // 
             this.menuitem_github.Name = "menuitem_github";
-            this.menuitem_github.Size = new System.Drawing.Size(124, 22);
+            this.menuitem_github.Size = new System.Drawing.Size(152, 22);
             this.menuitem_github.Text = "程序源码";
             this.menuitem_github.Click += new System.EventHandler(this.Menuitem_githubClick);
             // 
@@ -716,13 +723,6 @@ namespace DataEditorX
             this.pl_category.Padding = new System.Windows.Forms.Padding(2);
             this.pl_category.Size = new System.Drawing.Size(303, 166);
             this.pl_category.TabIndex = 13;
-            // 
-            // menuitem_copyselectto
-            // 
-            this.menuitem_copyselectto.Name = "menuitem_copyselectto";
-            this.menuitem_copyselectto.Size = new System.Drawing.Size(169, 22);
-            this.menuitem_copyselectto.Text = "复制选中卡片到...";
-            this.menuitem_copyselectto.Click += new System.EventHandler(this.Menuitem_copyselecttoClick);
             // 
             // DataEditForm
             // 
