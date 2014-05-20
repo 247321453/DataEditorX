@@ -460,7 +460,7 @@ namespace DataEditorX
                 return true;
             else
             {
-                MyMsg.Warning(MyMsg.ERROR_NoSelectCDB);
+                MyMsg.Warning("请打开一个数据库!");
                 return false;
             }
         }
@@ -469,7 +469,7 @@ namespace DataEditorX
         {
             if(!File.Exists(cdbFile))
             {
-                MyMsg.Error(string.Format(MyMsg.ERROR_File_NotExisit,cdbFile));
+                MyMsg.Error(string.Format("文件不存在！\n{0}",cdbFile));
                 return false;
             }
             nowCdbFile=cdbFile;
@@ -499,7 +499,7 @@ namespace DataEditorX
             else
             {
                 #if DEBUG
-                MyMsg.Warning(MyMsg.ERROR_NoCard);
+                MyMsg.Warning("没有卡片!");
                 #endif
                 cardcount=0;
                 page=1;
@@ -538,24 +538,24 @@ namespace DataEditorX
             Card c=GetCard();
             if(c.id<=0)
             {
-                MyMsg.Error(MyMsg.ERROR_CardCodeIsZero);
+                MyMsg.Error("卡片密码必须大于0!");
                 return false;
             }
             foreach(Card ckey in cardlist)
             {
                 if(c.id==ckey.id)
                 {
-                    MyMsg.Warning(string.Format(MyMsg.ERROR_Card_IsExisit,ckey.ToString()));
+                    MyMsg.Warning(string.Format("卡片已经存在!\n{0}",ckey.ToString()));
                     return false;
                 }
             }
             if(DataBase.Command(nowCdbFile, DataBase.GetInsertSQL(c,true))>=2)
             {
-                MyMsg.Show(string.Format(MyMsg.INFO_Addition_Card,c.ToString()));
+                MyMsg.Show(string.Format("添加 {0} 成功!",c.ToString()));
                 Search(srcCard, true);
                 return true;
             }
-            MyMsg.Error(MyMsg.ERROR_AdditionFail);
+            MyMsg.Error("修添加失败!");
             return false;
         }
         //修改
@@ -567,22 +567,22 @@ namespace DataEditorX
 
             if(c.Equals(oldCard))
             {
-                MyMsg.Show(MyMsg.INFO_NoChanged);
+                MyMsg.Show("卡片没有被修改!");
                 return false;
             }
             if(c.id<=0)
             {
-                MyMsg.Error(MyMsg.ERROR_CardCodeIsZero);
+                MyMsg.Error("卡片密码必须大于0!");
                 return false;
             }
             string sql;
             if(c.id!=oldCard.id)
             {
-                if(MyMsg.Question(string.Format(MyMsg.QUES_Delete_Card,oldCard.ToString())))
+                if(MyMsg.Question(string.Format("是否删除卡片?\n{0}",oldCard.ToString())))
                 {
                     if(DataBase.Command(nowCdbFile, DataBase.GetDeleteSQL(oldCard))<2)
                     {
-                        MyMsg.Error(MyMsg.ERROR_DeleteFail);
+                        MyMsg.Error("删除失败!");
                         return false;
                     }
                 }
@@ -592,11 +592,11 @@ namespace DataEditorX
                 sql=DataBase.GetUpdateSQL(c);
             if(DataBase.Command(nowCdbFile, sql)>0)
             {
-                MyMsg.Show(string.Format(MyMsg.INFO_Modifty_Card,c.ToString()));
+                MyMsg.Show(string.Format("修改 {0} 成功!",c.ToString()));
                 Search(srcCard, true);
             }
             else
-                MyMsg.Error(MyMsg.ERROR_ModiftyFail);
+                MyMsg.Error("修改失败!");
             return false;
         }
         //删除
@@ -605,9 +605,9 @@ namespace DataEditorX
             if(!Check())
                 return false;
             int ic=lv_cardlist.SelectedItems.Count;
-            if(ic>=0)
+            if(ic==0)
                 return false;
-            if(!MyMsg.Question(string.Format(MyMsg.QUES_Delete_Cards,ic)))
+            if(!MyMsg.Question(string.Format("是否删除选择的{0}张卡?",ic)))
                 return false;
             List<string> sql=new List<string>();
             foreach(ListViewItem lvitem in lv_cardlist.SelectedItems)
@@ -621,13 +621,13 @@ namespace DataEditorX
             }
             if(DataBase.Command(nowCdbFile, sql.ToArray())>=(sql.Count*2))
             {
-                MyMsg.Show(MyMsg.INFO_Delete);
+                MyMsg.Show("删除成功!");
                 Search(srcCard, true);
                 return true;
             }
             else
             {
-                MyMsg.Error(MyMsg.ERROR_DeleteFail);
+                MyMsg.Error("删除失败!");
                 Search(srcCard, true);
             }
             
@@ -641,7 +641,7 @@ namespace DataEditorX
             string lua=Path.Combine(LUAPTH,"c"+tb_cardcode.Text+".lua");
             if(!File.Exists(lua))
             {
-                if(MyMsg.Question(string.Format(MyMsg.QUES_Create_Lua_,lua)))
+                if(MyMsg.Question(string.Format("是否创建脚本?\n{0}",lua)))
                 {
                     File.Create(lua);
                 }
@@ -724,7 +724,7 @@ namespace DataEditorX
             }
             catch{
                 index=-1;
-                MyMsg.Error(MyMsg.ERROR_NoSeclectScriptText);
+                MyMsg.Error("请选中脚本文本");
             }
             if(index>=0)
             {
@@ -743,7 +743,7 @@ namespace DataEditorX
             }
             catch{
                 index=-1;
-                MyMsg.Error(MyMsg.ERROR_NoSeclectScriptText);
+                MyMsg.Error("请选中脚本文本");
             }
             if(index>=0)
                 return strs[index];
@@ -767,7 +767,7 @@ namespace DataEditorX
         #region 帮助菜单
         void Menuitem_aboutClick(object sender, EventArgs e)
         {
-            MyMsg.Show(MyMsg.ABOUT);
+            MyMsg.Show("程序：DataEditorX\n作者：247321453\nE-mail:247321453@qq.com\n");
         }
         
         void Menuitem_checkupdateClick(object sender, EventArgs e)
@@ -785,8 +785,8 @@ namespace DataEditorX
         {
             using(OpenFileDialog dlg=new OpenFileDialog())
             {
-                dlg.Title=MyMsg.STR_OpenCDB;
-                dlg.Filter=MyMsg.STR_CDBFilter;
+                dlg.Title="选择卡片数据库(cdb文件)";
+                dlg.Filter="cdb文件(*.cdb)|*.cdb|所有文件(*.*)|*.*";
                 if(dlg.ShowDialog()==DialogResult.OK)
                 {
                     Open(dlg.FileName);
@@ -797,8 +797,8 @@ namespace DataEditorX
         {
             using(SaveFileDialog dlg=new SaveFileDialog())
             {
-                dlg.Title=MyMsg.STR_SaveCDB;
-                dlg.Filter=MyMsg.STR_CDBFilter;
+                dlg.Title="选择卡片数据库(cdb文件)保存位置";
+                dlg.Filter="cdb文件(*.cdb)|*.cdb|所有文件(*.*)|*.*";
                 if(dlg.ShowDialog()==DialogResult.OK)
                 {
                     if(DataBase.Create(dlg.FileName))
@@ -836,11 +836,11 @@ namespace DataEditorX
                 cards.AddRange(cardlist.ToArray());
             using(OpenFileDialog dlg=new OpenFileDialog())
             {
-                dlg.Title=MyMsg.STR_OpenCDB;
-                dlg.Filter=MyMsg.STR_CDBFilter;
+                dlg.Title="选择卡片数据库(cdb文件)";
+                dlg.Filter="cdb文件(*.cdb)|*.cdb|所有文件(*.*)|*.*";
                 if(dlg.ShowDialog()==DialogResult.OK)
                 {
-                    if(MyMsg.Question(MyMsg.QUES_ReplaceCard))
+                    if(MyMsg.Question("是否覆盖已经存在的卡片？"))
                         DataBase.CopyDB(dlg.FileName,false,cards.ToArray());
                     else
                         DataBase.CopyDB(dlg.FileName,true,cards.ToArray());
@@ -853,8 +853,8 @@ namespace DataEditorX
                 return;
             using(OpenFileDialog dlg=new OpenFileDialog())
             {
-                dlg.Title=MyMsg.STR_Openydk;
-                dlg.Filter=MyMsg.STR_ydkFilter;
+                dlg.Title="选择卡组文件(ydk文件)";
+                dlg.Filter="ydk文件(*.ydk)|*.ydk|所有文件(*.*)|*.*";
                 if(dlg.ShowDialog()==DialogResult.OK)
                 {
                     SetCards(DataBase.ReadYdk(nowCdbFile, dlg.FileName), false);
@@ -868,7 +868,7 @@ namespace DataEditorX
                 return;
             using(FolderBrowserDialog fdlg=new FolderBrowserDialog())
             {
-                fdlg.Description=MyMsg.STR_SelectImages;
+                fdlg.Description= "请选择卡片图像目录";
                 if(fdlg.ShowDialog()==DialogResult.OK)
                 {
                     SetCards(DataBase.ReadImage(nowCdbFile, fdlg.SelectedPath), false);
