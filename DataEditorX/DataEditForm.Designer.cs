@@ -99,6 +99,7 @@ namespace DataEditorX
             this.label9 = new System.Windows.Forms.Label();
             this.pl_cardtype = new System.Windows.Forms.DFlowLayoutPanel();
             this.pl_category = new System.Windows.Forms.DFlowLayoutPanel();
+            this.menuitem_copyselectto = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -119,6 +120,7 @@ namespace DataEditorX
             this.menuitem_file.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
                                     this.menuitem_open,
                                     this.menuitem_new,
+                                    this.menuitem_copyselectto,
                                     this.menuitem_copyto,
                                     this.tsep1,
                                     this.menuitem_readydk,
@@ -133,7 +135,7 @@ namespace DataEditorX
             // 
             this.menuitem_open.Name = "menuitem_open";
             this.menuitem_open.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.menuitem_open.Size = new System.Drawing.Size(165, 22);
+            this.menuitem_open.Size = new System.Drawing.Size(169, 22);
             this.menuitem_open.Text = "打开(&O)";
             this.menuitem_open.Click += new System.EventHandler(this.Menuitem_openClick);
             // 
@@ -141,45 +143,45 @@ namespace DataEditorX
             // 
             this.menuitem_new.Name = "menuitem_new";
             this.menuitem_new.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.menuitem_new.Size = new System.Drawing.Size(165, 22);
+            this.menuitem_new.Size = new System.Drawing.Size(169, 22);
             this.menuitem_new.Text = "新建(&N)";
             this.menuitem_new.Click += new System.EventHandler(this.Menuitem_newClick);
             // 
             // menuitem_copyto
             // 
             this.menuitem_copyto.Name = "menuitem_copyto";
-            this.menuitem_copyto.Size = new System.Drawing.Size(165, 22);
-            this.menuitem_copyto.Text = "复制到(&C)";
+            this.menuitem_copyto.Size = new System.Drawing.Size(169, 22);
+            this.menuitem_copyto.Text = "复制全部卡片到...";
             this.menuitem_copyto.Click += new System.EventHandler(this.Menuitem_copytoClick);
             // 
             // tsep1
             // 
             this.tsep1.Name = "tsep1";
-            this.tsep1.Size = new System.Drawing.Size(162, 6);
+            this.tsep1.Size = new System.Drawing.Size(166, 6);
             // 
             // menuitem_readydk
             // 
             this.menuitem_readydk.Name = "menuitem_readydk";
-            this.menuitem_readydk.Size = new System.Drawing.Size(165, 22);
+            this.menuitem_readydk.Size = new System.Drawing.Size(169, 22);
             this.menuitem_readydk.Text = "读取ydk(&Y)";
             this.menuitem_readydk.Click += new System.EventHandler(this.Menuitem_readydkClick);
             // 
             // menuitem_readimages
             // 
             this.menuitem_readimages.Name = "menuitem_readimages";
-            this.menuitem_readimages.Size = new System.Drawing.Size(165, 22);
+            this.menuitem_readimages.Size = new System.Drawing.Size(169, 22);
             this.menuitem_readimages.Text = "读取图片(&I)";
             this.menuitem_readimages.Click += new System.EventHandler(this.Menuitem_readimagesClick);
             // 
             // tsep3
             // 
             this.tsep3.Name = "tsep3";
-            this.tsep3.Size = new System.Drawing.Size(162, 6);
+            this.tsep3.Size = new System.Drawing.Size(166, 6);
             // 
             // menuitem_quit
             // 
             this.menuitem_quit.Name = "menuitem_quit";
-            this.menuitem_quit.Size = new System.Drawing.Size(165, 22);
+            this.menuitem_quit.Size = new System.Drawing.Size(169, 22);
             this.menuitem_quit.Text = "退出(&Q)";
             this.menuitem_quit.Click += new System.EventHandler(this.Menuitem_quitClick);
             // 
@@ -715,6 +717,13 @@ namespace DataEditorX
             this.pl_category.Size = new System.Drawing.Size(303, 166);
             this.pl_category.TabIndex = 13;
             // 
+            // menuitem_copyselectto
+            // 
+            this.menuitem_copyselectto.Name = "menuitem_copyselectto";
+            this.menuitem_copyselectto.Size = new System.Drawing.Size(169, 22);
+            this.menuitem_copyselectto.Text = "复制选中卡片到...";
+            this.menuitem_copyselectto.Click += new System.EventHandler(this.Menuitem_copyselecttoClick);
+            // 
             // DataEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -780,6 +789,7 @@ namespace DataEditorX
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+        private System.Windows.Forms.ToolStripMenuItem menuitem_copyselectto;
         private System.Windows.Forms.ToolStripMenuItem menuitem_github;
         private System.Windows.Forms.ToolStripMenuItem menuitem_new;
         private System.Windows.Forms.ToolStripMenuItem menuitem_showimage;
