@@ -71,7 +71,6 @@
   <ItemGroup>
     <Folder Include="Data" />
     <Folder Include="Core" />
-    <Folder Include="Update" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\card-attribute.txt">
@@ -104,8 +103,6 @@
     <None Include="readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Update\Release.zip" />
-    <None Include="Update\version.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

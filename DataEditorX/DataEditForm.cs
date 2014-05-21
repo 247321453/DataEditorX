@@ -21,7 +21,8 @@ namespace DataEditorX
     {
         #region 成员变量
         string GAMEPATH,PICPATH,LUAPTH;
-        string GITURL="https://github.com/247321453/DataEcitorX";
+        readonly string GITURL="https://github.com/247321453/DataEcitorX";
+        readonly string VERURL="http://hi.baidu.com/247321453";
         Card oldCard=new Card(0);
         Card srcCard=new Card(0);
         ImageForm imgform=new ImageForm();
@@ -788,10 +789,7 @@ namespace DataEditorX
         
         void Menuitem_checkupdateClick(object sender, EventArgs e)
         {
-            if(MyUpdate.CheckUpdate())
-            {
-                MyUpdate.Download();
-            }
+            MyUpdate.CheckUpdate(VERURL);
         }
         void Menuitem_githubClick(object sender, EventArgs e)
         {
