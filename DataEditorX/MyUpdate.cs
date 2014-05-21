@@ -30,8 +30,8 @@ namespace DataEditorX
                 MyMsg.Error("无法获取版本！");
                 return false;
             }
-            l=html.IndexOf(" ");
-            ver=(l>=0)?html.Substring(0,l):"?.?.?.?";
+            l=html.IndexOf(" time:");
+            ver=(l>=0)?html.Substring(4,l):"?.?.?.?";
             lasttime=(l>=0)?html.Substring(l):"????-??-?? ??:??";
             MyMsg.Show("当前版本："+Application.ProductVersion
                        +"\n最新版本："+ver
