@@ -67,8 +67,9 @@ namespace DataEditorX
             Version  ver =new Version(Application.ProductVersion);   
             string   strVer  =   ver.ToString();
             #if DEBUG
-            this.Text=this.Text+"(DEBUG)"+" 版本:"+strVer;
+            this.Text=this.Text+"(DEBUG)";
             #endif
+            this.Text=this.Text+" Ver:"+strVer;
             title=this.Text;
 
             imgform.VisibleChanged+=OnimgFormClosed;
