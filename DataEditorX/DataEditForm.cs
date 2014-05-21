@@ -22,7 +22,7 @@ namespace DataEditorX
         #region 成员变量
         string GAMEPATH,PICPATH,LUAPTH;
         readonly string GITURL="https://github.com/247321453/DataEcitorX";
-        readonly string VERURL="http://hi.baidu.com/247321453";
+        string VERURL="http://hi.baidu.com/247321453";
         Card oldCard=new Card(0);
         Card srcCard=new Card(0);
         ImageForm imgform=new ImageForm();
@@ -97,6 +97,13 @@ namespace DataEditorX
                     GAMEPATH=(lines.Length>0)?lines[0]:Application.StartupPath;
                 else
                     MyMsg.Warning(string.Format("游戏目录不存在，请重新设置。\n{0}\n设置文件:\n{0}",lines[0],txt));
+            }
+            string urltxt=Path.Combine(datapath,"update.txt");
+            if(File.Exists(urltxt))
+            {
+                string[] lines=File.ReadAllLines(urltxt,Encoding.UTF8);
+                if(lines.Length>0)
+                    VERURL=lines[0];
             }
             PICPATH=Path.Combine(GAMEPATH,"pics");
             LUAPTH=Path.Combine(GAMEPATH,"script");
