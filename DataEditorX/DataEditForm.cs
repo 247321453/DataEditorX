@@ -796,7 +796,17 @@ namespace DataEditorX
         
         void Menuitem_checkupdateClick(object sender, EventArgs e)
         {
-            MyUpdate.CheckUpdate(VERURL);
+            if(MyMsg.Question("进入更新模式,需要重新启动程序,确认?"))
+            {
+                string updateexe=Application.StartupPath+"update.exe";
+                File.Copy(Application.ExecutablePath, updateexe,true);
+                System.Diagnostics.Process p = new System.Diagnostics.Process();
+                p.StartInfo.FileName = updateexe;
+                p.StartInfo.Arguments =" update";
+                p.StartInfo.WorkingDirectory=Application.StartupPath;
+                p.Start();
+                Application.Exit();
+            }
         }
         void Menuitem_githubClick(object sender, EventArgs e)
         {

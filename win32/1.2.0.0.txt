@@ -1,3 +1,0 @@
-<v>1.2.0.0<v>
-<t>2014-5-21 11:50<t>
-<d>http://ys-l.ys168.com/2.0/395236325/SJujftp5H5G476556NKJ/1.2.0.0.zip https://github.com/247321453/DataEditorX/raw/master/win32/1.2.0.0.zip<d>

@@ -1,0 +1,5 @@
+﻿<ver>1.2.0.1</ver>
+<time>2014-5-21 16:00</time>
+<file>readme.txt</file>
+<file>DataEditorX.exe</file>
+<file>data\update.txt</file>
