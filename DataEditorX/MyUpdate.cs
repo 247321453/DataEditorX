@@ -23,6 +23,11 @@ namespace DataEditorX
         static string Vhead="v";
         static string Thead="t";
         static string Dhead="d";
+        /*更新格式
+         * <v>1.1.0.3<v>
+         * <t>2014-5-21 11:50<t>
+         * <d>http://a.zip http://b.zip<d>
+         * */
         public static bool CheckUpdate(string url)
         {
             string ver,lasttime,verurl;
