@@ -6,18 +6,17 @@
  * 
  */
 using System;
-using System.Drawing;
-using System.Windows.Forms;
-using System.IO;
 using System.Collections.Generic;
-using DataEditorX.Core;
+using System.Drawing;
+using System.Globalization;
+using System.IO;
 using System.Text;
+using System.Windows.Forms;
+
+using DataEditorX.Core;
 
 namespace DataEditorX
 {
-    /// <summary>
-    /// Description of DataEditForm.
-    /// </summary>
     public partial class DataEditForm : Form
     {
         #region 成员变量
@@ -65,10 +64,12 @@ namespace DataEditorX
         void DataEditFormLoad(object sender, EventArgs e)
         {
             InitListRows();
-            title=this.Text;
+            Version  ver =new Version(Application.ProductVersion);   
+            string   strVer  =   ver.ToString();
             #if DEBUG
-            title=title+"(DEBUG)";
+            this.Text=this.Text+"(DEBUG)"+" 版本:"+strVer;
             #endif
+            title=this.Text;
 
             imgform.VisibleChanged+=OnimgFormClosed;
             InitPath();
@@ -281,10 +282,21 @@ namespace DataEditorX
             }
             if(index==cb.Items.Count)
             {
-                string word="0x"+k.ToString("x");
+                string word=k.ToString("x");
                 if(!dic.ContainsKey(k))
                     dic.Add(k, word);
-                cb.Items.Add(word);
+                if(cb.Name==cb_setname1.Name
+                   ||cb.Name==cb_setname2.Name
+                   ||cb.Name==cb_setname3.Name
+                   ||cb.Name==cb_setname4.Name)
+                {
+                    cb_setname1.Items.Add(word);
+                    cb_setname2.Items.Add(word);
+                    cb_setname3.Items.Add(word);
+                    cb_setname4.Items.Add(word);
+                }
+                else
+                    cb.Items.Add(word);
             }
             cb.SelectedIndex=index;
         }
@@ -301,18 +313,18 @@ namespace DataEditorX
             c.desc=tb_cardtext.Text;
             
             Array.Copy(strs,c.str, c.str.Length);
-            int.TryParse(GetSelect(dicCardRules,cb_cardrule,0),out c.ot);
-            int.TryParse(GetSelect(dicCardAttributes,cb_cardattribute,0),out c.attribute);
-            long.TryParse(GetSelect(dicCardLevels,cb_cardlevel,0),out c.level);
-            long.TryParse(GetSelect(dicCardRaces,cb_cardrace,0),out c.race);
+            int.TryParse(GetSelect(dicCardRules,cb_cardrule),out c.ot);
+            int.TryParse(GetSelect(dicCardAttributes,cb_cardattribute),out c.attribute);
+            long.TryParse(GetSelect(dicCardLevels,cb_cardlevel),out c.level);
+            long.TryParse(GetSelect(dicCardRaces,cb_cardrace),out c.race);
             
-            long.TryParse(GetSelect(dicSetnames, cb_setname1,1), out ltemp);
+            long.TryParse(GetSelect(dicSetnames, cb_setname1), out ltemp);
             c.setcode+=ltemp;
-            long.TryParse(GetSelect(dicSetnames, cb_setname2,1), out ltemp);
+            long.TryParse(GetSelect(dicSetnames, cb_setname2), out ltemp);
             c.setcode+=(ltemp<<0x10);
-            long.TryParse(GetSelect(dicSetnames, cb_setname3,1), out ltemp);
+            long.TryParse(GetSelect(dicSetnames, cb_setname3), out ltemp);
             c.setcode+=(ltemp<<0x20);
-            long.TryParse(GetSelect(dicSetnames, cb_setname4,1), out ltemp);
+            long.TryParse(GetSelect(dicSetnames, cb_setname4), out ltemp);
             c.setcode+=(ltemp<<0x30);
             
             c.type=GetCheck(pl_cardtype);
@@ -330,16 +342,22 @@ namespace DataEditorX
 
             return c;
         }
-        string GetSelect(Dictionary<long, string> dic,ComboBox cb, int start)
+        string GetSelect(Dictionary<long, string> dic,ComboBox cb)
         {
             long fkey=0;
+            bool isfind=false;
             foreach(long key in dic.Keys)
             {
                 if(cb.Text==dic[key])
                 {
                     fkey=key;
+                    isfind=true;
                     break;
                 }
+            }
+            if(!isfind)
+            {
+                long.TryParse(cb.Text, NumberStyles.HexNumber, null, out fkey);
             }
             return fkey.ToString();
         }
@@ -767,7 +785,10 @@ namespace DataEditorX
         #region 帮助菜单
         void Menuitem_aboutClick(object sender, EventArgs e)
         {
-            MyMsg.Show("程序：DataEditorX\n作者：247321453\nE-mail:247321453@qq.com\n");
+            MyMsg.Show("程序："+Application.ProductName
+                       +"\n版本："+Application.ProductVersion
+                       +"\n作者：247321453"
+                       +"\nE-mail:247321453@qq.com\n");
         }
         
         void Menuitem_checkupdateClick(object sender, EventArgs e)

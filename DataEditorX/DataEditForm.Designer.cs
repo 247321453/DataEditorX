@@ -222,21 +222,21 @@ namespace DataEditorX
             // 
             this.menuitem_about.Name = "menuitem_about";
             this.menuitem_about.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.menuitem_about.Size = new System.Drawing.Size(152, 22);
+            this.menuitem_about.Size = new System.Drawing.Size(136, 22);
             this.menuitem_about.Text = "关于";
             this.menuitem_about.Click += new System.EventHandler(this.Menuitem_aboutClick);
             // 
             // menuitem_checkupdate
             // 
             this.menuitem_checkupdate.Name = "menuitem_checkupdate";
-            this.menuitem_checkupdate.Size = new System.Drawing.Size(152, 22);
+            this.menuitem_checkupdate.Size = new System.Drawing.Size(136, 22);
             this.menuitem_checkupdate.Text = "下载新版本";
             this.menuitem_checkupdate.Click += new System.EventHandler(this.Menuitem_checkupdateClick);
             // 
             // menuitem_github
             // 
             this.menuitem_github.Name = "menuitem_github";
-            this.menuitem_github.Size = new System.Drawing.Size(152, 22);
+            this.menuitem_github.Size = new System.Drawing.Size(136, 22);
             this.menuitem_github.Text = "程序源码";
             this.menuitem_github.Click += new System.EventHandler(this.Menuitem_githubClick);
             // 
@@ -781,7 +781,7 @@ namespace DataEditorX
             this.MaximizeBox = false;
             this.Name = "DataEditForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "DataEditor";
+            this.Text = "DataEditorX";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DataEditFormFormClosing);
             this.Load += new System.EventHandler(this.DataEditFormLoad);
             this.menuStrip1.ResumeLayout(false);
