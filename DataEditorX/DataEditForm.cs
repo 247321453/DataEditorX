@@ -20,7 +20,8 @@ namespace DataEditorX
     public partial class DataEditForm : Form
     {
         #region 成员变量
-        string GAMEPATH,PICPATH,UPDATEURL,GITURL,LUAPTH,INIPATH;
+        string GAMEPATH,PICPATH,LUAPTH;
+        string GITURL="https://github.com/247321453/DataEcitorX";
         Card oldCard=new Card(0);
         Card srcCard=new Card(0);
         ImageForm imgform=new ImageForm();
@@ -86,24 +87,18 @@ namespace DataEditorX
         void InitPath()
         {
             GAMEPATH=Application.StartupPath;
-            INIPATH=Path.Combine(GAMEPATH,"DataEditorX.txt");
-            if(File.Exists(INIPATH))
+            string datapath=Path.Combine(Application.StartupPath,"data");
+            string txt=Path.Combine(datapath,"ygopro.txt");
+            if(File.Exists(txt))
             {
-                string[] lines=File.ReadAllLines(INIPATH, Encoding.UTF8);
-                GAMEPATH=(lines.Length>0)?lines[0]:Application.StartupPath;
-                UPDATEURL=(lines.Length>1)?lines[1]:"http://247321453@ys168.com";
-                GITURL=(lines.Length>2)?lines[2]:"https://github.com/247321453/DataEditorX";
-            }
-            else
-            {
-                GAMEPATH=Application.StartupPath;
-                UPDATEURL="http://247321453@ys168.com";
-                GITURL="https://github.com/247321453/DataEcitorX";
+                string[] lines=File.ReadAllLines(txt, Encoding.UTF8);
+                if(Directory.Exists(lines[0]))
+                    GAMEPATH=(lines.Length>0)?lines[0]:Application.StartupPath;
+                else
+                    MyMsg.Warning(string.Format("游戏目录不存在，请重新设置。\n{0}\n设置文件:\n{0}",lines[0],txt));
             }
             PICPATH=Path.Combine(GAMEPATH,"pics");
             LUAPTH=Path.Combine(GAMEPATH,"script");
-            
-            string datapath=Path.Combine(Application.StartupPath,"data");
             
             confrule=Path.Combine(datapath,"card-rule.txt");
             confattribute=Path.Combine(datapath,"card-attribute.txt");
@@ -116,8 +111,7 @@ namespace DataEditorX
         }
         void DataEditFormFormClosing(object sender, FormClosingEventArgs e)
         {
-            if(!File.Exists(INIPATH))
-                File.WriteAllLines(INIPATH,new string[]{GAMEPATH,UPDATEURL,GITURL},Encoding.UTF8);
+
         }
         
         void SaveDic(string file, Dictionary<long, string> dic)
@@ -794,7 +788,10 @@ namespace DataEditorX
         
         void Menuitem_checkupdateClick(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(UPDATEURL);
+            if(MyUpdate.CheckUpdate())
+            {
+                MyUpdate.Download();
+            }
         }
         void Menuitem_githubClick(object sender, EventArgs e)
         {

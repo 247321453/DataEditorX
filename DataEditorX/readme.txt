@@ -15,8 +15,7 @@
 2.更新网址
 3.源码网址
 
-DataEditorX.txt
-F:\game\YGOPRO
-http://247321453.ys168.com
-https://github.com/247321453/DataEditorX
+★设置游戏路径
+data\ygopro.txt
+注意：文本编码：UTF-8,最好是完整路径
 
