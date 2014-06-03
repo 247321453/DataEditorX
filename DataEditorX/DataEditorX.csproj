@@ -66,13 +66,8 @@
       <DependentUpon>ImageForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MyMsg.cs" />
-    <Compile Include="MyUpdate.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UpdateForm.cs" />
-    <Compile Include="UpdateForm.Designer.cs">
-      <DependentUpon>UpdateForm.cs</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DataEditForm.resx">
@@ -80,9 +75,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ImageForm.resx">
       <DependentUpon>ImageForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UpdateForm.resx">
-      <DependentUpon>UpdateForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -117,13 +109,7 @@
     <None Include="Data\update.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\ygopro.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="readme.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="update.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

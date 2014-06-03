@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Net;
 using System.Text;
 using System.Windows.Forms;
 
@@ -23,6 +24,7 @@ namespace DataEditorX
         string GAMEPATH,PICPATH,LUAPTH;
         readonly string GITURL="https://github.com/247321453/DataEcitorX";
         string VERURL="http://hi.baidu.com/247321453";
+        string HEAD="[DataEditorX]";
         Card oldCard=new Card(0);
         Card srcCard=new Card(0);
         ImageForm imgform=new ImageForm();
@@ -49,7 +51,25 @@ namespace DataEditorX
         string conftype="card-type.txt";
         string confcategory="card-category.txt";
         string confcover= "cover.jpg";
+        
+        void SetCDB(string cdb)
+        {
+            this.nowCdbFile=cdb;
+            this.Text=nowCdbFile+"-"+title;
+            char SEP=Path.DirectorySeparatorChar;
+            int l=nowCdbFile.LastIndexOf(SEP);
+            GAMEPATH=(l>0)?nowCdbFile.Substring(0,l+1):cdb;
+
+            PICPATH=Path.Combine(GAMEPATH,"pics");
+            if(!Directory.Exists(PICPATH))
+                Directory.CreateDirectory(PICPATH);
+            LUAPTH=Path.Combine(GAMEPATH,"script");
+            if(!Directory.Exists(LUAPTH))
+                Directory.CreateDirectory(LUAPTH);
+        }
         #endregion
+        
+        
         
         #region 界面初始化
         public DataEditForm(string cdbfile)
@@ -66,7 +86,7 @@ namespace DataEditorX
         void DataEditFormLoad(object sender, EventArgs e)
         {
             InitListRows();
-            Version  ver =new Version(Application.ProductVersion);   
+            Version  ver =new Version(Application.ProductVersion);
             string   strVer  =   ver.ToString();
             #if DEBUG
             this.Text=this.Text+"(DEBUG)";
@@ -81,7 +101,7 @@ namespace DataEditorX
             //set null card
             oldCard=new Card(0);
             SetCard(oldCard);
-            if(!string.IsNullOrEmpty(nowCdbFile))
+            if(File.Exists(nowCdbFile))
                 Open(nowCdbFile);
         }
         
@@ -89,15 +109,7 @@ namespace DataEditorX
         {
             GAMEPATH=Application.StartupPath;
             string datapath=Path.Combine(Application.StartupPath,"data");
-            string txt=Path.Combine(datapath,"ygopro.txt");
-            if(File.Exists(txt))
-            {
-                string[] lines=File.ReadAllLines(txt, Encoding.UTF8);
-                if(Directory.Exists(lines[0]))
-                    GAMEPATH=(lines.Length>0)?lines[0]:Application.StartupPath;
-                else
-                    MyMsg.Warning(string.Format("游戏目录不存在，请重新设置。\n{0}\n设置文件:\n{0}",lines[0],txt));
-            }
+            
             string urltxt=Path.Combine(datapath,"update.txt");
             if(File.Exists(urltxt))
             {
@@ -105,8 +117,6 @@ namespace DataEditorX
                 if(lines.Length>0)
                     VERURL=lines[0];
             }
-            PICPATH=Path.Combine(GAMEPATH,"pics");
-            LUAPTH=Path.Combine(GAMEPATH,"script");
             
             confrule=Path.Combine(datapath,"card-rule.txt");
             confattribute=Path.Combine(datapath,"card-attribute.txt");
@@ -381,7 +391,7 @@ namespace DataEditorX
             return number;
         }
         #endregion
-            
+        
         #region 卡片列表
         void Lv_cardlistSelectedIndexChanged(object sender, EventArgs e)
         {
@@ -493,8 +503,7 @@ namespace DataEditorX
                 MyMsg.Error(string.Format("文件不存在！\n{0}",cdbFile));
                 return false;
             }
-            nowCdbFile=cdbFile;
-            this.Text=cdbFile+"-"+title;
+            SetCDB(cdbFile);
             cardlist.Clear();
             SetCards(DataBase.Read(cdbFile,true,""),false);
 
@@ -664,7 +673,18 @@ namespace DataEditorX
             {
                 if(MyMsg.Question(string.Format("是否创建脚本?\n{0}",lua)))
                 {
-                    File.Create(lua);
+                    if(!Directory.Exists(LUAPTH))
+                        Directory.CreateDirectory(LUAPTH);
+                    using(FileStream fs=new FileStream(
+                        lua,
+                        FileMode.OpenOrCreate,
+                        FileAccess.Write))
+                    {
+                        StreamWriter sw=new StreamWriter(fs,new UTF8Encoding(false));
+                        sw.WriteLine("--"+tb_cardname.Text);
+                        sw.Close();
+                        fs.Close();
+                    }
                 }
             }
             if(File.Exists(lua))
@@ -796,18 +816,72 @@ namespace DataEditorX
         
         void Menuitem_checkupdateClick(object sender, EventArgs e)
         {
-            if(MyMsg.Question("进入更新模式,需要重新启动程序,确认?"))
+            string newver=CheckUpdate(VERURL);
+            int iver,iver2;
+            int.TryParse(Application.ProductVersion.Replace(".",""), out iver);
+            int.TryParse(newver.Replace(".",""), out iver2);
+            if(iver2>iver)
             {
-                string updateexe=Application.StartupPath+"update.exe";
-                File.Copy(Application.ExecutablePath, updateexe,true);
-                System.Diagnostics.Process p = new System.Diagnostics.Process();
-                p.StartInfo.FileName = updateexe;
-                p.StartInfo.Arguments =" update";
-                p.StartInfo.WorkingDirectory=Application.StartupPath;
-                p.Start();
-                Application.Exit();
+                if(MyMsg.Question("发现新版本："+newver
+                                  +"\n是否打开下载页面？"))
+                {
+                    System.Diagnostics.Process.Start(VERURL);
+                }
+            }
+            else
+            {
+                MyMsg.Show("已经是最新版本！");
             }
         }
+        string CheckUpdate(string url)
+        {
+            string urlver="0.0.0.0";
+            string html=GetHtmlContentByUrl(VERURL);
+            if(!string.IsNullOrEmpty(html))
+            {
+                int t,w;
+                t=html.IndexOf(HEAD);
+                w=(t>0)?html.IndexOf(HEAD,t+HEAD.Length):0;
+                if(w>0)
+                {
+                    urlver=html.Substring(t+HEAD.Length,w-t-HEAD.Length);
+                }
+            }
+            return urlver;
+        }
+        
+        #region 获取网址内容
+        string GetHtmlContentByUrl(string url)
+        {
+            string htmlContent = string.Empty;
+            try {
+                HttpWebRequest httpWebRequest =
+                    (HttpWebRequest)WebRequest.Create(url);
+                httpWebRequest.Timeout = 5000;
+                using(HttpWebResponse httpWebResponse =
+                      (HttpWebResponse)httpWebRequest.GetResponse())
+                {
+                    using(Stream stream = httpWebResponse.GetResponseStream())
+                    {
+                        using(StreamReader streamReader =
+                              new StreamReader(stream, Encoding.UTF8))
+                        {
+                            htmlContent = streamReader.ReadToEnd();
+                            streamReader.Close();
+                        }
+                        stream.Close();
+                    }
+                    httpWebResponse.Close();
+                }
+                return htmlContent;
+            }
+            catch{
+                
+            }
+            return "";
+        }
+        #endregion
+        
         void Menuitem_githubClick(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start(GITURL);
@@ -879,7 +953,7 @@ namespace DataEditorX
                     else
                         DataBase.CopyDB(dlg.FileName,true,cards.ToArray());
                 }
-            } 
+            }
         }
         void Menuitem_readydkClick(object sender, EventArgs e)
         {

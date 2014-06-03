@@ -6,6 +6,7 @@
  * 
  */
 using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace DataEditorX
@@ -23,23 +24,12 @@ namespace DataEditorX
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            if(args.Length==1)
+            string arg="";
+            if(args.Length>0)
             {
-                if(args[0]=="update")//进入更新模式
-                {
-                    Application.Run(new UpdateForm(Application.ProductVersion));
-                }
-                else if(args[0]=="updated")//更新完成，删除更新文件
-                {
-                    if(args.Length>1)
-                        System.IO.File.Delete(args[1]);
-                    Application.Run(new DataEditForm());
-                }
-                else
-                    Application.Run(new DataEditForm(args[0]));
+                arg=args[0];
             }
-            else
-                Application.Run(new DataEditForm());
-        }     
+            Application.Run(new DataEditForm(arg));
+        }
     }
 }
