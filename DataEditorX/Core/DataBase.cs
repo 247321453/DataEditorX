@@ -317,23 +317,6 @@ namespace DataEditorX.Core
                 sb.Append(" and texts.name like '%"+c.name+"%' ");
             if(!string.IsNullOrEmpty(c.desc))
                 sb.Append(" and texts.desc like '%"+c.desc+"%' ");
-            /*
-            if(c.setcode>0)
-            {
-                string temp;
-                temp=toInt(c.setcode);
-                sb.Append(" and ( datas.setcode & "+temp+"="+temp);
-                temp=toInt(c.setcode<<0x10);
-                if(temp!="0")
-                    sb.Append(" or datas.setcode & "+temp+"="+temp);
-                temp=toInt(c.setcode<<0x20);
-                if(temp!="0")
-                    sb.Append(" or datas.setcode & "+temp+"="+temp);
-                temp=toInt(c.setcode<<0x30);
-                if(temp!="0")
-                    sb.Append(" or datas.setcode & "+temp+"="+temp);
-                sb.Append(" ) ");
-            }*/
             if(c.ot>0)
                 sb.Append(" and datas.ot & "+c.ot.ToString()+" = "+c.ot.ToString());
             if(c.attribute>0)
@@ -346,14 +329,13 @@ namespace DataEditorX.Core
                 sb.Append(" and datas.type & "+toInt(c.type)+" = "+toInt(c.type));
             if(c.category>0)
                 sb.Append(" and datas.category & "+toInt(c.category)+" = "+toInt(c.category));
-            if(c.id>0 && c.alias<0)
-                sb.Append(" and datas.id >= "+c.id.ToString());
-            else if(c.id>0 && c.alias>0)
+
+            if(c.id>0 && c.alias>0)
                 sb.Append(" and datas.id >= "+c.id.ToString()+" and datas.id <="+c.alias.ToString());
-            else if(c.id<0 && c.alias>0)
-                sb.Append(" and datas.id <= "+c.alias.ToString());
             else if(c.id>0)
-                sb.Append(" and datas.id="+c.id.ToString());
+            {
+                sb.Append(" and ( datas.id="+c.id.ToString()+" or datas.alias="+c.id.ToString()+") ");
+            }
             else if(c.alias>0)
                 sb.Append(" and datas.alias= "+c.alias.ToString());
             return sb.ToString();

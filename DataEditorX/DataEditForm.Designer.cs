@@ -222,21 +222,21 @@ namespace DataEditorX
             // 
             this.menuitem_about.Name = "menuitem_about";
             this.menuitem_about.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.menuitem_about.Size = new System.Drawing.Size(152, 22);
+            this.menuitem_about.Size = new System.Drawing.Size(124, 22);
             this.menuitem_about.Text = "关于";
             this.menuitem_about.Click += new System.EventHandler(this.Menuitem_aboutClick);
             // 
             // menuitem_checkupdate
             // 
             this.menuitem_checkupdate.Name = "menuitem_checkupdate";
-            this.menuitem_checkupdate.Size = new System.Drawing.Size(152, 22);
+            this.menuitem_checkupdate.Size = new System.Drawing.Size(124, 22);
             this.menuitem_checkupdate.Text = "检查更新";
             this.menuitem_checkupdate.Click += new System.EventHandler(this.Menuitem_checkupdateClick);
             // 
             // menuitem_github
             // 
             this.menuitem_github.Name = "menuitem_github";
-            this.menuitem_github.Size = new System.Drawing.Size(152, 22);
+            this.menuitem_github.Size = new System.Drawing.Size(124, 22);
             this.menuitem_github.Text = "程序源码";
             this.menuitem_github.Click += new System.EventHandler(this.Menuitem_githubClick);
             // 
@@ -252,11 +252,11 @@ namespace DataEditorX
             this.lv_cardlist.GridLines = true;
             this.lv_cardlist.HideSelection = false;
             this.lv_cardlist.LabelWrap = false;
-            this.lv_cardlist.Location = new System.Drawing.Point(0, 26);
+            this.lv_cardlist.Location = new System.Drawing.Point(1, 26);
             this.lv_cardlist.Name = "lv_cardlist";
             this.lv_cardlist.Scrollable = false;
             this.lv_cardlist.ShowItemToolTips = true;
-            this.lv_cardlist.Size = new System.Drawing.Size(218, 492);
+            this.lv_cardlist.Size = new System.Drawing.Size(216, 492);
             this.lv_cardlist.TabIndex = 1;
             this.lv_cardlist.UseCompatibleStateImageBehavior = false;
             this.lv_cardlist.View = System.Windows.Forms.View.Details;

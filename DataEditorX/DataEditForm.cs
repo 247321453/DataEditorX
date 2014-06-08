@@ -36,6 +36,8 @@ namespace DataEditorX
         int cardcount;
         
         List<Card> cardlist=new List<Card>();
+        
+        Image m_cover;
         Dictionary<long, string> dicCardRules=null;
         Dictionary<long, string> dicCardAttributes=null;
         Dictionary<long, string> dicCardRaces=null;
@@ -55,11 +57,13 @@ namespace DataEditorX
         void SetCDB(string cdb)
         {
             this.nowCdbFile=cdb;
-            this.Text=nowCdbFile+"-"+title;
-            char SEP=Path.DirectorySeparatorChar;
-            int l=nowCdbFile.LastIndexOf(SEP);
-            GAMEPATH=(l>0)?nowCdbFile.Substring(0,l+1):cdb;
-
+            if(cdb.Length>0)
+            {
+                this.Text=nowCdbFile+"-"+title;
+                char SEP=Path.DirectorySeparatorChar;
+                int l=nowCdbFile.LastIndexOf(SEP);
+                GAMEPATH=(l>0)?nowCdbFile.Substring(0,l+1):cdb;
+            }
             PICPATH=Path.Combine(GAMEPATH,"pics");
             if(!Directory.Exists(PICPATH))
                 Directory.CreateDirectory(PICPATH);
@@ -68,8 +72,6 @@ namespace DataEditorX
                 Directory.CreateDirectory(LUAPTH);
         }
         #endregion
-        
-        
         
         #region 界面初始化
         public DataEditForm(string cdbfile)
@@ -108,6 +110,13 @@ namespace DataEditorX
         void InitPath()
         {
             GAMEPATH=Application.StartupPath;
+            PICPATH=Path.Combine(GAMEPATH,"pics");
+            if(!Directory.Exists(PICPATH))
+                Directory.CreateDirectory(PICPATH);
+            LUAPTH=Path.Combine(GAMEPATH,"script");
+            if(!Directory.Exists(LUAPTH))
+                Directory.CreateDirectory(LUAPTH);
+            
             string datapath=Path.Combine(Application.StartupPath,"data");
             
             string urltxt=Path.Combine(datapath,"update.txt");
@@ -167,7 +176,12 @@ namespace DataEditorX
             InitCheckPanel(pl_category, dicCardcategorys);
             //
             if(File.Exists(confcover))
-                imgform.SetDefault(Image.FromFile(confcover));
+            {
+                m_cover=Image.FromFile(confcover);
+                imgform.SetImage(m_cover,"卡片图像");
+            }
+            else
+                m_cover=null;
         }
         //初始化FlowLayoutPanel
         void InitCheckPanel(FlowLayoutPanel fpanel, Dictionary<long, string> dic)
@@ -393,6 +407,17 @@ namespace DataEditorX
         #endregion
         
         #region 卡片列表
+        void SetCardImage(string id,string name)
+        {
+            if(imgform.Visible)
+            {
+                string f=Path.Combine(PICPATH, id.ToString()+".jpg");
+                if(File.Exists(f))
+                    imgform.SetImage(Image.FromFile(f), name+" ["+id+"]");
+                else
+                    imgform.SetImage(m_cover, name+" ["+id+"]");
+            }
+        }
         void Lv_cardlistSelectedIndexChanged(object sender, EventArgs e)
         {
             if(lv_cardlist.SelectedItems.Count>0)
@@ -404,8 +429,7 @@ namespace DataEditorX
                     Card c=cardlist[index];
                     SetCard(c);
                     //设置卡片图像
-                    if(imgform.Visible)
-                        imgform.SetImageFile(Path.Combine(PICPATH,c.id.ToString()+".jpg"),c.name);
+                    SetCardImage(c.id.ToString(), c.name);
                 }
             }
         }
@@ -428,16 +452,17 @@ namespace DataEditorX
             if((iend-istart)>0)
             {
                 ListViewItem[] items=new ListViewItem[iend-istart];
-                
+                Card mcard;
                 for(i=istart,j=0;i < iend;i++,j++)
                 {
+                    mcard=cardlist[i];
                     items[j]=new ListViewItem();
-                    items[j].Text=cardlist[i].id.ToString();
+                    items[j].Text=mcard.id.ToString();
                     if ( i % 2 == 0 )
                         items[j].BackColor = Color.GhostWhite;
                     else
                         items[j].BackColor = Color.White;
-                    items[j].SubItems.Add(cardlist[i].name);
+                    items[j].SubItems.Add(mcard.name);
                 }
                 lv_cardlist.Items.AddRange(items);
             }
@@ -828,10 +853,10 @@ namespace DataEditorX
                     System.Diagnostics.Process.Start(VERURL);
                 }
             }
+            else if(iver2>0)
+                MyMsg.Show("已经是最新版本！\n版本号："+newver);
             else
-            {
-                MyMsg.Show("已经是最新版本！");
-            }
+                MyMsg.Error("查询失败！\n请检查计算机的网络连接。");
         }
         string CheckUpdate(string url)
         {
@@ -995,9 +1020,7 @@ namespace DataEditorX
         {
             if(menuitem_showimage.Checked)
             {
-                imgform.SetImageFile(
-                    Path.Combine(PICPATH, tb_cardcode.Text+".jpg"),
-                    tb_cardname.Text);
+                SetCardImage(tb_cardcode.Text, tb_cardname.Text);
                 imgform.Show();
             }
             else
@@ -1006,7 +1029,6 @@ namespace DataEditorX
         void OnimgFormClosed(object sender, EventArgs e)
         {
             menuitem_showimage.Checked=imgform.Visible;
-            
         }
         #endregion
 
