@@ -22,7 +22,7 @@ namespace DataEditorX
     {
         #region 成员变量
         string GAMEPATH,PICPATH,LUAPTH;
-        readonly string GITURL="https://github.com/247321453/DataEcitorX";
+        readonly string GITURL="https://github.com/247321453/DataEditorX";
         string VERURL="http://hi.baidu.com/247321453";
         string HEAD="[DataEditorX]";
         Card oldCard=new Card(0);

@@ -394,11 +394,11 @@ namespace DataEditorX
             // lb_pleft_right
             // 
             this.lb_pleft_right.AutoSize = true;
-            this.lb_pleft_right.Location = new System.Drawing.Point(226, 156);
+            this.lb_pleft_right.Location = new System.Drawing.Point(225, 156);
             this.lb_pleft_right.Name = "lb_pleft_right";
-            this.lb_pleft_right.Size = new System.Drawing.Size(35, 12);
+            this.lb_pleft_right.Size = new System.Drawing.Size(47, 12);
             this.lb_pleft_right.TabIndex = 7;
-            this.lb_pleft_right.Text = "摇摆:";
+            this.lb_pleft_right.Text = "PScale:";
             // 
             // tb_pleft
             // 
@@ -527,11 +527,11 @@ namespace DataEditorX
             // lb_cardcode
             // 
             this.lb_cardcode.AutoSize = true;
-            this.lb_cardcode.Location = new System.Drawing.Point(224, 180);
+            this.lb_cardcode.Location = new System.Drawing.Point(223, 181);
             this.lb_cardcode.Name = "lb_cardcode";
-            this.lb_cardcode.Size = new System.Drawing.Size(53, 12);
+            this.lb_cardcode.Size = new System.Drawing.Size(59, 12);
             this.lb_cardcode.TabIndex = 7;
-            this.lb_cardcode.Text = "卡片密码";
+            this.lb_cardcode.Text = "卡片密码:";
             // 
             // tb_cardcode
             // 
@@ -547,7 +547,7 @@ namespace DataEditorX
             // lb_cardalias
             // 
             this.lb_cardalias.AutoSize = true;
-            this.lb_cardalias.Location = new System.Drawing.Point(375, 183);
+            this.lb_cardalias.Location = new System.Drawing.Point(375, 181);
             this.lb_cardalias.Name = "lb_cardalias";
             this.lb_cardalias.Size = new System.Drawing.Size(41, 12);
             this.lb_cardalias.TabIndex = 7;
