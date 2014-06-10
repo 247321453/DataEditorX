@@ -1,0 +1,69 @@
+﻿!english
+info	Info
+error	Error
+warning	Warning
+
+question	Question
+
+Add	Add
+Modify	Modify
+Delete	Delete
+Lua Script	Lua Script
+Search	Search
+Reset	Reset
+
+Alias Card	Alias Card
+Card Code	Card Code
+Card Types	Card Types
+Card Categorys	Card Categorys
+Tips Texts	Tips Texts
+
+Help	Help
+About	About
+Check Update	Check Update
+Source	Source
+
+File	File
+Card Name	Card Name
+
+Open Database	Open Database
+New Database	New Database
+Cards Form ydk file	Cards Form ydk file
+Cards From Images	Cards From Images
+Select Copy To	Select Copy To...
+All Now Copy To	All Now Copy To...
+
+Quit	Quit
+
+Is Last Version.{0}Version:{1}	Is Last Version.{0}Version:{1}
+Check update fail!	check update fail
+have a new version.{0}version:{1}	have a new version.{0}version:{1}
+
+Please select a DataBase!	Please select a DataBase!
+File is not exists!	File is not exists!
+Card is exists!	Card is exists!
+
+Add Card succeed!	Add Card succeed!
+Add Card fail!	Add Card fail!
+
+Delete Card {0} ?	Delete Card {0} ?
+Delete {0} Cards ?	Delete {0} Cards ?
+Delete Card succeed!	Delete Card succeed!
+Delete Card fail!	Delete Card fail!
+
+Card is not changed!	Card is not changed!
+Modify Card succeed!	Modify Card succeed!
+Modify Card fail!	Modify Card fail!
+
+Please select script text!	Please select script text!
+create script file?{0}	create script file?{0}
+Card Code is zero!	Card Code is zero!
+Please select images directory!	Please select images directory!
+
+Please select ydk file.	Please select ydk file.
+ydk file(*.ydk)|*.ydk|all files(*.*)|*.*	ydk file(*.ydk)|*.ydk|all files(*.*)|*.*
+
+Overwrite existing card?	Overwrite existing card?
+Please select database.	Please select database.
+cdb file(*.cdb)|*.cdb|all files(*.*)|*.*	cdb file(*.cdb)|*.cdb|all files(*.*)|*.*
+About:{0}Version:{1}Author:{2}Email:{3}	About:{0}Version:{1}Author:{2}Email:{3}

@@ -40,6 +40,7 @@ namespace DataEditorX
         Dictionary<long, string> dicSetnames=null;
         Dictionary<long, string> dicCardTypes=null;
         Dictionary<long, string> dicCardcategorys=null;
+        string conflang="language.txt";
         string confrule="card-rule.txt";
         string confattribute="card-attribute.txt";
         string confrace="card-race.txt";
@@ -91,6 +92,7 @@ namespace DataEditorX
             {
                 Application.Exit();
             }
+            MyMsg.Init(conflang);
             InitForm();
             //set null card
             oldCard=new Card(0);
@@ -146,14 +148,15 @@ namespace DataEditorX
             PICPATH=Path.Combine(GAMEPATH,"pics");
             LUAPTH=Path.Combine(GAMEPATH,"script");
             
-            confrule=Path.Combine(datapath,"card-rule.txt");
-            confattribute=Path.Combine(datapath,"card-attribute.txt");
-            confrace=Path.Combine(datapath,"card-race.txt");
-            conflevel=Path.Combine(datapath,"card-level.txt");
-            confsetname=Path.Combine(datapath,"card-setname.txt");
-            conftype=Path.Combine(datapath,"card-type.txt");
-            confcategory=Path.Combine(datapath,"card-category.txt");
-            confcover= Path.Combine(datapath,"cover.jpg");
+            conflang=Path.Combine(datapath, conflang);
+            confrule=Path.Combine(datapath, confrule);
+            confattribute=Path.Combine(datapath, confattribute);
+            confrace=Path.Combine(datapath, confrace);
+            conflevel=Path.Combine(datapath, conflevel);
+            confsetname=Path.Combine(datapath, confsetname);
+            conftype=Path.Combine(datapath, conftype);
+            confcategory=Path.Combine(datapath, confcategory);
+            confcover= Path.Combine(datapath, confcover);
             return true;
         }
         
@@ -866,13 +869,13 @@ namespace DataEditorX
         
         void Menuitem_checkupdateClick(object sender, EventArgs e)
         {
-            CheckUpdate.UpdateTip(MyMsg.GetString("updateURL"));
+            CheckUpdate.UpdateTip(ConfigurationManager.AppSettings["updateURL"]);
         }
 
         
         void Menuitem_githubClick(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(MyMsg.GetString("sourceURL"));
+            System.Diagnostics.Process.Start(ConfigurationManager.AppSettings["sourceURL"]);
         }
         #endregion
         

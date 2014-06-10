@@ -6,8 +6,11 @@
  * 
  */
 using System;
+using System.IO;
+using System.Text;
 using System.Windows.Forms;
 using System.Configuration;
+using System.Collections.Generic;
 
 namespace DataEditorX
 {
@@ -16,11 +19,39 @@ namespace DataEditorX
     /// </summary>
     public static class MyMsg
     {   
-        public static string GetString(string keyStr)
+        static Dictionary<string ,string> strDic=new Dictionary<string,string>();
+        public static bool Init(string file)
         {
-            if(ConfigurationManager.AppSettings["language"]=="en")
-                return keyStr;
-            string str=ConfigurationManager.AppSettings[keyStr];
+            if(!File.Exists(file))
+                return false;
+            strDic.Clear();
+            using(FileStream fs=new FileStream(file,FileMode.Open, FileAccess.Read))
+            {
+                StreamReader sr=new StreamReader(fs,Encoding.UTF8);
+                string line;
+                string k,v;
+                while((line=sr.ReadLine())!=null)
+                {
+                    if(!string.IsNullOrEmpty(line)&&!line.StartsWith("!"))
+                    {
+                        int l=line.IndexOf("	");
+                        k=line.Substring(0,l);
+                        v=line.Substring(l+1);
+                        if(!strDic.ContainsKey(k))
+                            strDic.Add(k,v);
+                    }
+                }
+                sr.Close();
+                fs.Close();
+            }
+            return true;
+        }
+        public static string GetString(string keyStr)
+        { 
+            //string str=ConfigurationManager.AppSettings[keyStr];
+            string str=keyStr;
+            if(strDic.ContainsKey(keyStr))
+                str=strDic[keyStr];
             if(string.IsNullOrEmpty(str))
                 return keyStr;
             return str;

@@ -11,7 +11,7 @@ using System.Net;
 using System.Text;
 using System.Windows.Forms;
 
-namespace DataEditorX.Core
+namespace DataEditorX
 {
     /// <summary>
     /// Description of CheckUpdate.
@@ -27,16 +27,18 @@ namespace DataEditorX.Core
             int.TryParse(newver.Replace(".",""), out iver2);
             if(iver2>iver)
             {
-                if(MyMsg.Question("发现新版本："+newver
-                                  +"\n是否打开下载页面？"))
+                if(MyMsg.Question(string.Format(
+                    MyMsg.GetString("have a new version.{0}version:{1}"),
+                                    "\n",newver)))
                 {
                     System.Diagnostics.Process.Start(VERURL);
                 }
             }
             else if(iver2>0)
-                MyMsg.Show("已经是最新版本！\n版本号："+newver);
+                MyMsg.Show(string.Format(MyMsg.GetString("Is Last Version.{0}Version:{1}"),
+                                         "\n",newver));
             else
-                MyMsg.Error("查询失败！\n请检查计算机的网络连接。");
+                MyMsg.Error(MyMsg.GetString("Check update fail!"));
         }
         public static string Check(string VERURL)
         {
