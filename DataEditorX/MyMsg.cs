@@ -7,6 +7,7 @@
  */
 using System;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace DataEditorX
 {
@@ -15,24 +16,33 @@ namespace DataEditorX
     /// </summary>
     public static class MyMsg
     {   
+        public static string GetString(string keyStr)
+        {
+            if(ConfigurationManager.AppSettings["language"]=="en")
+                return keyStr;
+            string str=ConfigurationManager.AppSettings[keyStr];
+            if(string.IsNullOrEmpty(str))
+                return keyStr;
+            return str;
+        }
         public static void Show(string strMsg)
         {
-            MessageBox.Show(strMsg, "提示",
+            MessageBox.Show(strMsg, GetString("info"),
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         public static void Warning(string strWarn)
         {
-            MessageBox.Show(strWarn, "警告",
+            MessageBox.Show(strWarn, GetString("warning"),
                             MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
         public static void Error(string strError)
         {
-            MessageBox.Show(strError, "错误",
+            MessageBox.Show(strError, GetString("error"),
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         public static bool Question(string strQues)
         {
-            if(MessageBox.Show(strQues, "询问",
+            if(MessageBox.Show(strQues, GetString("question"),
                                MessageBoxButtons.OKCancel,
                                MessageBoxIcon.Question)==DialogResult.OK)
                 return true;

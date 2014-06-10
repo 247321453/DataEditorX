@@ -331,7 +331,7 @@ namespace DataEditorX.Core
                 sb.Append(" and datas.category & "+toInt(c.category)+" = "+toInt(c.category));
 
             if(c.id>0 && c.alias>0)
-                sb.Append(" and datas.id >= "+c.id.ToString()+" and datas.id <="+c.alias.ToString());
+                sb.Append(" and datas.id BETWEEN "+c.alias.ToString()+" and "+c.id.ToString());
             else if(c.id>0)
             {
                 sb.Append(" and ( datas.id="+c.id.ToString()+" or datas.alias="+c.id.ToString()+") ");

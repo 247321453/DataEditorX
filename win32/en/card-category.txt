@@ -1,0 +1,32 @@
+﻿0x1 S/T Destroy    
+0x2 Destroy Monster
+0x4 Banish         
+0x8 Graveyard      
+0x10 Back to Hand   
+0x20 Back to Deck   
+0x40 Destroy Hand   
+0x80 Destroy Deck   
+0x100 Draw           
+0x200 Search         
+0x400 Recovery       
+0x800 Position       
+0x1000 Control        
+0x2000 Change ATK/DEF 
+0x4000 Piercing       
+0x8000 Repeat Attack  
+0x10000 Limit Attack   
+0x20000 Direct Attack  
+0x40000 Special Summon 
+0x80000 Token          
+0x100000 Type-Related   
+0x200000 Property-Related
+0x400000 Damage LP      
+0x800000 Recover LP     
+0x1000000 Destroy        
+0x2000000 Select         
+0x4000000 Counter        
+0x8000000 Gamble         
+0x10000000 Fusion-Related 
+0x20000000 Tuner-Related  
+0x40000000 Xyz-Related    
+0x80000000 Negate Effect  

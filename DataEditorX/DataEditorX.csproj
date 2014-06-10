@@ -44,6 +44,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite">
       <HintPath>DLL\System.Data.SQLite.dll</HintPath>
@@ -54,17 +55,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Card.cs" />
+    <Compile Include="Core\CheckUpdate.cs" />
     <Compile Include="Core\DataBase.cs" />
     <Compile Include="Core\DataManager.cs" />
-    <Compile Include="Core\DoubleContorl.cs" />
     <Compile Include="DataEditForm.cs" />
     <Compile Include="DataEditForm.Designer.cs">
       <DependentUpon>DataEditForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ImageForm.cs" />
-    <Compile Include="ImageForm.Designer.cs">
-      <DependentUpon>ImageForm.cs</DependentUpon>
-    </Compile>
+    <Compile Include="DoubleContorl.cs" />
     <Compile Include="MyMsg.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -73,40 +71,62 @@
     <EmbeddedResource Include="DataEditForm.resx">
       <DependentUpon>DataEditForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ImageForm.resx">
-      <DependentUpon>ImageForm.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data" />
+    <Folder Include="chs" />
     <Folder Include="Core" />
+    <Folder Include="en" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Data\card-attribute.txt">
+    <None Include="app.config">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Include="chs\card-attribute.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\card-category.txt">
+    <None Include="chs\card-category.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\card-level.txt">
+    <None Include="chs\card-level.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\card-race.txt">
+    <None Include="chs\card-race.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\card-rule.txt">
+    <None Include="chs\card-rule.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\card-setname.txt">
+    <None Include="chs\card-setname.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\card-type.txt">
+    <None Include="chs\card-type.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\cover.jpg">
+    <None Include="chs\cover.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\update.txt">
+    <None Include="en\card-attribute.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="en\card-category.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="en\card-level.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="en\card-race.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="en\card-rule.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="en\card-setname.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="en\card-type.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="en\cover.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="readme.txt">

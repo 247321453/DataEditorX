@@ -10,10 +10,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.Net;
 using System.Text;
 using System.Windows.Forms;
-
+using System.Configuration;
 using DataEditorX.Core;
 
 namespace DataEditorX
@@ -22,12 +21,8 @@ namespace DataEditorX
     {
         #region 成员变量
         string GAMEPATH,PICPATH,LUAPTH;
-        readonly string GITURL="https://github.com/247321453/DataEditorX";
-        string VERURL="http://hi.baidu.com/247321453";
-        string HEAD="[DataEditorX]";
         Card oldCard=new Card(0);
         Card srcCard=new Card(0);
-        ImageForm imgform=new ImageForm();
         string[] strs=null;
         string title;
         string nowCdbFile="";
@@ -65,11 +60,7 @@ namespace DataEditorX
                 GAMEPATH=(l>0)?nowCdbFile.Substring(0,l+1):cdb;
             }
             PICPATH=Path.Combine(GAMEPATH,"pics");
-            if(!Directory.Exists(PICPATH))
-                Directory.CreateDirectory(PICPATH);
             LUAPTH=Path.Combine(GAMEPATH,"script");
-            if(!Directory.Exists(LUAPTH))
-                Directory.CreateDirectory(LUAPTH);
         }
         #endregion
         
@@ -95,37 +86,65 @@ namespace DataEditorX
             #endif
             this.Text=this.Text+" Ver:"+strVer;
             title=this.Text;
-
-            imgform.VisibleChanged+=OnimgFormClosed;
-            InitPath();
-            InitForm();
             
+            if(!InitPath())
+            {
+                Application.Exit();
+            }
+            InitForm();
             //set null card
             oldCard=new Card(0);
             SetCard(oldCard);
             if(File.Exists(nowCdbFile))
                 Open(nowCdbFile);
         }
-        
-        void InitPath()
+       
+        void InitString()
         {
+            btn_add.Text=MyMsg.GetString("Add")+"(&A)";
+            btn_serach.Text=MyMsg.GetString("Search")+"(&S)";
+            btn_reset.Text=MyMsg.GetString("Reset")+"(&R)";
+            btn_del.Text=MyMsg.GetString("Delete")+"(&D)";
+            btn_mod.Text=MyMsg.GetString("Modify")+"(&M)";
+            btn_lua.Text=MyMsg.GetString("Lua Script")+"(&L)";
+            
+            lb_cardalias.Text= MyMsg.GetString("Alias Card");
+            lb_cardcode.Text=MyMsg.GetString("Card Code");
+            lb_types.Text=MyMsg.GetString("Card Types");
+            lb_categorys.Text=MyMsg.GetString("Card Categorys");
+            lb_tiptexts.Text=MyMsg.GetString("Tips Texts");
+            
+            menuitem_help.Text=MyMsg.GetString("Help")+"(&H)";
+            menuitem_about.Text=MyMsg.GetString("About");
+            menuitem_checkupdate.Text=MyMsg.GetString("Check Update");
+            menuitem_github.Text=MyMsg.GetString("Source");
+            
+            menuitem_file.Text=MyMsg.GetString("File")+"(&F)";
+            menuitem_open.Text=MyMsg.GetString("Open Database")+"(&O)";
+            menuitem_new.Text=MyMsg.GetString("New Database")+"(&N)";
+            menuitem_readydk.Text=MyMsg.GetString("Cards Form ydk file")+"(&Y)";
+            menuitem_readimages.Text=MyMsg.GetString("Cards From Images")+"(&I)";
+            menuitem_copyselectto.Text=MyMsg.GetString("Select Copy To");
+            menuitem_copyto.Text=MyMsg.GetString("All Now Copy To");
+            menuitem_quit.Text=MyMsg.GetString("Quit");
+            
+            lv_cardlist.Columns[0].Text=MyMsg.GetString("Card Code");
+            lv_cardlist.Columns[1].Text=MyMsg.GetString("Card Name");
+        }
+        
+        bool InitPath()
+        {
+            //
+            string dir=ConfigurationManager.AppSettings["language"];
+            if(string.IsNullOrEmpty(dir))
+            {
+                return false;
+            }
+            string datapath=Path.Combine(Application.StartupPath, dir);
+            //
             GAMEPATH=Application.StartupPath;
             PICPATH=Path.Combine(GAMEPATH,"pics");
-            if(!Directory.Exists(PICPATH))
-                Directory.CreateDirectory(PICPATH);
             LUAPTH=Path.Combine(GAMEPATH,"script");
-            if(!Directory.Exists(LUAPTH))
-                Directory.CreateDirectory(LUAPTH);
-            
-            string datapath=Path.Combine(Application.StartupPath,"data");
-            
-            string urltxt=Path.Combine(datapath,"update.txt");
-            if(File.Exists(urltxt))
-            {
-                string[] lines=File.ReadAllLines(urltxt,Encoding.UTF8);
-                if(lines.Length>0)
-                    VERURL=lines[0];
-            }
             
             confrule=Path.Combine(datapath,"card-rule.txt");
             confattribute=Path.Combine(datapath,"card-attribute.txt");
@@ -135,7 +154,9 @@ namespace DataEditorX
             conftype=Path.Combine(datapath,"card-type.txt");
             confcategory=Path.Combine(datapath,"card-category.txt");
             confcover= Path.Combine(datapath,"cover.jpg");
+            return true;
         }
+        
         void DataEditFormFormClosing(object sender, FormClosingEventArgs e)
         {
 
@@ -154,6 +175,7 @@ namespace DataEditorX
                 fs.Close();
             }
         }
+        
         public void InitForm()
         {
             //初始化
@@ -178,10 +200,10 @@ namespace DataEditorX
             if(File.Exists(confcover))
             {
                 m_cover=Image.FromFile(confcover);
-                imgform.SetImage(m_cover,"卡片图像");
             }
             else
                 m_cover=null;
+            InitString();
         }
         //初始化FlowLayoutPanel
         void InitCheckPanel(FlowLayoutPanel fpanel, Dictionary<long, string> dic)
@@ -273,11 +295,17 @@ namespace DataEditorX
             tb_def.Text=(c.def<0)?"?":c.def.ToString();
             tb_cardcode.Text=c.id.ToString();
             tb_cardalias.Text=c.alias.ToString();
-
+            string f=Path.Combine(PICPATH, c.id.ToString()+".jpg");
+            if(File.Exists(f))
+                pl_image.BackgroundImage=Image.FromFile(f);
+            else
+                pl_image.BackgroundImage=m_cover;
         }
-        void SetCheck(FlowLayoutPanel fpl,long number)
+        
+        string SetCheck(FlowLayoutPanel fpl,long number)
         {
             long temp;
+            string strType="";
             foreach(Control c in fpl.Controls)
             {
                 if(c is CheckBox)
@@ -286,20 +314,24 @@ namespace DataEditorX
                     long.TryParse(cbox.Name.Substring(fpl.Name.Length), out temp);
                     
                     if((temp & number)==temp && temp!=0)
+                    {
                         cbox.Checked=true;
+                        strType+="/"+c.Text;
+                    }
                     else
                         cbox.Checked=false;
                 }
             }
+            return strType;
         }
         
-        void SetSelect(Dictionary<long, string> dic,ComboBox cb, long k)
+        int SetSelect(Dictionary<long, string> dic,ComboBox cb, long k)
         {
             int index=0;
             if(k==0)
             {
                 cb.SelectedIndex=0;
-                return;
+                return index;
             }
             foreach(long key in dic.Keys)
             {
@@ -326,6 +358,7 @@ namespace DataEditorX
                     cb.Items.Add(word);
             }
             cb.SelectedIndex=index;
+            return index;
         }
         
         #endregion
@@ -369,6 +402,7 @@ namespace DataEditorX
 
             return c;
         }
+        
         string GetSelect(Dictionary<long, string> dic,ComboBox cb)
         {
             long fkey=0;
@@ -388,6 +422,7 @@ namespace DataEditorX
             }
             return fkey.ToString();
         }
+        
         long GetCheck(FlowLayoutPanel fpl)
         {
             long number=0;
@@ -407,17 +442,6 @@ namespace DataEditorX
         #endregion
         
         #region 卡片列表
-        void SetCardImage(string id,string name)
-        {
-            if(imgform.Visible)
-            {
-                string f=Path.Combine(PICPATH, id.ToString()+".jpg");
-                if(File.Exists(f))
-                    imgform.SetImage(Image.FromFile(f), name+" ["+id+"]");
-                else
-                    imgform.SetImage(m_cover, name+" ["+id+"]");
-            }
-        }
         void Lv_cardlistSelectedIndexChanged(object sender, EventArgs e)
         {
             if(lv_cardlist.SelectedItems.Count>0)
@@ -428,8 +452,6 @@ namespace DataEditorX
                 {
                     Card c=cardlist[index];
                     SetCard(c);
-                    //设置卡片图像
-                    SetCardImage(c.id.ToString(), c.name);
                 }
             }
         }
@@ -516,7 +538,7 @@ namespace DataEditorX
                 return true;
             else
             {
-                MyMsg.Warning("请打开一个数据库!");
+                MyMsg.Warning(MyMsg.GetString("Please select a DataBase!"));
                 return false;
             }
         }
@@ -525,7 +547,7 @@ namespace DataEditorX
         {
             if(!File.Exists(cdbFile))
             {
-                MyMsg.Error(string.Format("文件不存在！\n{0}",cdbFile));
+                MyMsg.Error(MyMsg.GetString("File is not exists!"));
                 return false;
             }
             SetCDB(cdbFile);
@@ -553,9 +575,6 @@ namespace DataEditorX
             }
             else
             {
-                #if DEBUG
-                MyMsg.Warning("没有卡片!");
-                #endif
                 cardcount=0;
                 page=1;
                 pageNum=1;
@@ -593,24 +612,24 @@ namespace DataEditorX
             Card c=GetCard();
             if(c.id<=0)
             {
-                MyMsg.Error("卡片密码必须大于0!");
+                MyMsg.Error(MyMsg.GetString("Card Code is zero!"));
                 return false;
             }
             foreach(Card ckey in cardlist)
             {
                 if(c.id==ckey.id)
                 {
-                    MyMsg.Warning(string.Format("卡片已经存在!\n{0}",ckey.ToString()));
+                    MyMsg.Warning(MyMsg.GetString("Card is exists!"));
                     return false;
                 }
             }
             if(DataBase.Command(nowCdbFile, DataBase.GetInsertSQL(c,true))>=2)
             {
-                MyMsg.Show(string.Format("添加 {0} 成功!",c.ToString()));
+                MyMsg.Show(MyMsg.GetString("Add Card succeed"));
                 Search(srcCard, true);
                 return true;
             }
-            MyMsg.Error("修添加失败!");
+            MyMsg.Error(MyMsg.GetString("Add Card fail"));
             return false;
         }
         //修改
@@ -622,22 +641,23 @@ namespace DataEditorX
 
             if(c.Equals(oldCard))
             {
-                MyMsg.Show("卡片没有被修改!");
+                MyMsg.Show(MyMsg.GetString("Card is not changed!"));
                 return false;
             }
             if(c.id<=0)
             {
-                MyMsg.Error("卡片密码必须大于0!");
+                MyMsg.Error(MyMsg.GetString("Card Code is zero"));
                 return false;
             }
             string sql;
             if(c.id!=oldCard.id)
             {
-                if(MyMsg.Question(string.Format("是否删除卡片?\n{0}",oldCard.ToString())))
+                if(MyMsg.Question(string.Format(
+                    MyMsg.GetString("Delete Card {0} ?"),oldCard.ToString())))
                 {
                     if(DataBase.Command(nowCdbFile, DataBase.GetDeleteSQL(oldCard))<2)
                     {
-                        MyMsg.Error("删除失败!");
+                        MyMsg.Error(MyMsg.GetString("Delete Card fail!"));
                         return false;
                     }
                 }
@@ -647,11 +667,11 @@ namespace DataEditorX
                 sql=DataBase.GetUpdateSQL(c);
             if(DataBase.Command(nowCdbFile, sql)>0)
             {
-                MyMsg.Show(string.Format("修改 {0} 成功!",c.ToString()));
+                MyMsg.Show(MyMsg.GetString("Modify Card succeed!"));
                 Search(srcCard, true);
             }
             else
-                MyMsg.Error("修改失败!");
+                MyMsg.Error(MyMsg.GetString("Modify Card fail!"));
             return false;
         }
         //删除
@@ -662,7 +682,7 @@ namespace DataEditorX
             int ic=lv_cardlist.SelectedItems.Count;
             if(ic==0)
                 return false;
-            if(!MyMsg.Question(string.Format("是否删除选择的{0}张卡?",ic)))
+            if(!MyMsg.Question(string.Format(MyMsg.GetString("Delete {0} Cards ?"),ic)))
                 return false;
             List<string> sql=new List<string>();
             foreach(ListViewItem lvitem in lv_cardlist.SelectedItems)
@@ -676,13 +696,13 @@ namespace DataEditorX
             }
             if(DataBase.Command(nowCdbFile, sql.ToArray())>=(sql.Count*2))
             {
-                MyMsg.Show("删除成功!");
+                MyMsg.Show(MyMsg.GetString("Delete Card succeed!"));
                 Search(srcCard, true);
                 return true;
             }
             else
             {
-                MyMsg.Error("删除失败!");
+                MyMsg.Error(MyMsg.GetString("Delete Card fail!"));
                 Search(srcCard, true);
             }
             
@@ -696,7 +716,8 @@ namespace DataEditorX
             string lua=Path.Combine(LUAPTH,"c"+tb_cardcode.Text+".lua");
             if(!File.Exists(lua))
             {
-                if(MyMsg.Question(string.Format("是否创建脚本?\n{0}",lua)))
+                if(MyMsg.Question(
+                    string.Format(MyMsg.GetString("create script file?{0}"),"\n"+lua)))
                 {
                     if(!Directory.Exists(LUAPTH))
                         Directory.CreateDirectory(LUAPTH);
@@ -782,6 +803,7 @@ namespace DataEditorX
         {
             
         }
+        
         void Setscripttext(string str)
         {
             int index=-1;
@@ -790,7 +812,7 @@ namespace DataEditorX
             }
             catch{
                 index=-1;
-                MyMsg.Error("请选中脚本文本");
+                MyMsg.Error(MyMsg.GetString("Please select script text!"));
             }
             if(index>=0)
             {
@@ -801,6 +823,7 @@ namespace DataEditorX
                 lb_scripttext.SelectedIndex=index;
             }
         }
+        
         string Getscripttext()
         {
             int index=-1;
@@ -809,7 +832,7 @@ namespace DataEditorX
             }
             catch{
                 index=-1;
-                MyMsg.Error("请选中脚本文本");
+                MyMsg.Error(MyMsg.GetString("Please select script text!"));
             }
             if(index>=0)
                 return strs[index];
@@ -833,83 +856,23 @@ namespace DataEditorX
         #region 帮助菜单
         void Menuitem_aboutClick(object sender, EventArgs e)
         {
-            MyMsg.Show("程序："+Application.ProductName
-                       +"\n版本："+Application.ProductVersion
-                       +"\n作者：247321453"
-                       +"\nE-mail:247321453@qq.com\n");
+            MyMsg.Show(string.Format(
+                MyMsg.GetString("About:{0}Version:{1}Author:{2}Email:{3}")
+                ,"\t"+Application.ProductName+"\n"
+                ,"\t"+Application.ProductVersion+"\n"
+                ,"\t247321453\n"
+                ,"\t247321453@qq.com"));
         }
         
         void Menuitem_checkupdateClick(object sender, EventArgs e)
         {
-            string newver=CheckUpdate(VERURL);
-            int iver,iver2;
-            int.TryParse(Application.ProductVersion.Replace(".",""), out iver);
-            int.TryParse(newver.Replace(".",""), out iver2);
-            if(iver2>iver)
-            {
-                if(MyMsg.Question("发现新版本："+newver
-                                  +"\n是否打开下载页面？"))
-                {
-                    System.Diagnostics.Process.Start(VERURL);
-                }
-            }
-            else if(iver2>0)
-                MyMsg.Show("已经是最新版本！\n版本号："+newver);
-            else
-                MyMsg.Error("查询失败！\n请检查计算机的网络连接。");
+            CheckUpdate.UpdateTip(MyMsg.GetString("updateURL"));
         }
-        string CheckUpdate(string url)
-        {
-            string urlver="0.0.0.0";
-            string html=GetHtmlContentByUrl(VERURL);
-            if(!string.IsNullOrEmpty(html))
-            {
-                int t,w;
-                t=html.IndexOf(HEAD);
-                w=(t>0)?html.IndexOf(HEAD,t+HEAD.Length):0;
-                if(w>0)
-                {
-                    urlver=html.Substring(t+HEAD.Length,w-t-HEAD.Length);
-                }
-            }
-            return urlver;
-        }
-        
-        #region 获取网址内容
-        string GetHtmlContentByUrl(string url)
-        {
-            string htmlContent = string.Empty;
-            try {
-                HttpWebRequest httpWebRequest =
-                    (HttpWebRequest)WebRequest.Create(url);
-                httpWebRequest.Timeout = 5000;
-                using(HttpWebResponse httpWebResponse =
-                      (HttpWebResponse)httpWebRequest.GetResponse())
-                {
-                    using(Stream stream = httpWebResponse.GetResponseStream())
-                    {
-                        using(StreamReader streamReader =
-                              new StreamReader(stream, Encoding.UTF8))
-                        {
-                            htmlContent = streamReader.ReadToEnd();
-                            streamReader.Close();
-                        }
-                        stream.Close();
-                    }
-                    httpWebResponse.Close();
-                }
-                return htmlContent;
-            }
-            catch{
-                
-            }
-            return "";
-        }
-        #endregion
+
         
         void Menuitem_githubClick(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(GITURL);
+            System.Diagnostics.Process.Start(MyMsg.GetString("sourceURL"));
         }
         #endregion
         
@@ -918,8 +881,8 @@ namespace DataEditorX
         {
             using(OpenFileDialog dlg=new OpenFileDialog())
             {
-                dlg.Title="选择卡片数据库(cdb文件)";
-                dlg.Filter="cdb文件(*.cdb)|*.cdb|所有文件(*.*)|*.*";
+                dlg.Title=MyMsg.GetString("Please select database.");
+                dlg.Filter=MyMsg.GetString("cdb file(*.cdb)|*.cdb|all files(*.*)|*.*");
                 if(dlg.ShowDialog()==DialogResult.OK)
                 {
                     Open(dlg.FileName);
@@ -930,8 +893,8 @@ namespace DataEditorX
         {
             using(SaveFileDialog dlg=new SaveFileDialog())
             {
-                dlg.Title="选择卡片数据库(cdb文件)保存位置";
-                dlg.Filter="cdb文件(*.cdb)|*.cdb|所有文件(*.*)|*.*";
+                dlg.Title=MyMsg.GetString("Please select database.");
+                dlg.Filter=MyMsg.GetString("cdb file(*.cdb)|*.cdb|all files(*.*)|*.*");
                 if(dlg.ShowDialog()==DialogResult.OK)
                 {
                     if(DataBase.Create(dlg.FileName))
@@ -969,11 +932,11 @@ namespace DataEditorX
                 cards.AddRange(cardlist.ToArray());
             using(OpenFileDialog dlg=new OpenFileDialog())
             {
-                dlg.Title="选择卡片数据库(cdb文件)";
-                dlg.Filter="cdb文件(*.cdb)|*.cdb|所有文件(*.*)|*.*";
+                dlg.Title=MyMsg.GetString("Please select database.");
+                dlg.Filter=MyMsg.GetString("cdb file(*.cdb)|*.cdb|all files(*.*)|*.*");
                 if(dlg.ShowDialog()==DialogResult.OK)
                 {
-                    if(MyMsg.Question("是否覆盖已经存在的卡片？"))
+                    if(MyMsg.Question(MyMsg.GetString("Overwrite existing card?")))
                         DataBase.CopyDB(dlg.FileName,false,cards.ToArray());
                     else
                         DataBase.CopyDB(dlg.FileName,true,cards.ToArray());
@@ -986,8 +949,8 @@ namespace DataEditorX
                 return;
             using(OpenFileDialog dlg=new OpenFileDialog())
             {
-                dlg.Title="选择卡组文件(ydk文件)";
-                dlg.Filter="ydk文件(*.ydk)|*.ydk|所有文件(*.*)|*.*";
+                dlg.Title=MyMsg.GetString("Please select ydk file.");
+                dlg.Filter=MyMsg.GetString("ydk file(*.ydk)|*.ydk|all files(*.*)|*.*");
                 if(dlg.ShowDialog()==DialogResult.OK)
                 {
                     SetCards(DataBase.ReadYdk(nowCdbFile, dlg.FileName), false);
@@ -1001,7 +964,7 @@ namespace DataEditorX
                 return;
             using(FolderBrowserDialog fdlg=new FolderBrowserDialog())
             {
-                fdlg.Description= "请选择卡片图像目录";
+                fdlg.Description= MyMsg.GetString("Please select images directory");
                 if(fdlg.ShowDialog()==DialogResult.OK)
                 {
                     SetCards(DataBase.ReadImage(nowCdbFile, fdlg.SelectedPath), false);
@@ -1015,22 +978,5 @@ namespace DataEditorX
         }
         #endregion
         
-        #region 设置菜单
-        void Menuitem_showimageClick(object sender, EventArgs e)
-        {
-            if(menuitem_showimage.Checked)
-            {
-                SetCardImage(tb_cardcode.Text, tb_cardname.Text);
-                imgform.Show();
-            }
-            else
-                imgform.Hide();
-        }
-        void OnimgFormClosed(object sender, EventArgs e)
-        {
-            menuitem_showimage.Checked=imgform.Visible;
-        }
-        #endregion
-
     }
 }
