@@ -7,12 +7,13 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using System.Configuration;
+
 using DataEditorX.Core;
 
 namespace DataEditorX

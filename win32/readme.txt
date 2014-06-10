@@ -1,4 +1,4 @@
-﻿[DataEditorX]1.3.2.0[DataEditorX]
+﻿[DataEditorX]1.3.2.1[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 ★卡片复制：
 替换复制：如果存在卡片，就用最新的替换
@@ -14,6 +14,8 @@
 
 
 ★更新历史
+1.3.2.1
+完善language.txt
 1.3.2.0
 修复
 1.3.1.0

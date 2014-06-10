@@ -107,7 +107,7 @@ namespace DataEditorX
                                     this.menuitem_help});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(870, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(860, 25);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -356,18 +356,18 @@ namespace DataEditorX
             this.lb_scripttext.Location = new System.Drawing.Point(550, 384);
             this.lb_scripttext.Name = "lb_scripttext";
             this.lb_scripttext.ScrollAlwaysVisible = true;
-            this.lb_scripttext.Size = new System.Drawing.Size(314, 126);
+            this.lb_scripttext.Size = new System.Drawing.Size(310, 126);
             this.lb_scripttext.TabIndex = 6;
             this.lb_scripttext.SelectedIndexChanged += new System.EventHandler(this.Lb_scripttextSelectedIndexChanged);
             // 
             // tb_edittext
             // 
             this.tb_edittext.HideSelection = false;
-            this.tb_edittext.Location = new System.Drawing.Point(550, 514);
+            this.tb_edittext.Location = new System.Drawing.Point(550, 515);
             this.tb_edittext.MaxLength = 2000;
             this.tb_edittext.Name = "tb_edittext";
             this.tb_edittext.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tb_edittext.Size = new System.Drawing.Size(312, 21);
+            this.tb_edittext.Size = new System.Drawing.Size(310, 21);
             this.tb_edittext.TabIndex = 4;
             this.tb_edittext.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Tb_edittextKeyPress);
             // 
@@ -413,7 +413,7 @@ namespace DataEditorX
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(104, 549);
+            this.label4.Location = new System.Drawing.Point(102, 548);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(11, 12);
             this.label4.TabIndex = 7;
@@ -601,7 +601,7 @@ namespace DataEditorX
             this.lb_categorys.Location = new System.Drawing.Point(550, 171);
             this.lb_categorys.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.lb_categorys.Name = "lb_categorys";
-            this.lb_categorys.Size = new System.Drawing.Size(314, 16);
+            this.lb_categorys.Size = new System.Drawing.Size(310, 16);
             this.lb_categorys.TabIndex = 11;
             this.lb_categorys.Text = "Card Categorys";
             this.lb_categorys.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -636,17 +636,17 @@ namespace DataEditorX
             this.pl_cardtype.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.pl_cardtype.Name = "pl_cardtype";
             this.pl_cardtype.Padding = new System.Windows.Forms.Padding(2);
-            this.pl_cardtype.Size = new System.Drawing.Size(314, 123);
+            this.pl_cardtype.Size = new System.Drawing.Size(310, 123);
             this.pl_cardtype.TabIndex = 12;
             // 
             // pl_category
             // 
             this.pl_category.AutoScroll = true;
-            this.pl_category.Location = new System.Drawing.Point(551, 189);
+            this.pl_category.Location = new System.Drawing.Point(550, 189);
             this.pl_category.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.pl_category.Name = "pl_category";
             this.pl_category.Padding = new System.Windows.Forms.Padding(2);
-            this.pl_category.Size = new System.Drawing.Size(313, 174);
+            this.pl_category.Size = new System.Drawing.Size(310, 174);
             this.pl_category.TabIndex = 13;
             // 
             // pl_image
@@ -662,10 +662,10 @@ namespace DataEditorX
             // lb_types
             // 
             this.lb_types.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.lb_types.Location = new System.Drawing.Point(551, 28);
+            this.lb_types.Location = new System.Drawing.Point(550, 28);
             this.lb_types.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.lb_types.Name = "lb_types";
-            this.lb_types.Size = new System.Drawing.Size(313, 16);
+            this.lb_types.Size = new System.Drawing.Size(310, 16);
             this.lb_types.TabIndex = 11;
             this.lb_types.Text = "Card Types";
             this.lb_types.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -673,10 +673,10 @@ namespace DataEditorX
             // lb_tiptexts
             // 
             this.lb_tiptexts.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.lb_tiptexts.Location = new System.Drawing.Point(549, 365);
+            this.lb_tiptexts.Location = new System.Drawing.Point(550, 365);
             this.lb_tiptexts.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.lb_tiptexts.Name = "lb_tiptexts";
-            this.lb_tiptexts.Size = new System.Drawing.Size(314, 16);
+            this.lb_tiptexts.Size = new System.Drawing.Size(310, 16);
             this.lb_tiptexts.TabIndex = 11;
             this.lb_tiptexts.Text = "Tips Texts";
             this.lb_tiptexts.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -692,7 +692,7 @@ namespace DataEditorX
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(870, 568);
+            this.ClientSize = new System.Drawing.Size(860, 568);
             this.Controls.Add(this.pl_image);
             this.Controls.Add(this.pl_category);
             this.Controls.Add(this.pl_cardtype);

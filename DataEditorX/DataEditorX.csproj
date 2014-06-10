@@ -54,7 +54,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CheckUpdate.cs" />
+    <Compile Include="Common\CheckUpdate.cs" />
+    <Compile Include="Common\DoubleContorl.cs" />
+    <Compile Include="Common\MyMsg.cs" />
     <Compile Include="Core\Card.cs" />
     <Compile Include="Core\DataBase.cs" />
     <Compile Include="Core\DataManager.cs" />
@@ -62,8 +64,6 @@
     <Compile Include="DataEditForm.Designer.cs">
       <DependentUpon>DataEditForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DoubleContorl.cs" />
-    <Compile Include="MyMsg.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -76,6 +76,7 @@
     <Folder Include="chs" />
     <Folder Include="Core" />
     <Folder Include="en" />
+    <Folder Include="Common" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

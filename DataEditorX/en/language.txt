@@ -6,11 +6,11 @@ warning	Warning
 question	Question
 
 Add	Add
-Modify	Modify
-Delete	Delete
-Lua Script	Lua Script
-Search	Search
-Reset	Reset
+Modify	&Modify
+Delete	&Delete
+Lua Script	&Lua Script
+Search	&Search
+Reset	&Reset
 
 Alias Card	Alias Card
 Card Code	Card Code
@@ -18,12 +18,12 @@ Card Types	Card Types
 Card Categorys	Card Categorys
 Tips Texts	Tips Texts
 
-Help	Help
+Help	&Help
 About	About
 Check Update	Check Update
 Source	Source
 
-File	File
+File	&File
 Card Name	Card Name
 
 Open Database	Open Database
@@ -33,7 +33,7 @@ Cards From Images	Cards From Images
 Select Copy To	Select Copy To...
 All Now Copy To	All Now Copy To...
 
-Quit	Quit
+Quit	&Quit
 
 Is Last Version.{0}Version:{1}	Is Last Version.{0}Version:{1}
 Check update fail!	check update fail
