@@ -38,6 +38,7 @@ Quit	Quit
 Is Last Version.{0}Version:{1}	Is Last Version.{0}Version:{1}
 Check update fail!	check update fail
 have a new version.{0}version:{1}	have a new version.{0}version:{1}
+Download succeed.	Download succeed.
 
 Please select a DataBase!	Please select a DataBase!
 File is not exists!	File is not exists!

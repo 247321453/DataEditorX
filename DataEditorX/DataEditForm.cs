@@ -103,12 +103,12 @@ namespace DataEditorX
        
         void InitString()
         {
-            btn_add.Text=MyMsg.GetString("Add")+"(&A)";
-            btn_serach.Text=MyMsg.GetString("Search")+"(&S)";
-            btn_reset.Text=MyMsg.GetString("Reset")+"(&R)";
-            btn_del.Text=MyMsg.GetString("Delete")+"(&D)";
-            btn_mod.Text=MyMsg.GetString("Modify")+"(&M)";
-            btn_lua.Text=MyMsg.GetString("Lua Script")+"(&L)";
+            btn_add.Text=MyMsg.GetString("Add");
+            btn_serach.Text=MyMsg.GetString("Search");
+            btn_reset.Text=MyMsg.GetString("Reset");
+            btn_del.Text=MyMsg.GetString("Delete");
+            btn_mod.Text=MyMsg.GetString("Modify");
+            btn_lua.Text=MyMsg.GetString("Lua Script");
             
             lb_cardalias.Text= MyMsg.GetString("Alias Card");
             lb_cardcode.Text=MyMsg.GetString("Card Code");
@@ -116,16 +116,16 @@ namespace DataEditorX
             lb_categorys.Text=MyMsg.GetString("Card Categorys");
             lb_tiptexts.Text=MyMsg.GetString("Tips Texts");
             
-            menuitem_help.Text=MyMsg.GetString("Help")+"(&H)";
+            menuitem_help.Text=MyMsg.GetString("Help");
             menuitem_about.Text=MyMsg.GetString("About");
             menuitem_checkupdate.Text=MyMsg.GetString("Check Update");
             menuitem_github.Text=MyMsg.GetString("Source");
             
-            menuitem_file.Text=MyMsg.GetString("File")+"(&F)";
-            menuitem_open.Text=MyMsg.GetString("Open Database")+"(&O)";
-            menuitem_new.Text=MyMsg.GetString("New Database")+"(&N)";
-            menuitem_readydk.Text=MyMsg.GetString("Cards Form ydk file")+"(&Y)";
-            menuitem_readimages.Text=MyMsg.GetString("Cards From Images")+"(&I)";
+            menuitem_file.Text=MyMsg.GetString("File");
+            menuitem_open.Text=MyMsg.GetString("Open Database");
+            menuitem_new.Text=MyMsg.GetString("New Database");
+            menuitem_readydk.Text=MyMsg.GetString("Cards Form ydk file");
+            menuitem_readimages.Text=MyMsg.GetString("Cards From Images");
             menuitem_copyselectto.Text=MyMsg.GetString("Select Copy To");
             menuitem_copyto.Text=MyMsg.GetString("All Now Copy To");
             menuitem_quit.Text=MyMsg.GetString("Quit");

@@ -18,12 +18,12 @@ Card Types	卡片种类
 Card Categorys	效果种类
 Tips Texts	提示文字
 
-Help	帮助
+Help	帮助(&H)
 About	关于
 Check Update	检查更新
 Source	源码主页
 
-File	文件
+File	文件(&F)
 Card Name	卡片名称
 
 Open Database	打开
@@ -37,7 +37,8 @@ Quit	退出
 
 Is Last Version.{0}Version:{1}	已经是最新版本！{0}版本号：{1}
 Check update fail!	查询失败！
-have a new version.{0}version:{1}	发现一个新版本。{0}版本号{1}
+have a new version.{0}version:{1}	发现一个新版本。是否下载？{0}版本号{1}
+Download succeed.	下载成功。
 
 Please select a DataBase!	请打开一个数据库!
 File is not exists!	文件不存在!

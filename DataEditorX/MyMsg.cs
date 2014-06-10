@@ -18,7 +18,7 @@ namespace DataEditorX
     /// 消息
     /// </summary>
     public static class MyMsg
-    {   
+    {
         static Dictionary<string ,string> strDic=new Dictionary<string,string>();
         public static bool Init(string file)
         {
@@ -35,10 +35,13 @@ namespace DataEditorX
                     if(!string.IsNullOrEmpty(line)&&!line.StartsWith("!"))
                     {
                         int l=line.IndexOf("	");
-                        k=line.Substring(0,l);
-                        v=line.Substring(l+1);
-                        if(!strDic.ContainsKey(k))
-                            strDic.Add(k,v);
+                        if(l>0)
+                        {
+                            k=line.Substring(0,l);
+                            v=line.Substring(l+1);
+                            if(!strDic.ContainsKey(k))
+                                strDic.Add(k,v);
+                        }
                     }
                 }
                 sr.Close();
@@ -47,7 +50,7 @@ namespace DataEditorX
             return true;
         }
         public static string GetString(string keyStr)
-        { 
+        {
             //string str=ConfigurationManager.AppSettings[keyStr];
             string str=keyStr;
             if(strDic.ContainsKey(keyStr))
