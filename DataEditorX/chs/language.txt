@@ -1,4 +1,4 @@
-﻿!english
+﻿!chs
 info	提示
 error	错误
 warning	警告

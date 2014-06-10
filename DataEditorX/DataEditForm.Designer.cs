@@ -590,7 +590,7 @@ namespace DataEditorX
             this.btn_serach.Location = new System.Drawing.Point(220, 540);
             this.btn_serach.Name = "btn_serach";
             this.btn_serach.Size = new System.Drawing.Size(84, 28);
-            this.btn_serach.TabIndex = 5;
+            this.btn_serach.TabIndex = 0;
             this.btn_serach.Text = "&Search";
             this.btn_serach.UseVisualStyleBackColor = true;
             this.btn_serach.Click += new System.EventHandler(this.Btn_serachClick);

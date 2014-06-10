@@ -891,7 +891,7 @@ namespace DataEditorX
         }
         #endregion
         
-        #region 文件菜单(chs)
+        #region 文件菜单
         void Menuitem_openClick(object sender, EventArgs e)
         {
             using(OpenFileDialog dlg=new OpenFileDialog())
@@ -993,7 +993,7 @@ namespace DataEditorX
         }
         #endregion
         
-        
+        #region 线程
         void BackgroundWorker1DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             if(isdownload)
@@ -1059,5 +1059,6 @@ namespace DataEditorX
                 }
             }
         }
+        #endregion
     }
 }
