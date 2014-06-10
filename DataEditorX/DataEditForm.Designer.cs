@@ -96,6 +96,7 @@ namespace DataEditorX
             this.pl_image = new System.Windows.Forms.Panel();
             this.lb_types = new System.Windows.Forms.Label();
             this.lb_tiptexts = new System.Windows.Forms.Label();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -680,6 +681,13 @@ namespace DataEditorX
             this.lb_tiptexts.Text = "Tips Texts";
             this.lb_tiptexts.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.WorkerReportsProgress = true;
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundWorker1DoWork);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BackgroundWorker1RunWorkerCompleted);
+            // 
             // DataEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -743,6 +751,7 @@ namespace DataEditorX
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Panel pl_image;
         private System.Windows.Forms.ToolStripMenuItem menuitem_copyselectto;
         private System.Windows.Forms.ToolStripMenuItem menuitem_github;

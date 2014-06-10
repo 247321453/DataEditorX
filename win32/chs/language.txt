@@ -35,10 +35,11 @@ All Now Copy To	当前所有卡片复制到...
 
 Quit	退出
 
-Is Last Version.{0}Version:{1}	已经是最新版本！{0}版本号：{1}
+Is Last Version.{0}Version:{1}	已经是最新版本！{0}版本号：{1}是否重新下载？
 Check update fail!	查询失败！
 have a new version.{0}version:{1}	发现一个新版本。是否下载？{0}版本号{1}
 Download succeed.	下载成功。
+Download fail.	下载失败。
 
 Please select a DataBase!	请打开一个数据库!
 File is not exists!	文件不存在!

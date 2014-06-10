@@ -29,7 +29,9 @@ namespace DataEditorX
         int MaxRow=20;
         int page=1,pageNum=1;
         int cardcount;
-        
+        bool isdownload;
+        bool isbgcheck;
+        string NEWVER="0.0.0.0";
         List<Card> cardlist=new List<Card>();
         
         Image m_cover;
@@ -97,10 +99,14 @@ namespace DataEditorX
             //set null card
             oldCard=new Card(0);
             SetCard(oldCard);
+            isbgcheck=true;
+            isdownload=false;
+            //Menuitem_checkupdateClick(null,null);
             if(File.Exists(nowCdbFile))
                 Open(nowCdbFile);
+            
         }
-       
+        
         void InitString()
         {
             btn_add.Text=MyMsg.GetString("Add");
@@ -869,7 +875,13 @@ namespace DataEditorX
         
         void Menuitem_checkupdateClick(object sender, EventArgs e)
         {
-            CheckUpdate.UpdateTip(ConfigurationManager.AppSettings["updateURL"]);
+
+            if(!backgroundWorker1.IsBusy)
+            {
+                isdownload=false;
+                isbgcheck=false;
+                backgroundWorker1.RunWorkerAsync();
+            }
         }
 
         
@@ -981,5 +993,71 @@ namespace DataEditorX
         }
         #endregion
         
+        
+        void BackgroundWorker1DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            if(isdownload)
+                CheckUpdate.DownLoad(Path.Combine(Application.StartupPath, NEWVER+".zip"));
+            else
+            {
+                NEWVER=CheckUpdate.Check(ConfigurationManager.AppSettings["updateURL"]);
+            }
+        }
+        
+        void BackgroundWorker1RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            if(isdownload)
+            {
+                if(CheckUpdate.isOK)
+                    MyMsg.Show(MyMsg.GetString("Download succeed."));
+                else
+                    MyMsg.Show(MyMsg.GetString("Download fail.")+"\n"+CheckUpdate.URL);
+            }
+            else
+            {
+                string newver=NEWVER;
+                int iver,iver2;
+                int.TryParse(Application.ProductVersion.Replace(".",""), out iver);
+                int.TryParse(newver.Replace(".",""), out iver2);
+                if(iver2>iver)
+                {
+                    if(MyMsg.Question(string.Format(
+                        MyMsg.GetString("have a new version.{0}version:{1}"),
+                        "\n",newver)))
+                    {
+                        if(!backgroundWorker1.IsBusy)
+                        {
+                            isdownload=true;
+                            isbgcheck=false;
+                            backgroundWorker1.RunWorkerAsync();
+                        }
+                    }
+                }
+                else if(iver2>0)
+                    
+                {
+                    if(!isbgcheck)
+                    {
+                        if( MyMsg.Question(string.Format(
+                            MyMsg.GetString("Is Last Version.{0}Version:{1}"),
+                            "\n",newver+"\n")))
+                        {
+                            
+                            if(!backgroundWorker1.IsBusy)
+                            {
+                                isdownload=true;
+                                isbgcheck=false;
+                                backgroundWorker1.RunWorkerAsync();
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if(!isbgcheck)
+                        MyMsg.Error(MyMsg.GetString("Check update fail!"));
+                }
+            }
+        }
     }
 }

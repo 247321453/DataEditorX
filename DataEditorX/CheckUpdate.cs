@@ -18,32 +18,10 @@ namespace DataEditorX
     /// </summary>
     public class CheckUpdate
     {
-        static string URL="";
+        public static string URL="";
         static string HEAD="[DataEditorX]",HEAD2="[URL]";
-        public static void UpdateTip(string VERURL)
-        {
-            string newver=Check(VERURL);
-            int iver,iver2;
-            int.TryParse(Application.ProductVersion.Replace(".",""), out iver);
-            int.TryParse(newver.Replace(".",""), out iver2);
-            if(iver2>iver)
-            {
-                if(MyMsg.Question(string.Format(
-                    MyMsg.GetString("have a new version.{0}version:{1}"),
-                                    "\n",newver)))
-                {
-                    if(DownLoad(URL,Path.Combine(Application.StartupPath, newver+".update.zip"),null))
-                    {
-                        MyMsg.Show("Download succeed.");
-                    }
-                }
-            }
-            else if(iver2>0)
-                MyMsg.Show(string.Format(MyMsg.GetString("Is Last Version.{0}Version:{1}"),
-                                         "\n",newver));
-            else
-                MyMsg.Error(MyMsg.GetString("Check update fail!"));
-        }
+        public static bool isOK=false;
+
         public static string Check(string VERURL)
         {
             string urlver="0.0.0.0";
@@ -99,41 +77,35 @@ namespace DataEditorX
         }
         #endregion
         
-        public static bool DownLoad(string URL,string filename,System.Windows.Forms.ProgressBar prog)
+        public static void DownLoad(string filename)
         {
             try
             {
                 HttpWebRequest Myrq = (HttpWebRequest)System.Net.HttpWebRequest.Create(URL);
                 HttpWebResponse myrp = (HttpWebResponse)Myrq.GetResponse();
                 long totalBytes = myrp.ContentLength;
-                if (prog != null)
-                {
-                    prog.Maximum = (int)totalBytes;
-                }
-                System.IO.Stream st = myrp.GetResponseStream();
-                System.IO.Stream so = new System.IO.FileStream(filename, System.IO.FileMode.Create);
+  
+                Stream st = myrp.GetResponseStream();
+                Stream so = new System.IO.FileStream(filename+".tmp", FileMode.Create);
                 long totalDownloadedByte = 0;
-                byte[] by = new byte[1024];
+                byte[] by = new byte[2048];
                 int osize = st.Read(by, 0, (int)by.Length);
                 while (osize > 0)
                 {
                     totalDownloadedByte = osize + totalDownloadedByte;
                     System.Windows.Forms.Application.DoEvents();
                     so.Write(by, 0, osize);
-                    if (prog != null)
-                    {
-                        prog.Value = (int)totalDownloadedByte;
-                    }
                     osize = st.Read(by, 0, (int)by.Length);
                 }
                 so.Close();
                 st.Close();
+                File.Move(filename+".tmp", filename);
             }
             catch (System.Exception)
             {
-                return false;
+                isOK= false;
             }
-            return true;
+            isOK=true;
         }
     }
 }
