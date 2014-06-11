@@ -43,32 +43,8 @@ namespace DataEditorX
         Dictionary<long, string> dicSetnames=null;
         Dictionary<long, string> dicCardTypes=null;
         Dictionary<long, string> dicCardcategorys=null;
-        string conflang="language.txt";
-        string confrule="card-rule.txt";
-        string confattribute="card-attribute.txt";
-        string confrace="card-race.txt";
-        string conflevel="card-level.txt";
-        string confsetname="card-setname.txt";
-        string conftype="card-type.txt";
-        string confcategory="card-category.txt";
-        string confcover= "cover.jpg";
-        
-        void SetCDB(string cdb)
-        {
-            this.nowCdbFile=cdb;
-            if(cdb.Length>0)
-            {
-                this.Text=nowCdbFile+"-"+title;
-                char SEP=Path.DirectorySeparatorChar;
-                int l=nowCdbFile.LastIndexOf(SEP);
-                GAMEPATH=(l>0)?nowCdbFile.Substring(0,l+1):cdb;
-            }
-            PICPATH=Path.Combine(GAMEPATH,"pics");
-            LUAPTH=Path.Combine(GAMEPATH,"script");
-        }
-        #endregion
-        
-        #region 界面初始化
+        string conflang, confrule, confattribute, confrace, conflevel;
+        string confsetname, conftype, confcategory, confcover;
         public DataEditForm(string cdbfile)
         {
             InitializeComponent();
@@ -78,26 +54,39 @@ namespace DataEditorX
         public DataEditForm()
         {
             InitializeComponent();
+            nowCdbFile="";
         }
         
+        #endregion
+        
+        #region 界面初始化  
+        //窗体第一次加载
         void DataEditFormLoad(object sender, EventArgs e)
         {
             InitListRows();
-            Version  ver =new Version(Application.ProductVersion);
-            string   strVer  =   ver.ToString();
             #if DEBUG
             this.Text=this.Text+"(DEBUG)";
             #endif
-            this.Text=this.Text+" Ver:"+strVer;
+
+            this.Text=this.Text+" Ver:"+Application.ProductVersion;
             title=this.Text;
             
-            if(!InitPath())
+            //界面初始化
+            string dir=ConfigurationManager.AppSettings["language"];
+            if(string.IsNullOrEmpty(dir))
             {
                 Application.Exit();
             }
+            string datapath=Path.Combine(Application.StartupPath, dir);
+            InitPath(datapath);
+            
             MyMsg.Init(conflang);
-            InitForm();
-            //set null card
+            InitString();
+            
+            InitGameData();
+            
+            SetCDB("");
+            //设置空白卡片
             oldCard=new Card(0);
             SetCard(oldCard);
             isbgcheck=true;
@@ -107,7 +96,13 @@ namespace DataEditorX
                 Open(nowCdbFile);
             
         }
+        //窗体关闭
+        void DataEditFormFormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
         
+        //设置界面文字
         void InitString()
         {
             btn_add.Text=MyMsg.GetString("Add");
@@ -141,37 +136,37 @@ namespace DataEditorX
             lv_cardlist.Columns[1].Text=MyMsg.GetString("Card Name");
         }
         
-        bool InitPath()
+        //按cdb路径设置目录
+        void SetCDB(string cdb)
         {
-            //
-            string dir=ConfigurationManager.AppSettings["language"];
-            if(string.IsNullOrEmpty(dir))
+            this.nowCdbFile=cdb;
+            if(cdb.Length>0)
             {
-                return false;
+                this.Text=nowCdbFile+"-"+title;
+                char SEP=Path.DirectorySeparatorChar;
+                int l=nowCdbFile.LastIndexOf(SEP);
+                GAMEPATH=(l>0)?nowCdbFile.Substring(0,l+1):cdb;
             }
-            string datapath=Path.Combine(Application.StartupPath, dir);
-            //
-            GAMEPATH=Application.StartupPath;
+            else
+                GAMEPATH=Application.StartupPath;
             PICPATH=Path.Combine(GAMEPATH,"pics");
             LUAPTH=Path.Combine(GAMEPATH,"script");
-            
-            conflang=Path.Combine(datapath, conflang);
-            confrule=Path.Combine(datapath, confrule);
-            confattribute=Path.Combine(datapath, confattribute);
-            confrace=Path.Combine(datapath, confrace);
-            conflevel=Path.Combine(datapath, conflevel);
-            confsetname=Path.Combine(datapath, confsetname);
-            conftype=Path.Combine(datapath, conftype);
-            confcategory=Path.Combine(datapath, confcategory);
-            confcover= Path.Combine(datapath, confcover);
-            return true;
         }
-        
-        void DataEditFormFormClosing(object sender, FormClosingEventArgs e)
+        //初始化文件路径
+        void InitPath(string datapath)
         {
-
+            conflang=Path.Combine(datapath, "language.txt");
+            confrule=Path.Combine(datapath, "card-rule.txt");
+            confattribute=Path.Combine(datapath, "card-attribute.txt");
+            confrace=Path.Combine(datapath, "card-race.txt");
+            conflevel=Path.Combine(datapath, "card-level.txt");
+            confsetname=Path.Combine(datapath, "card-setname.txt");
+            conftype=Path.Combine(datapath, "card-type.txt");
+            confcategory=Path.Combine(datapath, "card-category.txt");
+            confcover= Path.Combine(datapath, "cover.jpg");
         }
         
+        //保存dic
         void SaveDic(string file, Dictionary<long, string> dic)
         {
             using(FileStream fs=new FileStream(file,FileMode.OpenOrCreate,FileAccess.Write))
@@ -186,7 +181,8 @@ namespace DataEditorX
             }
         }
         
-        public void InitForm()
+        //初始化游戏数据
+        public void InitGameData()
         {
             //初始化
             dicCardRules=InitComboBox(cb_cardrule,confrule);
@@ -208,13 +204,11 @@ namespace DataEditorX
             InitCheckPanel(pl_category, dicCardcategorys);
             //
             if(File.Exists(confcover))
-            {
                 m_cover=Image.FromFile(confcover);
-            }
             else
                 m_cover=null;
-            InitString();
         }
+        
         //初始化FlowLayoutPanel
         void InitCheckPanel(FlowLayoutPanel fpanel, Dictionary<long, string> dic)
         {
@@ -312,6 +306,7 @@ namespace DataEditorX
                 pl_image.BackgroundImage=m_cover;
         }
         
+        //设置checkbox
         string SetCheck(FlowLayoutPanel fpl,long number)
         {
             long temp;
@@ -335,6 +330,7 @@ namespace DataEditorX
             return strType;
         }
         
+        //设置combobox
         int SetSelect(Dictionary<long, string> dic,ComboBox cb, long k)
         {
             int index=0;
@@ -413,6 +409,7 @@ namespace DataEditorX
             return c;
         }
         
+        //得到所选值
         string GetSelect(Dictionary<long, string> dic,ComboBox cb)
         {
             long fkey=0;
@@ -433,6 +430,7 @@ namespace DataEditorX
             return fkey.ToString();
         }
         
+        //得到checkbox的总值
         long GetCheck(FlowLayoutPanel fpl)
         {
             long number=0;
@@ -466,6 +464,7 @@ namespace DataEditorX
             }
         }
         
+        //添加行
         void AddListView(int p)
         {
             int i,j,istart,iend;
@@ -503,16 +502,18 @@ namespace DataEditorX
             
         }
         
+        //列表按键
         void Lv_cardlistKeyDown(object sender, KeyEventArgs e)
         {
             switch(e.KeyCode)
             {
-                    case Keys.Delete:MyMsg.Show("del");break;
+                    case Keys.Delete:DelCards();break;
                     case Keys.Right:Btn_PageDownClick(null,null);break;
                     case Keys.Left:Btn_PageUpClick(null,null);break;
             }
         }
         
+        //上一页
         void Btn_PageUpClick(object sender, EventArgs e)
         {
             if(!Check())
@@ -521,6 +522,7 @@ namespace DataEditorX
             AddListView(page);
         }
         
+        //下一页
         void Btn_PageDownClick(object sender, EventArgs e)
         {
             if(!Check())
@@ -529,6 +531,7 @@ namespace DataEditorX
             AddListView(page);
         }
         
+        //跳转到指定页数
         void Tb_pageKeyPress(object sender, KeyPressEventArgs e)
         {
             if(e.KeyChar==(char)Keys.Enter)
@@ -542,6 +545,7 @@ namespace DataEditorX
         #endregion
         
         #region 卡片搜索，打开
+        //检查是否打开数据库
         public bool Check()
         {
             if(File.Exists(nowCdbFile))
@@ -553,6 +557,7 @@ namespace DataEditorX
             }
         }
         
+        //打开数据库
         public bool Open(string cdbFile)
         {
             if(!File.Exists(cdbFile))
@@ -876,7 +881,6 @@ namespace DataEditorX
         
         void Menuitem_checkupdateClick(object sender, EventArgs e)
         {
-
             if(!backgroundWorker1.IsBusy)
             {
                 isdownload=false;
@@ -885,7 +889,6 @@ namespace DataEditorX
             }
         }
 
-        
         void Menuitem_githubClick(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start(ConfigurationManager.AppSettings["sourceURL"]);
@@ -920,6 +923,7 @@ namespace DataEditorX
                 }
             }
         }
+       
         void Menuitem_copytoClick(object sender, EventArgs e)
         {
             CopyTo(false);
@@ -995,6 +999,7 @@ namespace DataEditorX
         #endregion
         
         #region 线程
+        //线程任务
         void BackgroundWorker1DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             if(isdownload)
@@ -1004,7 +1009,7 @@ namespace DataEditorX
                 NEWVER=CheckUpdate.Check(ConfigurationManager.AppSettings["updateURL"]);
             }
         }
-        
+        //任务完成
         void BackgroundWorker1RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
             if(isdownload)
