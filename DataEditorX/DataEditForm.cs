@@ -85,7 +85,7 @@ namespace DataEditorX
             
             InitGameData();
             
-            SetCDB("");
+            SetCDB(nowCdbFile);
             //设置空白卡片
             oldCard=new Card(0);
             SetCard(oldCard);
