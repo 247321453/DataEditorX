@@ -58,10 +58,19 @@ namespace DataEditorX.Core
                 SQLiteConnection.CreateFile(Db);
                 Command(Db, defaultTableSQL);
             }
-            catch(Exception exc)
+            catch
             {
-                File.AppendAllText("System.Data.SQLite.log", exc.Source+"\n"+
-                                   exc.TargetSite+"\n"+exc.Message+"\n"+exc.ToString());
+                return false;
+            }
+            return true;
+        }
+        public static bool CheckTable(string db)
+        {
+            try{
+                Command(db, defaultTableSQL);
+            }
+            catch
+            {
                 return false;
             }
             return true;
@@ -96,10 +105,8 @@ namespace DataEditorX.Core
                                 }
                             }
                         }
-                        catch(Exception exc)
+                        catch
                         {
-                            File.AppendAllText("System.Data.SQLite.log", exc.Source+"\n"+
-                                               exc.TargetSite+"\n"+exc.Message+"\n"+exc.ToString());
                             trans.Rollback();
                             result = -1;
                         }
@@ -116,6 +123,7 @@ namespace DataEditorX.Core
         #endregion
 
         #region 数据读取
+        
         #region 根据SQL读取
         static Card ReadCard(SQLiteDataReader reader,bool reNewLine)
         {

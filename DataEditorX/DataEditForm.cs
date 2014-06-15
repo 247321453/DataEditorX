@@ -567,6 +567,7 @@ namespace DataEditorX
             }
             SetCDB(cdbFile);
             cardlist.Clear();
+            DataBase.CheckTable(cdbFile);
             SetCards(DataBase.Read(cdbFile,true,""),false);
 
             return true;
