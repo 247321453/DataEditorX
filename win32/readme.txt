@@ -1,5 +1,15 @@
 ﻿[DataEditorX]1.3.4.0[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
+
+★支持关联cdb文件，命令参数启动。
+关联cdb文件：
+请确保DataEditorX的文件夹名固定不变，然后右键随意一个cdb文件，打开方式--浏览--DataEditorX.exe。确定。
+以后双击cdb文件即可打开DataEditorX。
+
+★支持 新建文本文档.txt 直接改名 新建文本文档.cdb
+
+★文件夹pics和script和cdb所在文件夹一致。
+
 ★卡片复制：
 替换复制：如果存在卡片，就用最新的替换
 不替换复制：如果存在卡片，就跳过
