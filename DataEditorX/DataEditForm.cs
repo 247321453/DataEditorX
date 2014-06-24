@@ -400,9 +400,14 @@ namespace DataEditorX
             c.level+=(temp << 0x18);
             int.TryParse(tb_pright.Text,out temp);
             c.level+=(temp << 0x10);
-            
-            int.TryParse( tb_atk.Text,out c.atk);
-            int.TryParse( tb_def.Text,out c.def);
+            if(tb_atk.Text=="?"||tb_atk.Text=="？")
+                c.atk=-2;
+            else
+                int.TryParse( tb_atk.Text,out c.atk);
+            if(tb_def.Text=="?"||tb_def.Text=="？")
+                c.def=-2;
+            else
+                int.TryParse( tb_def.Text,out c.def);
             long.TryParse( tb_cardcode.Text,out c.id);
             long.TryParse( tb_cardalias.Text,out c.alias);
 
