@@ -26,6 +26,11 @@
 Email:247321453@qq.com
 提交版本前，请检查更新。
 
+支持多语言化
+DataEditorX.exe.config
+<add key="language" value="chs" />简体
+<add key="language" value="en" />英文
+
 标题：(DataEditorX+版本号)
 内容：
 错误提示文字：（弹出出错框，请按Ctrl+C，然后找地方粘贴）
@@ -58,9 +63,6 @@ ATK/DEF输入？，自动转-2
 1.3.0.0
 txt文件，顺序可以打乱，关键是数值不能重复
 支持多语言化
-DataEditorX.exe.config
-<add key="language" value="chs" />简体
-<add key="language" value="en" />英文
 1.2.1.2
 按密码搜索一样会显示同名卡
 更改密码搜索
