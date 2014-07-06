@@ -40,6 +40,7 @@ Check update fail!	check update fail
 have a new version.{0}version:{1}	have a new version.{0}version:{1}
 Download succeed.	Download succeed.
 
+if open this new database?	If open this new database?
 Please select a DataBase!	Please select a DataBase!
 File is not exists!	File is not exists!
 Card is exists!	Card is exists!

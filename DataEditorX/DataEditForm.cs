@@ -927,7 +927,7 @@ namespace DataEditorX
                 {
                     if(DataBase.Create(dlg.FileName))
                     {
-                        if(MyMsg.Question("if open this new database?"))
+                        if(MyMsg.Question(MyMsg.GetString("if open this new database?")))
                             Open(dlg.FileName);
                     }
                 }

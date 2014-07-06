@@ -41,6 +41,7 @@ have a new version.{0}version:{1}	发现一个新版本。是否下载？{0}版�
 Download succeed.	下载成功。
 Download fail.	下载失败。
 
+if open this new database?	是否打开新建的数据库？
 Please select a DataBase!	请打开一个数据库!
 File is not exists!	文件不存在!
 Card is exists!	卡片已经存在!
