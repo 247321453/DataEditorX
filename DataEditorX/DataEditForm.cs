@@ -601,6 +601,9 @@ namespace DataEditorX
                 pageNum=1;
                 tb_page.Text=page.ToString();
                 tb_pagenum.Text=pageNum.ToString();
+                cardlist.Clear();
+                lv_cardlist.Items.Clear();
+                SetCard(new Card(0));
             }
         }
         
@@ -924,7 +927,8 @@ namespace DataEditorX
                 {
                     if(DataBase.Create(dlg.FileName))
                     {
-                        Open(dlg.FileName);
+                        if(MyMsg.Question("if open this new database?"))
+                            Open(dlg.FileName);
                     }
                 }
             }
