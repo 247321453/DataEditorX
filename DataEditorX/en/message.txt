@@ -11,7 +11,7 @@
 0xa It's no changed.
 0xb If delete Card(s)?
 0xc If create script file？
-0xd If open databse?
+0xd If open database?
 0xe If replace exitis cards?
 0xf It's new version.
 0x10 Check update fail，/nPlease Check Network.
