@@ -69,13 +69,13 @@ namespace DataEditorX
             this.tb_pleft = new System.Windows.Forms.TextBox();
             this.tb_pright = new System.Windows.Forms.TextBox();
             this.lb_atkdef = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lb4 = new System.Windows.Forms.Label();
             this.tb_page = new System.Windows.Forms.TextBox();
             this.tb_pagenum = new System.Windows.Forms.TextBox();
             this.btn_PageUp = new System.Windows.Forms.Button();
             this.btn_PageDown = new System.Windows.Forms.Button();
             this.btn_add = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lb5 = new System.Windows.Forms.Label();
             this.tb_atk = new System.Windows.Forms.TextBox();
             this.tb_def = new System.Windows.Forms.TextBox();
             this.lb_cardcode = new System.Windows.Forms.Label();
@@ -88,9 +88,7 @@ namespace DataEditorX
             this.btn_reset = new System.Windows.Forms.Button();
             this.btn_serach = new System.Windows.Forms.Button();
             this.lb_categorys = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.lb2 = new System.Windows.Forms.Label();
             this.pl_cardtype = new System.Windows.Forms.DFlowLayoutPanel();
             this.pl_category = new System.Windows.Forms.DFlowLayoutPanel();
             this.pl_image = new System.Windows.Forms.Panel();
@@ -409,15 +407,15 @@ namespace DataEditorX
             this.lb_atkdef.TabIndex = 7;
             this.lb_atkdef.Text = "ATK/DEF";
             // 
-            // label4
+            // lb4
             // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(102, 548);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(11, 12);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "/";
+            this.lb4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lb4.AutoSize = true;
+            this.lb4.Location = new System.Drawing.Point(102, 548);
+            this.lb4.Name = "lb4";
+            this.lb4.Size = new System.Drawing.Size(11, 12);
+            this.lb4.TabIndex = 7;
+            this.lb4.Text = "/";
             // 
             // tb_page
             // 
@@ -467,7 +465,7 @@ namespace DataEditorX
             // 
             // btn_add
             // 
-            this.btn_add.Location = new System.Drawing.Point(548, 540);
+            this.btn_add.Location = new System.Drawing.Point(548, 539);
             this.btn_add.Name = "btn_add";
             this.btn_add.Size = new System.Drawing.Size(84, 28);
             this.btn_add.TabIndex = 5;
@@ -475,14 +473,14 @@ namespace DataEditorX
             this.btn_add.UseVisualStyleBackColor = true;
             this.btn_add.Click += new System.EventHandler(this.Btn_addClick);
             // 
-            // label5
+            // lb5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(491, 314);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(11, 12);
-            this.label5.TabIndex = 7;
-            this.label5.Text = "/";
+            this.lb5.AutoSize = true;
+            this.lb5.Location = new System.Drawing.Point(491, 314);
+            this.lb5.Name = "lb5";
+            this.lb5.Size = new System.Drawing.Size(11, 12);
+            this.lb5.TabIndex = 7;
+            this.lb5.Text = "/";
             // 
             // tb_atk
             // 
@@ -545,7 +543,7 @@ namespace DataEditorX
             // 
             // btn_mod
             // 
-            this.btn_mod.Location = new System.Drawing.Point(638, 540);
+            this.btn_mod.Location = new System.Drawing.Point(638, 539);
             this.btn_mod.Name = "btn_mod";
             this.btn_mod.Size = new System.Drawing.Size(84, 28);
             this.btn_mod.TabIndex = 5;
@@ -556,7 +554,7 @@ namespace DataEditorX
             // btn_del
             // 
             this.btn_del.ForeColor = System.Drawing.Color.DarkRed;
-            this.btn_del.Location = new System.Drawing.Point(461, 540);
+            this.btn_del.Location = new System.Drawing.Point(774, 540);
             this.btn_del.Name = "btn_del";
             this.btn_del.Size = new System.Drawing.Size(84, 28);
             this.btn_del.TabIndex = 5;
@@ -567,7 +565,7 @@ namespace DataEditorX
             // btn_lua
             // 
             this.btn_lua.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.btn_lua.Location = new System.Drawing.Point(776, 539);
+            this.btn_lua.Location = new System.Drawing.Point(462, 539);
             this.btn_lua.Name = "btn_lua";
             this.btn_lua.Size = new System.Drawing.Size(84, 28);
             this.btn_lua.TabIndex = 5;
@@ -606,28 +604,14 @@ namespace DataEditorX
             this.lb_categorys.Text = "Card Categorys";
             this.lb_categorys.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label2
+            // lb2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(317, 315);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(11, 12);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "/";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(530, -168);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(281, 21);
-            this.textBox1.TabIndex = 4;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(534, -235);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(281, 21);
-            this.textBox2.TabIndex = 4;
+            this.lb2.AutoSize = true;
+            this.lb2.Location = new System.Drawing.Point(317, 315);
+            this.lb2.Name = "lb2";
+            this.lb2.Size = new System.Drawing.Size(11, 12);
+            this.lb2.TabIndex = 7;
+            this.lb2.Text = "/";
             // 
             // pl_cardtype
             // 
@@ -707,13 +691,13 @@ namespace DataEditorX
             this.Controls.Add(this.tb_cardalias);
             this.Controls.Add(this.tb_cardcode);
             this.Controls.Add(this.tb_atk);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.lb4);
             this.Controls.Add(this.lb_cardalias);
             this.Controls.Add(this.tb_pleft);
             this.Controls.Add(this.lb_cardcode);
-            this.Controls.Add(this.label5);
+            this.Controls.Add(this.lb5);
             this.Controls.Add(this.lb_atkdef);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lb2);
             this.Controls.Add(this.lb_pleft_right);
             this.Controls.Add(this.lb_scripttext);
             this.Controls.Add(this.btn_reset);
@@ -723,9 +707,7 @@ namespace DataEditorX
             this.Controls.Add(this.btn_mod);
             this.Controls.Add(this.btn_add);
             this.Controls.Add(this.btn_PageDown);
-            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.btn_PageUp);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.tb_cardtext);
             this.Controls.Add(this.tb_cardname);
             this.Controls.Add(this.cb_setname3);
@@ -756,8 +738,6 @@ namespace DataEditorX
         private System.Windows.Forms.ToolStripMenuItem menuitem_copyselectto;
         private System.Windows.Forms.ToolStripMenuItem menuitem_github;
         private System.Windows.Forms.ToolStripMenuItem menuitem_new;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label lb_tiptexts;
         private System.Windows.Forms.Label lb_categorys;
         private System.Windows.Forms.Label lb_types;
@@ -774,15 +754,15 @@ namespace DataEditorX
         private System.Windows.Forms.Label lb_cardcode;
         private System.Windows.Forms.TextBox tb_def;
         private System.Windows.Forms.TextBox tb_atk;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lb5;
         private System.Windows.Forms.Button btn_add;
         private System.Windows.Forms.Button btn_PageDown;
         private System.Windows.Forms.Button btn_PageUp;
         private System.Windows.Forms.TextBox tb_pagenum;
         private System.Windows.Forms.TextBox tb_page;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lb4;
         private System.Windows.Forms.Label lb_atkdef;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lb2;
         private System.Windows.Forms.TextBox tb_pright;
         private System.Windows.Forms.TextBox tb_pleft;
         private System.Windows.Forms.Label lb_pleft_right;

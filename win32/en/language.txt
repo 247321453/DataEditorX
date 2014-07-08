@@ -1,71 +1,34 @@
-﻿!english
-info	Info
-error	Error
-warning	Warning
-
-question	Question
-
-Add	Add
-Modify	&Modify
-Delete	&Delete
-Lua Script	&Lua Script
-Search	&Search
-Reset	&Reset
-
-Alias Card	Alias Card
-Card Code	Card Code
-Card Types	Card Types
-Card Categorys	Card Categorys
-Tips Texts	Tips Texts
-
-Help	&Help
-About	About
-Check Update	Check Update
-Source	Source
-
-File	&File
-Card Name	Card Name
-
-Open Database	Open Database
-New Database	New Database
-Cards Form ydk file	Cards Form ydk file
-Cards From Images	Cards From Images
-Select Copy To	Select Copy To...
-All Now Copy To	All Now Copy To...
-
-Quit	&Quit
-
-Is Last Version.{0}Version:{1}	Is Last Version.{0}Version:{1}
-Check update fail!	check update fail
-have a new version.{0}version:{1}	have a new version.{0}version:{1}
-Download succeed.	Download succeed.
-
-if open this new database?	If open this new database?
-Please select a DataBase!	Please select a DataBase!
-File is not exists!	File is not exists!
-Card is exists!	Card is exists!
-
-Add Card succeed!	Add Card succeed!
-Add Card fail!	Add Card fail!
-
-Delete Card {0} ?	Delete Card {0} ?
-Delete {0} Cards ?	Delete {0} Cards ?
-Delete Card succeed!	Delete Card succeed!
-Delete Card fail!	Delete Card fail!
-
-Card is not changed!	Card is not changed!
-Modify Card succeed!	Modify Card succeed!
-Modify Card fail!	Modify Card fail!
-
-Please select script text!	Please select script text!
-create script file?{0}	create script file?{0}
-Card Code is zero!	Card Code is zero!
-Please select images directory!	Please select images directory!
-
-Please select ydk file.	Please select ydk file.
-ydk file(*.ydk)|*.ydk|all files(*.*)|*.*	ydk file(*.ydk)|*.ydk|all files(*.*)|*.*
-
-Overwrite existing card?	Overwrite existing card?
-Please select database.	Please select database.
-cdb file(*.cdb)|*.cdb|all files(*.*)|*.*	cdb file(*.cdb)|*.cdb|all files(*.*)|*.*
-About:{0}Version:{1}Author:{2}Email:{3}	About:{0}Version:{1}Author:{2}Email:{3}
+﻿DataEditForm->btn_add Add
+DataEditForm->btn_del Delte
+DataEditForm->btn_lua Lua
+DataEditForm->btn_mod Modify
+DataEditForm->btn_PageDown >>
+DataEditForm->btn_PageUp <<
+DataEditForm->btn_reset Rest
+DataEditForm->btn_serach Search
+DataEditForm->DataEditForm DataEditorX by 247321453
+DataEditForm->lb_atkdef ATK/DEF
+DataEditForm->lb_cardalias Alias
+DataEditForm->lb_cardcode Card Code
+DataEditForm->lb_categorys Category
+DataEditForm->lb_pleft_right PScale
+DataEditForm->lb_scripttext 
+DataEditForm->lb_tiptexts TipText
+DataEditForm->lb_types Card Type
+DataEditForm->lb2 /
+DataEditForm->lb4 /
+DataEditForm->lb5 /
+DataEditForm->lv_cardlist0 Card Code
+DataEditForm->lv_cardlist1 Card Name
+DataEditForm->menuitem_about About
+DataEditForm->menuitem_checkupdate Check Update
+DataEditForm->menuitem_copyselectto Slect Cards Copy To...
+DataEditForm->menuitem_copyto Now All Cards Copy To...
+DataEditForm->menuitem_file File
+DataEditForm->menuitem_github Github
+DataEditForm->menuitem_help Help
+DataEditForm->menuitem_new New
+DataEditForm->menuitem_open Open
+DataEditForm->menuitem_quit Quit
+DataEditForm->menuitem_readimages Read for Image Folder
+DataEditForm->menuitem_readydk Read for ydk file

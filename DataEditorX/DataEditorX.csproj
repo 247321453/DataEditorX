@@ -56,7 +56,6 @@
   <ItemGroup>
     <Compile Include="Common\CheckUpdate.cs" />
     <Compile Include="Common\DoubleContorl.cs" />
-    <Compile Include="Common\MyMsg.cs" />
     <Compile Include="Core\Card.cs" />
     <Compile Include="Core\DataBase.cs" />
     <Compile Include="Core\DataManager.cs" />
@@ -64,6 +63,9 @@
     <Compile Include="DataEditForm.Designer.cs">
       <DependentUpon>DataEditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Language\LanguageHelper.cs" />
+    <Compile Include="Language\LMsg.cs" />
+    <Compile Include="Language\MyMsg.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -77,6 +79,7 @@
     <Folder Include="Core" />
     <Folder Include="en" />
     <Folder Include="Common" />
+    <Folder Include="Language" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -109,6 +112,9 @@
     <None Include="chs\language.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="chs\message.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="en\card-attribute.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -134,6 +140,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="en\language.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="en\message.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="readme.txt">

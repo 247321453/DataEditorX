@@ -15,6 +15,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using DataEditorX.Core;
+using DataEditorX.Language;
 
 namespace DataEditorX
 {
@@ -44,7 +45,7 @@ namespace DataEditorX
         Dictionary<long, string> dicCardTypes=null;
         Dictionary<long, string> dicCardcategorys=null;
         string conflang, confrule, confattribute, confrace, conflevel;
-        string confsetname, conftype, confcategory, confcover;
+        string confsetname, conftype, confcategory, confcover, confmsg;
         public DataEditForm(string cdbfile)
         {
             InitializeComponent();
@@ -59,17 +60,11 @@ namespace DataEditorX
         
         #endregion
         
-        #region 界面初始化  
+        #region 界面初始化
         //窗体第一次加载
         void DataEditFormLoad(object sender, EventArgs e)
         {
             InitListRows();
-            #if DEBUG
-            this.Text=this.Text+"(DEBUG)";
-            #endif
-
-            this.Text=this.Text+" Ver:"+Application.ProductVersion;
-            title=this.Text;
             
             //界面初始化
             string dir=ConfigurationManager.AppSettings["language"];
@@ -80,8 +75,16 @@ namespace DataEditorX
             string datapath=Path.Combine(Application.StartupPath, dir);
             InitPath(datapath);
             
-            MyMsg.Init(conflang);
-            InitString();
+            LanguageHelper.InitForm(this, conflang);
+            LanguageHelper.LoadMessage(confmsg);
+            LanguageHelper.SetLanguage(this);
+
+            this.Text=this.Text+" Ver:"+Application.ProductVersion;
+            title=this.Text;
+            
+            #if DEBUG
+            this.Text=this.Text+"(DEBUG)";
+            #endif
             
             InitGameData();
             
@@ -99,42 +102,13 @@ namespace DataEditorX
         //窗体关闭
         void DataEditFormFormClosing(object sender, FormClosingEventArgs e)
         {
+            #if DEBUG
+            LanguageHelper.GetLanguage(this);
+            LanguageHelper.SaveLanguage(this, conflang+"bak.txt");
+            LanguageHelper.SaveMessage(confmsg+"bak.txt");
+            #endif
+        }
 
-        }
-        
-        //设置界面文字
-        void InitString()
-        {
-            btn_add.Text=MyMsg.GetString("Add");
-            btn_serach.Text=MyMsg.GetString("Search");
-            btn_reset.Text=MyMsg.GetString("Reset");
-            btn_del.Text=MyMsg.GetString("Delete");
-            btn_mod.Text=MyMsg.GetString("Modify");
-            btn_lua.Text=MyMsg.GetString("Lua Script");
-            
-            lb_cardalias.Text= MyMsg.GetString("Alias Card");
-            lb_cardcode.Text=MyMsg.GetString("Card Code");
-            lb_types.Text=MyMsg.GetString("Card Types");
-            lb_categorys.Text=MyMsg.GetString("Card Categorys");
-            lb_tiptexts.Text=MyMsg.GetString("Tips Texts");
-            
-            menuitem_help.Text=MyMsg.GetString("Help");
-            menuitem_about.Text=MyMsg.GetString("About");
-            menuitem_checkupdate.Text=MyMsg.GetString("Check Update");
-            menuitem_github.Text=MyMsg.GetString("Source");
-            
-            menuitem_file.Text=MyMsg.GetString("File");
-            menuitem_open.Text=MyMsg.GetString("Open Database");
-            menuitem_new.Text=MyMsg.GetString("New Database");
-            menuitem_readydk.Text=MyMsg.GetString("Cards Form ydk file");
-            menuitem_readimages.Text=MyMsg.GetString("Cards From Images");
-            menuitem_copyselectto.Text=MyMsg.GetString("Select Copy To");
-            menuitem_copyto.Text=MyMsg.GetString("All Now Copy To");
-            menuitem_quit.Text=MyMsg.GetString("Quit");
-            
-            lv_cardlist.Columns[0].Text=MyMsg.GetString("Card Code");
-            lv_cardlist.Columns[1].Text=MyMsg.GetString("Card Name");
-        }
         
         //按cdb路径设置目录
         void SetCDB(string cdb)
@@ -164,6 +138,7 @@ namespace DataEditorX
             conftype=Path.Combine(datapath, "card-type.txt");
             confcategory=Path.Combine(datapath, "card-category.txt");
             confcover= Path.Combine(datapath, "cover.jpg");
+            confmsg = Path.Combine(datapath, "message.txt");
         }
         
         //保存dic
@@ -557,7 +532,7 @@ namespace DataEditorX
                 return true;
             else
             {
-                MyMsg.Warning(MyMsg.GetString("Please select a DataBase!"));
+                MyMsg.Warning(LMSG.NotSelectDataBase);
                 return false;
             }
         }
@@ -567,7 +542,7 @@ namespace DataEditorX
         {
             if(!File.Exists(cdbFile))
             {
-                MyMsg.Error(MyMsg.GetString("File is not exists!"));
+                MyMsg.Error(LMSG.FileIsNotExists);
                 return false;
             }
             SetCDB(cdbFile);
@@ -636,24 +611,24 @@ namespace DataEditorX
             Card c=GetCard();
             if(c.id<=0)
             {
-                MyMsg.Error(MyMsg.GetString("Card Code is zero!"));
+                MyMsg.Error(LMSG.CodeCanNotIsZero);
                 return false;
             }
             foreach(Card ckey in cardlist)
             {
                 if(c.id==ckey.id)
                 {
-                    MyMsg.Warning(MyMsg.GetString("Card is exists!"));
+                    MyMsg.Warning(LMSG.ItIsExists);
                     return false;
                 }
             }
             if(DataBase.Command(nowCdbFile, DataBase.GetInsertSQL(c,true))>=2)
             {
-                MyMsg.Show(MyMsg.GetString("Add Card succeed"));
+                MyMsg.Show(LMSG.AddSucceed);
                 Search(srcCard, true);
                 return true;
             }
-            MyMsg.Error(MyMsg.GetString("Add Card fail"));
+            MyMsg.Error(LMSG.AddFail);
             return false;
         }
         //修改
@@ -665,23 +640,22 @@ namespace DataEditorX
 
             if(c.Equals(oldCard))
             {
-                MyMsg.Show(MyMsg.GetString("Card is not changed!"));
+                MyMsg.Show(LMSG.ItIsNotChanged);
                 return false;
             }
             if(c.id<=0)
             {
-                MyMsg.Error(MyMsg.GetString("Card Code is zero"));
+                MyMsg.Error(LMSG.CodeCanNotIsZero);
                 return false;
             }
             string sql;
             if(c.id!=oldCard.id)
             {
-                if(MyMsg.Question(string.Format(
-                    MyMsg.GetString("Delete Card {0} ?"),oldCard.ToString())))
+                if(MyMsg.Question(LMSG.IfDeleteCard))
                 {
                     if(DataBase.Command(nowCdbFile, DataBase.GetDeleteSQL(oldCard))<2)
                     {
-                        MyMsg.Error(MyMsg.GetString("Delete Card fail!"));
+                        MyMsg.Error(LMSG.DeleteFail);
                         return false;
                     }
                 }
@@ -691,11 +665,11 @@ namespace DataEditorX
                 sql=DataBase.GetUpdateSQL(c);
             if(DataBase.Command(nowCdbFile, sql)>0)
             {
-                MyMsg.Show(MyMsg.GetString("Modify Card succeed!"));
+                MyMsg.Show(LMSG.ModifySucceed);
                 Search(srcCard, true);
             }
             else
-                MyMsg.Error(MyMsg.GetString("Modify Card fail!"));
+                MyMsg.Error(LMSG.ModifyFail);
             return false;
         }
         //删除
@@ -706,7 +680,7 @@ namespace DataEditorX
             int ic=lv_cardlist.SelectedItems.Count;
             if(ic==0)
                 return false;
-            if(!MyMsg.Question(string.Format(MyMsg.GetString("Delete {0} Cards ?"),ic)))
+            if(!MyMsg.Question(LMSG.IfDeleteCard))
                 return false;
             List<string> sql=new List<string>();
             foreach(ListViewItem lvitem in lv_cardlist.SelectedItems)
@@ -720,13 +694,13 @@ namespace DataEditorX
             }
             if(DataBase.Command(nowCdbFile, sql.ToArray())>=(sql.Count*2))
             {
-                MyMsg.Show(MyMsg.GetString("Delete Card succeed!"));
+                MyMsg.Show(LMSG.DeleteSucceed);
                 Search(srcCard, true);
                 return true;
             }
             else
             {
-                MyMsg.Error(MyMsg.GetString("Delete Card fail!"));
+                MyMsg.Error(LMSG.DeleteFail);
                 Search(srcCard, true);
             }
             
@@ -740,8 +714,7 @@ namespace DataEditorX
             string lua=Path.Combine(LUAPTH,"c"+tb_cardcode.Text+".lua");
             if(!File.Exists(lua))
             {
-                if(MyMsg.Question(
-                    string.Format(MyMsg.GetString("create script file?{0}"),"\n"+lua)))
+                if(MyMsg.Question(LMSG.IfCreateScript))
                 {
                     if(!Directory.Exists(LUAPTH))
                         Directory.CreateDirectory(LUAPTH);
@@ -836,7 +809,7 @@ namespace DataEditorX
             }
             catch{
                 index=-1;
-                MyMsg.Error(MyMsg.GetString("Please select script text!"));
+                MyMsg.Error(LMSG.NotSelectScriptText);
             }
             if(index>=0)
             {
@@ -856,7 +829,7 @@ namespace DataEditorX
             }
             catch{
                 index=-1;
-                MyMsg.Error(MyMsg.GetString("Please select script text!"));
+                MyMsg.Error(LMSG.NotSelectScriptText);
             }
             if(index>=0)
                 return strs[index];
@@ -880,12 +853,11 @@ namespace DataEditorX
         #region 帮助菜单
         void Menuitem_aboutClick(object sender, EventArgs e)
         {
-            MyMsg.Show(string.Format(
-                MyMsg.GetString("About:{0}Version:{1}Author:{2}Email:{3}")
-                ,"\t"+Application.ProductName+"\n"
-                ,"\t"+Application.ProductVersion+"\n"
-                ,"\t247321453\n"
-                ,"\t247321453@qq.com"));
+            MyMsg.Show(
+                LanguageHelper.GetMsg(LMSG.About)+"\t"+Application.ProductName+"\n"
+                +LanguageHelper.GetMsg(LMSG.Version)+"\t"+Application.ProductVersion+"\n"
+                +LanguageHelper.GetMsg(LMSG.Author)+"\t247321453\n"
+                +"Email:\t247321453@qq.com");
         }
         
         void Menuitem_checkupdateClick(object sender, EventArgs e)
@@ -909,8 +881,8 @@ namespace DataEditorX
         {
             using(OpenFileDialog dlg=new OpenFileDialog())
             {
-                dlg.Title=MyMsg.GetString("Please select database.");
-                dlg.Filter=MyMsg.GetString("cdb file(*.cdb)|*.cdb|all files(*.*)|*.*");
+                dlg.Title=LanguageHelper.GetMsg(LMSG.SelectDataBasePath);
+                dlg.Filter=LanguageHelper.GetMsg(LMSG.CdbType);
                 if(dlg.ShowDialog()==DialogResult.OK)
                 {
                     Open(dlg.FileName);
@@ -921,19 +893,19 @@ namespace DataEditorX
         {
             using(SaveFileDialog dlg=new SaveFileDialog())
             {
-                dlg.Title=MyMsg.GetString("Please select database.");
-                dlg.Filter=MyMsg.GetString("cdb file(*.cdb)|*.cdb|all files(*.*)|*.*");
+                dlg.Title=LanguageHelper.GetMsg(LMSG.SelectDataBasePath);
+                dlg.Filter=LanguageHelper.GetMsg(LMSG.CdbType);
                 if(dlg.ShowDialog()==DialogResult.OK)
                 {
                     if(DataBase.Create(dlg.FileName))
                     {
-                        if(MyMsg.Question(MyMsg.GetString("if open this new database?")))
+                        if(MyMsg.Question(LMSG.IfOpenDataBase))
                             Open(dlg.FileName);
                     }
                 }
             }
         }
-       
+        
         void Menuitem_copytoClick(object sender, EventArgs e)
         {
             CopyTo(false);
@@ -962,11 +934,11 @@ namespace DataEditorX
                 cards.AddRange(cardlist.ToArray());
             using(OpenFileDialog dlg=new OpenFileDialog())
             {
-                dlg.Title=MyMsg.GetString("Please select database.");
-                dlg.Filter=MyMsg.GetString("cdb file(*.cdb)|*.cdb|all files(*.*)|*.*");
+                dlg.Title=LanguageHelper.GetMsg(LMSG.SelectDataBasePath);
+                dlg.Filter=LanguageHelper.GetMsg(LMSG.CdbType);
                 if(dlg.ShowDialog()==DialogResult.OK)
                 {
-                    if(MyMsg.Question(MyMsg.GetString("Overwrite existing card?")))
+                    if(MyMsg.Question(LMSG.IfReplaceExistingCard))
                         DataBase.CopyDB(dlg.FileName,false,cards.ToArray());
                     else
                         DataBase.CopyDB(dlg.FileName,true,cards.ToArray());
@@ -979,8 +951,8 @@ namespace DataEditorX
                 return;
             using(OpenFileDialog dlg=new OpenFileDialog())
             {
-                dlg.Title=MyMsg.GetString("Please select ydk file.");
-                dlg.Filter=MyMsg.GetString("ydk file(*.ydk)|*.ydk|all files(*.*)|*.*");
+                dlg.Title=LanguageHelper.GetMsg(LMSG.SelectYdkPath);
+                dlg.Filter=LanguageHelper.GetMsg(LMSG.ydkType);
                 if(dlg.ShowDialog()==DialogResult.OK)
                 {
                     SetCards(DataBase.ReadYdk(nowCdbFile, dlg.FileName), false);
@@ -994,7 +966,7 @@ namespace DataEditorX
                 return;
             using(FolderBrowserDialog fdlg=new FolderBrowserDialog())
             {
-                fdlg.Description= MyMsg.GetString("Please select images directory");
+                fdlg.Description= LanguageHelper.GetMsg(LMSG.SelectImagePath);
                 if(fdlg.ShowDialog()==DialogResult.OK)
                 {
                     SetCards(DataBase.ReadImage(nowCdbFile, fdlg.SelectedPath), false);
@@ -1025,9 +997,9 @@ namespace DataEditorX
             if(isdownload)
             {
                 if(CheckUpdate.isOK)
-                    MyMsg.Show(MyMsg.GetString("Download succeed."));
+                    MyMsg.Show(LMSG.DownloadSucceed);
                 else
-                    MyMsg.Show(MyMsg.GetString("Download fail.")+"\n"+CheckUpdate.URL);
+                    MyMsg.Show(LMSG.DownloadFail);
             }
             else
             {
@@ -1037,9 +1009,7 @@ namespace DataEditorX
                 int.TryParse(newver.Replace(".",""), out iver2);
                 if(iver2>iver)
                 {
-                    if(MyMsg.Question(string.Format(
-                        MyMsg.GetString("have a new version.{0}version:{1}"),
-                        "\n",newver)))
+                    if(MyMsg.Question(LMSG.HaveNewVersion))
                     {
                         if(!backgroundWorker1.IsBusy)
                         {
@@ -1054,9 +1024,7 @@ namespace DataEditorX
                 {
                     if(!isbgcheck)
                     {
-                        if( MyMsg.Question(string.Format(
-                            MyMsg.GetString("Is Last Version.{0}Version:{1}"),
-                            "\n",newver+"\n")))
+                        if( MyMsg.Question(LMSG.NowIsNewVersion))
                         {
                             
                             if(!backgroundWorker1.IsBusy)
@@ -1071,7 +1039,7 @@ namespace DataEditorX
                 else
                 {
                     if(!isbgcheck)
-                        MyMsg.Error(MyMsg.GetString("Check update fail!"));
+                        MyMsg.Error(LMSG.CheckUpdateFail);
                 }
             }
         }

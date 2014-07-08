@@ -1,4 +1,4 @@
-﻿[DataEditorX]1.3.4.2[DataEditorX]
+﻿[DataEditorX]1.4.0.0[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★支持关联cdb文件，命令参数启动。
@@ -41,6 +41,8 @@ DataEditorX.exe.config
 描述不详细的bug，我修复不了。（都不知道是bug是什么）
 
 ★更新历史
+1.4.0.0
+增加多语言文件的可修改性。
 1.3.4.2
 新建数据库，改为提示是否打开。
 打开空白数据库，将会清空当前列表和内容。

@@ -1,72 +1,34 @@
-﻿!chs
-info	提示
-error	错误
-warning	警告
-
-question	询问
-
-Add	添加卡片
-Modify	修改卡片
-Delete	删除卡片
-Lua Script	lua脚本
-Search	搜索
-Reset	重置
-
-Alias Card	同名卡
-Card Code	卡片密码
-Card Types	卡片种类
-Card Categorys	效果种类
-Tips Texts	提示文字
-
-Help	帮助(&H)
-About	关于
-Check Update	检查更新
-Source	源码主页
-
-File	文件(&F)
-Card Name	卡片名称
-
-Open Database	打开
-New Database	新建
-Cards Form ydk file	从ydk文件读取
-Cards From Images	从图像文件夹读取
-Select Copy To	选中卡片复制到...
-All Now Copy To	当前所有卡片复制到...
-
-Quit	退出
-
-Is Last Version.{0}Version:{1}	已经是最新版本！{0}版本号：{1}是否重新下载？
-Check update fail!	查询失败！
-have a new version.{0}version:{1}	发现一个新版本。是否下载？{0}版本号{1}
-Download succeed.	下载成功。
-Download fail.	下载失败。
-
-if open this new database?	是否打开新建的数据库？
-Please select a DataBase!	请打开一个数据库!
-File is not exists!	文件不存在!
-Card is exists!	卡片已经存在!
-
-Add Card succeed!	添加成功!
-Add Card fail!	添加失败!
-
-Delete Card {0} ?	是否删除卡片 {0}?
-Delete {0} Cards ?	是否删除 {0} 张卡片?
-Delete Card succeed!	删除成功!
-Delete Card fail!	删除失败!
-
-Card is not changed!	卡片没有被修改!
-Modify Card succeed!	修改成功!
-Modify Card fail!	修改失败!
-
-Please select script text!	请选中脚本文本!
-create script file?{0}	是否创建脚本文件?{0}
-Card Code is zero!	卡片密码必须大于0!
-Please select images directory!	请选择一个图像文件夹!
-
-Please select ydk file.	选择卡组文件(ydk文件)
-ydk file(*.ydk)|*.ydk|all files(*.*)|*.*	ydk文件(*.ydk)|*.ydk|所有文件(*.*)|*.*
-
-Overwrite existing card?	是否覆盖已经存在的卡片？
-Please select database.	请选择数据库(*.cdb)
-cdb file(*.cdb)|*.cdb|all files(*.*)|*.*	cdb文件(*.cdb)|*.cdb|所有文件(*.*)|*.*
-About:{0}Version:{1}Author:{2}Email:{3}	关于:{0}版本:{1}作者:{2}邮箱:{3}
+﻿DataEditForm->btn_add 添加(&A)
+DataEditForm->btn_del 删除(&D)
+DataEditForm->btn_lua 脚本(&L)
+DataEditForm->btn_mod 修改(&M)
+DataEditForm->btn_PageDown 下一页
+DataEditForm->btn_PageUp 上一页
+DataEditForm->btn_reset 重置(&R)
+DataEditForm->btn_serach 搜索(&S)
+DataEditForm->DataEditForm DataEditorX by 247321453
+DataEditForm->lb_atkdef ATK/DEF
+DataEditForm->lb_cardalias 同名卡
+DataEditForm->lb_cardcode 卡片密码
+DataEditForm->lb_categorys 效果种类
+DataEditForm->lb_pleft_right PScale
+DataEditForm->lb_scripttext 
+DataEditForm->lb_tiptexts 提示文字
+DataEditForm->lb_types 卡片种类
+DataEditForm->lb2 /
+DataEditForm->lb4 /
+DataEditForm->lb5 /
+DataEditForm->lv_cardlist0 卡片密码
+DataEditForm->lv_cardlist1 卡片名称
+DataEditForm->menuitem_about 关于(&A)
+DataEditForm->menuitem_checkupdate 检查更新
+DataEditForm->menuitem_copyselectto 选中卡片复制到...
+DataEditForm->menuitem_copyto 当前所有卡片复制到...
+DataEditForm->menuitem_file 文件(&F)
+DataEditForm->menuitem_github 源码主页
+DataEditForm->menuitem_help 帮助(&H)
+DataEditForm->menuitem_new 新建(&N)
+DataEditForm->menuitem_open 打开(&O)
+DataEditForm->menuitem_quit 退出(&Q)
+DataEditForm->menuitem_readimages 从图像文件夹读取
+DataEditForm->menuitem_readydk 从ydk文件读取
