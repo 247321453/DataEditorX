@@ -95,6 +95,7 @@ namespace DataEditorX
             this.lb_types = new System.Windows.Forms.Label();
             this.lb_tiptexts = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.btn_undo = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -467,7 +468,7 @@ namespace DataEditorX
             // 
             this.btn_add.Location = new System.Drawing.Point(548, 539);
             this.btn_add.Name = "btn_add";
-            this.btn_add.Size = new System.Drawing.Size(84, 28);
+            this.btn_add.Size = new System.Drawing.Size(75, 28);
             this.btn_add.TabIndex = 5;
             this.btn_add.Text = "&Add";
             this.btn_add.UseVisualStyleBackColor = true;
@@ -543,9 +544,9 @@ namespace DataEditorX
             // 
             // btn_mod
             // 
-            this.btn_mod.Location = new System.Drawing.Point(638, 539);
+            this.btn_mod.Location = new System.Drawing.Point(627, 539);
             this.btn_mod.Name = "btn_mod";
-            this.btn_mod.Size = new System.Drawing.Size(84, 28);
+            this.btn_mod.Size = new System.Drawing.Size(75, 28);
             this.btn_mod.TabIndex = 5;
             this.btn_mod.Text = "&Modify";
             this.btn_mod.UseVisualStyleBackColor = true;
@@ -554,9 +555,9 @@ namespace DataEditorX
             // btn_del
             // 
             this.btn_del.ForeColor = System.Drawing.Color.DarkRed;
-            this.btn_del.Location = new System.Drawing.Point(774, 540);
+            this.btn_del.Location = new System.Drawing.Point(783, 539);
             this.btn_del.Name = "btn_del";
-            this.btn_del.Size = new System.Drawing.Size(84, 28);
+            this.btn_del.Size = new System.Drawing.Size(75, 28);
             this.btn_del.TabIndex = 5;
             this.btn_del.Text = "&Delete";
             this.btn_del.UseVisualStyleBackColor = true;
@@ -565,7 +566,7 @@ namespace DataEditorX
             // btn_lua
             // 
             this.btn_lua.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.btn_lua.Location = new System.Drawing.Point(462, 539);
+            this.btn_lua.Location = new System.Drawing.Point(461, 539);
             this.btn_lua.Name = "btn_lua";
             this.btn_lua.Size = new System.Drawing.Size(84, 28);
             this.btn_lua.TabIndex = 5;
@@ -575,7 +576,7 @@ namespace DataEditorX
             // 
             // btn_reset
             // 
-            this.btn_reset.Location = new System.Drawing.Point(312, 540);
+            this.btn_reset.Location = new System.Drawing.Point(306, 540);
             this.btn_reset.Name = "btn_reset";
             this.btn_reset.Size = new System.Drawing.Size(84, 28);
             this.btn_reset.TabIndex = 5;
@@ -672,6 +673,16 @@ namespace DataEditorX
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundWorker1DoWork);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BackgroundWorker1RunWorkerCompleted);
             // 
+            // btn_undo
+            // 
+            this.btn_undo.Location = new System.Drawing.Point(705, 539);
+            this.btn_undo.Name = "btn_undo";
+            this.btn_undo.Size = new System.Drawing.Size(75, 28);
+            this.btn_undo.TabIndex = 5;
+            this.btn_undo.Text = "&Undo";
+            this.btn_undo.UseVisualStyleBackColor = true;
+            this.btn_undo.Click += new System.EventHandler(this.Btn_undoClick);
+            // 
             // DataEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -704,6 +715,7 @@ namespace DataEditorX
             this.Controls.Add(this.btn_lua);
             this.Controls.Add(this.btn_serach);
             this.Controls.Add(this.btn_del);
+            this.Controls.Add(this.btn_undo);
             this.Controls.Add(this.btn_mod);
             this.Controls.Add(this.btn_add);
             this.Controls.Add(this.btn_PageDown);
@@ -733,6 +745,7 @@ namespace DataEditorX
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+        private System.Windows.Forms.Button btn_undo;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Panel pl_image;
         private System.Windows.Forms.ToolStripMenuItem menuitem_copyselectto;

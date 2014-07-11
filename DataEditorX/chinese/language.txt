@@ -1,6 +1,7 @@
 ﻿DataEditForm->btn_add 添加(&A)
 DataEditForm->btn_del 删除(&D)
 DataEditForm->btn_lua 脚本(&L)
+DataEditForm->btn_undo 撤销(&U)
 DataEditForm->btn_mod 修改(&M)
 DataEditForm->btn_PageDown 下一页
 DataEditForm->btn_PageUp 上一页

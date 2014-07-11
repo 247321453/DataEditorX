@@ -34,6 +34,7 @@ namespace DataEditorX
         bool isdownload;
         bool isbgcheck;
         string NEWVER="0.0.0.0";
+        string undoString;
         List<Card> cardlist=new List<Card>();
         
         Image m_cover;
@@ -75,9 +76,9 @@ namespace DataEditorX
             string datapath=Path.Combine(Application.StartupPath, dir);
             InitPath(datapath);
             
-            LanguageHelper.InitForm(this, conflang);
-            LanguageHelper.LoadMessage(confmsg);
-            LanguageHelper.SetLanguage(this);
+            LANG.InitForm(this, conflang);
+            LANG.LoadMessage(confmsg);
+            LANG.SetLanguage(this);
 
             this.Text=this.Text+" Ver:"+Application.ProductVersion;
             title=this.Text;
@@ -103,9 +104,9 @@ namespace DataEditorX
         void DataEditFormFormClosing(object sender, FormClosingEventArgs e)
         {
             #if DEBUG
-            LanguageHelper.GetLanguage(this);
-            LanguageHelper.SaveLanguage(this, conflang+"bak.txt");
-            LanguageHelper.SaveMessage(confmsg+"bak.txt");
+            LANG.GetLanguage(this);
+            LANG.SaveLanguage(this, conflang+"bak.txt");
+            LANG.SaveMessage(confmsg+"bak.txt");
             #endif
         }
 
@@ -625,6 +626,7 @@ namespace DataEditorX
             if(DataBase.Command(nowCdbFile, DataBase.GetInsertSQL(c,true))>=2)
             {
                 MyMsg.Show(LMSG.AddSucceed);
+                undoString=DataBase.GetDeleteSQL(c);
                 Search(srcCard, true);
                 return true;
             }
@@ -666,6 +668,8 @@ namespace DataEditorX
             if(DataBase.Command(nowCdbFile, sql)>0)
             {
                 MyMsg.Show(LMSG.ModifySucceed);
+                undoString=DataBase.GetDeleteSQL(c);
+                undoString+=DataBase.GetInsertSQL(oldCard,false);
                 Search(srcCard, true);
             }
             else
@@ -689,6 +693,7 @@ namespace DataEditorX
                 if(index<cardlist.Count)
                 {
                     Card c=cardlist[index];
+                    undoString+=DataBase.GetInsertSQL(c, true);
                     sql.Add(DataBase.GetDeleteSQL(c));
                 }
             }
@@ -734,6 +739,17 @@ namespace DataEditorX
                 System.Diagnostics.Process.Start(lua);
             return false;
         }
+        //撤销
+        public void Undo()
+        {
+            if(string.IsNullOrEmpty(undoString))
+            {
+                return;
+            }
+            DataBase.Command(nowCdbFile,undoString);
+            Search(srcCard, true);
+        }
+        
         #endregion
         
         #region 按钮
@@ -766,6 +782,10 @@ namespace DataEditorX
         void Btn_delClick(object sender, EventArgs e)
         {
             DelCards();
+        }
+        void Btn_undoClick(object sender, EventArgs e)
+        {
+            Undo();
         }
         #endregion
         
@@ -854,9 +874,9 @@ namespace DataEditorX
         void Menuitem_aboutClick(object sender, EventArgs e)
         {
             MyMsg.Show(
-                LanguageHelper.GetMsg(LMSG.About)+"\t"+Application.ProductName+"\n"
-                +LanguageHelper.GetMsg(LMSG.Version)+"\t"+Application.ProductVersion+"\n"
-                +LanguageHelper.GetMsg(LMSG.Author)+"\t247321453\n"
+                LANG.GetMsg(LMSG.About)+"\t"+Application.ProductName+"\n"
+                +LANG.GetMsg(LMSG.Version)+"\t"+Application.ProductVersion+"\n"
+                +LANG.GetMsg(LMSG.Author)+"\t247321453\n"
                 +"Email:\t247321453@qq.com");
         }
         
@@ -881,8 +901,8 @@ namespace DataEditorX
         {
             using(OpenFileDialog dlg=new OpenFileDialog())
             {
-                dlg.Title=LanguageHelper.GetMsg(LMSG.SelectDataBasePath);
-                dlg.Filter=LanguageHelper.GetMsg(LMSG.CdbType);
+                dlg.Title=LANG.GetMsg(LMSG.SelectDataBasePath);
+                dlg.Filter=LANG.GetMsg(LMSG.CdbType);
                 if(dlg.ShowDialog()==DialogResult.OK)
                 {
                     Open(dlg.FileName);
@@ -893,8 +913,8 @@ namespace DataEditorX
         {
             using(SaveFileDialog dlg=new SaveFileDialog())
             {
-                dlg.Title=LanguageHelper.GetMsg(LMSG.SelectDataBasePath);
-                dlg.Filter=LanguageHelper.GetMsg(LMSG.CdbType);
+                dlg.Title=LANG.GetMsg(LMSG.SelectDataBasePath);
+                dlg.Filter=LANG.GetMsg(LMSG.CdbType);
                 if(dlg.ShowDialog()==DialogResult.OK)
                 {
                     if(DataBase.Create(dlg.FileName))
@@ -934,8 +954,8 @@ namespace DataEditorX
                 cards.AddRange(cardlist.ToArray());
             using(OpenFileDialog dlg=new OpenFileDialog())
             {
-                dlg.Title=LanguageHelper.GetMsg(LMSG.SelectDataBasePath);
-                dlg.Filter=LanguageHelper.GetMsg(LMSG.CdbType);
+                dlg.Title=LANG.GetMsg(LMSG.SelectDataBasePath);
+                dlg.Filter=LANG.GetMsg(LMSG.CdbType);
                 if(dlg.ShowDialog()==DialogResult.OK)
                 {
                     if(MyMsg.Question(LMSG.IfReplaceExistingCard))
@@ -951,8 +971,8 @@ namespace DataEditorX
                 return;
             using(OpenFileDialog dlg=new OpenFileDialog())
             {
-                dlg.Title=LanguageHelper.GetMsg(LMSG.SelectYdkPath);
-                dlg.Filter=LanguageHelper.GetMsg(LMSG.ydkType);
+                dlg.Title=LANG.GetMsg(LMSG.SelectYdkPath);
+                dlg.Filter=LANG.GetMsg(LMSG.ydkType);
                 if(dlg.ShowDialog()==DialogResult.OK)
                 {
                     SetCards(DataBase.ReadYdk(nowCdbFile, dlg.FileName), false);
@@ -966,7 +986,7 @@ namespace DataEditorX
                 return;
             using(FolderBrowserDialog fdlg=new FolderBrowserDialog())
             {
-                fdlg.Description= LanguageHelper.GetMsg(LMSG.SelectImagePath);
+                fdlg.Description= LANG.GetMsg(LMSG.SelectImagePath);
                 if(fdlg.ShowDialog()==DialogResult.OK)
                 {
                     SetCards(DataBase.ReadImage(nowCdbFile, fdlg.SelectedPath), false);
@@ -1044,5 +1064,7 @@ namespace DataEditorX
             }
         }
         #endregion
+        
+        
     }
 }

@@ -17,13 +17,13 @@ namespace DataEditorX.Language
     /// <summary>
     /// Description of Language.
     /// </summary>
-    public static class LanguageHelper
+    public static class LANG
     {
         static Dictionary<Form, SortedList<string, string>> wordslist;
         static SortedList<LMSG, string> msglist;
         static string SEP="->";
         
-        static LanguageHelper()
+        static LANG()
         {
             wordslist=new Dictionary<Form, SortedList<string, string>>();
             msglist=new SortedList<LMSG, string>();
@@ -267,12 +267,12 @@ namespace DataEditorX.Language
                 StreamWriter sw=new StreamWriter(fs, Encoding.UTF8);
                 foreach(LMSG k in msglist.Keys)
                 {
-                    sw.WriteLine("0x"+((uint)k).ToString("x")+" "+msglist[k].Replace("\n","/n"));
+                    sw.WriteLine("0x"+((uint)k).ToString("x")+"\t"+msglist[k].Replace("\n","/n"));
                 }
                 foreach ( LMSG k in Enum.GetValues(typeof(LMSG)))
                 {
                     if(!msglist.ContainsKey(k))
-                        sw.WriteLine("0x"+((uint)k).ToString("x")+" "+k.ToString());
+                        sw.WriteLine("0x"+((uint)k).ToString("x")+"\t"+k.ToString());
                 }
                 sw.Close();
                 fs.Close();
@@ -330,7 +330,7 @@ namespace DataEditorX.Language
                     {
                         if(!line.StartsWith("#"))
                         {
-                            int si=line.IndexOf(" ");
+                            int si=line.IndexOf("\t");
                             if(si>0)
                             {
                                 sk=line.Substring(0,si);

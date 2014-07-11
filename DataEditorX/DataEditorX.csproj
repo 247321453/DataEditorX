@@ -75,9 +75,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="chs" />
+    <Folder Include="chinese" />
     <Folder Include="Core" />
-    <Folder Include="en" />
+    <Folder Include="english" />
     <Folder Include="Common" />
     <Folder Include="Language" />
   </ItemGroup>
@@ -85,64 +85,64 @@
     <None Include="app.config">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
-    <None Include="chs\card-attribute.txt">
+    <None Include="chinese\card-attribute.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="chs\card-category.txt">
+    <None Include="chinese\card-category.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="chs\card-level.txt">
+    <None Include="chinese\card-level.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="chs\card-race.txt">
+    <None Include="chinese\card-race.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="chs\card-rule.txt">
+    <None Include="chinese\card-rule.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="chs\card-setname.txt">
+    <None Include="chinese\card-setname.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="chs\card-type.txt">
+    <None Include="chinese\card-type.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="chs\cover.jpg">
+    <None Include="chinese\cover.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="chs\language.txt">
+    <None Include="chinese\language.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="chs\message.txt">
+    <None Include="chinese\message.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="en\card-attribute.txt">
+    <None Include="english\card-attribute.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="en\card-category.txt">
+    <None Include="english\card-category.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="en\card-level.txt">
+    <None Include="english\card-level.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="en\card-race.txt">
+    <None Include="english\card-race.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="en\card-rule.txt">
+    <None Include="english\card-rule.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="en\card-setname.txt">
+    <None Include="english\card-setname.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="en\card-type.txt">
+    <None Include="english\card-type.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="en\cover.jpg">
+    <None Include="english\cover.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="en\language.txt">
+    <None Include="english\language.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="en\message.txt">
+    <None Include="english\message.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="readme.txt">

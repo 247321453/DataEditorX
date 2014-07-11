@@ -1,0 +1,35 @@
+﻿0x0	Info
+0x1	Error
+0x2	Warning
+0x3	Question
+0x4	Create succeed!
+0x5	Create fail!
+0x6	Add succeed!
+0x7	Add fail!
+0x8	Code can't is 0!
+0x9	It's exitis!
+0xa	It's no changed.
+0xb	If delete Card(s)?
+0xc	If create script file？
+0xd	If open database?
+0xe	If replace exitis cards?
+0xf	It's new version./nWhether you need to download again?
+0x10	Check update fail，/nPlease Check Network.
+0x11	Find a new version,/nIf Download it?
+0x12	File is't exitis!
+0x13	No select database!
+0x14	select database file
+0x15	select ydk file
+0x16	selcet image folder
+0x17	Download succeed!
+0x18	Download fail！
+0x19	No slect script text!
+0x1a	Delete succeed!
+0x1b	Delete fail!
+0x1c	Modify succeed!
+0x1d	Modify fail!
+0x1e	About  : 
+0x1f	Version: 
+0x20	Author : 
+0x21	cdb file(*.cdb)|*.cdb|all files(*.*)|*.*
+0x22	ydk file(*.ydk)|*.ydk|all files(*.*)|*.*

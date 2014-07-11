@@ -2,6 +2,7 @@
 DataEditForm->btn_del Delte
 DataEditForm->btn_lua Lua
 DataEditForm->btn_mod Modify
+DataEditForm->btn_undo Undo
 DataEditForm->btn_PageDown >>
 DataEditForm->btn_PageUp <<
 DataEditForm->btn_reset Rest

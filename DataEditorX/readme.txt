@@ -1,4 +1,4 @@
-﻿[DataEditorX]1.4.0.0[DataEditorX]
+﻿[DataEditorX]1.4.1.0[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★支持关联cdb文件，命令参数启动。
@@ -28,8 +28,8 @@ Email:247321453@qq.com
 
 支持多语言化
 DataEditorX.exe.config
-<add key="language" value="chs" />简体
-<add key="language" value="en" />英文
+<add key="language" value="chinese" />简体
+<add key="language" value="english" />英文
 
 标题：(DataEditorX+版本号)
 内容：
@@ -41,6 +41,8 @@ DataEditorX.exe.config
 描述不详细的bug，我修复不了。（都不知道是bug是什么）
 
 ★更新历史
+1.4.1.0
+添加撤销上一次操作。
 1.4.0.0
 增加多语言文件的可修改性。
 1.3.4.2

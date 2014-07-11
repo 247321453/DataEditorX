@@ -22,10 +22,10 @@ namespace DataEditorX.Language
         static string info, warning, error, question;
         static MyMsg()
         {
-            info = LanguageHelper.GetMsg(LMSG.titleInfo);
-            warning = LanguageHelper.GetMsg(LMSG.titleWarning);
-            error = LanguageHelper.GetMsg(LMSG.titleError);
-            question = LanguageHelper.GetMsg(LMSG.titleQuestion);
+            info = LANG.GetMsg(LMSG.titleInfo);
+            warning = LANG.GetMsg(LMSG.titleWarning);
+            error = LANG.GetMsg(LMSG.titleError);
+            question = LANG.GetMsg(LMSG.titleQuestion);
         }
         public static void Show(string strMsg)
         {
@@ -53,22 +53,22 @@ namespace DataEditorX.Language
         }
         public static void Show(LMSG msg)
         {
-            MessageBox.Show(LanguageHelper.GetMsg(msg), info,
+            MessageBox.Show(LANG.GetMsg(msg), info,
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         public static void Warning(LMSG msg)
         {
-            MessageBox.Show(LanguageHelper.GetMsg(msg), warning,
+            MessageBox.Show(LANG.GetMsg(msg), warning,
                             MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
         public static void Error(LMSG msg)
         {
-            MessageBox.Show(LanguageHelper.GetMsg(msg), error,
+            MessageBox.Show(LANG.GetMsg(msg), error,
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         public static bool Question(LMSG msg)
         {
-            if(MessageBox.Show(LanguageHelper.GetMsg(msg), question,
+            if(MessageBox.Show(LANG.GetMsg(msg), question,
                                MessageBoxButtons.OKCancel,
                                MessageBoxIcon.Question)==DialogResult.OK)
                 return true;
