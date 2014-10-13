@@ -59,6 +59,8 @@
     <Compile Include="Common\MyBitmap.cs" />
     <Compile Include="Common\ZipStorer.cs" />
     <Compile Include="Core\Card.cs" />
+    <Compile Include="Core\CardAttribute.cs" />
+    <Compile Include="Core\CardRace.cs" />
     <Compile Include="Core\CardType.cs" />
     <Compile Include="Core\DataBase.cs" />
     <Compile Include="Core\DataManager.cs" />

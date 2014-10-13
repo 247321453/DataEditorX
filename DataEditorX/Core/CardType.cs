@@ -14,28 +14,28 @@ namespace DataEditorX.Core
 	/// </summary>
 	public enum CardType : long
 	{
-        MONSTER = 0x1,
-        SPELL = 0x2,
-        TRAP = 0x4,
-        NORMAL = 0x10,
-        EFFECT = 0x20,
-        FUSION = 0x40,
-        RITUAL = 0x80,
-        TRAPMONSTER = 0x100,
-        SPIRIT = 0x200,
-        UNION = 0x400,
-        DUAL = 0x800,
-        TUNER = 0x1000,
-        SYNCHRO = 0x2000,
-        TOKEN = 0x4000,
-        QUICKPLAY = 0x10000,
-        CONTINUOUS = 0x20000,
-        EQUIP = 0x40000,
-        FIELD = 0x80000,
-        COUNTER = 0x100000,
-        FLIP = 0x200000,
-        TOON = 0x400000,
-        XYZ = 0x800000,
-        PENDULUM = 0x1000000,
+		TYPE_MONSTER		=0x1		,//--怪兽卡
+		TYPE_SPELL			=0x2		,//--魔法卡
+		TYPE_TRAP			=0x4		,//--陷阱卡
+		TYPE_NORMAL			=0x10		,//--通常
+		TYPE_EFFECT			=0x20		,//--效果
+		TYPE_FUSION			=0x40		,//--融合
+		TYPE_RITUAL			=0x80		,//--仪式
+		TYPE_TRAPMONSTER	=0x100		,//--陷阱怪兽
+		TYPE_SPIRIT			=0x200		,//--灵魂
+		TYPE_UNION			=0x400		,//--同盟
+		TYPE_DUAL			=0x800		,//--二重
+		TYPE_TUNER			=0x1000		,//--调整
+		TYPE_SYNCHRO		=0x2000		,//--同调
+		TYPE_TOKEN			=0x4000		,//--衍生物
+		TYPE_QUICKPLAY		=0x10000	,//--速攻
+		TYPE_CONTINUOUS		=0x20000	,//--永续
+		TYPE_EQUIP			=0x40000	,//--装备
+		TYPE_FIELD			=0x80000	,//--场地
+		TYPE_COUNTER		=0x100000	,//--反击
+		TYPE_FLIP			=0x200000	,//--翻转
+		TYPE_TOON			=0x400000	,//--卡通
+		TYPE_XYZ			=0x800000	,//--超量
+		TYPE_PENDULUM		=0x1000000	,//--摇摆
 	}
 }

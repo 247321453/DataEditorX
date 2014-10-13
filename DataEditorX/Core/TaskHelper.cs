@@ -86,12 +86,12 @@ namespace DataEditorX.Core
 				if(File.Exists(jpg)){
 					Bitmap bp=new Bitmap(jpg);
 					Bitmap bmp=null;
-					if(c.IsType(CardType.XYZ)){
+					if(c.IsType(CardType.TYPE_XYZ)){
 						bmp = MyBitmap.Cut(bp,
 						                  imgSet.xyz_x,imgSet.xyz_y,
 						                  imgSet.xyz_w,imgSet.xyz_h);
 					}
-					else if(c.IsType(CardType.PENDULUM)){
+					else if(c.IsType(CardType.TYPE_PENDULUM)){
 						bmp = MyBitmap.Cut(bp,
 						                  imgSet.pendulum_x,imgSet.pendulum_y,
 						                  imgSet.pendulum_w,imgSet.pendulum_h);

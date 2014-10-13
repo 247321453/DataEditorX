@@ -46,3 +46,4 @@
 0x2d	Export Mse-set OK
 0x2e	Cut Images...
 0x2f	Cut Images OK
+0x30	No Select Cards
