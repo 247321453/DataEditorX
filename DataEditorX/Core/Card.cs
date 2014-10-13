@@ -15,7 +15,7 @@ namespace DataEditorX.Core
         /// </summary>
         /// <param name="cardCode">密码</param>
         /// <param name="cardName">名字</param>
-        public Card(int cardCode)
+        public Card(long cardCode)
         {
             int i;
             this.id = cardCode;
@@ -164,5 +164,11 @@ namespace DataEditorX.Core
         }
         #endregion
 
+        public bool IsType(CardType type){
+        	if((this.type & (long)type) == (long)type)
+				return true;
+			return false;
+        }
     }
+    
 }

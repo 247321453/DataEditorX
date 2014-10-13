@@ -56,9 +56,15 @@
   <ItemGroup>
     <Compile Include="Common\CheckUpdate.cs" />
     <Compile Include="Common\DoubleContorl.cs" />
+    <Compile Include="Common\MyBitmap.cs" />
+    <Compile Include="Common\ZipStorer.cs" />
     <Compile Include="Core\Card.cs" />
+    <Compile Include="Core\CardType.cs" />
     <Compile Include="Core\DataBase.cs" />
     <Compile Include="Core\DataManager.cs" />
+    <Compile Include="Core\ImageSet.cs" />
+    <Compile Include="Core\MSE.cs" />
+    <Compile Include="Core\TaskHelper.cs" />
     <Compile Include="DataEditForm.cs" />
     <Compile Include="DataEditForm.Designer.cs">
       <DependentUpon>DataEditForm.cs</DependentUpon>
@@ -80,6 +86,7 @@
     <Folder Include="english" />
     <Folder Include="Common" />
     <Folder Include="Language" />
+    <Folder Include="mse" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -143,6 +150,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="english\message.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="mse\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="mse\download.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="mse\update.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="mse\update.exe.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="readme.txt">

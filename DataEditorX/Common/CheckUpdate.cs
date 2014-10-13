@@ -77,7 +77,7 @@ namespace DataEditorX
         }
         #endregion
         
-        public static void DownLoad(string filename)
+        public static bool DownLoad(string filename)
         {
             try
             {
@@ -106,6 +106,7 @@ namespace DataEditorX
                 isOK= false;
             }
             isOK=true;
+            return isOK;
         }
     }
 }

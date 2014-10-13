@@ -1,5 +1,7 @@
-﻿[DataEditorX]1.4.1.0[DataEditorX]
+﻿[DataEditorX]1.5.0.0[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
+
+★使用前，请关联lua的打开方式，例如记事本，notepad++，等。
 
 ★支持关联cdb文件，命令参数启动。
 关联cdb文件：
@@ -41,6 +43,10 @@ DataEditorX.exe.config
 描述不详细的bug，我修复不了。（都不知道是bug是什么）
 
 ★更新历史
+1.5.0.0
+修复卡名搜索，读取ydk，读取图片
+添加导出MSE存档，裁剪图片
+可以记住最后打开数据库
 1.4.1.0
 添加撤销上一次操作。
 1.4.0.0

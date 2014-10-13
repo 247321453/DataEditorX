@@ -41,6 +41,9 @@ namespace DataEditorX.Core
                            continue;
                         strkey=line.Substring(0,l).Replace("0x","");
                         strword=line.Substring(l+1);
+                        int t=strword.IndexOf('\t');
+                        if(t>0)
+                        	strword=strword.Substring(0,t);
                         if(line.StartsWith("0x"))
                             long.TryParse(strkey, NumberStyles.HexNumber, null, out lkey);
                         else
