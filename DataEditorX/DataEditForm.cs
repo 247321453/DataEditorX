@@ -1063,6 +1063,14 @@ namespace DataEditorX
 		#endregion
 		
 		#region setcode
+		string Add0(long num,int len){
+			string str=num.ToString("x");
+			int j=len-str.Length;
+			for(int i=0;i<j;i++){
+				str="0"+str;
+			}		
+			return str;
+		}
 		void setSetcode(long setcode){
 			string setname="";
 			if(setcode<0){
@@ -1073,19 +1081,19 @@ namespace DataEditorX
 			long s3=(setcode>>0x20)&0xffff;
 			long s4=(setcode>>0x30)&0xffff;
 			if(s4>0)
-				setname=s4.ToString("x")
-					+" "+s3.ToString("x")
-					+" "+s2.ToString("x")
-					+" "+s1.ToString("x");
+				setname=Add0(s4,4)
+					+" "+Add0(s3,4)
+					+" "+Add0(s2,4)
+					+" "+Add0(s1,4);
 			else if(s3>0)
-				setname=s3.ToString("x")
-					+" "+s2.ToString("x")
-					+" "+s1.ToString("x");
+				setname=Add0(s3,4)
+					+" "+Add0(s2,4)
+					+" "+Add0(s1,4);
 			else if(s2>0)
-				setname=s2.ToString("x")
-					+" "+s1.ToString("x");
+				setname=Add0(s2,4)
+					+" "+Add0(s1,4);
 			else if(s1>0)
-				setname=s1.ToString("x");
+				setname=Add0(s1,4);
 			else
 				setname="0";
 			tb_setcode.Text=setname;
