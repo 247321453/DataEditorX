@@ -1,7 +1,11 @@
-﻿[DataEditorX]1.5.1.0[DataEditorX]
+﻿[DataEditorX]1.5.1.1[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★使用前，请关联lua的打开方式，例如记事本，notepad++，等。
+
+★支援Magic Set Editor 2
+下载/更新：
+Magic Set Editor 2/update/download.bat
 
 ★支持关联cdb文件，命令参数启动。
 关联cdb文件：
@@ -43,6 +47,8 @@ DataEditorX.exe.config
 描述不详细的bug，我修复不了。（都不知道是bug是什么）
 
 ★更新历史
+1.5.1.1
+改MSE更新器的默认路径
 1.5.1.0
 完善系列框,等待导出MSE存档
 1.5.0.0

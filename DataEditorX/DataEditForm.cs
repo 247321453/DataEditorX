@@ -1073,6 +1073,7 @@ namespace DataEditorX
 		}
 		void setSetcode(long setcode){
 			string setname="";
+			string strtip="";
 			if(setcode<0){
 				setcode = getSetcodeBySelect();
 			}
@@ -1080,23 +1081,47 @@ namespace DataEditorX
 			long s2=(setcode>>0x10)&0xffff;
 			long s3=(setcode>>0x20)&0xffff;
 			long s4=(setcode>>0x30)&0xffff;
-			if(s4>0)
+			if(s4>0){
 				setname=Add0(s4,4)
 					+" "+Add0(s3,4)
 					+" "+Add0(s2,4)
 					+" "+Add0(s1,4);
-			else if(s3>0)
+				strtip=DataManager.GetValue(dicSetnames,s1)
+					+Environment.NewLine
+					+DataManager.GetValue(dicSetnames,s2)
+					+Environment.NewLine
+					+DataManager.GetValue(dicSetnames,s3)
+					+Environment.NewLine
+					+DataManager.GetValue(dicSetnames,s4);
+			}
+			else if(s3>0){
 				setname=Add0(s3,4)
 					+" "+Add0(s2,4)
 					+" "+Add0(s1,4);
-			else if(s2>0)
+				strtip=DataManager.GetValue(dicSetnames,s1)
+					+Environment.NewLine
+					+DataManager.GetValue(dicSetnames,s2)
+					+Environment.NewLine
+					+DataManager.GetValue(dicSetnames,s3);
+			}
+			else if(s2>0){
 				setname=Add0(s2,4)
 					+" "+Add0(s1,4);
-			else if(s1>0)
+				strtip=DataManager.GetValue(dicSetnames,s1)
+					+Environment.NewLine
+					+DataManager.GetValue(dicSetnames,s2);
+			}
+			else if(s1>0){
 				setname=Add0(s1,4);
-			else
+				strtip=DataManager.GetValue(dicSetnames,s1);
+			}
+			else{
 				setname="0";
+				strtip="N/A";
+			}
+			toolTip1.SetToolTip(lb_setcode,strtip);
 			tb_setcode.Text=setname;
+			
 		}
 		long getSetcodeByText(){
 			long ltemp;

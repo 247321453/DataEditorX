@@ -35,6 +35,7 @@ namespace DataEditorX
         /// </summary>
         private void InitializeComponent()
         {
+        	this.components = new System.ComponentModel.Container();
         	this.menuStrip1 = new System.Windows.Forms.MenuStrip();
         	this.menuitem_file = new System.Windows.Forms.ToolStripMenuItem();
         	this.menuitem_open = new System.Windows.Forms.ToolStripMenuItem();
@@ -105,6 +106,7 @@ namespace DataEditorX
         	this.tb_setcode = new System.Windows.Forms.TextBox();
         	this.lb_setcode = new System.Windows.Forms.Label();
         	this.btn_img = new System.Windows.Forms.Button();
+        	this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
         	this.menuStrip1.SuspendLayout();
         	this.SuspendLayout();
         	// 
@@ -836,6 +838,7 @@ namespace DataEditorX
         	this.ResumeLayout(false);
         	this.PerformLayout();
         }
+        private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.ToolStripSeparator tsep2;
         private System.Windows.Forms.ToolStripMenuItem menuitem_openLastDataBase;
         private System.Windows.Forms.ToolStripMenuItem menuitem_cutimages;

@@ -88,7 +88,8 @@
     <Folder Include="english" />
     <Folder Include="Common" />
     <Folder Include="Language" />
-    <Folder Include="mse" />
+    <Folder Include="Magic Set Editor 2" />
+    <Folder Include="Magic Set Editor 2\update" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -124,6 +125,7 @@
     <None Include="chinese\message.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="chinese\mse-set.txt" />
     <None Include="english\card-attribute.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -154,16 +156,16 @@
     <None Include="english\message.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="mse\readme.txt">
+    <None Include="Magic Set Editor 2\update\download.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="mse\download.bat">
+    <None Include="Magic Set Editor 2\update\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="mse\update.exe">
+    <None Include="Magic Set Editor 2\update\update.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="mse\update.exe.config">
+    <None Include="Magic Set Editor 2\update\update.exe.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="readme.txt">

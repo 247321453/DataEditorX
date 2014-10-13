@@ -99,5 +99,10 @@ namespace DataEditorX.Core
             }
             return words;
         }
+        public static string GetValue(Dictionary<long, string> dic,long key){
+        	if(dic.ContainsKey(key))
+        		return dic[key];
+        	return key.ToString("x");
+        }
     }
 }
