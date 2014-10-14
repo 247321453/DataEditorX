@@ -25,6 +25,7 @@ namespace DataEditorX.Core
 		CopyDataBase,
 		SaveAsMSE,
 		CutImages,
+		ConvertImages,
 	}
 	/// <summary>
 	/// Description of TaskHelper.
@@ -75,31 +76,34 @@ namespace DataEditorX.Core
 			else
 				MyMsg.Show(LMSG.DownloadFail);
 		}
-		
 		public static void CutImages(string imgpath,string savepath)
+		{
+			CutImages(imgpath,savepath,true);
+		}
+		public static void CutImages(string imgpath,string savepath,bool isreplace)
 		{
 			imgSet.Init();
 			foreach(Card c in cardlist)
 			{
 				string jpg=Path.Combine(imgpath, c.id+".jpg");
 				string savejpg=Path.Combine(savepath, c.id+".jpg");
-				if(File.Exists(jpg)){
+				if(File.Exists(jpg) && (isreplace || !File.Exists(savejpg))){
 					Bitmap bp=new Bitmap(jpg);
 					Bitmap bmp=null;
 					if(c.IsType(CardType.TYPE_XYZ)){
 						bmp = MyBitmap.Cut(bp,
-						                  imgSet.xyz_x,imgSet.xyz_y,
-						                  imgSet.xyz_w,imgSet.xyz_h);
+						                   imgSet.xyz_x,imgSet.xyz_y,
+						                   imgSet.xyz_w,imgSet.xyz_h);
 					}
 					else if(c.IsType(CardType.TYPE_PENDULUM)){
 						bmp = MyBitmap.Cut(bp,
-						                  imgSet.pendulum_x,imgSet.pendulum_y,
-						                  imgSet.pendulum_w,imgSet.pendulum_h);
+						                   imgSet.pendulum_x,imgSet.pendulum_y,
+						                   imgSet.pendulum_w,imgSet.pendulum_h);
 					}
 					else{
 						bmp = MyBitmap.Cut(bp,
-						                  imgSet.other_x,imgSet.other_y,
-						                  imgSet.other_w,imgSet.other_h);
+						                   imgSet.other_x,imgSet.other_y,
+						                   imgSet.other_w,imgSet.other_h);
 					}
 					MyBitmap.SaveAsJPEG(bmp, savejpg, imgSet.quilty);
 				}
@@ -115,11 +119,46 @@ namespace DataEditorX.Core
 			MyBitmap.SaveAsJPEG(MyBitmap.Zoom(bmp, imgSet.w, imgSet.h),
 			                    saveimg2, imgSet.quilty);
 		}
+		public static void ConvertImages(string imgpath)
+		{
+			ConvertImages(imgpath,true);
+		}
+		public static void ConvertImages(string imgpath,bool isreplace)
+		{
+			imgSet.Init();
+			string picspath=Path.Combine(imgpath,"pics");
+			string thubpath=Path.Combine(picspath,"thumbnail");
+			string[] files=Directory.GetFiles(imgpath);
+			foreach(string f in files){
+				string ex=Path.GetExtension(f).ToLower();
+				string name=Path.GetFileNameWithoutExtension(f);
+				string jpg_b=Path.Combine(picspath,name+".jpg");
+				string jpg_s=Path.Combine(thubpath,name+".jpg");
+				if(ex==".jpg"||ex==".png"||ex==".bmp"){
+					if(File.Exists(f)){
+						//存在大图
+						Bitmap bmp=new Bitmap(f);
+						if(isreplace || !File.Exists(jpg_b)){
+							
+							MyBitmap.SaveAsJPEG(MyBitmap.Zoom(bmp, imgSet.W, imgSet.H),
+							                    jpg_b, imgSet.quilty);
+						}
+						if(isreplace || !File.Exists(jpg_s)){
+							MyBitmap.SaveAsJPEG(MyBitmap.Zoom(bmp, imgSet.w, imgSet.h),
+							                    jpg_s, imgSet.quilty);
+							
+						}
+					}
+				}
+			}
+		}
 		
 		public static void Run(){
+			bool replace;
+			bool showNew;
 			switch(nowTask){
 				case MyTask.CheckUpdate:
-					bool showNew=false;
+					showNew=false;
 					if(mArgs!=null && mArgs.Length>=1){
 						showNew=(mArgs[0]==Boolean.TrueString)?true:false;
 					}
@@ -127,16 +166,21 @@ namespace DataEditorX.Core
 					break;
 				case MyTask.CopyDataBase:
 					if(mArgs!=null && mArgs.Length>=2){
-						string filename=mArgs[0];
-						bool replace=(mArgs[1]==Boolean.TrueString)?true:false;
-						DataBase.CopyDB(filename, replace,cardlist);
+						string filename=mArgs[0];						
+						replace=(mArgs[1]==Boolean.TrueString)?true:false;
+						DataBase.CopyDB(filename, !replace,cardlist);
 						//
 						MyMsg.Show(LMSG.copyDBIsOK);
 					}
 					break;
 				case MyTask.CutImages:
 					if(mArgs!=null && mArgs.Length>=2){
-						CutImages(mArgs[0],mArgs[1]);
+						replace=true;
+						if(mArgs.Length>=3){
+							if(mArgs[2]==Boolean.FalseString)
+								replace=false;
+						}
+						CutImages(mArgs[0],mArgs[1],replace);
 						MyMsg.Show(LMSG.CutImageOK);
 					}
 					break;
@@ -144,6 +188,17 @@ namespace DataEditorX.Core
 					if(mArgs!=null && mArgs.Length>=2){
 						MSE.Save(mArgs[0], cardlist, mArgs[1]);
 						MyMsg.Show(LMSG.SaveMseOK);
+					}
+					break;
+				case MyTask.ConvertImages:
+					if(mArgs!=null && mArgs.Length>=1){
+						replace=true;
+						if(mArgs.Length>=2){
+							if(mArgs[1]==Boolean.FalseString)
+								replace=false;
+						}
+						ConvertImages(mArgs[0],replace);
+						MyMsg.Show(LMSG.ConvertImageOK);
 					}
 					break;
 			}

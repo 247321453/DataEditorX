@@ -63,6 +63,9 @@ namespace DataEditorX.Language
         CutImage,
         CutImageOK,
         NoSelectCard,
+        IfReplaceExistingImage,
+        ConvertImage,
+        ConvertImageOK,
         COUNT,
     }
 }

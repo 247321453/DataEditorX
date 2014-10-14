@@ -1,4 +1,4 @@
-﻿[DataEditorX]1.5.1.1[DataEditorX]
+﻿[DataEditorX]1.5.2.0[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★使用前，请关联lua的打开方式，例如记事本，notepad++，等。
@@ -47,6 +47,9 @@ DataEditorX.exe.config
 描述不详细的bug，我修复不了。（都不知道是bug是什么）
 
 ★更新历史
+1.5.2.0
+修复复制卡片的替换
+增加批量导入卡图
 1.5.1.1
 改MSE更新器的默认路径
 1.5.1.0

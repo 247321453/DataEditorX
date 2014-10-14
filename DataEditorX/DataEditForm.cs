@@ -80,11 +80,11 @@ namespace DataEditorX
 			LANG.SetLanguage(this);
 
 			this.Text=this.Text+" Ver:"+Application.ProductVersion;
-			title=this.Text;
 			
 			#if DEBUG
 			this.Text=this.Text+"(DEBUG)";
 			#endif
+			title=this.Text;
 			
 			InitGameData();
 			
@@ -1068,7 +1068,7 @@ namespace DataEditorX
 			int j=len-str.Length;
 			for(int i=0;i<j;i++){
 				str="0"+str;
-			}		
+			}
 			return str;
 		}
 		void setSetcode(long setcode){
@@ -1179,6 +1179,9 @@ namespace DataEditorX
 			List<Card> cards=new List<Card>();
 			if(onlyselect)
 			{
+				#if DEBUG
+				MessageBox.Show("select");
+				#endif
 				foreach(ListViewItem lvitem in lv_cardlist.SelectedItems)
 				{
 					int index=lvitem.Index+(page-1)*MaxRow;
@@ -1241,8 +1244,9 @@ namespace DataEditorX
 				return;
 			if(isRun())
 				return;
+			bool isreplace=MyMsg.Question(LMSG.IfReplaceExistingImage);
 			TaskHelper.SetTask(MyTask.CutImages, cardlist.ToArray(),
-			                   PICPATH, IMAGEPATH);
+			                   PICPATH, IMAGEPATH, isreplace.ToString());
 			Run(LANG.GetMsg(LMSG.CutImage));
 		}
 		void Menuitem_saveasmse_selectClick(object sender, EventArgs e)
@@ -1277,5 +1281,23 @@ namespace DataEditorX
 		}
 		#endregion
 		
+		#region Convert images
+		void Menuitem_convertimageClick(object sender, EventArgs e)
+		{
+			if(isRun())
+				return;
+			using(FolderBrowserDialog fdlg=new FolderBrowserDialog())
+			{
+				fdlg.Description= LANG.GetMsg(LMSG.SelectImagePath);
+				if(fdlg.ShowDialog()==DialogResult.OK)
+				{
+					bool isreplace=MyMsg.Question(LMSG.IfReplaceExistingImage);
+					TaskHelper.SetTask(MyTask.ConvertImages, null,
+					                   fdlg.SelectedPath, isreplace.ToString());
+					Run(LANG.GetMsg(LMSG.ConvertImage));
+				}
+			}
+		}
+		#endregion
 	}
 }
