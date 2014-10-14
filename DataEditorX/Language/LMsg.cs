@@ -66,6 +66,7 @@ namespace DataEditorX.Language
         IfReplaceExistingImage,
         ConvertImage,
         ConvertImageOK,
+        CompDBOK,
         COUNT,
     }
 }

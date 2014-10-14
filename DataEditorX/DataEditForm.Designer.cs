@@ -46,6 +46,7 @@ namespace DataEditorX
         	this.menuitem_saveasmse = new System.Windows.Forms.ToolStripMenuItem();
         	this.tsep4 = new System.Windows.Forms.ToolStripSeparator();
         	this.menuitem_cutimages = new System.Windows.Forms.ToolStripMenuItem();
+        	this.menuitem_convertimage = new System.Windows.Forms.ToolStripMenuItem();
         	this.tsep1 = new System.Windows.Forms.ToolStripSeparator();
         	this.menuitem_readydk = new System.Windows.Forms.ToolStripMenuItem();
         	this.menuitem_readimages = new System.Windows.Forms.ToolStripMenuItem();
@@ -107,7 +108,8 @@ namespace DataEditorX
         	this.lb_setcode = new System.Windows.Forms.Label();
         	this.btn_img = new System.Windows.Forms.Button();
         	this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-        	this.menuitem_convertimage = new System.Windows.Forms.ToolStripMenuItem();
+        	this.tsep5 = new System.Windows.Forms.ToolStripSeparator();
+        	this.menuitem_compdb = new System.Windows.Forms.ToolStripMenuItem();
         	this.menuStrip1.SuspendLayout();
         	this.SuspendLayout();
         	// 
@@ -127,6 +129,8 @@ namespace DataEditorX
         	this.menuitem_file.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
         	        	        	this.menuitem_open,
         	        	        	this.menuitem_new,
+        	        	        	this.menuitem_compdb,
+        	        	        	this.tsep5,
         	        	        	this.menuitem_copyselectto,
         	        	        	this.menuitem_saveasmse_select,
         	        	        	this.menuitem_copyto,
@@ -202,6 +206,13 @@ namespace DataEditorX
         	this.menuitem_cutimages.Size = new System.Drawing.Size(232, 22);
         	this.menuitem_cutimages.Text = "Cut Images";
         	this.menuitem_cutimages.Click += new System.EventHandler(this.Menuitem_cutimagesClick);
+        	// 
+        	// menuitem_convertimage
+        	// 
+        	this.menuitem_convertimage.Name = "menuitem_convertimage";
+        	this.menuitem_convertimage.Size = new System.Drawing.Size(232, 22);
+        	this.menuitem_convertimage.Text = "Inport Images";
+        	this.menuitem_convertimage.Click += new System.EventHandler(this.Menuitem_convertimageClick);
         	// 
         	// tsep1
         	// 
@@ -775,12 +786,17 @@ namespace DataEditorX
         	this.btn_img.UseVisualStyleBackColor = true;
         	this.btn_img.Click += new System.EventHandler(this.Btn_imgClick);
         	// 
-        	// menuitem_convertimage
+        	// tsep5
         	// 
-        	this.menuitem_convertimage.Name = "menuitem_convertimage";
-        	this.menuitem_convertimage.Size = new System.Drawing.Size(232, 22);
-        	this.menuitem_convertimage.Text = "Convert Images";
-        	this.menuitem_convertimage.Click += new System.EventHandler(this.Menuitem_convertimageClick);
+        	this.tsep5.Name = "tsep5";
+        	this.tsep5.Size = new System.Drawing.Size(229, 6);
+        	// 
+        	// menuitem_compdb
+        	// 
+        	this.menuitem_compdb.Name = "menuitem_compdb";
+        	this.menuitem_compdb.Size = new System.Drawing.Size(232, 22);
+        	this.menuitem_compdb.Text = "Compression DataBase";
+        	this.menuitem_compdb.Click += new System.EventHandler(this.Menuitem_compdbClick);
         	// 
         	// DataEditForm
         	// 
@@ -847,6 +863,8 @@ namespace DataEditorX
         	this.ResumeLayout(false);
         	this.PerformLayout();
         }
+        private System.Windows.Forms.ToolStripSeparator tsep5;
+        private System.Windows.Forms.ToolStripMenuItem menuitem_compdb;
         private System.Windows.Forms.ToolStripMenuItem menuitem_convertimage;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.ToolStripSeparator tsep2;

@@ -23,6 +23,7 @@ DataEditForm->lb4 /
 DataEditForm->lb5 /
 DataEditForm->lv_cardlist0 卡片密码
 DataEditForm->lv_cardlist1 卡片名称
+DataEditForm->menuitem_compdb 压缩当前数据库
 DataEditForm->menuitem_convertimage 批量导入卡图
 DataEditForm->menuitem_openLastDataBase 最后打开的数据库
 DataEditForm->menuitem_cutimages 裁剪列表卡片的图片

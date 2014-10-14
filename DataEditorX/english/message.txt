@@ -50,3 +50,4 @@
 0x31	If Replace Iamge When it's exisit?
 0x32	Converting Images
 0x33	Convert Images OK
+0x34	Compression DataBase OK

@@ -983,7 +983,29 @@ namespace DataEditorX
 				}
 			}
 		}
-		
+		void Menuitem_compdbClick(object sender, EventArgs e)
+		{
+			if(!Check())
+				return;
+			DataBase.Compression(nowCdbFile);
+			MyMsg.Show(LMSG.CompDBOK);
+		}
+		void Menuitem_convertimageClick(object sender, EventArgs e)
+		{
+			if(isRun())
+				return;
+			using(FolderBrowserDialog fdlg=new FolderBrowserDialog())
+			{
+				fdlg.Description= LANG.GetMsg(LMSG.SelectImagePath);
+				if(fdlg.ShowDialog()==DialogResult.OK)
+				{
+					bool isreplace=MyMsg.Question(LMSG.IfReplaceExistingImage);
+					TaskHelper.SetTask(MyTask.ConvertImages, null,
+					                   fdlg.SelectedPath, GAMEPATH, isreplace.ToString());
+					Run(LANG.GetMsg(LMSG.ConvertImage));
+				}
+			}
+		}
 		void Menuitem_readydkClick(object sender, EventArgs e)
 		{
 			if(!Check())
@@ -1281,23 +1303,5 @@ namespace DataEditorX
 		}
 		#endregion
 		
-		#region Convert images
-		void Menuitem_convertimageClick(object sender, EventArgs e)
-		{
-			if(isRun())
-				return;
-			using(FolderBrowserDialog fdlg=new FolderBrowserDialog())
-			{
-				fdlg.Description= LANG.GetMsg(LMSG.SelectImagePath);
-				if(fdlg.ShowDialog()==DialogResult.OK)
-				{
-					bool isreplace=MyMsg.Question(LMSG.IfReplaceExistingImage);
-					TaskHelper.SetTask(MyTask.ConvertImages, null,
-					                   fdlg.SelectedPath, GAMEPATH, isreplace.ToString());
-					Run(LANG.GetMsg(LMSG.ConvertImage));
-				}
-			}
-		}
-		#endregion
 	}
 }
