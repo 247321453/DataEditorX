@@ -1293,7 +1293,7 @@ namespace DataEditorX
 				{
 					bool isreplace=MyMsg.Question(LMSG.IfReplaceExistingImage);
 					TaskHelper.SetTask(MyTask.ConvertImages, null,
-					                   fdlg.SelectedPath, isreplace.ToString());
+					                   fdlg.SelectedPath, GAMEPATH, isreplace.ToString());
 					Run(LANG.GetMsg(LMSG.ConvertImage));
 				}
 			}

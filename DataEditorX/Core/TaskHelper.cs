@@ -119,14 +119,10 @@ namespace DataEditorX.Core
 			MyBitmap.SaveAsJPEG(MyBitmap.Zoom(bmp, imgSet.w, imgSet.h),
 			                    saveimg2, imgSet.quilty);
 		}
-		public static void ConvertImages(string imgpath)
-		{
-			ConvertImages(imgpath,true);
-		}
-		public static void ConvertImages(string imgpath,bool isreplace)
+		public static void ConvertImages(string imgpath,string gamepath,bool isreplace)
 		{
 			imgSet.Init();
-			string picspath=Path.Combine(imgpath,"pics");
+			string picspath=Path.Combine(gamepath,"pics");
 			string thubpath=Path.Combine(picspath,"thumbnail");
 			string[] files=Directory.GetFiles(imgpath);
 			foreach(string f in files){
@@ -191,13 +187,13 @@ namespace DataEditorX.Core
 					}
 					break;
 				case MyTask.ConvertImages:
-					if(mArgs!=null && mArgs.Length>=1){
+					if(mArgs!=null && mArgs.Length>=2){
 						replace=true;
-						if(mArgs.Length>=2){
-							if(mArgs[1]==Boolean.FalseString)
+						if(mArgs.Length>=3){
+							if(mArgs[2]==Boolean.FalseString)
 								replace=false;
 						}
-						ConvertImages(mArgs[0],replace);
+						ConvertImages(mArgs[0],mArgs[1],replace);
 						MyMsg.Show(LMSG.ConvertImageOK);
 					}
 					break;
