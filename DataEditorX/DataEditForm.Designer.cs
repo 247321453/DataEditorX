@@ -465,7 +465,7 @@ namespace DataEditorX
         	// 
         	// tb_pleft
         	// 
-        	this.tb_pleft.Location = new System.Drawing.Point(275, 313);
+        	this.tb_pleft.Location = new System.Drawing.Point(297, 312);
         	this.tb_pleft.MaxLength = 12;
         	this.tb_pleft.Name = "tb_pleft";
         	this.tb_pleft.Size = new System.Drawing.Size(38, 21);
@@ -475,7 +475,7 @@ namespace DataEditorX
         	// 
         	// tb_pright
         	// 
-        	this.tb_pright.Location = new System.Drawing.Point(331, 313);
+        	this.tb_pright.Location = new System.Drawing.Point(353, 313);
         	this.tb_pright.MaxLength = 12;
         	this.tb_pright.Name = "tb_pright";
         	this.tb_pright.Size = new System.Drawing.Size(38, 21);
@@ -569,7 +569,7 @@ namespace DataEditorX
         	// 
         	// tb_atk
         	// 
-        	this.tb_atk.Location = new System.Drawing.Point(449, 311);
+        	this.tb_atk.Location = new System.Drawing.Point(450, 311);
         	this.tb_atk.MaxLength = 12;
         	this.tb_atk.Name = "tb_atk";
         	this.tb_atk.Size = new System.Drawing.Size(38, 21);
@@ -692,7 +692,7 @@ namespace DataEditorX
         	// lb2
         	// 
         	this.lb2.AutoSize = true;
-        	this.lb2.Location = new System.Drawing.Point(317, 317);
+        	this.lb2.Location = new System.Drawing.Point(339, 316);
         	this.lb2.Name = "lb2";
         	this.lb2.Size = new System.Drawing.Size(11, 12);
         	this.lb2.TabIndex = 7;

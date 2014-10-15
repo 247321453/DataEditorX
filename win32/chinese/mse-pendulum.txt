@@ -12,9 +12,9 @@
 		%desc%
 	attack: %atk%
 	defense: %def%
-	gamecode: %code%
 	pendulum: medium
 	pendulum scale 1: %pl%
 	pendulum scale 2: %pr%
 	pendulum text: 
 		%pdesc%
+	gamecode: %code%

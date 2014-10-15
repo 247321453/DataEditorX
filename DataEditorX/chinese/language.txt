@@ -13,7 +13,7 @@ DataEditForm->lb_atkdef ATK/DEF
 DataEditForm->lb_cardalias 同名卡
 DataEditForm->lb_cardcode 卡片密码
 DataEditForm->lb_categorys 效果种类
-DataEditForm->lb_pleft_right PScale
+DataEditForm->lb_pleft_right 灵摆刻度
 DataEditForm->lb_scripttext 
 DataEditForm->lb_tiptexts 提示文字
 DataEditForm->lb_types 卡片种类

@@ -1322,9 +1322,12 @@ namespace DataEditorX
 		}
 		void InportImage(string file,string tid)
 		{
-			pl_image.BackgroundImage.Dispose();
-			pl_image.BackgroundImage=m_cover;
 			string f=Path.Combine(PICPATH,tid+".jpg");
+			if(File.Exists(f))
+			{
+				pl_image.BackgroundImage.Dispose();
+				pl_image.BackgroundImage=m_cover;
+			}
 			TaskHelper.ToImg(file,f,
 			                 Path.Combine(PICPATH2,tid+".jpg"));
 			setImage(f);
