@@ -34,12 +34,20 @@ namespace DataEditorX.Core
 			monster = read(path, "mse-monster.txt");
 			pendulum = read(path, "mse-pendulum.txt");
 			spelltrap = read(path, "mse-spelltrap.txt");
+			
+			string tmp=Path.Combine(path, "mse-italic.txt");
+			
+			if(File.Exists(tmp))
+				repalces = File.ReadAllLines(tmp);
+			else
+				repalces = new String[1];
 		}
 		string read(string path,string name)
 		{
 			string tmp=Path.Combine(path, name);
 			return File.Exists(tmp)?File.ReadAllText(tmp):"";
 		}
+		public string[] repalces;
 		public string regx_pendulum;
 		public string regx_monster;
 		public string head;

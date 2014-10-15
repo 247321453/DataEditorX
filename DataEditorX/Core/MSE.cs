@@ -11,6 +11,7 @@ using System.Configuration;
 using System.Collections.Generic;
 using System.Text;
 using System.IO.Compression;
+using System.Windows.Forms;
 
 namespace DataEditorX.Core
 {
@@ -51,7 +52,8 @@ namespace DataEditorX.Core
 		}
 
 		public static void Save(string file, Card[] cards,string pic){
-			string setFile=file+".txt";
+			
+			string setFile=Path.Combine(Application.StartupPath, "set.tmp");
 			string[] images=WriteSet(setFile, cards, pic);
 			using(ZipStorer zips=ZipStorer.Create(file, ""))
 			{
@@ -81,7 +83,7 @@ namespace DataEditorX.Core
 					}
 					else
 						jpg="";
-					
+
 					if(c.IsType(CardType.TYPE_SPELL))
 						sw.WriteLine(getSpell(c, jpg));
 					else if(c.IsType(CardType.TYPE_TRAP))
@@ -96,13 +98,24 @@ namespace DataEditorX.Core
 
 			return list.ToArray();
 		}
+		
+		public static string reItalic(string str)
+		{
+			foreach(string s in cfg.repalces)
+			{
+				if(!string.IsNullOrEmpty(s))
+					str=str.Replace(s,"<i>"+s+"</i>");
+			}
+			return str;
+		}
+		
 		static string getMonster(Card c,string img)
 		{
 			StringBuilder sb=new StringBuilder(cfg.monster);
 			string[] types=MSEConvert.GetTypes(c);
 			string race=MSEConvert.GetRace(c.race);
 			sb.Replace("%type%", types[0]);
-			sb.Replace("%name%", c.name);
+			sb.Replace("%name%", MSE.reItalic(c.name));
 			sb.Replace("%attribute%", MSEConvert.GetAttribute(c.attribute));
 			sb.Replace("%level%", MSEConvert.GetStar(c.level));
 			sb.Replace("%image%", img);
@@ -125,7 +138,7 @@ namespace DataEditorX.Core
 			string[] types=MSEConvert.GetTypes(c);
 			string race=MSEConvert.GetRace(c.race);
 			sb.Replace("%type%", types[0]);
-			sb.Replace("%name%", c.name);
+			sb.Replace("%name%", MSE.reItalic(c.name));
 			sb.Replace("%attribute%", MSEConvert.GetAttribute(c.attribute));
 			sb.Replace("%level%", MSEConvert.GetStar(c.level));
 			sb.Replace("%image%", img);
@@ -164,7 +177,7 @@ namespace DataEditorX.Core
 				level="^";
 			StringBuilder sb=new StringBuilder(cfg.spelltrap);
 			sb.Replace("%type%", "spell card");
-			sb.Replace("%name%", c.name);
+			sb.Replace("%name%", MSE.reItalic(c.name));
 			sb.Replace("%attribute%", "spell");
 			sb.Replace("%level%", level);
 			sb.Replace("%image%", img);
@@ -183,7 +196,7 @@ namespace DataEditorX.Core
 				level="^";
 			StringBuilder sb=new StringBuilder(cfg.spelltrap);
 			sb.Replace("%type%", "trap card");
-			sb.Replace("%name%", c.name);
+			sb.Replace("%name%", MSE.reItalic(c.name));
 			sb.Replace("%attribute%", "trap");
 			sb.Replace("%level%", level);
 			sb.Replace("%image%", img);

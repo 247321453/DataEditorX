@@ -27,7 +27,7 @@ namespace DataEditorX.Core
 		}
 		public static string ReDesc(string desc)
 		{
-			StringBuilder sb=new StringBuilder(desc);
+			StringBuilder sb=new StringBuilder(MSE.reItalic(desc));
 			sb.Replace(Environment.NewLine, "\n");
 			sb.Replace("\n\n","\n");
 			sb.Replace("\n","\n\t\t");

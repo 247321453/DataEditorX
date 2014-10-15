@@ -1,4 +1,4 @@
-﻿[DataEditorX]1.5.5.1[DataEditorX]
+﻿[DataEditorX]1.5.5.2[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★使用前，请关联lua的打开方式，例如记事本，notepad++，等。
@@ -47,6 +47,8 @@ DataEditorX.exe.config
 描述不详细的bug，我修复不了。（都不知道是bug是什么）
 
 ★更新历史
+1.5.5.2
+增加MSE的mse-italic.txt
 1.5.5.1
 修复第2次导入图片，出bug
 1.5.5.0
