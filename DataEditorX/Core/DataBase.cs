@@ -309,6 +309,7 @@ namespace DataEditorX.Core
 		}
 		#endregion
 		
+		#region 压缩数据库
 		public static void Compression(string db)
 		{
 			if (File.Exists(db))
@@ -326,7 +327,7 @@ namespace DataEditorX.Core
 			}
 			
 		}
-		
+		#endregion
 		
 		#region SQL语句
 		#region 查询

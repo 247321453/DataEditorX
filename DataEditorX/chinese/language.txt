@@ -16,12 +16,11 @@ DataEditForm->lb_categorys 效果种类
 DataEditForm->lb_pleft_right PScale
 DataEditForm->lb_scripttext 
 DataEditForm->lb_tiptexts 提示文字
-DataEditForm->lb_setcode 卡片系列(最多4个)
 DataEditForm->lb_types 卡片种类
 DataEditForm->lb2 /
 DataEditForm->lb4 /
 DataEditForm->lb5 /
-DataEditForm->lv_cardlist0 卡片密码
+DataEditForm->lv_cardlist0 密码
 DataEditForm->lv_cardlist1 卡片名称
 DataEditForm->menuitem_compdb 压缩当前数据库
 DataEditForm->menuitem_convertimage 批量导入卡图

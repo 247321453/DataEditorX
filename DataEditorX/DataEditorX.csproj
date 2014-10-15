@@ -66,6 +66,8 @@
     <Compile Include="Core\DataManager.cs" />
     <Compile Include="Core\ImageSet.cs" />
     <Compile Include="Core\MSE.cs" />
+    <Compile Include="Core\MSEConfig.cs" />
+    <Compile Include="Core\MSEConvert.cs" />
     <Compile Include="Core\TaskHelper.cs" />
     <Compile Include="DataEditForm.cs" />
     <Compile Include="DataEditForm.Designer.cs">
@@ -125,7 +127,18 @@
     <None Include="chinese\message.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="chinese\mse-set.txt" />
+    <None Include="chinese\mse-monster.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="chinese\mse-head.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="chinese\mse-pendulum.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="chinese\mse-spelltrap.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="english\card-attribute.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -154,6 +167,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="english\message.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="english\mse-head.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="english\mse-monster.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="english\mse-pendulum.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="english\mse-spelltrap.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Magic Set Editor 2\update\download.bat">

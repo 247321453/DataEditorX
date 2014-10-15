@@ -165,8 +165,6 @@ namespace DataEditorX.Core
 						string filename=mArgs[0];						
 						replace=(mArgs[1]==Boolean.TrueString)?true:false;
 						DataBase.CopyDB(filename, !replace,cardlist);
-						//
-						MyMsg.Show(LMSG.copyDBIsOK);
 					}
 					break;
 				case MyTask.CutImages:
@@ -177,13 +175,11 @@ namespace DataEditorX.Core
 								replace=false;
 						}
 						CutImages(mArgs[0],mArgs[1],replace);
-						MyMsg.Show(LMSG.CutImageOK);
 					}
 					break;
 				case MyTask.SaveAsMSE:
 					if(mArgs!=null && mArgs.Length>=2){
 						MSE.Save(mArgs[0], cardlist, mArgs[1]);
-						MyMsg.Show(LMSG.SaveMseOK);
 					}
 					break;
 				case MyTask.ConvertImages:
@@ -194,12 +190,9 @@ namespace DataEditorX.Core
 								replace=false;
 						}
 						ConvertImages(mArgs[0],mArgs[1],replace);
-						MyMsg.Show(LMSG.ConvertImageOK);
 					}
 					break;
 			}
-
-			nowTask=MyTask.NONE;
 			cardlist=null;
 			mArgs=null;
 		}

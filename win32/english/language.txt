@@ -16,7 +16,6 @@ DataEditForm->lb_categorys Category
 DataEditForm->lb_pleft_right PScale
 DataEditForm->lb_scripttext 
 DataEditForm->lb_tiptexts TipText
-DataEditForm->lb_setcode SetCode(Max 4)
 DataEditForm->lb_types Card Type
 DataEditForm->lb2 /
 DataEditForm->lb4 /

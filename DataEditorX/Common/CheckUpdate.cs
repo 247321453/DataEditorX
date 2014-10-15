@@ -52,7 +52,7 @@ namespace DataEditorX
             try {
                 HttpWebRequest httpWebRequest =
                     (HttpWebRequest)WebRequest.Create(url);
-                httpWebRequest.Timeout = 30000;
+                httpWebRequest.Timeout = 15000;
                 using(HttpWebResponse httpWebResponse =
                       (HttpWebResponse)httpWebRequest.GetResponse())
                 {

@@ -1,0 +1,9 @@
+﻿card:
+	card type: %type%
+	name: %name%
+	attribute: %attribute%
+	level: %level%
+	image: %image%
+	rule text: 
+		%desc%
+	gamecode: %code%

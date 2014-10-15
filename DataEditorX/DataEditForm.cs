@@ -21,10 +21,9 @@ namespace DataEditorX
 {
 	public partial class DataEditForm : Form
 	{
+		#region 成员变量
 		string ydkfile=null;
 		string imagepath=null;
-		
-		#region 成员变量
 		string GAMEPATH,PICPATH,PICPATH2,LUAPTH,IMAGEPATH;
 		Card oldCard=new Card(0);
 		Card srcCard=new Card(0);
@@ -36,6 +35,10 @@ namespace DataEditorX
 		int cardcount;
 		string undoString;
 		List<Card> cardlist=new List<Card>();
+		bool setcodeIsedit1;
+		bool setcodeIsedit2;
+		bool setcodeIsedit3;
+		bool setcodeIsedit4;
 		
 		Image m_cover;
 		Dictionary<long, string> dicCardRules=null;
@@ -73,6 +76,7 @@ namespace DataEditorX
 				Application.Exit();
 			}
 			string datapath=Path.Combine(Application.StartupPath, dir);
+			
 			InitPath(datapath);
 			
 			LANG.InitForm(this, conflang);
@@ -87,6 +91,7 @@ namespace DataEditorX
 			title=this.Text;
 			
 			InitGameData();
+			MSE.Init(datapath, dicCardTypes, dicCardRaces);
 			
 			SetCDB(nowCdbFile);
 			//设置空白卡片
@@ -275,11 +280,18 @@ namespace DataEditorX
 			SetSelect(dicCardLevels,cb_cardlevel,(long)(c.level&0xff));
 			SetSelect(dicCardRaces,cb_cardrace,c.race);
 			
-			SetSelect(dicSetnames, cb_setname1, c.setcode&0xffff);
-			SetSelect(dicSetnames, cb_setname2, (c.setcode>>0x10)&0xffff);
-			SetSelect(dicSetnames, cb_setname3, (c.setcode>>0x20)&0xffff);
-			SetSelect(dicSetnames, cb_setname4, (c.setcode>>0x30)&0xffff);
-			setSetcode(c.setcode);
+			long sc1=c.setcode&0xffff;
+			long sc2=(c.setcode>>0x10)&0xffff;
+			long sc3=(c.setcode>>0x20)&0xffff;
+			long sc4=(c.setcode>>0x30)&0xffff;
+			tb_setcode1.Text=sc1.ToString("x");
+			tb_setcode2.Text=sc2.ToString("x");
+			tb_setcode3.Text=sc3.ToString("x");
+			tb_setcode4.Text=sc4.ToString("x");
+			SetSelect(dicSetnames, cb_setname1, sc1);
+			SetSelect(dicSetnames, cb_setname2, sc2);
+			SetSelect(dicSetnames, cb_setname3, sc3);
+			SetSelect(dicSetnames, cb_setname4, sc4);
 			
 			SetCheck(pl_cardtype,c.type);
 			SetCheck(pl_category,c.category);
@@ -371,7 +383,16 @@ namespace DataEditorX
 			long.TryParse(GetSelect(dicCardLevels,cb_cardlevel),out c.level);
 			long.TryParse(GetSelect(dicCardRaces,cb_cardrace),out c.race);
 			
-			c.setcode = getSetcodeByText();
+			int.TryParse(tb_setcode1.Text, NumberStyles.HexNumber,null,out temp);
+			c.setcode +=temp;
+			int.TryParse(tb_setcode2.Text, NumberStyles.HexNumber,null,out temp);
+			c.setcode +=temp<<0x10;
+			int.TryParse(tb_setcode3.Text, NumberStyles.HexNumber,null,out temp);
+			c.setcode +=temp<<0x20;
+			int.TryParse(tb_setcode4.Text, NumberStyles.HexNumber,null,out temp);
+			c.setcode +=temp<<0x30;
+			
+			//c.setcode = getSetcodeByText();
 			
 			c.type=GetCheck(pl_cardtype);
 			c.category=GetCheck(pl_category);
@@ -395,6 +416,12 @@ namespace DataEditorX
 		}
 		
 		//得到所选值
+		string GetSelectHex(Dictionary<long, string> dic,ComboBox cb)
+		{
+			long temp;
+			long.TryParse(GetSelect(dic,cb),out temp);
+			return temp.ToString("x");
+		}
 		string GetSelect(Dictionary<long, string> dic,ComboBox cb)
 		{
 			long fkey=0;
@@ -821,22 +848,9 @@ namespace DataEditorX
 				if(dlg.ShowDialog()==DialogResult.OK)
 				{
 					//dlg.FileName;
-					pl_image.BackgroundImage.Dispose();
-					pl_image.BackgroundImage=m_cover;
-					string f=Path.Combine(PICPATH,tid+".jpg");
-					TaskHelper.ToImg(dlg.FileName,f,
-					                 Path.Combine(PICPATH2,tid+".jpg"));
-					setImage(f);
+					InportImage(dlg.FileName, tid);
 				}
 			}
-		}
-		void setImage(string f){
-			if(File.Exists(f)){
-				Bitmap temp=new Bitmap(f);
-				pl_image.BackgroundImage=temp;
-			}
-			else
-				pl_image.BackgroundImage=m_cover;
 		}
 		#endregion
 		
@@ -1074,125 +1088,110 @@ namespace DataEditorX
 		//任务完成
 		void BackgroundWorker1RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
 		{
-			//TaskHelper.getTask();
+			//
 			int t=title.LastIndexOf(" (");
 			if(t>0)
 			{
 				title=title.Substring(0,t);
 				SetTitle();
 			}
+			MyTask mt=TaskHelper.getTask();
+			switch(mt){
+				case MyTask.CheckUpdate:break;
+				case MyTask.CopyDataBase:
+					MyMsg.Show(LMSG.copyDBIsOK);
+					break;
+				case MyTask.CutImages:
+					MyMsg.Show(LMSG.CutImageOK);
+					break;
+				case MyTask.SaveAsMSE:
+					MyMsg.Show(LMSG.SaveMseOK);
+					break;
+				case MyTask.ConvertImages:
+					MyMsg.Show(LMSG.ConvertImageOK);
+					break;
+			}
 		}
 		#endregion
 		
 		#region setcode
-		string Add0(long num,int len){
-			string str=num.ToString("x");
-			int j=len-str.Length;
-			for(int i=0;i<j;i++){
-				str="0"+str;
-			}
-			return str;
-		}
-		void setSetcode(long setcode){
-			string setname="";
-			string strtip="";
-			if(setcode<0){
-				setcode = getSetcodeBySelect();
-			}
-			long s1=setcode&0xffff;
-			long s2=(setcode>>0x10)&0xffff;
-			long s3=(setcode>>0x20)&0xffff;
-			long s4=(setcode>>0x30)&0xffff;
-			if(s4>0){
-				setname=Add0(s4,4)
-					+" "+Add0(s3,4)
-					+" "+Add0(s2,4)
-					+" "+Add0(s1,4);
-				strtip=DataManager.GetValue(dicSetnames,s1)
-					+Environment.NewLine
-					+DataManager.GetValue(dicSetnames,s2)
-					+Environment.NewLine
-					+DataManager.GetValue(dicSetnames,s3)
-					+Environment.NewLine
-					+DataManager.GetValue(dicSetnames,s4);
-			}
-			else if(s3>0){
-				setname=Add0(s3,4)
-					+" "+Add0(s2,4)
-					+" "+Add0(s1,4);
-				strtip=DataManager.GetValue(dicSetnames,s1)
-					+Environment.NewLine
-					+DataManager.GetValue(dicSetnames,s2)
-					+Environment.NewLine
-					+DataManager.GetValue(dicSetnames,s3);
-			}
-			else if(s2>0){
-				setname=Add0(s2,4)
-					+" "+Add0(s1,4);
-				strtip=DataManager.GetValue(dicSetnames,s1)
-					+Environment.NewLine
-					+DataManager.GetValue(dicSetnames,s2);
-			}
-			else if(s1>0){
-				setname=Add0(s1,4);
-				strtip=DataManager.GetValue(dicSetnames,s1);
-			}
-			else{
-				setname="0";
-				strtip="N/A";
-			}
-			toolTip1.SetToolTip(lb_setcode,strtip);
-			tb_setcode.Text=setname;
-			
-		}
-		long getSetcodeByText(){
-			long ltemp;
-			long.TryParse(tb_setcode.Text.Replace(" ",""),
-			              NumberStyles.HexNumber, null, out ltemp);
-			return ltemp;
-		}
-		long getSetcodeBySelect(){
-			long ltemp;
-			long setcode;
-			long.TryParse(GetSelect(dicSetnames, cb_setname1), out ltemp);
-			setcode=ltemp;
-			long.TryParse(GetSelect(dicSetnames, cb_setname2), out ltemp);
-			setcode+=(ltemp<<0x10);
-			long.TryParse(GetSelect(dicSetnames, cb_setname3), out ltemp);
-			setcode+=(ltemp<<0x20);
-			long.TryParse(GetSelect(dicSetnames, cb_setname4), out ltemp);
-			setcode+=(ltemp<<0x30);
-			return setcode;
-		}
-		
 		void Cb_setname2SelectedIndexChanged(object sender, EventArgs e)
 		{
-			setSetcode(-1);
+			if(setcodeIsedit2)
+				return;
+			setcodeIsedit2=true;
+			tb_setcode2.Text=GetSelectHex(dicSetnames, cb_setname2);
+			setcodeIsedit2=false;
 		}
 		
 		void Cb_setname1SelectedIndexChanged(object sender, EventArgs e)
 		{
-			setSetcode(-1);
+			if(setcodeIsedit1)
+				return;
+			setcodeIsedit1=true;
+			tb_setcode1.Text=GetSelectHex(dicSetnames, cb_setname1);
+			setcodeIsedit1=false;
 		}
 		
 		void Cb_setname3SelectedIndexChanged(object sender, EventArgs e)
 		{
-			setSetcode(-1);
+			if(setcodeIsedit3)
+				return;
+			setcodeIsedit3=true;
+			tb_setcode3.Text=GetSelectHex(dicSetnames, cb_setname3);
+			setcodeIsedit3=false;
 		}
 		
 		void Cb_setname4SelectedIndexChanged(object sender, EventArgs e)
 		{
-			setSetcode(-1);
+			if(setcodeIsedit4)
+				return;
+			setcodeIsedit4=true;
+			tb_setcode4.Text=GetSelectHex(dicSetnames, cb_setname4);
+			setcodeIsedit4=false;
+		}
+		void Tb_setcode4TextChanged(object sender, EventArgs e)
+		{
+			if(setcodeIsedit4)
+				return;
+			setcodeIsedit4=true;
+			long temp;
+			long.TryParse(tb_setcode4.Text,out temp);
+			SetSelect(dicSetnames, cb_setname4, temp);
+			setcodeIsedit4=false;
 		}
 		
-		void Tb_setcodeTextChanged(object sender, EventArgs e)
+		void Tb_setcode3TextChanged(object sender, EventArgs e)
 		{
-			long sc=getSetcodeByText();
-			if(sc==0 && tb_setcode.Text.Length>1){
-				MyMsg.Show(LMSG.Setcode_error);
-			}
-			else
-				setSetcode(sc);
+			if(setcodeIsedit3)
+				return;
+			setcodeIsedit3=true;
+			long temp;
+			long.TryParse(tb_setcode3.Text,out temp);
+			SetSelect(dicSetnames, cb_setname3, temp);
+			setcodeIsedit3=false;
+		}
+		
+		void Tb_setcode2TextChanged(object sender, EventArgs e)
+		{
+			if(setcodeIsedit2)
+				return;
+			setcodeIsedit2=true;
+			long temp;
+			long.TryParse(tb_setcode2.Text,out temp);
+			SetSelect(dicSetnames, cb_setname2, temp);
+			setcodeIsedit2=false;
+		}
+		
+		void Tb_setcode1TextChanged(object sender, EventArgs e)
+		{
+			if(setcodeIsedit1)
+				return;
+			setcodeIsedit1=true;
+			long temp;
+			long.TryParse(tb_setcode1.Text,out temp);
+			SetSelect(dicSetnames, cb_setname1, temp);
+			setcodeIsedit1=false;
 		}
 		#endregion
 		
@@ -1300,6 +1299,43 @@ namespace DataEditorX
 					Run(LANG.GetMsg(LMSG.SaveMse));
 				}
 			}
+		}
+		#endregion
+		
+		#region inprot image
+		void Pl_imageDragDrop(object sender, DragEventArgs e)
+		{
+			string[] files=e.Data.GetData(DataFormats.FileDrop) as string[];
+			#if DEBUG
+			MessageBox.Show(files[0]);
+			#endif
+			if(File.Exists(files[0]))
+				InportImage(files[0], tb_cardcode.Text);
+		}
+		
+		void Pl_imageDragEnter(object sender, DragEventArgs e)
+		{
+			if (e.Data.GetDataPresent(DataFormats.FileDrop))
+				e.Effect = DragDropEffects.Link; //重要代码：表明是链接类型的数据，比如文件路径
+			else
+				e.Effect = DragDropEffects.None;
+		}
+		void InportImage(string file,string tid)
+		{
+			pl_image.BackgroundImage.Dispose();
+			pl_image.BackgroundImage=m_cover;
+			string f=Path.Combine(PICPATH,tid+".jpg");
+			TaskHelper.ToImg(file,f,
+			                 Path.Combine(PICPATH2,tid+".jpg"));
+			setImage(f);
+		}
+		void setImage(string f){
+			if(File.Exists(f)){
+				Bitmap temp=new Bitmap(f);
+				pl_image.BackgroundImage=temp;
+			}
+			else
+				pl_image.BackgroundImage=m_cover;
 		}
 		#endregion
 		
