@@ -1,4 +1,4 @@
-﻿[DataEditorX]1.5.5.2[DataEditorX]
+﻿[DataEditorX]1.6.0.0[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★使用前，请关联lua的打开方式，例如记事本，notepad++，等。
@@ -6,6 +6,15 @@
 ★支援Magic Set Editor 2
 下载/更新：
 Magic Set Editor 2/update/download.bat
+
+★MSE存档生成设置
+config文件，设置pendulum文本和普通文本的正则正则表达式，用来分离文本
+mse-head 		MSE的风格设置文件
+mse-monster		普通怪兽模版
+mse-pendulum	P怪兽模版
+mse-spelltrap	魔陷模版
+mse-italic		特数字替换，达到一个位置使用2种字体的效果
+
 
 ★支持关联cdb文件，命令参数启动。
 关联cdb文件：
@@ -47,6 +56,9 @@ DataEditorX.exe.config
 描述不详细的bug，我修复不了。（都不知道是bug是什么）
 
 ★更新历史
+1.6.0.0
+增加简体转繁体功能
+mse-italic.txt支持正则替换
 1.5.5.2
 增加MSE的mse-italic.txt
 1.5.5.1

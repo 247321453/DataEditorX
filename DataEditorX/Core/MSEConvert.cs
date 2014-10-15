@@ -9,6 +9,8 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Microsoft.VisualBasic;
+using System.Configuration;
 
 namespace DataEditorX.Core
 {
@@ -17,6 +19,7 @@ namespace DataEditorX.Core
 	/// </summary>
 	public class MSEConvert
 	{
+		static bool Iscn2tw;
 		static Dictionary<long,string> mTypedic=null;
 		static Dictionary<long,string> mRacedic=null;
 		public static void Init(Dictionary<long,string> typedic,
@@ -24,10 +27,46 @@ namespace DataEditorX.Core
 		{
 			mTypedic = typedic;
 			mRacedic = racedic;
+			string tmp=ConfigurationManager.AppSettings["mse-cn2tw"];
+			if(tmp!=null && tmp.ToLower()=="true")
+				Iscn2tw=true;
+			else
+				Iscn2tw=false;
+		}
+		
+		public static string GetST(Card c)
+		{
+			string level;
+			if(c.IsType(CardType.TYPE_EQUIP))
+				level="+";
+			else if(c.IsType(CardType.TYPE_QUICKPLAY))
+				level="$";
+			else if(c.IsType(CardType.TYPE_FIELD))
+				level="&";
+			else if(c.IsType(CardType.TYPE_CONTINUOUS))
+				level="%";
+			else if(c.IsType(CardType.TYPE_RITUAL))
+				level="#";
+			else if(c.IsType(CardType.TYPE_COUNTER))
+				level="!";
+			else
+				level="^";
+			return level;
+		}
+		
+		public static string cn2tw(string str)
+		{
+			if(Iscn2tw){
+				str= Strings.StrConv(str,VbStrConv.TraditionalChinese,0);
+				str=str.Replace("巖","岩");
+			}
+			return str;
 		}
 		public static string ReDesc(string desc)
 		{
+			desc=cn2tw(desc);
 			StringBuilder sb=new StringBuilder(MSE.reItalic(desc));
+			
 			sb.Replace(Environment.NewLine, "\n");
 			sb.Replace("\n\n","\n");
 			sb.Replace("\n","\n\t\t");
@@ -124,7 +163,7 @@ namespace DataEditorX.Core
 			if(mTypedic==null)
 				return "";
 			if(mTypedic.ContainsKey(key))
-				return mTypedic[key].Trim();
+				return cn2tw(mTypedic[key].Trim());
 			return "";
 		}
 		
@@ -144,7 +183,7 @@ namespace DataEditorX.Core
 			if(mRacedic==null)
 				return "";
 			if(mRacedic.ContainsKey(race))
-				return mRacedic[race];
+				return cn2tw(mRacedic[race]);
 			return "";
 		}
 

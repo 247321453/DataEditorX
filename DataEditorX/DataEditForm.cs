@@ -97,12 +97,12 @@ namespace DataEditorX
 			//设置空白卡片
 			oldCard=new Card(0);
 			SetCard(oldCard);
-
-			checkupdate(false);
 			
 			if(File.Exists(nowCdbFile))
 				Open(nowCdbFile);
-			
+			#if !DEBUG
+			checkupdate(false);
+			#endif
 		}
 		//窗体关闭
 		void DataEditFormFormClosing(object sender, FormClosingEventArgs e)
