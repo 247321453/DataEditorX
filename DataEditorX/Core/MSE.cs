@@ -135,11 +135,9 @@ namespace DataEditorX.Core
 			}
 			else
 				sb.Replace("%desc%", MSEConvert.ReDesc(c.desc));
-			if(!string.IsNullOrEmpty(race))
-			{
-				sb.Replace("%atk%", (c.atk<0)?"?":c.atk.ToString());
-				sb.Replace("%def%", (c.def<0)?"?":c.def.ToString());
-			}
+			sb.Replace("%atk%", (c.atk<0)?"?":c.atk.ToString());
+			sb.Replace("%def%", (c.def<0)?"?":c.def.ToString());
+			
 			sb.Replace("%code%",c.id.ToString("00000000"));
 			return sb.ToString();
 		}
@@ -150,7 +148,7 @@ namespace DataEditorX.Core
 			sb.Replace("%name%", MSE.reItalic(c.name));
 			sb.Replace("%attribute%", isSpell?"spell":"trap");
 			if(cfg.STisEn)
-				sb.Replace("%level%", 
+				sb.Replace("%level%",
 				           "["+
 				           (isSpell?"Spell Card":"Trap Card")
 				           +MSEConvert.GetST(c)

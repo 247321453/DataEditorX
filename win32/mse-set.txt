@@ -1,0 +1,1568 @@
+﻿mse version: 0.3.8
+game: yugioh
+stylesheet: standard
+set info:
+	language: TW
+	edition: 
+	ST mark is text: yes
+	pendulum image is small: yes
+card:
+	card type: token monster
+	name: 核成衍生物
+	attribute: earth
+	level: ****
+	image: 176393
+	type 1: 岩石族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「核成試驗臺」的效果特殊召喚。
+	attack: 1800
+	defense: 1800
+	gamecode: 00176393
+card:
+	card type: token monster
+	name: 幻獸機衍生物
+	attribute: wind
+	level: ***
+	image: 904186
+	type 1: 機械族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「垂直著陸」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 00904186
+card:
+	card type: token monster
+	name: 幻影衍生物
+	attribute: dark
+	level: *
+	image: 1426715
+	type 1: 惡魔族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「<i>N</i>o.48^暗影巫妖」的效果特殊召喚。
+	attack: 500
+	defense: 500
+	gamecode: 01426715
+card:
+	card type: token monster
+	name: 幻獸機衍生物
+	attribute: wind
+	level: ***
+	image: 4417408
+	type 1: 機械族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「幻獸機^黑獵鷹」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 04417408
+card:
+	card type: token monster
+	name: 小鼠骨衍生物
+	attribute: earth
+	level: *
+	image: 7392746
+	type 1: 不死族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「鼠骨」的效果特殊召喚。
+	attack: 100
+	defense: 300
+	gamecode: 07392746
+card:
+	card type: token monster
+	name: 暗魂體衍生物
+	attribute: dark
+	level: *
+	image: 8198621
+	type 1: 不死族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「冥界龍^龍亡」的效果特殊召喚。
+	attack: ?
+	defense: 0
+	gamecode: 08198621
+card:
+	card type: token monster
+	name: 蒸汽衍生物
+	attribute: wind
+	level: *
+	image: 9047461
+	type 1: 水族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「黑羽-隱身蓑之斯蒂姆」的效果特殊召喚。
+	attack: 100
+	defense: 100
+	gamecode: 09047461
+card:
+	card type: token monster
+	name: 黑羽-黑冠衍生物
+	attribute: dark
+	level: **
+	image: 9925983
+	type 1: 鳥獸族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「黑翼復仇」的效果特殊召喚。
+	attack: 0
+	defense: 800
+	gamecode: 09925983
+card:
+	card type: token monster
+	name: 戰鷹衍生物
+	attribute: wind
+	level: ******
+	image: 10389143
+	type 1: 機械族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「<i>N</i>o.42^星艦·銀河戰斧鷹」的效果特殊召喚。這個衍生物在這個回合的結束階段時破壞。
+	attack: 2000
+	defense: 0
+	gamecode: 10389143
+card:
+	card type: token monster
+	name: 銃士衍生物
+	attribute: dark
+	level: ****
+	image: 12958920
+	type 1: 惡魔族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「幻銃士」的效果特殊召喚。
+	attack: 500
+	defense: 500
+	gamecode: 12958920
+card:
+	card type: token monster
+	name: 魔草衍生物
+	attribute: earth
+	level: *
+	image: 12965762
+	type 1: 植物族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「死亡石斛」的效果特殊召喚。
+	attack: 800
+	defense: 800
+	gamecode: 12965762
+card:
+	card type: token monster
+	name: 閃電子機衍生物
+	attribute: light
+	level: ****
+	image: 14089429
+	type 1: 機械族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「藍色雷電<i>T</i>45」特殊召喚。這個衍生物不能作為祭品召喚的祭品。
+	attack: 1500
+	defense: 1500
+	gamecode: 14089429
+card:
+	card type: token monster
+	name: 綿毛衍生物
+	attribute: wind
+	level: *
+	image: 15341822
+	type 1: 植物族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「蒲公英獅」的效果特殊召喚。這個衍生物特殊召喚的回合不能用于上級召喚的解放。
+	attack: 0
+	defense: 0
+	gamecode: 15341822
+card:
+	card type: token monster
+	name: 綿毛衍生物
+	attribute: wind
+	level: *
+	image: 15341823
+	type 1: 植物族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「蒲公英獅」的效果特殊召喚。這個衍生物特殊召喚的回合不能用于上級召喚的解放。
+	attack: 0
+	defense: 0
+	gamecode: 15341823
+card:
+	card type: token monster
+	name: 極星獸衍生物
+	attribute: earth
+	level: ***
+	image: 15394084
+	type 1: 獸族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「極星獸^坦格里斯尼爾」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 15394084
+card:
+	card type: token card
+	name: 圓舞衍生物
+	attribute: none
+	level: 
+	image: 15629802
+	type 1: 
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「武斗圓舞」的效果特殊召喚。這個衍生物的戰斗發生的對雙方玩家的戰斗傷害變成0。
+	attack: %atk%
+	defense: %def%
+	gamecode: 15629802
+card:
+	card type: token monster
+	name: 幻獸機衍生物
+	attribute: wind
+	level: ***
+	image: 16943771
+	type 1: 機械族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「幻獸機^航空企鵝」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 16943771
+card:
+	card type: token monster
+	name: 人造天使衍生物
+	attribute: light
+	level: *
+	image: 16946850
+	type 1: 天使族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「人造天使」的效果特殊召喚。
+	attack: 300
+	defense: 300
+	gamecode: 16946850
+card:
+	card type: token monster
+	name: 光子衍生物
+	attribute: light
+	level: ****
+	image: 17418745
+	type 1: 雷族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「光子圣域」的效果特殊召喚。這個衍生物不能攻擊，也不能作為同調素材。
+	attack: 2000
+	defense: 0
+	gamecode: 17418745
+card:
+	card type: token card
+	name: 河馬衍生物
+	attribute: none
+	level: 
+	image: 18027139
+	type 1: 
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「河馬狂歡節」的效果特殊召喚。自己不能從額外卡組把怪獸特殊召喚。
+	attack: %atk%
+	defense: %def%
+	gamecode: 18027139
+card:
+	card type: token monster
+	name: 幻獸機衍生物
+	attribute: wind
+	level: ***
+	image: 20368764
+	type 1: 機械族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「幻獸機^鷂式獅豹獸」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 20368764
+card:
+	card type: token monster
+	name: 爬蟲妖衍生物
+	attribute: earth
+	level: *
+	image: 21179144
+	type 1: 爬蟲類族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「爬蟲妖卵」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 21179144
+card:
+	card type: token monster
+	name: 史萊姆衍生物
+	attribute: water
+	level: *
+	image: 21770261
+	type 1: 水族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「史萊姆增殖爐」的效果特殊召喚。
+	attack: 500
+	defense: 500
+	gamecode: 21770261
+card:
+	card type: token monster
+	name: 幻獸機衍生物
+	attribute: wind
+	level: ***
+	image: 22110648
+	type 1: 機械族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「幻獸機^哥薩克龍」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 22110648
+card:
+	card type: token monster
+	name: 兵隊衍生物
+	attribute: earth
+	level: ****
+	image: 22493812
+	type 1: 昆蟲族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「螞蟻的增殖」的效果特殊召喚。這個衍生物不能用于上級召喚而解放。
+	attack: 500
+	defense: 1200
+	gamecode: 22493812
+card:
+	card type: token monster
+	name: 火之玉衍生物
+	attribute: fire
+	level: *
+	image: 23116809
+	type 1: 炎族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「怨念之魂^業火」的效果特殊召喚。
+	attack: 100
+	defense: 100
+	gamecode: 23116809
+card:
+	card type: token monster
+	name: 金屬惡魔衍生物
+	attribute: dark
+	level: *
+	image: 24874631
+	type 1: 惡魔族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「惡魔的圣域」的效果特殊召喚。這個衍生物不能攻擊，受到的戰斗傷害由對方玩家承受。
+	attack: 0
+	defense: 0
+	gamecode: 24874631
+card:
+	card type: token monster
+	name: 鐘擺衍生物
+	attribute: earth
+	level: *
+	image: 27450401
+	type 1: 機械族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「密集鐘擺」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 27450401
+card:
+	card type: token monster
+	name: 植物衍生物
+	attribute: earth
+	level: *
+	image: 28062326
+	type 1: 植物族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「竹頭木屑」的效果特殊召喚。
+	attack: 800
+	defense: 500
+	gamecode: 28062326
+card:
+	card type: token monster
+	name: 雙身人衍生物
+	attribute: dark
+	level: ****
+	image: 28355719
+	type 1: 戰士族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「命運英雄^雙身人」的效果特殊召喚。
+	attack: 1000
+	defense: 1000
+	gamecode: 28355719
+card:
+	card type: token monster
+	name: 擾亂衍生物
+	attribute: light
+	level: **
+	image: 29843092
+	type 1: 獸族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「擾亂三重奏」的效果特殊召喚。這個衍生物不能用于上級召喚的解放。這個衍生物破壞時，這個衍生物的控制者收到300點傷害。
+	attack: 0
+	defense: 1000
+	gamecode: 29843092
+card:
+	card type: token monster
+	name: 擾亂衍生物
+	attribute: light
+	level: **
+	image: 29843093
+	type 1: 獸族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「擾亂三重奏」的效果特殊召喚。這個衍生物不能用于上級召喚的解放。這個衍生物破壞時，這個衍生物的控制者收到300點傷害。
+	attack: 0
+	defense: 1000
+	gamecode: 29843093
+card:
+	card type: token monster
+	name: 擾亂衍生物
+	attribute: light
+	level: **
+	image: 29843094
+	type 1: 獸族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「擾亂三重奏」的效果特殊召喚。這個衍生物不能用于上級召喚的解放。這個衍生物破壞時，這個衍生物的控制者收到300點傷害。
+	attack: 0
+	defense: 1000
+	gamecode: 29843094
+card:
+	card type: token monster
+	name: 常春藤衍生物
+	attribute: earth
+	level: *
+	image: 30069399
+	type 1: 植物族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「常春藤壁」的效果特殊召喚。這個衍生物破壞時，這個衍生物的控制者受到300分傷害。
+	attack: 0
+	defense: 0
+	gamecode: 30069399
+card:
+	card type: token monster
+	name: 幻獸機衍生物
+	attribute: wind
+	level: ***
+	image: 30811117
+	type 1: 機械族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「幻獸機^長尾隱形鰩」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 30811117
+card:
+	card type: token monster
+	name: 幻獸機衍生物
+	attribute: wind
+	level: ***
+	image: 31480216
+	type 1: 機械族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「幻獸機^暴風雪鶯」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 31480216
+card:
+	card type: token monster
+	name: 幻獸機衍生物
+	attribute: wind
+	level: ***
+	image: 31533705
+	type 1: 機械族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「幻獸機^猛禽大盜龍」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 31533705
+card:
+	card type: token monster
+	name: 魔界薔薇衍生物
+	attribute: dark
+	level: ***
+	image: 31986289
+	type 1: 植物族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「分裂魔界薔薇」的效果特殊召喚。
+	attack: 1200
+	defense: 1200
+	gamecode: 31986289
+card:
+	card type: token monster
+	name: 魂魄衍生物
+	attribute: dark
+	level: *
+	image: 32446631
+	type 1: 惡魔族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「混沌<i>N</i>o.43^魂魄傀儡鬼神^混沌傀儡師」的效果特殊召喚。這個衍生物的攻擊力·守備力變成這衍生物的特殊召喚時的對方基本分一半的數值。
+	attack: ?
+	defense: ?
+	gamecode: 32446631
+card:
+	card type: token monster
+	name: 幽靈衍生物
+	attribute: dark
+	level: *
+	image: 35268888
+	type 1: 惡魔族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「傷害轉化」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 35268888
+card:
+	card type: token monster
+	name: 分機衍生物
+	attribute: light
+	level: ****
+	image: 35514097
+	type 1: 機械族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「羅德不列顛號」特殊召喚。
+	attack: 1200
+	defense: 1200
+	gamecode: 35514097
+card:
+	card type: token monster
+	name: 花種衍生物
+	attribute: earth
+	level: *
+	image: 38041941
+	type 1: 植物族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「火焰花種」的效果特殊召喚。這衍生物不能為上級召喚而解放。
+	attack: 0
+	defense: 0
+	gamecode: 38041941
+card:
+	card type: token monster
+	name: 影武者貍衍生物
+	attribute: earth
+	level: *
+	image: 39972130
+	type 1: 獸族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由?<i>N</i>o.64^古貍^三太夫?的效果特殊召喚。
+	attack: ?
+	defense: 0
+	gamecode: 39972130
+card:
+	card type: token monster
+	name: 栗子球衍生物
+	attribute: dark
+	level: *
+	image: 40703223
+	type 1: 惡魔族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「增殖」的效果特殊召喚。這個衍生物不能成為上級召喚用的祭品。
+	attack: 300
+	defense: 200
+	gamecode: 40703223
+card:
+	card type: token monster
+	name: 英靈衍生物
+	attribute: earth
+	level: ****
+	image: 40844553
+	type 1: 戰士族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「極星天^女武神」的效果特殊召喚。
+	attack: 1000
+	defense: 1000
+	gamecode: 40844553
+card:
+	card type: token monster
+	name: 幻獸機衍生物
+	attribute: wind
+	level: ***
+	image: 41329459
+	type 1: 機械族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「幻獸機^加里寧獅鷲」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 41329459
+card:
+	card type: token monster
+	name: 邪精衍生物
+	attribute: dark
+	level: *
+	image: 42671152
+	type 1: 惡魔族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「芙莉嘉的蘋果」的效果特殊召喚。
+	attack: ?
+	defense: ?
+	gamecode: 42671152
+card:
+	card type: token monster
+	name: 夢魘惡魔衍生物
+	attribute: dark
+	level: ******
+	image: 42956964
+	type 1: 惡魔族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「夢魘惡魔群」的效果特殊召喚。這個衍生物被破壞時，這衍生物的控制者受到每1只800分傷害。
+	attack: 2000
+	defense: 2000
+	gamecode: 42956964
+card:
+	card type: token monster
+	name: 蟲衍生物
+	attribute: earth
+	level: *
+	image: 43140792
+	type 1: 昆蟲族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「蟲餌」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 43140792
+card:
+	card type: token monster
+	name: 冥府之使者 凱茵
+	attribute: light
+	level: *******
+	image: 44330099
+	type 1: 天使族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「冥府之使者^格斯」的效果特殊召喚。這個衍生物的攻擊力和守備力變成和「冥府之使者^格斯」特殊召喚時玩家受到的戰斗傷害一樣的數值。
+	attack: ?
+	defense: ?
+	gamecode: 44330099
+card:
+	card type: token monster
+	name: 棘龍衍生物
+	attribute: fire
+	level: *
+	image: 44689689
+	type 1: 恐龍族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由?侏羅紀棘龍?的效果特殊召喚。
+	attack: 300
+	defense: 0
+	gamecode: 44689689
+card:
+	card type: token monster
+	name: 黑焰衍生物
+	attribute: dark
+	level: *
+	image: 46173680
+	type 1: 惡魔族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「終焉之焰」的效果特殊召喚。這個衍生物不能作為暗屬性怪獸以外的祭品召喚的祭品。
+	attack: 0
+	defense: 0
+	gamecode: 46173680
+card:
+	card type: token monster
+	name: 黑焰衍生物
+	attribute: dark
+	level: *
+	image: 46173681
+	type 1: 惡魔族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「終焉之焰」的效果特殊召喚。這個衍生物不能作為暗屬性怪獸以外的祭品召喚的祭品。
+	attack: 0
+	defense: 0
+	gamecode: 46173681
+card:
+	card type: token monster
+	name: 熔岩衍生物
+	attribute: fire
+	level: *
+	image: 47658965
+	type 1: 炎族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「紅蓮之炎壁」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 47658965
+card:
+	card type: token monster
+	name: 方塊衍生物
+	attribute: earth
+	level: ****
+	image: 48115278
+	type 1: 岩石族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「積木人」的效果特殊召喚。這個衍生物不能攻擊宣言。
+	attack: 1000
+	defense: 1500
+	gamecode: 48115278
+card:
+	card type: token monster
+	name: 朱羅紀衍生物
+	attribute: fire
+	level: *
+	image: 48411997
+	type 1: 恐龍族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由?朱羅紀南十字龍?的效果特殊召喚。這個衍生物不能為名字帶有「朱羅紀」的怪獸以外的上級召喚而解放。
+	attack: 0
+	defense: 0
+	gamecode: 48411997
+card:
+	card type: token monster
+	name: 代謝衍生物
+	attribute: dark
+	level: *
+	image: 49808197
+	type 1: 惡魔族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「代謝吸食怪」的效果特殊召喚。這衍生物不能為上級召喚而解放。
+	attack: 0
+	defense: 0
+	gamecode: 49808197
+card:
+	card type: token monster
+	name: 岩石衍生物
+	attribute: earth
+	level: *
+	image: 51987572
+	type 1: 岩石族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「岩石戰士」的效果特殊召喚。這個衍生物不能為上級召喚而解放。
+	attack: 0
+	defense: 0
+	gamecode: 51987572
+card:
+	card type: token monster
+	name: 二重身衍生物
+	attribute: dark
+	level: *
+	image: 53855410
+	type 1: 戰士族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「二重身戰士」的效果特殊召喚。
+	attack: 400
+	defense: 400
+	gamecode: 53855410
+card:
+	card type: token monster
+	name: 二重身衍生物
+	attribute: dark
+	level: *
+	image: 53855411
+	type 1: 戰士族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「二重身戰士」的效果特殊召喚。
+	attack: 400
+	defense: 400
+	gamecode: 53855411
+card:
+	card type: token monster
+	name: 蜘蛛衍生物
+	attribute: earth
+	level: *
+	image: 56051649
+	type 1: 昆蟲族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「蜘蛛卵」的效果特殊召喚。
+	attack: 100
+	defense: 100
+	gamecode: 56051649
+card:
+	card type: token monster
+	name: 云魔物衍生物
+	attribute: water
+	level: *
+	image: 56597273
+	type 1: 天使族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「云魔物-羊云」的效果特殊召喚。這個衍生物不能作為名字帶有「云魔物」的卡以外的祭品召喚的祭品。
+	attack: 0
+	defense: 0
+	gamecode: 56597273
+card:
+	card type: token monster
+	name: 魔界鳳仙花衍生物
+	attribute: dark
+	level: *
+	image: 60406592
+	type 1: 植物族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「魔界鳳仙花種」的效果特殊召喚。
+	attack: 100
+	defense: 100
+	gamecode: 60406592
+card:
+	card type: token monster
+	name: 仔羊衍生物
+	attribute: earth
+	level: *
+	image: 60764582
+	type 1: 獸族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「迷途的羔羊」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 60764582
+card:
+	card type: token monster
+	name: 仔羊衍生物
+	attribute: earth
+	level: *
+	image: 60764583
+	type 1: 獸族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「迷途的羔羊」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 60764583
+card:
+	card type: token monster
+	name: 裂蕈牙衍生物
+	attribute: water
+	level: **
+	image: 62543394
+	type 1: 植物族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「裂蕈牙」的效果特殊召喚。
+	attack: 700
+	defense: 700
+	gamecode: 62543394
+card:
+	card type: token card
+	name: 幻影衍生物
+	attribute: none
+	level: 
+	image: 63442605
+	type 1: 
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「物理分身」的效果特殊召喚。
+	attack: %atk%
+	defense: %def%
+	gamecode: 63442605
+card:
+	card type: token monster
+	name: 地外生命衍生物
+	attribute: dark
+	level: **
+	image: 64382840
+	type 1: 惡魔族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「網罟座澤塔星人」的效果特殊召喚。
+	attack: 500
+	defense: 500
+	gamecode: 64382840
+card:
+	card type: token monster
+	name: 邪神衍生物
+	attribute: dark
+	level: ****
+	image: 65810490
+	type 1: 惡魔族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「黃金邪神像」的效果特殊召喚。
+	attack: 1000
+	defense: 1000
+	gamecode: 65810490
+card:
+	card type: token monster
+	name: 幻獸機衍生物
+	attribute: wind
+	level: ***
+	image: 66200211
+	type 1: 機械族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「幻獸機^同溫層倉鼠」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 66200211
+card:
+	card type: token monster
+	name: 冰棺衍生物
+	attribute: water
+	level: *
+	image: 66661679
+	type 1: 水族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「冰結界的王家騎士」的效果特殊召喚。這個衍生物不能為上級召喚而解放。
+	attack: 1000
+	defense: 0
+	gamecode: 66661679
+card:
+	card type: token monster
+	name: 幻獸機衍生物
+	attribute: wind
+	level: ***
+	image: 67489920
+	type 1: 機械族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「幻獸機^藍沖高角羚」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 67489920
+card:
+	card type: token monster
+	name: 幻獸機衍生物
+	attribute: wind
+	level: ***
+	image: 67922703
+	type 1: 機械族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「幻獸機^繩狼」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 67922703
+card:
+	card type: token monster
+	name: 陰影蜃景衍生物
+	attribute: dark
+	level: *
+	image: 67949764
+	type 1: 惡魔族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「罪鍵之法」的效果特殊召喚。這衍生物不能直接攻擊，不能為上級召喚以外而解放。
+	attack: ?
+	defense: 0
+	gamecode: 67949764
+card:
+	card type: token monster
+	name: 狂焰衍生物
+	attribute: fire
+	level: ***
+	image: 68815402
+	type 1: 炎族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「狂焰」的效果特殊召喚。
+	attack: 1000
+	defense: 1000
+	gamecode: 68815402
+card:
+	card type: token monster
+	name: 幻魔衍生物
+	attribute: dark
+	level: *
+	image: 69890968
+	type 1: 惡魔族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「幻魔皇^拉比艾爾」的效果特殊召喚。這個衍生物不能攻擊宣言。
+	attack: 1000
+	defense: 1000
+	gamecode: 69890968
+card:
+	card type: token monster
+	name: 星食衍生物
+	attribute: dark
+	level: *
+	image: 70391589
+	type 1: 魔法使族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「星食-等級攀升-」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 70391589
+card:
+	card type: token monster
+	name: 幻獸機衍生物
+	attribute: wind
+	level: ***
+	image: 70875956
+	type 1: 機械族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「空中補給」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 70875956
+card:
+	card type: token monster
+	name: 薔薇衍生物
+	attribute: dark
+	level: **
+	image: 71645243
+	type 1: 植物族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「黑色花園」的效果特殊召喚
+	attack: 800
+	defense: 800
+	gamecode: 71645243
+card:
+	card type: token monster
+	name: 幻獸機衍生物
+	attribute: wind
+	level: ***
+	image: 72291079
+	type 1: 機械族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「幻獸機^獵戶座飛獅」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 72291079
+card:
+	card type: token monster
+	name: 羊衍生物
+	attribute: earth
+	level: *
+	image: 73915052
+	type 1: 獸族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「替罪羊」的效果特殊召喚。這個衍生物不能成為上級召喚用的祭品。
+	attack: 0
+	defense: 0
+	gamecode: 73915052
+card:
+	card type: token monster
+	name: 羊衍生物
+	attribute: earth
+	level: *
+	image: 73915053
+	type 1: 獸族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「替罪羊」的效果特殊召喚。這個衍生物不能成為上級召喚用的祭品。
+	attack: 0
+	defense: 0
+	gamecode: 73915053
+card:
+	card type: token monster
+	name: 羊衍生物
+	attribute: earth
+	level: *
+	image: 73915054
+	type 1: 獸族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「替罪羊」的效果特殊召喚。這個衍生物不能成為上級召喚用的祭品。
+	attack: 0
+	defense: 0
+	gamecode: 73915054
+card:
+	card type: token monster
+	name: 羊衍生物
+	attribute: earth
+	level: *
+	image: 73915055
+	type 1: 獸族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「替罪羊」的效果特殊召喚。這個衍生物不能成為上級召喚用的祭品。
+	attack: 0
+	defense: 0
+	gamecode: 73915055
+card:
+	card type: token monster
+	name: 針衍生物
+	attribute: earth
+	level: *
+	image: 74440056
+	type 1: 植物族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「小仙人掌斗士」的效果特殊召喚。
+	attack: 500
+	defense: 500
+	gamecode: 74440056
+card:
+	card type: token monster
+	name: 玉米粒衍生物
+	attribute: earth
+	level: *
+	image: 74983882
+	type 1: 植物族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「小玉米」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 74983882
+card:
+	card type: token monster
+	name: 邪心衍生物
+	attribute: dark
+	level: *******
+	image: 75524093
+	type 1: 惡魔族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「墮惡之爪」的效果特殊召喚。
+	attack: 2500
+	defense: 2500
+	gamecode: 75524093
+card:
+	card type: token monster
+	name: 詭術衍生物
+	attribute: wind
+	level: *****
+	image: 75622825
+	type 1: 魔法使族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「詭術師的魔術4」的效果特殊召喚。
+	attack: 2000
+	defense: 1200
+	gamecode: 75622825
+card:
+	card type: token monster
+	name: 拷問衍生物
+	attribute: dark
+	level: *
+	image: 75732623
+	type 1: 惡魔族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「拷問巨人」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 75732623
+card:
+	card type: token monster
+	name: 靈魂衍生物
+	attribute: dark
+	level: *
+	image: 82324106
+	type 1: 惡魔族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「對極限的沖動」的效果特殊召喚。這個衍生物不能為上級召喚以外而解放。
+	attack: 0
+	defense: 0
+	gamecode: 82324106
+card:
+	card type: token monster
+	name: 祭品石碑衍生物
+	attribute: earth
+	level: *
+	image: 82340057
+	type 1: 岩石族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「榮譽的祭品」特殊召喚。這個衍生物不能為名字帶有「地縛神」的怪獸的上級召喚以外而解放，也不能作為同調素材。
+	attack: 0
+	defense: 0
+	gamecode: 82340057
+card:
+	card type: token monster
+	name: 馬達衍生物
+	attribute: earth
+	level: *
+	image: 82556059
+	type 1: 機械族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「魔機馬達·Ω」的效果特殊召喚。
+	attack: 200
+	defense: 200
+	gamecode: 82556059
+card:
+	card type: token monster
+	name: 筆頭菜衍生物
+	attribute: wind
+	level: *
+	image: 82994510
+	type 1: 植物族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「小筆頭菜」的效果特殊召喚。這衍生物被和植物族怪獸的戰斗破壞的場合，這衍生物的控制者把1張手卡送去墓地。
+	attack: 0
+	defense: 0
+	gamecode: 82994510
+card:
+	card type: token monster
+	name: 牡蠣衍生物
+	attribute: water
+	level: *
+	image: 83239740
+	type 1: 魚族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「牡蠣大王」的效果特殊召喚
+	attack: 0
+	defense: 0
+	gamecode: 83239740
+card:
+	card type: token monster
+	name: 阿斯蒙衍生物
+	attribute: dark
+	level: *****
+	image: 85771020
+	type 1: 天使族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「墮天使^阿斯蒙蒂斯」的效果特殊召喚。這個衍生物不會被卡的效果破壞。
+	attack: 1800
+	defense: 1300
+	gamecode: 85771020
+card:
+	card type: token monster
+	name: 蒂斯衍生物
+	attribute: dark
+	level: ***
+	image: 85771021
+	type 1: 天使族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「墮天使^阿斯蒙蒂斯」的效果特殊召喚。這個衍生物不會被戰斗破壞。
+	attack: 1200
+	defense: 1200
+	gamecode: 85771021
+card:
+	card type: token monster
+	name: 毒蛇衍生物
+	attribute: earth
+	level: ***
+	image: 86801872
+	type 1: 爬蟲類族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「蛇壺」的效果特殊召喚。
+	attack: 1200
+	defense: 1200
+	gamecode: 86801872
+card:
+	card type: token card
+	name: 克隆衍生物
+	attribute: none
+	level: 
+	image: 86871615
+	type 1: 
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「克隆復制」的效果特殊召喚。
+	attack: %atk%
+	defense: %def%
+	gamecode: 86871615
+card:
+	card type: token monster
+	name: 昆蟲怪獸衍生物
+	attribute: earth
+	level: *
+	image: 91512836
+	type 1: 昆蟲族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「昆蟲女王」的效果特殊召喚。
+	attack: 100
+	defense: 100
+	gamecode: 91512836
+card:
+	card type: token monster
+	name: 子機衍生物
+	attribute: light
+	level: ****
+	image: 93130022
+	type 1: 機械族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「勝利蛇<i>X</i><i>X</i>03」特殊召喚。這個衍生物的種族·屬性·等級·攻擊力·守備力始終和特殊召喚的卡相同。
+	attack: ?
+	defense: ?
+	gamecode: 93130022
+card:
+	card type: token monster
+	name: 幻魔的殉教者衍生物
+	attribute: dark
+	level: *
+	image: 93224849
+	type 1: 惡魔族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「幻魔的殉教者」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 93224849
+card:
+	card type: token monster
+	name: 禮物魔衍生物
+	attribute: dark
+	level: ***
+	image: 93912846
+	type 1: 惡魔族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「蘇生的禮物」的效果特殊召喚。
+	attack: 1500
+	defense: 1500
+	gamecode: 93912846
+card:
+	card type: token monster
+	name: 幻獸機衍生物
+	attribute: wind
+	level: ***
+	image: 94973029
+	type 1: 機械族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「幻獸機^傾轉翼馬」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 94973029
+card:
+	card type: token monster
+	name: 月衍生物
+	attribute: light
+	level: *
+	image: 97452818
+	type 1: 天使族
+	type 2: 
+	type 3: 
+	type 4: 
+	rule text: 
+		由「秘儀之力18-月亮」的效果特殊召喚。
+	attack: 0
+	defense: 0
+	gamecode: 97452818
