@@ -595,12 +595,18 @@ namespace DataEditorX
 			if(cards!=null)
 			{
 				cardlist.Clear();
-				cardcount=cards.Length;
+				foreach(Card c in cards){
+					if(srcCard.setcode==0)
+						cardlist.Add(c);
+					else if(c.IsSetCode(srcCard.setcode&0xffff))
+						cardlist.Add(c);
+				}
+				cardcount=cardlist.Count;
 				pageNum=cardcount/MaxRow;
 				if(cardcount%MaxRow > 0)
 					pageNum++;
 				tb_pagenum.Text=pageNum.ToString();
-				cardlist.AddRange(cards);
+				
 				if(isfresh)
 					AddListView(page);
 				else

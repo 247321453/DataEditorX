@@ -49,7 +49,7 @@ namespace DataEditorX.Core
 			cfg=new MSEConfig(path);
 			mTypedic = typedic;
 			mRacedic = racedic;
-			MSEConvert.Init(typedic, racedic);
+			MSEConvert.Init(typedic, racedic, cfg.Iscn2tw, cfg.STisEn);
 			isInit=true;
 		}
 
@@ -87,7 +87,7 @@ namespace DataEditorX.Core
 					else
 						jpg="";
 					if(c.IsType(CardType.TYPE_SPELL)||c.IsType(CardType.TYPE_TRAP))
-						sw.WriteLine(getSpellTrap(c, jpg, c.IsType(CardType.TYPE_SPELL)));
+						sw.WriteLine("2");//getSpellTrap(c, jpg, c.IsType(CardType.TYPE_SPELL)));
 					else
 						sw.WriteLine(getMonster(c, jpg, c.IsType(CardType.TYPE_PENDULUM)));
 				}
@@ -99,10 +99,9 @@ namespace DataEditorX.Core
 		public static string reItalic(string str)
 		{
 			str=MSEConvert.cn2tw(str);
-			foreach(string s in cfg.repalces)
+			foreach(RegStr rs in cfg.replaces)
 			{
-				if(!string.IsNullOrEmpty(s) && !s.StartsWith("#") && s.Length>0)
-					str= Regex.Replace(str, "("+s+")", "<i>$1</i>");
+				str= Regex.Replace(str, rs.pstr, rs.rstr);
 			}
 			return str;
 		}
@@ -114,6 +113,7 @@ namespace DataEditorX.Core
 				sb.Append(cfg.pendulum);
 			else
 				sb.Append(cfg.monster);
+			
 			string[] types=MSEConvert.GetTypes(c);
 			string race=MSEConvert.GetRace(c.race);
 			sb.Replace("%type%", types[0]);
@@ -134,8 +134,7 @@ namespace DataEditorX.Core
 					MSEConvert.GetDesc(c.desc, cfg.regx_pendulum)));
 			}
 			else
-				sb.Replace("%desc%", MSEConvert.ReDesc(
-					MSEConvert.GetDesc(c.desc, cfg.regx_monster)));
+				sb.Replace("%desc%", MSEConvert.ReDesc(c.desc));
 			if(!string.IsNullOrEmpty(race))
 			{
 				sb.Replace("%atk%", (c.atk<0)?"?":c.atk.ToString());
@@ -150,7 +149,15 @@ namespace DataEditorX.Core
 			sb.Replace("%type%", isSpell?"spell card":"trap card");
 			sb.Replace("%name%", MSE.reItalic(c.name));
 			sb.Replace("%attribute%", isSpell?"spell":"trap");
-			sb.Replace("%level%", MSEConvert.GetST(c));
+			if(cfg.STisEn)
+				sb.Replace("%level%", 
+				           "["+
+				           (isSpell?"Spell Card":"Trap Card")
+				           +MSEConvert.GetST(c)
+				           +"]"
+				          );
+			else
+				sb.Replace("%level%", MSEConvert.GetST(c));
 			sb.Replace("%image%", img);
 			sb.Replace("%desc%", MSEConvert.ReDesc(c.desc));
 			sb.Replace("%code%", c.id.ToString("00000000"));

@@ -1,4 +1,4 @@
-﻿[DataEditorX]1.6.0.0[DataEditorX]
+﻿[DataEditorX]1.6.2.0[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★使用前，请关联lua的打开方式，例如记事本，notepad++，等。
@@ -56,6 +56,11 @@ DataEditorX.exe.config
 描述不详细的bug，我修复不了。（都不知道是bug是什么）
 
 ★更新历史
+1.6.2.0
+MSE存档导出，修正english的魔法陷阱标志
+增加单系列搜索
+1.6.1.0
+把config的MSE设置改为chinese(english)/mse-config.txt
 1.6.0.0
 增加简体转繁体功能
 mse-italic.txt支持正则替换

@@ -1,0 +1,6 @@
+﻿cn2tw = false
+STisEn = true
+pendulum-text = Text:[\s\S]*?\n([\S\s]*?)\n[\s\S]*?Text:
+monster-text = Text:[\s\S]*?\n([\S\s]*)
+replace = ([\|鮟|鱇]) <i>$1</i>
+replace = ([A-Z]) <i>$1</i>

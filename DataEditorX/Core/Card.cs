@@ -169,6 +169,20 @@ namespace DataEditorX.Core
 				return true;
 			return false;
 		}
+		
+		public bool IsSetCode(long sc)
+		{
+			if((this.setcode&0xffff)==sc)
+				return true;
+			else if(((this.setcode>>0x10)&0xffff)==sc)
+				return true;
+			else if(((this.setcode>>0x20)&0xffff)==sc)
+				return true;
+			else if(((this.setcode>>0x30)&0xffff)==sc)
+				return true;
+			else 
+				return false;
+		}
 	}
 	
 }

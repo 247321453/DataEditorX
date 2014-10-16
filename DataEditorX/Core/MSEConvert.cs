@@ -19,19 +19,17 @@ namespace DataEditorX.Core
 	/// </summary>
 	public class MSEConvert
 	{
-		static bool Iscn2tw;
+		static bool Iscn2tw,STisEN;
 		static Dictionary<long,string> mTypedic=null;
 		static Dictionary<long,string> mRacedic=null;
 		public static void Init(Dictionary<long,string> typedic,
-		                        Dictionary<long,string> racedic)
+		                        Dictionary<long,string> racedic,
+		                       bool iscn2tw,bool stisen)
 		{
 			mTypedic = typedic;
 			mRacedic = racedic;
-			string tmp=ConfigurationManager.AppSettings["mse-cn2tw"];
-			if(tmp!=null && tmp.ToLower()=="true")
-				Iscn2tw=true;
-			else
-				Iscn2tw=false;
+			Iscn2tw=iscn2tw;
+			STisEN=stisen;
 		}
 		
 		public static string GetST(Card c)
@@ -49,6 +47,8 @@ namespace DataEditorX.Core
 				level="#";
 			else if(c.IsType(CardType.TYPE_COUNTER))
 				level="!";
+			else if(STisEN)
+				level="";
 			else
 				level="^";
 			return level;
