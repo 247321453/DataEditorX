@@ -87,7 +87,7 @@ namespace DataEditorX.Core
 					else
 						jpg="";
 					if(c.IsType(CardType.TYPE_SPELL)||c.IsType(CardType.TYPE_TRAP))
-						sw.WriteLine("2");//getSpellTrap(c, jpg, c.IsType(CardType.TYPE_SPELL)));
+						sw.WriteLine(getSpellTrap(c, jpg, c.IsType(CardType.TYPE_SPELL)));
 					else
 						sw.WriteLine(getMonster(c, jpg, c.IsType(CardType.TYPE_PENDULUM)));
 				}

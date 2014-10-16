@@ -3,6 +3,6 @@ game: yugioh
 stylesheet: standard
 set info:
 	language: TW
-	edition: MSE Editrion
+	edition: 
 	ST mark is text: yes
 	pendulum image is small: yes
