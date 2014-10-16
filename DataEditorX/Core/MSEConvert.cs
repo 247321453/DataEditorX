@@ -83,7 +83,10 @@ namespace DataEditorX.Core
 					types[1]=GetType(CardType.TYPE_XYZ);
 				}
 				else if(c.IsType(CardType.TYPE_TOKEN)){
-					types[0]="token monster";
+					if(c.race==0)
+						types[0]="token card";
+					else
+						types[0]="token monster";
 				}
 				else if(c.IsType(CardType.TYPE_RITUAL)){
 					types[0]="ritual monster";
