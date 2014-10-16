@@ -180,6 +180,8 @@ namespace DataEditorX.Core
 		
 		public static string GetRace(long race)
 		{
+			if(race==0)
+				return "";
 			if(mRacedic==null)
 				return "";
 			if(mRacedic.ContainsKey(race))
