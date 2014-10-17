@@ -1301,8 +1301,12 @@ namespace DataEditorX
 				dlg.Filter=LANG.GetMsg(LMSG.MseType);
 				if(dlg.ShowDialog()==DialogResult.OK)
 				{
+					bool isUpdate=false;
+					#if DEBUG
+					isUpdate=MyMsg.Question(LMSG.OnlySet);
+					#endif
 					TaskHelper.SetTask(MyTask.SaveAsMSE,cards,
-					                   dlg.FileName,IMAGEPATH);
+					                   dlg.FileName,IMAGEPATH,isUpdate.ToString());
 					Run(LANG.GetMsg(LMSG.SaveMse));
 				}
 			}

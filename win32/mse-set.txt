@@ -11,7 +11,7 @@ card:
 	name: 隱藏的機殼
 	attribute: trap
 	level: [陷阱卡]
-	image: 4450854
+	image: 4450854.jpg
 	rule text: 
 		「隱藏的機殼」在1回合只能發動1張。
 		①：從自己的額外卡組把最多3只表側表示的「機殼」靈擺怪獸加入手卡。
@@ -21,7 +21,7 @@ card:
 	name: 機殼的牲祭
 	attribute: spell
 	level: [魔法卡+]
-	image: 17639150
+	image: 17639150.jpg
 	rule text: 
 		「機殼」怪獸才能裝備。
 		①：裝備怪獸的攻擊力上升300，不會被戰斗破壞。
@@ -33,7 +33,7 @@ card:
 	name: 隱藏的機殼殺手 物質主義
 	attribute: earth
 	level: **********
-	image: 27279764
+	image: 27279764.jpg
 	type 1: 機械族
 	type 2: 效果
 	type 3: 
@@ -51,7 +51,7 @@ card:
 	name: 起動的機殼
 	attribute: trap
 	level: [陷阱卡]
-	image: 30845999
+	image: 30845999.jpg
 	rule text: 
 		①：場上的通常召喚的「機殼」怪獸直到回合結束時攻擊力上升300，效果無效化，不受這張卡以外的魔法·陷阱卡的效果影響。
 		
@@ -61,7 +61,7 @@ card:
 	name: 機殼基因組 貪欲
 	attribute: earth
 	level: ******
-	image: 37991342
+	image: 37991342.jpg
 	type 1: 機械族
 	type 2: 靈擺
 	type 3: 效果
@@ -85,7 +85,7 @@ card:
 	name: 機殼的要塞
 	attribute: spell
 	level: [魔法卡&]
-	image: 43034264
+	image: 43034264.jpg
 	rule text: 
 		①：只要這張卡在場地區域存在，自己在通常召喚外加上只有1次，自己主要階段可以把1只「機殼」怪獸召喚。
 		②：只要這張卡在場地區域存在，「機殼」怪獸的召喚不會被無效化。
@@ -96,7 +96,7 @@ card:
 	name: 機殼磁盤 無感動
 	attribute: earth
 	level: *******
-	image: 64496451
+	image: 64496451.jpg
 	type 1: 機械族
 	type 2: 靈擺
 	type 3: 效果
@@ -120,16 +120,16 @@ card:
 	name: 機殼工具 丑惡
 	attribute: earth
 	level: *****
-	image: 65518099
+	image: 65518099.jpg
 	type 1: 機械族
 	type 2: 靈擺
 	type 3: 
 	type 4: 
 	rule text: 
 		正在準備以副本模式啟動系統...
-		<i>C</i>:<i>\</i>sophia<i>\</i>sefiroth.exe^執行中發生錯誤。
+		C:\sophia\sefiroth.exe^執行中發生錯誤。
 		正在試圖執行來自未知發布者的以下程序。
-		<i>C</i>:<i>\</i>tierra<i>\</i>qliphoth.exe^您想允許執行嗎?^<<i>Y</i>/<i>N</i>>...[<i>Y</i>]
+		C:\tierra\qliphoth.exe^您想允許執行嗎?^<Y/N>...[Y]
 		以自律模式啟動系統。
 	attack: 1000
 	defense: 2800
@@ -145,7 +145,7 @@ card:
 	name: 機殼殼層 拒絕
 	attribute: earth
 	level: ********
-	image: 90885155
+	image: 90885155.jpg
 	type 1: 機械族
 	type 2: 靈擺
 	type 3: 效果
@@ -169,7 +169,7 @@ card:
 	name: 機殼檔案 色欲
 	attribute: earth
 	level: ******
-	image: 91907707
+	image: 91907707.jpg
 	type 1: 機械族
 	type 2: 靈擺
 	type 3: 效果

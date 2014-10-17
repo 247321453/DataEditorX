@@ -51,3 +51,4 @@
 0x32	Converting Images
 0x33	Convert Images OK
 0x34	Compression DataBase OK
+0x35	Only Update Text of Set? 

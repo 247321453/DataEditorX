@@ -1,6 +1,18 @@
-﻿cn2tw = false
-STisEn = true
-pendulum-text = Text:[\s\S]*?\n([\S\s]*?)\n[\s\S]*?Text:
-monster-text = Text:[\s\S]*?\n([\S\s]*)
-replace = ([\|鮟|鱇]) <i>$1</i>
-replace = ([A-Z]) <i>$1</i>
+﻿###########################
+# Magic Set Editor 2
+###########################
+cn2tw = true
+########################### Spell/Trap
+spell = [魔法卡%%]
+# spell = 【魔法カード%%】
+trap = [陷阱卡%%]
+# trap = 【罠カード%%】
+############################ Text
+pendulum-text = 】[\s\S]*?\n([\S\s]*?)\n【
+# pendulum-text = ([\S\s]*?)\n【
+# pendulum-text = Text:\n([\S\s]*?)\n[\S\s]*?Text:
+monster-text = [果|介|述|報]】\n([\S\s]*)
+# monster-text = Text:[\s\S]*?Text:\n([\S\s]*)
+########################### Replace
+replace = ([鮟|鱇]) <i>$1</i>
+# replace = ([A-Z]) <i>$1</i>

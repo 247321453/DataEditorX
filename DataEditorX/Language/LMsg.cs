@@ -67,6 +67,7 @@ namespace DataEditorX.Language
         ConvertImage,
         ConvertImageOK,
         CompDBOK,
+        OnlySet,
         COUNT,
     }
 }

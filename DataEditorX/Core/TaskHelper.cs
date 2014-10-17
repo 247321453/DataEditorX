@@ -162,7 +162,7 @@ namespace DataEditorX.Core
 					break;
 				case MyTask.CopyDataBase:
 					if(mArgs!=null && mArgs.Length>=2){
-						string filename=mArgs[0];						
+						string filename=mArgs[0];
 						replace=(mArgs[1]==Boolean.TrueString)?true:false;
 						DataBase.CopyDB(filename, !replace,cardlist);
 					}
@@ -179,7 +179,12 @@ namespace DataEditorX.Core
 					break;
 				case MyTask.SaveAsMSE:
 					if(mArgs!=null && mArgs.Length>=2){
-						MSE.Save(mArgs[0], cardlist, mArgs[1]);
+						replace=false;
+						if(mArgs.Length>=3){
+							if(mArgs[2]==Boolean.TrueString)
+								replace=true;
+						}
+						MSE.Save(mArgs[0], cardlist, mArgs[1], replace);
 					}
 					break;
 				case MyTask.ConvertImages:

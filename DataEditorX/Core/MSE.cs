@@ -53,21 +53,24 @@ namespace DataEditorX.Core
 			isInit=true;
 		}
 
-		public static void Save(string file, Card[] cards,string pic){
+		public static void Save(string file, Card[] cards,string pic,bool isUpdate){
 			if(!isInit)
 				return;
 			
 			string setFile=Path.Combine(Application.StartupPath, "mse-set.txt");
 			string[] images=WriteSet(setFile, cards, pic);
+			if(isUpdate)//仅更新文字
+				return;
 			using(ZipStorer zips=ZipStorer.Create(file, ""))
 			{
 				zips.AddFile(setFile,"set","");
 				foreach ( string img in images )
 				{
-					zips.AddFile(img, Path.GetFileNameWithoutExtension(img),"");
+					zips.AddFile(img, Path.GetFileName(img),"");
 				}
 				zips.Close();
 			}
+			File.Delete(setFile);
 		}
 		public static string[] WriteSet(string file,Card[] cards,string pic)
 		{
@@ -82,7 +85,7 @@ namespace DataEditorX.Core
 					string jpg=Path.Combine(pic,c.id+".jpg");
 					if(File.Exists(jpg)){
 						list.Add(jpg);
-						jpg=Path.GetFileNameWithoutExtension(jpg);
+						jpg=Path.GetFileName(jpg);
 					}
 					else
 						jpg="";
