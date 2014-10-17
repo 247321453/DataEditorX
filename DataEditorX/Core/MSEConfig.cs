@@ -56,8 +56,10 @@ namespace DataEditorX.Core
 						continue;
 					if(line.StartsWith("cn2tw"))
 						Iscn2tw=(getValue(line).ToLower()=="true")?true:false;
-					else if(line.StartsWith("STisEn"))
-						STisEn=(getValue(line).ToLower()=="true")?true:false;
+					else if(line.StartsWith("spell"))
+						str_spell=getValue(line);
+					else if(line.StartsWith("trap"))
+						str_trap=getValue(line);
 					else if(line.StartsWith("pendulum-text"))
 						regx_pendulum=getRegex(getValue(line));
 					else if(line.StartsWith("monster-text"))
@@ -74,6 +76,10 @@ namespace DataEditorX.Core
 						
 					}
 				}
+				if(str_spell=="%%" && str_trap =="%%")
+					st_is_symbol=true;
+				else
+					st_is_symbol=false;
 			}
 			else
 			{
@@ -96,7 +102,9 @@ namespace DataEditorX.Core
 			string tmp=Path.Combine(path, name);
 			return File.Exists(tmp)?File.ReadAllText(tmp):"";
 		}
-		public bool STisEn;
+		public bool st_is_symbol;
+		public string str_spell;
+		public string str_trap;
 		public bool Iscn2tw;
 		public List<RegStr> replaces;
 		public string regx_pendulum;

@@ -49,7 +49,7 @@ namespace DataEditorX.Core
 			cfg=new MSEConfig(path);
 			mTypedic = typedic;
 			mRacedic = racedic;
-			MSEConvert.Init(typedic, racedic, cfg.Iscn2tw, cfg.STisEn);
+			MSEConvert.Init(typedic, racedic, cfg);
 			isInit=true;
 		}
 
@@ -147,15 +147,7 @@ namespace DataEditorX.Core
 			sb.Replace("%type%", isSpell?"spell card":"trap card");
 			sb.Replace("%name%", MSE.reItalic(c.name));
 			sb.Replace("%attribute%", isSpell?"spell":"trap");
-			if(cfg.STisEn)
-				sb.Replace("%level%",
-				           "["+
-				           (isSpell?"Spell Card":"Trap Card")
-				           +MSEConvert.GetST(c)
-				           +"]"
-				          );
-			else
-				sb.Replace("%level%", MSEConvert.GetST(c));
+			sb.Replace("%level%", MSEConvert.GetST(c, isSpell));
 			sb.Replace("%image%", img);
 			sb.Replace("%desc%", MSEConvert.ReDesc(c.desc));
 			sb.Replace("%code%", c.id.ToString("00000000"));

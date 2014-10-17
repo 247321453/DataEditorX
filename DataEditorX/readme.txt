@@ -1,4 +1,4 @@
-﻿[DataEditorX]1.6.4.0[DataEditorX]
+﻿[DataEditorX]1.6.5.0[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★使用前，请关联lua的打开方式，例如记事本，notepad++，等。
@@ -56,6 +56,8 @@ DataEditorX.exe.config
 描述不详细的bug，我修复不了。（都不知道是bug是什么）
 
 ★更新历史
+1.6.5.0
+改进自定义魔法陷阱
 1.6.4.0
 修复setcode输入错误
 搜索为空的错误

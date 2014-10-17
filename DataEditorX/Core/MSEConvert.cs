@@ -19,20 +19,19 @@ namespace DataEditorX.Core
 	/// </summary>
 	public class MSEConvert
 	{
-		static bool Iscn2tw,STisEN;
+		static MSEConfig cfg;
 		static Dictionary<long,string> mTypedic=null;
 		static Dictionary<long,string> mRacedic=null;
 		public static void Init(Dictionary<long,string> typedic,
 		                        Dictionary<long,string> racedic,
-		                       bool iscn2tw,bool stisen)
+		                       MSEConfig _cfg)
 		{
 			mTypedic = typedic;
 			mRacedic = racedic;
-			Iscn2tw=iscn2tw;
-			STisEN=stisen;
+			cfg=_cfg;
 		}
 		
-		public static string GetST(Card c)
+		public static string GetST(Card c,bool isSpell)
 		{
 			string level;
 			if(c.IsType(CardType.TYPE_EQUIP))
@@ -47,16 +46,21 @@ namespace DataEditorX.Core
 				level="#";
 			else if(c.IsType(CardType.TYPE_COUNTER))
 				level="!";
-			else if(STisEN)
-				level="";
-			else
+			else if(cfg.st_is_symbol)
 				level="^";
+			else
+				level="";
+			
+			if(isSpell)
+				level=cfg.str_spell.Replace("%%",level);
+			else
+				level=cfg.str_trap.Replace("%%",level);
 			return level;
 		}
 		
 		public static string cn2tw(string str)
 		{
-			if(Iscn2tw){
+			if(cfg.Iscn2tw){
 				str= Strings.StrConv(str,VbStrConv.TraditionalChinese,0);
 				str=str.Replace("巖","岩");
 			}
