@@ -384,14 +384,13 @@ namespace DataEditorX
 			long.TryParse(GetSelect(dicCardRaces,cb_cardrace),out c.race);
 			
 			int.TryParse(tb_setcode1.Text, NumberStyles.HexNumber,null,out temp);
-			c.setcode +=temp;
+			c.setcode =temp;
 			int.TryParse(tb_setcode2.Text, NumberStyles.HexNumber,null,out temp);
-			c.setcode +=temp<<0x10;
+			c.setcode +=((long)temp<<0x10);
 			int.TryParse(tb_setcode3.Text, NumberStyles.HexNumber,null,out temp);
-			c.setcode +=temp<<0x20;
+			c.setcode +=((long)temp<<0x20);
 			int.TryParse(tb_setcode4.Text, NumberStyles.HexNumber,null,out temp);
-			c.setcode +=temp<<0x30;
-			
+			c.setcode +=((long)temp<<0x30);
 			//c.setcode = getSetcodeByText();
 			
 			c.type=GetCheck(pl_cardtype);
@@ -605,6 +604,8 @@ namespace DataEditorX
 				pageNum=cardcount/MaxRow;
 				if(cardcount%MaxRow > 0)
 					pageNum++;
+				else if(cardcount==0)
+					pageNum=1;
 				tb_pagenum.Text=pageNum.ToString();
 				
 				if(isfresh)
@@ -1162,7 +1163,7 @@ namespace DataEditorX
 				return;
 			setcodeIsedit4=true;
 			long temp;
-			long.TryParse(tb_setcode4.Text,out temp);
+			long.TryParse(tb_setcode4.Text,NumberStyles.HexNumber, null ,out temp);
 			SetSelect(dicSetnames, cb_setname4, temp);
 			setcodeIsedit4=false;
 		}
@@ -1173,7 +1174,7 @@ namespace DataEditorX
 				return;
 			setcodeIsedit3=true;
 			long temp;
-			long.TryParse(tb_setcode3.Text,out temp);
+			long.TryParse(tb_setcode3.Text,NumberStyles.HexNumber, null ,out temp);
 			SetSelect(dicSetnames, cb_setname3, temp);
 			setcodeIsedit3=false;
 		}
@@ -1184,7 +1185,7 @@ namespace DataEditorX
 				return;
 			setcodeIsedit2=true;
 			long temp;
-			long.TryParse(tb_setcode2.Text,out temp);
+			long.TryParse(tb_setcode2.Text,NumberStyles.HexNumber, null ,out temp);
 			SetSelect(dicSetnames, cb_setname2, temp);
 			setcodeIsedit2=false;
 		}
@@ -1195,7 +1196,7 @@ namespace DataEditorX
 				return;
 			setcodeIsedit1=true;
 			long temp;
-			long.TryParse(tb_setcode1.Text,out temp);
+			long.TryParse(tb_setcode1.Text,NumberStyles.HexNumber, null ,out temp);
 			SetSelect(dicSetnames, cb_setname1, temp);
 			setcodeIsedit1=false;
 		}
