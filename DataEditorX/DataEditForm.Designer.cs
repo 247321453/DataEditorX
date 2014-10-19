@@ -103,13 +103,15 @@ namespace DataEditorX
         	this.pl_image = new System.Windows.Forms.Panel();
         	this.lb_types = new System.Windows.Forms.Label();
         	this.lb_tiptexts = new System.Windows.Forms.Label();
-        	this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+        	this.bgWorker1 = new System.ComponentModel.BackgroundWorker();
         	this.btn_undo = new System.Windows.Forms.Button();
         	this.btn_img = new System.Windows.Forms.Button();
         	this.tb_setcode1 = new System.Windows.Forms.TextBox();
         	this.tb_setcode2 = new System.Windows.Forms.TextBox();
         	this.tb_setcode3 = new System.Windows.Forms.TextBox();
         	this.tb_setcode4 = new System.Windows.Forms.TextBox();
+        	this.menuitem_cancelTask = new System.Windows.Forms.ToolStripMenuItem();
+        	this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
         	this.menuStrip1.SuspendLayout();
         	this.SuspendLayout();
         	// 
@@ -272,7 +274,9 @@ namespace DataEditorX
         	this.menuitem_help.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
         	        	        	this.menuitem_about,
         	        	        	this.menuitem_checkupdate,
-        	        	        	this.menuitem_github});
+        	        	        	this.menuitem_github,
+        	        	        	this.toolStripSeparator1,
+        	        	        	this.menuitem_cancelTask});
         	this.menuitem_help.Name = "menuitem_help";
         	this.menuitem_help.Size = new System.Drawing.Size(64, 21);
         	this.menuitem_help.Text = "Help(&H)";
@@ -753,12 +757,13 @@ namespace DataEditorX
         	this.lb_tiptexts.Text = "Tips Texts";
         	this.lb_tiptexts.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
         	// 
-        	// backgroundWorker1
+        	// bgWorker1
         	// 
-        	this.backgroundWorker1.WorkerReportsProgress = true;
-        	this.backgroundWorker1.WorkerSupportsCancellation = true;
-        	this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundWorker1DoWork);
-        	this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BackgroundWorker1RunWorkerCompleted);
+        	this.bgWorker1.WorkerReportsProgress = true;
+        	this.bgWorker1.WorkerSupportsCancellation = true;
+        	this.bgWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BgWorker1DoWork);
+        	this.bgWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.BgWorker1ProgressChanged);
+        	this.bgWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BgWorker1RunWorkerCompleted);
         	// 
         	// btn_undo
         	// 
@@ -819,6 +824,18 @@ namespace DataEditorX
         	this.tb_setcode4.Text = "0";
         	this.tb_setcode4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
         	this.tb_setcode4.TextChanged += new System.EventHandler(this.Tb_setcode4TextChanged);
+        	// 
+        	// menuitem_cancelTask
+        	// 
+        	this.menuitem_cancelTask.Name = "menuitem_cancelTask";
+        	this.menuitem_cancelTask.Size = new System.Drawing.Size(158, 22);
+        	this.menuitem_cancelTask.Text = "Cancel Task";
+        	this.menuitem_cancelTask.Click += new System.EventHandler(this.Menuitem_cancelTaskClick);
+        	// 
+        	// toolStripSeparator1
+        	// 
+        	this.toolStripSeparator1.Name = "toolStripSeparator1";
+        	this.toolStripSeparator1.Size = new System.Drawing.Size(155, 6);
         	// 
         	// DataEditForm
         	// 
@@ -887,6 +904,8 @@ namespace DataEditorX
         	this.ResumeLayout(false);
         	this.PerformLayout();
         }
+        private System.Windows.Forms.ToolStripMenuItem menuitem_cancelTask;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.TextBox tb_setcode4;
         private System.Windows.Forms.TextBox tb_setcode3;
         private System.Windows.Forms.TextBox tb_setcode2;
@@ -902,7 +921,7 @@ namespace DataEditorX
         private System.Windows.Forms.ToolStripSeparator tsep4;
         private System.Windows.Forms.Button btn_img;
         private System.Windows.Forms.Button btn_undo;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.ComponentModel.BackgroundWorker bgWorker1;
         private System.Windows.Forms.Panel pl_image;
         private System.Windows.Forms.ToolStripMenuItem menuitem_copyselectto;
         private System.Windows.Forms.ToolStripMenuItem menuitem_github;

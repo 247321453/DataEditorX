@@ -19,10 +19,22 @@ namespace DataEditorX.Core
 	/// </summary>
 	public class MSEConvert
 	{
-		static MSEConfig cfg;
-		static Dictionary<long,string> mTypedic=null;
-		static Dictionary<long,string> mRacedic=null;
-		public static void Init(Dictionary<long,string> typedic,
+				/*
+		 * 
+		normal monster	通常怪兽
+		effect monster	效果怪兽
+		fusion monster	融合怪兽
+		ritual monster	仪式怪兽
+		synchro monster	同调怪兽
+		token monster	衍生物
+		xyz monster	超量怪兽
+		spell card	魔法
+		trap card	陷阱
+		 */
+		MSEConfig cfg;
+		Dictionary<long,string> mTypedic=null;
+		Dictionary<long,string> mRacedic=null;
+		public MSEConvert(Dictionary<long,string> typedic,
 		                        Dictionary<long,string> racedic,
 		                       MSEConfig _cfg)
 		{
@@ -31,7 +43,11 @@ namespace DataEditorX.Core
 			cfg=_cfg;
 		}
 		
-		public static string GetST(Card c,bool isSpell)
+		public string Code(long id)
+		{
+			return id.ToString("00000000");
+		}
+		public string GetST(Card c,bool isSpell)
 		{
 			string level;
 			if(c.IsType(CardType.TYPE_EQUIP))
@@ -57,8 +73,16 @@ namespace DataEditorX.Core
 				level=cfg.str_trap.Replace("%%",level);
 			return level;
 		}
-		
-		public static string cn2tw(string str)
+		public string reItalic(string str)
+		{
+			str=cn2tw(str);
+			foreach(RegStr rs in cfg.replaces)
+			{
+				str= Regex.Replace(str, rs.pstr, rs.rstr);
+			}
+			return str;
+		}
+		public string cn2tw(string str)
 		{
 			if(cfg.Iscn2tw){
 				str= Strings.StrConv(str,VbStrConv.TraditionalChinese,0);
@@ -66,10 +90,10 @@ namespace DataEditorX.Core
 			}
 			return str;
 		}
-		public static string ReDesc(string desc)
+		public string ReDesc(string desc)
 		{
 			desc=cn2tw(desc);
-			StringBuilder sb=new StringBuilder(MSE.reItalic(desc));
+			StringBuilder sb=new StringBuilder(reItalic(desc));
 			
 			sb.Replace(Environment.NewLine, "\n");
 			sb.Replace("\n\n","\n");
@@ -77,7 +101,7 @@ namespace DataEditorX.Core
 			sb.Replace(" ","^");
 			return sb.ToString();
 		}
-		public static string[] GetTypes(Card c)
+		public string[] GetTypes(Card c)
 		{
 			string[] types=new string[]{"normal monster","","",""};
 			if(c.IsType(CardType.TYPE_MONSTER))
@@ -164,7 +188,7 @@ namespace DataEditorX.Core
 			return types;
 		}
 		
-		static string GetType(CardType type)
+		string GetType(CardType type)
 		{
 			long key=(long)type;
 			if(mTypedic==null)
@@ -174,7 +198,7 @@ namespace DataEditorX.Core
 			return "";
 		}
 		
-		public static string GetStar(long level)
+		public string GetStar(long level)
 		{
 			long j=level&0xff;
 			string star="";
@@ -185,7 +209,7 @@ namespace DataEditorX.Core
 			return star;
 		}
 		
-		public static string GetRace(long race)
+		public string GetRace(long race)
 		{
 			if(race==0)
 				return "";
@@ -196,7 +220,7 @@ namespace DataEditorX.Core
 			return "";
 		}
 
-		public static string GetDesc(string desc,string regx)
+		public string GetDesc(string desc,string regx)
 		{
 			desc=desc.Replace(Environment.NewLine,"\n");
 			Regex regex=new Regex(regx);
@@ -207,7 +231,7 @@ namespace DataEditorX.Core
 			return "";
 		}
 		
-		public static string GetAttribute(int attr)
+		public string GetAttribute(int attr)
 		{
 			CardAttribute cattr= (CardAttribute)attr;
 			string sattr="none";

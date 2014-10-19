@@ -51,4 +51,9 @@
 0x32	Converting Images
 0x33	Convert Images OK
 0x34	Compression DataBase OK
-0x35	Only Update Text of Set? 
+0x35	Only Update Text of Set?
+0x36	Task is Canceled
+0x37	Task is Paused
+0x38	Task is Resume
+0x39	Task has Error
+0x3a	Cancel Task?

@@ -23,56 +23,17 @@ namespace DataEditorX.Core
 	/// </summary>
 	public class MSE
 	{
-		/*
-		 * 
-		normal monster	通常怪兽
-		effect monster	效果怪兽
-		fusion monster	融合怪兽
-		ritual monster	仪式怪兽
-		synchro monster	同调怪兽
-		token monster	衍生物
-		xyz monster	超量怪兽
-		spell card	魔法
-		trap card	陷阱
-		 */
-		static bool isInit=false;
-		static MSEConfig cfg;
-		static Dictionary<long,string> mTypedic;
-		static Dictionary<long,string> mRacedic;
+		MSEConfig cfg;
+		MSEConvert conv;
 		
-		public static void Init(string path,
-		                        Dictionary<long,string> typedic,
-		                        Dictionary<long,string> racedic)
+		public MSE(string path,
+		           Dictionary<long,string> typedic,
+		           Dictionary<long,string> racedic)
 		{
-			if(isInit)
-				return;
 			cfg=new MSEConfig(path);
-			mTypedic = typedic;
-			mRacedic = racedic;
-			MSEConvert.Init(typedic, racedic, cfg);
-			isInit=true;
+			conv=new MSEConvert(typedic, racedic, cfg);
 		}
-
-		public static void Save(string file, Card[] cards,string pic,bool isUpdate){
-			if(!isInit)
-				return;
-			
-			string setFile=Path.Combine(Application.StartupPath, "mse-set.txt");
-			string[] images=WriteSet(setFile, cards, pic);
-			if(isUpdate)//仅更新文字
-				return;
-			using(ZipStorer zips=ZipStorer.Create(file, ""))
-			{
-				zips.AddFile(setFile,"set","");
-				foreach ( string img in images )
-				{
-					zips.AddFile(img, Path.GetFileName(img),"");
-				}
-				zips.Close();
-			}
-			File.Delete(setFile);
-		}
-		public static string[] WriteSet(string file,Card[] cards,string pic)
+		public string[] WriteSet(string file,Card[] cards,string pic)
 		{
 			List<string> list=new List<string>();
 			using(FileStream fs=new FileStream(file,
@@ -99,17 +60,8 @@ namespace DataEditorX.Core
 
 			return list.ToArray();
 		}
-		public static string reItalic(string str)
-		{
-			str=MSEConvert.cn2tw(str);
-			foreach(RegStr rs in cfg.replaces)
-			{
-				str= Regex.Replace(str, rs.pstr, rs.rstr);
-			}
-			return str;
-		}
 		
-		static string getMonster(Card c,string img,bool isPendulum)
+		string getMonster(Card c,string img,bool isPendulum)
 		{
 			StringBuilder sb=new StringBuilder();
 			if(isPendulum)
@@ -117,43 +69,43 @@ namespace DataEditorX.Core
 			else
 				sb.Append(cfg.monster);
 			
-			string[] types=MSEConvert.GetTypes(c);
-			string race=MSEConvert.GetRace(c.race);
+			string[] types = conv.GetTypes(c);
+			string race = conv.GetRace(c.race);
 			sb.Replace("%type%", types[0]);
-			sb.Replace("%name%", MSE.reItalic(c.name));
-			sb.Replace("%attribute%", MSEConvert.GetAttribute(c.attribute));
-			sb.Replace("%level%", MSEConvert.GetStar(c.level));
+			sb.Replace("%name%", conv.reItalic(c.name));
+			sb.Replace("%attribute%", conv.GetAttribute(c.attribute));
+			sb.Replace("%level%", conv.GetStar(c.level));
 			sb.Replace("%image%", img);
 			sb.Replace("%race%", race);
 			sb.Replace("%type1%",types[1]);
 			sb.Replace("%type2%",types[2]);
 			sb.Replace("%type3%",types[3]);
 			if(isPendulum){
-				sb.Replace("%desc%", MSEConvert.ReDesc(
-					MSEConvert.GetDesc(c.desc, cfg.regx_monster)));
+				sb.Replace("%desc%", conv.ReDesc(
+					conv.GetDesc(c.desc, cfg.regx_monster)));
 				sb.Replace("%pl%", ((c.level >> 0x18) & 0xff).ToString());
 				sb.Replace("%pr%", ((c.level >> 0x10) & 0xff).ToString());
-				sb.Replace("%pdesc%", MSEConvert.ReDesc(
-					MSEConvert.GetDesc(c.desc, cfg.regx_pendulum)));
+				sb.Replace("%pdesc%", conv.ReDesc(
+					conv.GetDesc(c.desc, cfg.regx_pendulum)));
 			}
 			else
-				sb.Replace("%desc%", MSEConvert.ReDesc(c.desc));
+				sb.Replace("%desc%", conv.ReDesc(c.desc));
 			sb.Replace("%atk%", (c.atk<0)?"?":c.atk.ToString());
 			sb.Replace("%def%", (c.def<0)?"?":c.def.ToString());
 			
-			sb.Replace("%code%",c.id.ToString("00000000"));
+			sb.Replace("%code%", conv.Code(c.id));
 			return sb.ToString();
 		}
-		static string getSpellTrap(Card c,string img,bool isSpell)
+		string getSpellTrap(Card c,string img,bool isSpell)
 		{
 			StringBuilder sb=new StringBuilder(cfg.spelltrap);
 			sb.Replace("%type%", isSpell?"spell card":"trap card");
-			sb.Replace("%name%", MSE.reItalic(c.name));
+			sb.Replace("%name%", conv.reItalic(c.name));
 			sb.Replace("%attribute%", isSpell?"spell":"trap");
-			sb.Replace("%level%", MSEConvert.GetST(c, isSpell));
+			sb.Replace("%level%", conv.GetST(c, isSpell));
 			sb.Replace("%image%", img);
-			sb.Replace("%desc%", MSEConvert.ReDesc(c.desc));
-			sb.Replace("%code%", c.id.ToString("00000000"));
+			sb.Replace("%desc%", conv.ReDesc(c.desc));
+			sb.Replace("%code%", conv.Code(c.id));
 			return sb.ToString();
 		}
 	}

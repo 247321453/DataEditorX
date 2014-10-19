@@ -9,12 +9,11 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
-using System.Text;
+using System.IO.Compression;
 using System.Windows.Forms;
+using System.ComponentModel;
 
-using DataEditorX.Core;
 using DataEditorX.Language;
 
 namespace DataEditorX.Core
@@ -32,20 +31,40 @@ namespace DataEditorX.Core
 	/// </summary>
 	public class TaskHelper
 	{
-		private static MyTask nowTask=MyTask.NONE;
-		private static Card[] cardlist;
-		private static string[] mArgs;
-		private static ImageSet imgSet=new ImageSet();
-		
-		public static MyTask getTask(){
-			return nowTask;
+		private MyTask nowTask=MyTask.NONE;
+		private MyTask lastTask=MyTask.NONE;
+		private Card[] cardlist;
+		private string[] mArgs;
+		private ImageSet imgSet=new ImageSet();
+		private MSE mseHelper;
+		private bool isCancel=false;
+		private BackgroundWorker worker;
+
+		public TaskHelper(string datapath,BackgroundWorker worker,
+		                  Dictionary<long,string> typedic,
+		                  Dictionary<long,string> racedic)
+		{
+			this.worker=worker;
+			mseHelper=new MSE(datapath,typedic,racedic);
+			imgSet.Init();
 		}
-		public static void SetTask(MyTask myTask,Card[] cards,params string[] args){
+		public bool IsCancel()
+		{
+			return isCancel;
+		}
+		public void Cancel()
+		{
+			isCancel=true;
+		}
+		public MyTask getLastTask(){
+			return lastTask;
+		}
+		public void SetTask(MyTask myTask,Card[] cards,params string[] args){
 			nowTask=myTask;
 			cardlist=cards;
 			mArgs=args;
 		}
-		public static void OnCheckUpdate(bool showNew){
+		public void OnCheckUpdate(bool showNew){
 			string newver=CheckUpdate.Check(
 				ConfigurationManager.AppSettings["updateURL"]);
 			int iver,iver2;
@@ -76,15 +95,16 @@ namespace DataEditorX.Core
 			else
 				MyMsg.Show(LMSG.DownloadFail);
 		}
-		public static void CutImages(string imgpath,string savepath)
+		public void CutImages(string imgpath,string savepath,bool isreplace)
 		{
-			CutImages(imgpath,savepath,true);
-		}
-		public static void CutImages(string imgpath,string savepath,bool isreplace)
-		{
-			imgSet.Init();
+			int count=cardlist.Length;
+			int i=0;
 			foreach(Card c in cardlist)
 			{
+				if(isCancel)
+					break;
+				i++;
+				worker.ReportProgress((i/count), string.Format("{0}/{1}",i,count));
 				string jpg=Path.Combine(imgpath, c.id+".jpg");
 				string savejpg=Path.Combine(savepath, c.id+".jpg");
 				if(File.Exists(jpg) && (isreplace || !File.Exists(savejpg))){
@@ -109,8 +129,7 @@ namespace DataEditorX.Core
 				}
 			}
 		}
-		public static void ToImg(string img,string saveimg1,string saveimg2){
-			imgSet.Init();
+		public void ToImg(string img,string saveimg1,string saveimg2){
 			if(!File.Exists(img))
 				return;
 			Bitmap bmp=new Bitmap(img);
@@ -119,13 +138,19 @@ namespace DataEditorX.Core
 			MyBitmap.SaveAsJPEG(MyBitmap.Zoom(bmp, imgSet.w, imgSet.h),
 			                    saveimg2, imgSet.quilty);
 		}
-		public static void ConvertImages(string imgpath,string gamepath,bool isreplace)
+		public void ConvertImages(string imgpath,string gamepath,bool isreplace)
 		{
-			imgSet.Init();
 			string picspath=Path.Combine(gamepath,"pics");
 			string thubpath=Path.Combine(picspath,"thumbnail");
 			string[] files=Directory.GetFiles(imgpath);
+			int i=0;
+			int count=files.Length;
+			
 			foreach(string f in files){
+				if(isCancel)
+					break;
+				i++;
+				worker.ReportProgress(i/count, string.Format("{0}/{1}",i,count));
 				string ex=Path.GetExtension(f).ToLower();
 				string name=Path.GetFileNameWithoutExtension(f);
 				string jpg_b=Path.Combine(picspath,name+".jpg");
@@ -148,8 +173,29 @@ namespace DataEditorX.Core
 				}
 			}
 		}
-		
-		public static void Run(){
+		public void SaveMSE(string file, Card[] cards,string pic,bool isUpdate){
+			string setFile=file+".txt";
+			string[] images=mseHelper.WriteSet(setFile, cards, pic);
+			if(isUpdate)//仅更新文字
+				return;
+			int i=0;
+			int count=images.Length;
+			using(ZipStorer zips=ZipStorer.Create(file, ""))
+			{
+				zips.AddFile(setFile,"set","");
+				foreach ( string img in images )
+				{
+					if(isCancel)
+						break;
+					i++;
+					worker.ReportProgress(i/count, string.Format("{0}/{1}",i,count));
+					zips.AddFile(img, Path.GetFileName(img),"");
+				}
+			}
+			File.Delete(setFile);
+		}
+		public void Run(){
+			isCancel=false;
 			bool replace;
 			bool showNew;
 			switch(nowTask){
@@ -184,7 +230,7 @@ namespace DataEditorX.Core
 							if(mArgs[2]==Boolean.TrueString)
 								replace=true;
 						}
-						MSE.Save(mArgs[0], cardlist, mArgs[1], replace);
+						SaveMSE(mArgs[0], cardlist, mArgs[1], replace);
 					}
 					break;
 				case MyTask.ConvertImages:
@@ -198,6 +244,8 @@ namespace DataEditorX.Core
 					}
 					break;
 			}
+			lastTask=nowTask;
+			nowTask=MyTask.NONE;
 			cardlist=null;
 			mArgs=null;
 		}

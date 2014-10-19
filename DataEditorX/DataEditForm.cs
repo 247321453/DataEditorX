@@ -22,10 +22,14 @@ namespace DataEditorX
 	public partial class DataEditForm : Form
 	{
 		#region 成员变量
+		TaskHelper tasker;
+		string taskname;
 		string ydkfile=null;
 		string imagepath=null;
 		string GAMEPATH,PICPATH,PICPATH2,LUAPTH,IMAGEPATH;
+		/// <summary>当前卡片</summary>
 		Card oldCard=new Card(0);
+		/// <summary>搜索条件</summary>
 		Card srcCard=new Card(0);
 		string[] strs=null;
 		string title;
@@ -91,7 +95,7 @@ namespace DataEditorX
 			title=this.Text;
 			
 			InitGameData();
-			MSE.Init(datapath, dicCardTypes, dicCardRaces);
+			tasker=new TaskHelper(datapath, bgWorker1, dicCardTypes, dicCardRaces);
 			
 			SetCDB(nowCdbFile);
 			//设置空白卡片
@@ -964,11 +968,20 @@ namespace DataEditorX
 		{
 			if(!isRun())
 			{
-				TaskHelper.SetTask(MyTask.CheckUpdate,null,showNew.ToString());
+				tasker.SetTask(MyTask.CheckUpdate,null,showNew.ToString());
 				Run(LANG.GetMsg(LMSG.checkUpdate));
 			}
 		}
-
+        
+        void Menuitem_cancelTaskClick(object sender, EventArgs e)
+        {
+        	if(MyMsg.Question(LMSG.IfCancelTask)){
+        		if(bgWorker1.IsBusy){
+        			tasker.Cancel();
+        			bgWorker1.CancelAsync();
+        		}
+        	}
+        }
 		void Menuitem_githubClick(object sender, EventArgs e)
 		{
 			System.Diagnostics.Process.Start(ConfigurationManager.AppSettings["sourceURL"]);
@@ -1021,8 +1034,8 @@ namespace DataEditorX
 				if(fdlg.ShowDialog()==DialogResult.OK)
 				{
 					bool isreplace=MyMsg.Question(LMSG.IfReplaceExistingImage);
-					TaskHelper.SetTask(MyTask.ConvertImages, null,
-					                   fdlg.SelectedPath, GAMEPATH, isreplace.ToString());
+					tasker.SetTask(MyTask.ConvertImages, null,
+					               fdlg.SelectedPath, GAMEPATH, isreplace.ToString());
 					Run(LANG.GetMsg(LMSG.ConvertImage));
 				}
 			}
@@ -1073,7 +1086,7 @@ namespace DataEditorX
 		
 		#region 线程
 		bool isRun(){
-			if(backgroundWorker1.IsBusy){
+			if(bgWorker1.IsBusy){
 				MyMsg.Warning(LMSG.RunError);
 				return true;
 			}
@@ -1083,17 +1096,31 @@ namespace DataEditorX
 		void Run(string name){
 			if(isRun())
 				return;
-			title=title+" ("+name+")";
+			taskname=name;
+			title=title+" ("+taskname+")";
 			SetTitle();
-			backgroundWorker1.RunWorkerAsync();
+			bgWorker1.RunWorkerAsync();
 		}
 		//线程任务
-		void BackgroundWorker1DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+		void BgWorker1DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
 		{
-			TaskHelper.Run();
+			tasker.Run();
+		}
+		void BgWorker1ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
+		{
+			int t=title.LastIndexOf(" (");
+			if(t>0)
+			{
+				title=string.Format("{0} ({1}-{2})",
+				                    title.Substring(0,t),
+				                    taskname,
+				                   // e.ProgressPercentage,
+				                    e.UserState);
+				SetTitle();
+			}
 		}
 		//任务完成
-		void BackgroundWorker1RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+		void BgWorker1RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
 		{
 			//
 			int t=title.LastIndexOf(" (");
@@ -1102,21 +1129,31 @@ namespace DataEditorX
 				title=title.Substring(0,t);
 				SetTitle();
 			}
-			MyTask mt=TaskHelper.getTask();
-			switch(mt){
-				case MyTask.CheckUpdate:break;
-				case MyTask.CopyDataBase:
-					MyMsg.Show(LMSG.copyDBIsOK);
-					break;
-				case MyTask.CutImages:
-					MyMsg.Show(LMSG.CutImageOK);
-					break;
-				case MyTask.SaveAsMSE:
-					MyMsg.Show(LMSG.SaveMseOK);
-					break;
-				case MyTask.ConvertImages:
-					MyMsg.Show(LMSG.ConvertImageOK);
-					break;
+			if ( e.Error != null){
+				
+				MyMsg.Show(LANG.GetMsg(LMSG.TaskError)+"\n"+e.Error);
+			}
+			else if(tasker.IsCancel() || e.Cancelled){
+				MyMsg.Show(LMSG.CancelTask);
+			}
+			else
+			{
+				MyTask mt=tasker.getLastTask();
+				switch(mt){
+						case MyTask.CheckUpdate:break;
+					case MyTask.CopyDataBase:
+						MyMsg.Show(LMSG.copyDBIsOK);
+						break;
+					case MyTask.CutImages:
+						MyMsg.Show(LMSG.CutImageOK);
+						break;
+					case MyTask.SaveAsMSE:
+						MyMsg.Show(LMSG.SaveMseOK);
+						break;
+					case MyTask.ConvertImages:
+						MyMsg.Show(LMSG.ConvertImageOK);
+						break;
+				}
 			}
 		}
 		#endregion
@@ -1157,6 +1194,7 @@ namespace DataEditorX
 			tb_setcode4.Text=GetSelectHex(dicSetnames, cb_setname4);
 			setcodeIsedit4=false;
 		}
+
 		void Tb_setcode4TextChanged(object sender, EventArgs e)
 		{
 			if(setcodeIsedit4)
@@ -1202,7 +1240,7 @@ namespace DataEditorX
 		}
 		#endregion
 		
-		#region copy cards
+		#region 复制卡片
 		Card[] getCardList(bool onlyselect){
 			List<Card> cards=new List<Card>();
 			if(onlyselect)
@@ -1258,14 +1296,14 @@ namespace DataEditorX
 				}
 			}
 			if(!string.IsNullOrEmpty(filename)){
-				TaskHelper.SetTask(MyTask.CopyDataBase, cards, filename, replace.ToString());
+				tasker.SetTask(MyTask.CopyDataBase, cards, filename, replace.ToString());
 				Run(LANG.GetMsg(LMSG.copyCards));
 			}
 			
 		}
 		#endregion
 		
-		#region MSE set
+		#region MSE存档
 		void Menuitem_cutimagesClick(object sender, EventArgs e)
 		{
 			if(!Check())
@@ -1273,8 +1311,8 @@ namespace DataEditorX
 			if(isRun())
 				return;
 			bool isreplace=MyMsg.Question(LMSG.IfReplaceExistingImage);
-			TaskHelper.SetTask(MyTask.CutImages, cardlist.ToArray(),
-			                   PICPATH, IMAGEPATH, isreplace.ToString());
+			tasker.SetTask(MyTask.CutImages, cardlist.ToArray(),
+			               PICPATH, IMAGEPATH, isreplace.ToString());
 			Run(LANG.GetMsg(LMSG.CutImage));
 		}
 		void Menuitem_saveasmse_selectClick(object sender, EventArgs e)
@@ -1305,15 +1343,15 @@ namespace DataEditorX
 					#if DEBUG
 					isUpdate=MyMsg.Question(LMSG.OnlySet);
 					#endif
-					TaskHelper.SetTask(MyTask.SaveAsMSE,cards,
-					                   dlg.FileName,IMAGEPATH,isUpdate.ToString());
+					tasker.SetTask(MyTask.SaveAsMSE,cards,
+					               dlg.FileName,IMAGEPATH,isUpdate.ToString());
 					Run(LANG.GetMsg(LMSG.SaveMse));
 				}
 			}
 		}
 		#endregion
 		
-		#region inprot image
+		#region 导入卡图
 		void Pl_imageDragDrop(object sender, DragEventArgs e)
 		{
 			string[] files=e.Data.GetData(DataFormats.FileDrop) as string[];
@@ -1339,8 +1377,8 @@ namespace DataEditorX
 				pl_image.BackgroundImage.Dispose();
 				pl_image.BackgroundImage=m_cover;
 			}
-			TaskHelper.ToImg(file,f,
-			                 Path.Combine(PICPATH2,tid+".jpg"));
+			tasker.ToImg(file,f,
+			             Path.Combine(PICPATH2,tid+".jpg"));
 			setImage(f);
 		}
 		void setImage(string f){

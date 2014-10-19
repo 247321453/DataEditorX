@@ -68,6 +68,11 @@ namespace DataEditorX.Language
         ConvertImageOK,
         CompDBOK,
         OnlySet,
+        CancelTask,
+        PauseTask,
+        ResumeTask,
+        TaskError,
+        IfCancelTask,
         COUNT,
     }
 }

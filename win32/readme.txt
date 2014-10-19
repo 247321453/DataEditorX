@@ -1,4 +1,4 @@
-﻿[DataEditorX]1.6.6.0[DataEditorX]
+﻿[DataEditorX]1.6.7.0[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★使用前，请关联lua的打开方式，例如记事本，notepad++，等。
@@ -56,6 +56,9 @@ DataEditorX.exe.config
 描述不详细的bug，我修复不了。（都不知道是bug是什么）
 
 ★更新历史
+1.6.7.0
+任务进度提示
+取消任务
 1.6.6.0
 mse-config.txt添加注释
 1.6.5.0
