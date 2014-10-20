@@ -341,8 +341,13 @@ namespace DataEditorX.Core
 		{
 			StringBuilder sb=new StringBuilder();
 			sb.Append("SELECT datas.*,texts.* FROM datas,texts WHERE datas.id=texts.id ");
-			if(!string.IsNullOrEmpty(c.name))
-				sb.Append(" and texts.name like '%"+c.name+"%' ");
+			if(!string.IsNullOrEmpty(c.name)){
+				if(c.name.IndexOf("%%")>=0)
+					c.name=c.name.Replace("%%","%");
+				else
+					c.name="%"+c.name.Replace("%","/%").Replace("_","/_")+"%";
+				sb.Append(" and texts.name like '"+c.name+"' ");
+			}
 			if(!string.IsNullOrEmpty(c.desc))
 				sb.Append(" and texts.desc like '%"+c.desc+"%' ");
 			if(c.ot>0)
@@ -357,7 +362,21 @@ namespace DataEditorX.Core
 				sb.Append(" and datas.type & "+toInt(c.type)+" = "+toInt(c.type));
 			if(c.category>0)
 				sb.Append(" and datas.category & "+toInt(c.category)+" = "+toInt(c.category));
-
+			
+			if(c.atk>0)
+				sb.Append(" and datas.atk >= "+c.atk.ToString());
+			else if(c.atk==-2)
+				sb.Append(" and datas.atk = "+c.atk.ToString());
+			else if(c.atk==-1)
+				sb.Append(" and datas.atk = 0");
+				
+			if(c.def>0)
+				sb.Append(" and datas.def >= "+c.def.ToString());
+			else if(c.def==-2)
+				sb.Append(" and datas.def = "+c.def.ToString());
+			else if(c.def==-1)
+				sb.Append(" and datas.def = 0");
+				          
 			if(c.id>0 && c.alias>0)
 				sb.Append(" and datas.id BETWEEN "+c.alias.ToString()+" and "+c.id.ToString());
 			else if(c.id>0)

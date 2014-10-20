@@ -104,9 +104,7 @@ namespace DataEditorX
 			
 			if(File.Exists(nowCdbFile))
 				Open(nowCdbFile);
-			#if !DEBUG
-			checkupdate(false);
-			#endif
+			//checkupdate(false);
 		}
 		//窗体关闭
 		void DataEditFormFormClosing(object sender, FormClosingEventArgs e)
@@ -406,10 +404,14 @@ namespace DataEditorX
 			c.level+=(temp << 0x10);
 			if(tb_atk.Text=="?"||tb_atk.Text=="？")
 				c.atk=-2;
+			else if(tb_atk.Text==".")
+				c.atk=-1;
 			else
 				int.TryParse( tb_atk.Text,out c.atk);
 			if(tb_def.Text=="?"||tb_def.Text=="？")
 				c.def=-2;
+			else if(tb_def.Text==".")
+				c.def=-1;
 			else
 				int.TryParse( tb_def.Text,out c.def);
 			long.TryParse( tb_cardcode.Text,out c.id);

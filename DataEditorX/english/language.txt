@@ -22,6 +22,7 @@ DataEditForm->lb4 /
 DataEditForm->lb5 /
 DataEditForm->lv_cardlist0 Card Code
 DataEditForm->lv_cardlist1 Card Name
+DataEditForm->menu_tools Tools
 DataEditForm->menuitem_cancelTask Cancel Task
 DataEditForm->menuitem_compdb Compression DataBase
 DataEditForm->menuitem_convertimage Inport Images

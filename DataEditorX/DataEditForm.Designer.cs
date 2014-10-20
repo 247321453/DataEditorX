@@ -40,14 +40,6 @@ namespace DataEditorX
         	this.menuitem_open = new System.Windows.Forms.ToolStripMenuItem();
         	this.menuitem_new = new System.Windows.Forms.ToolStripMenuItem();
         	this.menuitem_compdb = new System.Windows.Forms.ToolStripMenuItem();
-        	this.tsep5 = new System.Windows.Forms.ToolStripSeparator();
-        	this.menuitem_copyselectto = new System.Windows.Forms.ToolStripMenuItem();
-        	this.menuitem_saveasmse_select = new System.Windows.Forms.ToolStripMenuItem();
-        	this.menuitem_copyto = new System.Windows.Forms.ToolStripMenuItem();
-        	this.menuitem_saveasmse = new System.Windows.Forms.ToolStripMenuItem();
-        	this.tsep4 = new System.Windows.Forms.ToolStripSeparator();
-        	this.menuitem_cutimages = new System.Windows.Forms.ToolStripMenuItem();
-        	this.menuitem_convertimage = new System.Windows.Forms.ToolStripMenuItem();
         	this.tsep1 = new System.Windows.Forms.ToolStripSeparator();
         	this.menuitem_readydk = new System.Windows.Forms.ToolStripMenuItem();
         	this.menuitem_readimages = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,6 +47,17 @@ namespace DataEditorX
         	this.menuitem_openLastDataBase = new System.Windows.Forms.ToolStripMenuItem();
         	this.tsep2 = new System.Windows.Forms.ToolStripSeparator();
         	this.menuitem_quit = new System.Windows.Forms.ToolStripMenuItem();
+        	this.menu_tools = new System.Windows.Forms.ToolStripMenuItem();
+        	this.menuitem_copyselectto = new System.Windows.Forms.ToolStripMenuItem();
+        	this.menuitem_saveasmse_select = new System.Windows.Forms.ToolStripMenuItem();
+        	this.tsep4 = new System.Windows.Forms.ToolStripSeparator();
+        	this.menuitem_copyto = new System.Windows.Forms.ToolStripMenuItem();
+        	this.menuitem_saveasmse = new System.Windows.Forms.ToolStripMenuItem();
+        	this.tsep5 = new System.Windows.Forms.ToolStripSeparator();
+        	this.menuitem_cutimages = new System.Windows.Forms.ToolStripMenuItem();
+        	this.menuitem_convertimage = new System.Windows.Forms.ToolStripMenuItem();
+        	this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+        	this.menuitem_cancelTask = new System.Windows.Forms.ToolStripMenuItem();
         	this.menuitem_help = new System.Windows.Forms.ToolStripMenuItem();
         	this.menuitem_about = new System.Windows.Forms.ToolStripMenuItem();
         	this.menuitem_checkupdate = new System.Windows.Forms.ToolStripMenuItem();
@@ -110,8 +113,6 @@ namespace DataEditorX
         	this.tb_setcode2 = new System.Windows.Forms.TextBox();
         	this.tb_setcode3 = new System.Windows.Forms.TextBox();
         	this.tb_setcode4 = new System.Windows.Forms.TextBox();
-        	this.menuitem_cancelTask = new System.Windows.Forms.ToolStripMenuItem();
-        	this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
         	this.menuStrip1.SuspendLayout();
         	this.SuspendLayout();
         	// 
@@ -119,6 +120,7 @@ namespace DataEditorX
         	// 
         	this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
         	        	        	this.menuitem_file,
+        	        	        	this.menu_tools,
         	        	        	this.menuitem_help});
         	this.menuStrip1.Location = new System.Drawing.Point(0, 0);
         	this.menuStrip1.Name = "menuStrip1";
@@ -132,14 +134,6 @@ namespace DataEditorX
         	        	        	this.menuitem_open,
         	        	        	this.menuitem_new,
         	        	        	this.menuitem_compdb,
-        	        	        	this.tsep5,
-        	        	        	this.menuitem_copyselectto,
-        	        	        	this.menuitem_saveasmse_select,
-        	        	        	this.menuitem_copyto,
-        	        	        	this.menuitem_saveasmse,
-        	        	        	this.tsep4,
-        	        	        	this.menuitem_cutimages,
-        	        	        	this.menuitem_convertimage,
         	        	        	this.tsep1,
         	        	        	this.menuitem_readydk,
         	        	        	this.menuitem_readimages,
@@ -173,58 +167,6 @@ namespace DataEditorX
         	this.menuitem_compdb.Size = new System.Drawing.Size(232, 22);
         	this.menuitem_compdb.Text = "Compression DataBase";
         	this.menuitem_compdb.Click += new System.EventHandler(this.Menuitem_compdbClick);
-        	// 
-        	// tsep5
-        	// 
-        	this.tsep5.Name = "tsep5";
-        	this.tsep5.Size = new System.Drawing.Size(229, 6);
-        	// 
-        	// menuitem_copyselectto
-        	// 
-        	this.menuitem_copyselectto.Name = "menuitem_copyselectto";
-        	this.menuitem_copyselectto.Size = new System.Drawing.Size(232, 22);
-        	this.menuitem_copyselectto.Text = "Select Copy To...";
-        	this.menuitem_copyselectto.Click += new System.EventHandler(this.Menuitem_copyselecttoClick);
-        	// 
-        	// menuitem_saveasmse_select
-        	// 
-        	this.menuitem_saveasmse_select.Name = "menuitem_saveasmse_select";
-        	this.menuitem_saveasmse_select.Size = new System.Drawing.Size(232, 22);
-        	this.menuitem_saveasmse_select.Text = "Select Save As MSE";
-        	this.menuitem_saveasmse_select.Click += new System.EventHandler(this.Menuitem_saveasmse_selectClick);
-        	// 
-        	// menuitem_copyto
-        	// 
-        	this.menuitem_copyto.Name = "menuitem_copyto";
-        	this.menuitem_copyto.Size = new System.Drawing.Size(232, 22);
-        	this.menuitem_copyto.Text = "All Now Copy To...";
-        	this.menuitem_copyto.Click += new System.EventHandler(this.Menuitem_copytoClick);
-        	// 
-        	// menuitem_saveasmse
-        	// 
-        	this.menuitem_saveasmse.Name = "menuitem_saveasmse";
-        	this.menuitem_saveasmse.Size = new System.Drawing.Size(232, 22);
-        	this.menuitem_saveasmse.Text = "All Now Save As MSE";
-        	this.menuitem_saveasmse.Click += new System.EventHandler(this.Menuitem_saveasmseClick);
-        	// 
-        	// tsep4
-        	// 
-        	this.tsep4.Name = "tsep4";
-        	this.tsep4.Size = new System.Drawing.Size(229, 6);
-        	// 
-        	// menuitem_cutimages
-        	// 
-        	this.menuitem_cutimages.Name = "menuitem_cutimages";
-        	this.menuitem_cutimages.Size = new System.Drawing.Size(232, 22);
-        	this.menuitem_cutimages.Text = "Cut Images";
-        	this.menuitem_cutimages.Click += new System.EventHandler(this.Menuitem_cutimagesClick);
-        	// 
-        	// menuitem_convertimage
-        	// 
-        	this.menuitem_convertimage.Name = "menuitem_convertimage";
-        	this.menuitem_convertimage.Size = new System.Drawing.Size(232, 22);
-        	this.menuitem_convertimage.Text = "Inport Images";
-        	this.menuitem_convertimage.Click += new System.EventHandler(this.Menuitem_convertimageClick);
         	// 
         	// tsep1
         	// 
@@ -269,14 +211,91 @@ namespace DataEditorX
         	this.menuitem_quit.Text = "Quit(&Q)";
         	this.menuitem_quit.Click += new System.EventHandler(this.Menuitem_quitClick);
         	// 
+        	// menu_tools
+        	// 
+        	this.menu_tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+        	        	        	this.menuitem_copyselectto,
+        	        	        	this.menuitem_saveasmse_select,
+        	        	        	this.tsep4,
+        	        	        	this.menuitem_copyto,
+        	        	        	this.menuitem_saveasmse,
+        	        	        	this.tsep5,
+        	        	        	this.menuitem_cutimages,
+        	        	        	this.menuitem_convertimage,
+        	        	        	this.toolStripSeparator1,
+        	        	        	this.menuitem_cancelTask});
+        	this.menu_tools.Name = "menu_tools";
+        	this.menu_tools.Size = new System.Drawing.Size(67, 21);
+        	this.menu_tools.Text = "Tools(&T)";
+        	// 
+        	// menuitem_copyselectto
+        	// 
+        	this.menuitem_copyselectto.Name = "menuitem_copyselectto";
+        	this.menuitem_copyselectto.Size = new System.Drawing.Size(200, 22);
+        	this.menuitem_copyselectto.Text = "Select Copy To...";
+        	this.menuitem_copyselectto.Click += new System.EventHandler(this.Menuitem_copyselecttoClick);
+        	// 
+        	// menuitem_saveasmse_select
+        	// 
+        	this.menuitem_saveasmse_select.Name = "menuitem_saveasmse_select";
+        	this.menuitem_saveasmse_select.Size = new System.Drawing.Size(200, 22);
+        	this.menuitem_saveasmse_select.Text = "Select Save As MSE";
+        	this.menuitem_saveasmse_select.Click += new System.EventHandler(this.Menuitem_saveasmse_selectClick);
+        	// 
+        	// tsep4
+        	// 
+        	this.tsep4.Name = "tsep4";
+        	this.tsep4.Size = new System.Drawing.Size(197, 6);
+        	// 
+        	// menuitem_copyto
+        	// 
+        	this.menuitem_copyto.Name = "menuitem_copyto";
+        	this.menuitem_copyto.Size = new System.Drawing.Size(200, 22);
+        	this.menuitem_copyto.Text = "All Now Copy To...";
+        	this.menuitem_copyto.Click += new System.EventHandler(this.Menuitem_copytoClick);
+        	// 
+        	// menuitem_saveasmse
+        	// 
+        	this.menuitem_saveasmse.Name = "menuitem_saveasmse";
+        	this.menuitem_saveasmse.Size = new System.Drawing.Size(200, 22);
+        	this.menuitem_saveasmse.Text = "All Now Save As MSE";
+        	this.menuitem_saveasmse.Click += new System.EventHandler(this.Menuitem_saveasmseClick);
+        	// 
+        	// tsep5
+        	// 
+        	this.tsep5.Name = "tsep5";
+        	this.tsep5.Size = new System.Drawing.Size(197, 6);
+        	// 
+        	// menuitem_cutimages
+        	// 
+        	this.menuitem_cutimages.Name = "menuitem_cutimages";
+        	this.menuitem_cutimages.Size = new System.Drawing.Size(200, 22);
+        	this.menuitem_cutimages.Text = "Cut Images";
+        	this.menuitem_cutimages.Click += new System.EventHandler(this.Menuitem_cutimagesClick);
+        	// 
+        	// menuitem_convertimage
+        	// 
+        	this.menuitem_convertimage.Name = "menuitem_convertimage";
+        	this.menuitem_convertimage.Size = new System.Drawing.Size(200, 22);
+        	this.menuitem_convertimage.Text = "Inport Images";
+        	// 
+        	// toolStripSeparator1
+        	// 
+        	this.toolStripSeparator1.Name = "toolStripSeparator1";
+        	this.toolStripSeparator1.Size = new System.Drawing.Size(197, 6);
+        	// 
+        	// menuitem_cancelTask
+        	// 
+        	this.menuitem_cancelTask.Name = "menuitem_cancelTask";
+        	this.menuitem_cancelTask.Size = new System.Drawing.Size(200, 22);
+        	this.menuitem_cancelTask.Text = "Cancel Task";
+        	// 
         	// menuitem_help
         	// 
         	this.menuitem_help.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
         	        	        	this.menuitem_about,
         	        	        	this.menuitem_checkupdate,
-        	        	        	this.menuitem_github,
-        	        	        	this.toolStripSeparator1,
-        	        	        	this.menuitem_cancelTask});
+        	        	        	this.menuitem_github});
         	this.menuitem_help.Name = "menuitem_help";
         	this.menuitem_help.Size = new System.Drawing.Size(64, 21);
         	this.menuitem_help.Text = "Help(&H)";
@@ -825,18 +844,6 @@ namespace DataEditorX
         	this.tb_setcode4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
         	this.tb_setcode4.TextChanged += new System.EventHandler(this.Tb_setcode4TextChanged);
         	// 
-        	// menuitem_cancelTask
-        	// 
-        	this.menuitem_cancelTask.Name = "menuitem_cancelTask";
-        	this.menuitem_cancelTask.Size = new System.Drawing.Size(158, 22);
-        	this.menuitem_cancelTask.Text = "Cancel Task";
-        	this.menuitem_cancelTask.Click += new System.EventHandler(this.Menuitem_cancelTaskClick);
-        	// 
-        	// toolStripSeparator1
-        	// 
-        	this.toolStripSeparator1.Name = "toolStripSeparator1";
-        	this.toolStripSeparator1.Size = new System.Drawing.Size(155, 6);
-        	// 
         	// DataEditForm
         	// 
         	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -904,6 +911,7 @@ namespace DataEditorX
         	this.ResumeLayout(false);
         	this.PerformLayout();
         }
+        private System.Windows.Forms.ToolStripMenuItem menu_tools;
         private System.Windows.Forms.ToolStripMenuItem menuitem_cancelTask;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.TextBox tb_setcode4;
