@@ -204,7 +204,7 @@
     <None Include="english\mse-spelltrap.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Magic Set Editor 2\update\download.bat">
+    <None Include="Magic Set Editor 2\download.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Magic Set Editor 2\update\readme.txt">
