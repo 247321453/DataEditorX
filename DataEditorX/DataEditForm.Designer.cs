@@ -113,6 +113,7 @@ namespace DataEditorX
         	this.tb_setcode3 = new System.Windows.Forms.TextBox();
         	this.tb_setcode4 = new System.Windows.Forms.TextBox();
         	this.lb_cardcode = new System.Windows.Forms.Label();
+        	this.menuitem_exportdata = new System.Windows.Forms.ToolStripMenuItem();
         	this.menuStrip1.SuspendLayout();
         	this.SuspendLayout();
         	// 
@@ -200,9 +201,10 @@ namespace DataEditorX
         	// menu_tools
         	// 
         	this.menu_tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-        	        	        	this.menuitem_compdb,
         	        	        	this.menuitem_readydk,
         	        	        	this.menuitem_readimages,
+        	        	        	this.menuitem_compdb,
+        	        	        	this.menuitem_exportdata,
         	        	        	this.tsep5,
         	        	        	this.menuitem_saveasmse_select,
         	        	        	this.menuitem_saveasmse,
@@ -882,6 +884,13 @@ namespace DataEditorX
         	this.lb_cardcode.TabIndex = 7;
         	this.lb_cardcode.Text = "Card Code";
         	// 
+        	// menuitem_exportdata
+        	// 
+        	this.menuitem_exportdata.Name = "menuitem_exportdata";
+        	this.menuitem_exportdata.Size = new System.Drawing.Size(212, 22);
+        	this.menuitem_exportdata.Text = "Export Data";
+        	this.menuitem_exportdata.Click += new System.EventHandler(this.Menuitem_exportdataClick);
+        	// 
         	// DataEditForm
         	// 
         	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -950,6 +959,7 @@ namespace DataEditorX
         	this.ResumeLayout(false);
         	this.PerformLayout();
         }
+        private System.Windows.Forms.ToolStripMenuItem menuitem_exportdata;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem menuitem_quit;

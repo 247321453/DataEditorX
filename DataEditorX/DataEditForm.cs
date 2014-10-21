@@ -154,10 +154,19 @@ namespace DataEditorX
 			//this.PerformLayout();
 		}
 		
+		string RemoveTag(string text)
+		{
+			int t=text.LastIndexOf(" (");
+			if(t>0)
+			{
+				return text.Substring(0,t);
+			}
+			return text;
+		}
 		void SetTitle()
 		{
 			string str=title;
-			string str2=title;
+			string str2=RemoveTag(title);
 			if(!string.IsNullOrEmpty(nowCdbFile)){
 				str=nowCdbFile+"-"+str;
 				str2=Path.GetFileName(nowCdbFile);
@@ -1074,31 +1083,7 @@ namespace DataEditorX
 				}
 			}
 		}
-		void Menuitem_compdbClick(object sender, EventArgs e)
-		{
-			if(!Check())
-				return;
-			DataBase.Compression(nowCdbFile);
-			MyMsg.Show(LMSG.CompDBOK);
-		}
-		void Menuitem_convertimageClick(object sender, EventArgs e)
-		{
-			if(!Check())
-				return;
-			if(isRun())
-				return;
-			using(FolderBrowserDialog fdlg=new FolderBrowserDialog())
-			{
-				fdlg.Description= LANG.GetMsg(LMSG.SelectImagePath);
-				if(fdlg.ShowDialog()==DialogResult.OK)
-				{
-					bool isreplace=MyMsg.Question(LMSG.IfReplaceExistingImage);
-					tasker.SetTask(MyTask.ConvertImages, null,
-					               fdlg.SelectedPath, GAMEPATH, isreplace.ToString());
-					Run(LANG.GetMsg(LMSG.ConvertImage));
-				}
-			}
-		}
+
 		void Menuitem_readydkClick(object sender, EventArgs e)
 		{
 			if(!Check())
@@ -1160,16 +1145,12 @@ namespace DataEditorX
 		}
 		void BgWorker1ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
 		{
-			int t=title.LastIndexOf(" (");
-			if(t>0)
-			{
-				title=string.Format("{0} ({1}-{2})",
-				                    title.Substring(0,t),
-				                    taskname,
-				                    // e.ProgressPercentage,
-				                    e.UserState);
-				SetTitle();
-			}
+			title=string.Format("{0} ({1}-{2})",
+			                    RemoveTag(title),
+			                    taskname,
+			                    // e.ProgressPercentage,
+			                    e.UserState);
+			SetTitle();
 		}
 		//任务完成
 		void BgWorker1RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
@@ -1192,7 +1173,11 @@ namespace DataEditorX
 			{
 				MyTask mt=tasker.getLastTask();
 				switch(mt){
-						case MyTask.CheckUpdate:break;
+					case MyTask.CheckUpdate:
+						break;
+					case MyTask.ExportData:
+						MyMsg.Show(LMSG.ExportDataOK);
+						break;
 					case MyTask.CutImages:
 						MyMsg.Show(LMSG.CutImageOK);
 						break;
@@ -1443,7 +1428,43 @@ namespace DataEditorX
 			else
 				pl_image.BackgroundImage=m_cover;
 		}
+		void Menuitem_compdbClick(object sender, EventArgs e)
+		{
+			if(!Check())
+				return;
+			DataBase.Compression(nowCdbFile);
+			MyMsg.Show(LMSG.CompDBOK);
+		}
+		void Menuitem_convertimageClick(object sender, EventArgs e)
+		{
+			if(!Check())
+				return;
+			if(isRun())
+				return;
+			using(FolderBrowserDialog fdlg=new FolderBrowserDialog())
+			{
+				fdlg.Description= LANG.GetMsg(LMSG.SelectImagePath);
+				if(fdlg.ShowDialog()==DialogResult.OK)
+				{
+					bool isreplace=MyMsg.Question(LMSG.IfReplaceExistingImage);
+					tasker.SetTask(MyTask.ConvertImages, null,
+					               fdlg.SelectedPath, GAMEPATH, isreplace.ToString());
+					Run(LANG.GetMsg(LMSG.ConvertImage));
+				}
+			}
+		}
 		#endregion
-
+		
+		#region 导出数据包
+		void Menuitem_exportdataClick(object sender, EventArgs e)
+		{
+			if(!Check())
+				return;
+			if(isRun())
+				return;
+			tasker.SetTask(MyTask.ExportData, null, nowCdbFile);
+			Run(LANG.GetMsg(LMSG.ExportData));
+		}
+		#endregion
 	}
 }

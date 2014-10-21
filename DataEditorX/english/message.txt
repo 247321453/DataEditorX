@@ -60,3 +60,5 @@
 0x3b	Copy
 0x3c	Paste
 0x3d	Clear History
+0x3e	Exporting Data
+0x3f	Export Data OK

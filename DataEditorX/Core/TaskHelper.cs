@@ -21,6 +21,7 @@ namespace DataEditorX.Core
 	public enum MyTask{
 		NONE,
 		CheckUpdate,
+		ExportData,
 		SaveAsMSE,
 		CutImages,
 		ConvertImages,
@@ -198,12 +199,58 @@ namespace DataEditorX.Core
 			}
 			File.Delete(setFile);
 		}
+		
+		public void ExportData(string cdbfile)
+		{
+			if(!File.Exists(cdbfile))
+				return;
+			int i=0;
+			Card[] cards=DataBase.Read(cdbfile, false, "");
+			if(cards == null || cards.Length == 0)
+				return;
+			int count=cards.Length;
+			string path=Path.GetDirectoryName(cdbfile);
+			string name=Path.GetFileNameWithoutExtension(cdbfile);
+			string zipname=Path.Combine(path, name+".zip");
+			string pics=Path.Combine(path,"pics");
+			string thumb=Path.Combine(pics,"thumbnail");
+			string script=Path.Combine(path,"script");
+
+			if(File.Exists(zipname))
+				File.Delete(zipname);
+			using(ZipStorer zips=ZipStorer.Create(zipname, ""))
+			{
+				zips.AddFile(cdbfile, name+".cdb","");
+				foreach(Card c in cards)
+				{
+					i++;
+					worker.ReportProgress(i/count, string.Format("{0}/{1}",i,count));
+					//zips.AddFile(
+					string jpg1=Path.Combine(pics, c.id.ToString()+".jpg");
+					string jpg2=Path.Combine(thumb, c.id.ToString()+".jpg");
+					string lua=Path.Combine(script, "c"+c.id.ToString()+".lua");
+					
+					if(File.Exists(jpg1))
+						zips.AddFile(jpg1,"pics/"+c.id.ToString()+".jpg","");
+					if(File.Exists(jpg2))
+						zips.AddFile(jpg2,"pics/thumbnail/"+c.id.ToString()+".jpg","");
+					if(File.Exists(lua))
+						zips.AddFile(lua,"script/c"+c.id.ToString()+".lua","");
+				}
+			}
+		}
+		
 		public void Run(){
 			isCancel=false;
 			isRun=true;
 			bool replace;
 			bool showNew;
 			switch(nowTask){
+				case MyTask.ExportData:
+					if(mArgs!=null && mArgs.Length>=1){
+						ExportData(mArgs[0]);
+					}
+					break;
 				case MyTask.CheckUpdate:
 					showNew=false;
 					if(mArgs!=null && mArgs.Length>=1){

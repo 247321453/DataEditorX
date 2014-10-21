@@ -76,6 +76,8 @@ namespace DataEditorX.Language
         CopyCards,
         PasteCards,
         ClearHistory,
+        ExportData,
+        ExportDataOK,
         COUNT,
     }
 }

@@ -1,0 +1,3 @@
+# history
+F:\games\ygopro\cards.cdb
+F:\games\ygocore\my.cdb
