@@ -1028,12 +1028,15 @@ namespace DataEditorX
 		}
 		bool CancelTask()
 		{
-			bool bl=MyMsg.Question(LMSG.IfCancelTask);
-			if(bl){
-				if(tasker!=null)
-					tasker.Cancel();
-				if(bgWorker1.IsBusy)
-					bgWorker1.CancelAsync();
+			bool bl=false;
+			if(tasker !=null && tasker.IsRuning()){
+				bl=MyMsg.Question(LMSG.IfCancelTask);
+				if(bl){
+					if(tasker!=null)
+						tasker.Cancel();
+					if(bgWorker1.IsBusy)
+						bgWorker1.CancelAsync();
+				}
 			}
 			return bl;
 		}
