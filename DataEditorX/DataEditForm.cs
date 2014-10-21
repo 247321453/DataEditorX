@@ -16,13 +16,14 @@ using System.Windows.Forms;
 
 using DataEditorX.Core;
 using DataEditorX.Language;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace DataEditorX
 {
-	public partial class DataEditForm : Form
+	public partial class DataEditForm : DockContent
 	{
 		#region 成员变量
-		TaskHelper tasker;
+		TaskHelper tasker=null;
 		string taskname;
 		string ydkfile=null;
 		string imagepath=null;
@@ -52,17 +53,40 @@ namespace DataEditorX
 		Dictionary<long, string> dicSetnames=null;
 		Dictionary<long, string> dicCardTypes=null;
 		Dictionary<long, string> dicCardcategorys=null;
-		string conflang, confrule, confattribute, confrace, conflevel;
-		string confsetname, conftype, confcategory, confcover, confmsg;
-		public DataEditForm(string cdbfile)
+		string datapath, confrule, confattribute, confrace, conflevel;
+		string confsetname, conftype, confcategory, confcover;
+		
+		public string getNowCDB()
 		{
-			InitializeComponent();
+			return nowCdbFile;
+		}
+		public DataEditForm(string datapath,string cdbfile)
+		{
+			InitPath(datapath);
+			Initialize();
 			nowCdbFile=cdbfile;
 		}
 		
+		public DataEditForm(string datapath)
+		{
+			InitPath(datapath);
+			Initialize();
+		}
 		public DataEditForm()
 		{
+			string dir=ConfigurationManager.AppSettings["language"];
+			if(string.IsNullOrEmpty(dir))
+			{
+				Application.Exit();
+			}
+			datapath=Path.Combine(Application.StartupPath, dir);
+			InitPath(datapath);
+			Initialize();
+		}
+		void Initialize()
+		{
 			InitializeComponent();
+			title=this.Text;
 			nowCdbFile="";
 		}
 		
@@ -74,25 +98,13 @@ namespace DataEditorX
 		{
 			InitListRows();
 			//界面初始化
-			string dir=ConfigurationManager.AppSettings["language"];
-			if(string.IsNullOrEmpty(dir))
-			{
-				Application.Exit();
-			}
-			string datapath=Path.Combine(Application.StartupPath, dir);
-			
-			InitPath(datapath);
-			
-			LANG.InitForm(this, conflang);
-			LANG.LoadMessage(confmsg);
-			LANG.SetLanguage(this);
 
-			this.Text=this.Text+" Ver:"+Application.ProductVersion;
+			HideMenu();
 			
 			#if DEBUG
-			this.Text=this.Text+"(DEBUG)";
+			title=title+"(DEBUG)";
 			#endif
-			title=this.Text;
+			SetTitle();
 			
 			InitGameData();
 			tasker=new TaskHelper(datapath, bgWorker1, dicCardTypes, dicCardRaces);
@@ -109,24 +121,65 @@ namespace DataEditorX
 		//窗体关闭
 		void DataEditFormFormClosing(object sender, FormClosingEventArgs e)
 		{
-			#if DEBUG
-			LANG.GetLanguage(this);
-			LANG.SaveLanguage(this, conflang+"bak.txt");
-			LANG.SaveMessage(confmsg+"bak.txt");
-			#endif
+			if(tasker!=null && tasker.IsRuning())
+			{
+				if(!CancelTask())
+				{
+					e.Cancel=true;
+					return;
+				}
+				
+			}
 			if(!string.IsNullOrEmpty(nowCdbFile)){
 				Configuration cfa = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 				cfa.AppSettings.Settings["cdb"].Value = nowCdbFile;
 				cfa.Save(ConfigurationSaveMode.Modified);
 			}
 		}
+		void DataEditFormEnter(object sender, EventArgs e)
+		{
+			SetTitle();
+		}
+		void HideMenu()
+		{
+			if(this.MdiParent ==null)
+				return;
+			menuStrip1.Visible=false;
+			menuitem_file.Visible=false;
+			//this.SuspendLayout();
+			this.ResumeLayout(true);
+			foreach(Control c in this.Controls)
+			{
+				if(c.GetType()==typeof(MenuStrip))
+					continue;
+				Point p=c.Location;
+				c.Location=new Point(p.X, p.Y-25);
+			}
+			this.ResumeLayout(false);
+			//this.PerformLayout();
+		}
 		
 		void SetTitle()
 		{
-			if(string.IsNullOrEmpty(nowCdbFile))
-				this.Text=title;
+			string str=title;
+			string str2=title;
+			if(!string.IsNullOrEmpty(nowCdbFile)){
+				str=nowCdbFile+"-"+str;
+				str2=Path.GetFileName(nowCdbFile);
+			}
+			if(this.MdiParent !=null)
+			{
+				this.Text=str2;
+				if(tasker!=null && tasker.IsRuning()){
+					if(DockPanel.ActiveContent == this)
+						this.MdiParent.Text=str;
+				}
+				else
+					this.MdiParent.Text=str;
+			}
 			else
-				this.Text=nowCdbFile+"-"+title;
+				this.Text=str;
+			
 		}
 		//按cdb路径设置目录
 		void SetCDB(string cdb)
@@ -148,7 +201,7 @@ namespace DataEditorX
 		//初始化文件路径
 		void InitPath(string datapath)
 		{
-			conflang=Path.Combine(datapath, "language.txt");
+			this.datapath=datapath;
 			confrule=Path.Combine(datapath, "card-rule.txt");
 			confattribute=Path.Combine(datapath, "card-attribute.txt");
 			confrace=Path.Combine(datapath, "card-race.txt");
@@ -157,8 +210,7 @@ namespace DataEditorX
 			conftype=Path.Combine(datapath, "card-type.txt");
 			confcategory=Path.Combine(datapath, "card-category.txt");
 			confcover= Path.Combine(datapath, "cover.jpg");
-			confmsg = Path.Combine(datapath, "message.txt");
-			
+
 			IMAGEPATH=Path.Combine(Application.StartupPath,"Images");
 		}
 		
@@ -974,16 +1026,21 @@ namespace DataEditorX
 				Run(LANG.GetMsg(LMSG.checkUpdate));
 			}
 		}
-        
-        void Menuitem_cancelTaskClick(object sender, EventArgs e)
-        {
-        	if(MyMsg.Question(LMSG.IfCancelTask)){
-        		if(bgWorker1.IsBusy){
-        			tasker.Cancel();
-        			bgWorker1.CancelAsync();
-        		}
-        	}
-        }
+		bool CancelTask()
+		{
+			bool bl=MyMsg.Question(LMSG.IfCancelTask);
+			if(bl){
+				if(tasker!=null)
+					tasker.Cancel();
+				if(bgWorker1.IsBusy)
+					bgWorker1.CancelAsync();
+			}
+			return bl;
+		}
+		void Menuitem_cancelTaskClick(object sender, EventArgs e)
+		{
+			CancelTask();
+		}
 		void Menuitem_githubClick(object sender, EventArgs e)
 		{
 			System.Diagnostics.Process.Start(ConfigurationManager.AppSettings["sourceURL"]);
@@ -1028,6 +1085,8 @@ namespace DataEditorX
 		}
 		void Menuitem_convertimageClick(object sender, EventArgs e)
 		{
+			if(!Check())
+				return;
 			if(isRun())
 				return;
 			using(FolderBrowserDialog fdlg=new FolderBrowserDialog())
@@ -1088,7 +1147,7 @@ namespace DataEditorX
 		
 		#region 线程
 		bool isRun(){
-			if(bgWorker1.IsBusy){
+			if(tasker !=null && tasker.IsRuning()){
 				MyMsg.Warning(LMSG.RunError);
 				return true;
 			}
@@ -1116,7 +1175,7 @@ namespace DataEditorX
 				title=string.Format("{0} ({1}-{2})",
 				                    title.Substring(0,t),
 				                    taskname,
-				                   // e.ProgressPercentage,
+				                    // e.ProgressPercentage,
 				                    e.UserState);
 				SetTitle();
 			}
@@ -1143,9 +1202,6 @@ namespace DataEditorX
 				MyTask mt=tasker.getLastTask();
 				switch(mt){
 						case MyTask.CheckUpdate:break;
-					case MyTask.CopyDataBase:
-						MyMsg.Show(LMSG.copyDBIsOK);
-						break;
 					case MyTask.CutImages:
 						MyMsg.Show(LMSG.CutImageOK);
 						break;
@@ -1243,7 +1299,7 @@ namespace DataEditorX
 		#endregion
 		
 		#region 复制卡片
-		Card[] getCardList(bool onlyselect){
+		public Card[] getCardList(bool onlyselect){
 			List<Card> cards=new List<Card>();
 			if(onlyselect)
 			{
@@ -1274,12 +1330,17 @@ namespace DataEditorX
 		{
 			CopyTo(true);
 		}
-		
-		void CopyTo(bool onlyselect)
+		public void SaveCards(Card[] cards)
 		{
 			if(!Check())
 				return;
-			if(isRun())
+			bool replace=MyMsg.Question(LMSG.IfReplaceExistingCard);
+			DataBase.CopyDB(nowCdbFile, !replace, cards);
+			Search(srcCard, true);
+		}
+		void CopyTo(bool onlyselect)
+		{
+			if(!Check())
 				return;
 			Card[] cards=getCardList(onlyselect);
 			if(cards==null)
@@ -1298,8 +1359,8 @@ namespace DataEditorX
 				}
 			}
 			if(!string.IsNullOrEmpty(filename)){
-				tasker.SetTask(MyTask.CopyDataBase, cards, filename, replace.ToString());
-				Run(LANG.GetMsg(LMSG.copyCards));
+				DataBase.CopyDB(filename, !replace, cards);
+				MyMsg.Show(LMSG.CopyCardsToDBIsOK);
 			}
 			
 		}
@@ -1392,6 +1453,6 @@ namespace DataEditorX
 				pl_image.BackgroundImage=m_cover;
 		}
 		#endregion
-		
+
 	}
 }

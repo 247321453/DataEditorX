@@ -8,7 +8,7 @@ DataEditForm->btn_PageDown 下一页
 DataEditForm->btn_PageUp 上一页
 DataEditForm->btn_reset 重置(&R)
 DataEditForm->btn_serach 搜索(&S)
-DataEditForm->DataEditForm DataEditorX by 247321453
+DataEditForm->DataEditForm DataEditorX
 DataEditForm->lb_atkdef ATK/DEF
 DataEditForm->lb_cardalias 同名卡
 DataEditForm->lb_cardcode 卡片密码

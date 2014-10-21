@@ -57,3 +57,5 @@
 0x38	Task is Resume
 0x39	Task has Error
 0x3a	Cancel Task?
+0x3b	Copy
+0x3c	Paste

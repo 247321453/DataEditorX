@@ -19,21 +19,21 @@ namespace DataEditorX.Language
     /// </summary>
     public static class LANG
     {
-        static Dictionary<Form, SortedList<string, string>> wordslist;
+        static Dictionary<string, SortedList<string, string>> wordslist;
         static SortedList<LMSG, string> msglist;
         static string SEP="->";
         
         static LANG()
         {
-            wordslist=new Dictionary<Form, SortedList<string, string>>();
+            wordslist=new Dictionary<string, SortedList<string, string>>();
             msglist=new SortedList<LMSG, string>();
         }
         
         public static void InitForm(Form fm, string langfile)
         {
-            if(!wordslist.ContainsKey(fm))
+            if(!wordslist.ContainsKey(fm.Name))
             {
-                wordslist.Add(fm, LoadLanguage(langfile));
+                wordslist.Add(fm.Name, LoadLanguage(langfile));
             }
         }
         
@@ -56,10 +56,14 @@ namespace DataEditorX.Language
         /// <param name="fm"></param>
         public static bool SetLanguage(Form fm)
         {
-            if(wordslist.ContainsKey(fm))
+            if(wordslist.ContainsKey(fm.Name))
             {
-                SortedList<string, string> list=wordslist[fm];
+                SortedList<string, string> list=wordslist[fm.Name];
+               // fm.SuspendLayout();
+              	fm.ResumeLayout(true);
                 SetText(fm, list);
+                fm.ResumeLayout(false);
+                //fm.PerformLayout();
                 return true;
             }
             return false;
@@ -155,10 +159,10 @@ namespace DataEditorX.Language
         {
             SortedList<string, string> list=new SortedList<string, string>();
             GetText(fm, list);
-            if(wordslist.ContainsKey(fm))
-                wordslist[fm]=list;
+            if(wordslist.ContainsKey(fm.Name))
+                wordslist[fm.Name]=list;
             else
-                wordslist.Add(fm, list);
+                wordslist.Add(fm.Name, list);
         }
         static void GetText(Control c, SortedList<string, string> list)
         {
@@ -244,9 +248,9 @@ namespace DataEditorX.Language
         #region 保存语言文件
         public static bool SaveLanguage(Form fm, string f)
         {
-            if(!wordslist.ContainsKey(fm))
+            if(!wordslist.ContainsKey(fm.Name))
                 return false;
-            SortedList<string, string> fmlist=wordslist[fm];
+            SortedList<string, string> fmlist=wordslist[fm.Name];
             using(FileStream fs=new FileStream(f, FileMode.Create, FileAccess.Write))
             {
                 StreamWriter sw=new StreamWriter(fs, Encoding.UTF8);

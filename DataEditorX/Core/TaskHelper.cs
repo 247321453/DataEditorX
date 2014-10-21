@@ -21,7 +21,6 @@ namespace DataEditorX.Core
 	public enum MyTask{
 		NONE,
 		CheckUpdate,
-		CopyDataBase,
 		SaveAsMSE,
 		CutImages,
 		ConvertImages,
@@ -38,6 +37,7 @@ namespace DataEditorX.Core
 		private ImageSet imgSet=new ImageSet();
 		private MSE mseHelper;
 		private bool isCancel=false;
+		private bool isRun=false;
 		private BackgroundWorker worker;
 
 		public TaskHelper(string datapath,BackgroundWorker worker,
@@ -47,6 +47,10 @@ namespace DataEditorX.Core
 			this.worker=worker;
 			mseHelper=new MSE(datapath,typedic,racedic);
 			imgSet.Init();
+		}
+		public bool IsRuning()
+		{
+			return isRun;
 		}
 		public bool IsCancel()
 		{
@@ -196,6 +200,7 @@ namespace DataEditorX.Core
 		}
 		public void Run(){
 			isCancel=false;
+			isRun=true;
 			bool replace;
 			bool showNew;
 			switch(nowTask){
@@ -205,13 +210,6 @@ namespace DataEditorX.Core
 						showNew=(mArgs[0]==Boolean.TrueString)?true:false;
 					}
 					OnCheckUpdate(showNew);
-					break;
-				case MyTask.CopyDataBase:
-					if(mArgs!=null && mArgs.Length>=2){
-						string filename=mArgs[0];
-						replace=(mArgs[1]==Boolean.TrueString)?true:false;
-						DataBase.CopyDB(filename, !replace,cardlist);
-					}
 					break;
 				case MyTask.CutImages:
 					if(mArgs!=null && mArgs.Length>=2){
@@ -244,6 +242,7 @@ namespace DataEditorX.Core
 					}
 					break;
 			}
+			isRun=false;
 			lastTask=nowTask;
 			nowTask=MyTask.NONE;
 			cardlist=null;

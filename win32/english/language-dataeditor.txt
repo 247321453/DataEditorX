@@ -8,7 +8,7 @@ DataEditForm->btn_PageDown >>
 DataEditForm->btn_PageUp <<
 DataEditForm->btn_reset Rest
 DataEditForm->btn_serach Search
-DataEditForm->DataEditForm DataEditorX by 247321453
+DataEditForm->DataEditForm DataEditorX
 DataEditForm->lb_atkdef ATK/DEF
 DataEditForm->lb_cardalias Alias
 DataEditForm->lb_cardcode Card Code

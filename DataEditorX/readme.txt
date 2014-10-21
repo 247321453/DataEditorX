@@ -1,4 +1,4 @@
-﻿[DataEditorX]1.6.8.0[DataEditorX]
+﻿[DataEditorX]2.0.0.2[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★使用前，请关联lua的打开方式，例如记事本，notepad++，等。
@@ -66,6 +66,12 @@ DataEditorX.exe.config
 描述不详细的bug，我修复不了。（都不知道是bug是什么）
 
 ★更新历史
+2.0.0.2
+复制卡片，粘贴卡片
+2.0.0.1
+分离文件菜单，下个版本，改进复制卡片功能
+2.0.0.0
+多标签界面
 1.6.8.0
 不再支持自动更新，请大家每天手动更新，下个版本添加多cdb编辑
 把文件菜单的项分开

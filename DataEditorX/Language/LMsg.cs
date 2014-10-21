@@ -54,8 +54,8 @@ namespace DataEditorX.Language
         ImageType,
         RunError,
         checkUpdate,
-        copyCards,
-        copyDBIsOK,
+        CopyCardsToDB,
+        CopyCardsToDBIsOK,
         selectMseset,
         MseType,
         SaveMse,
@@ -73,6 +73,8 @@ namespace DataEditorX.Language
         ResumeTask,
         TaskError,
         IfCancelTask,
+        CopyCards,
+        PasteCards,
         COUNT,
     }
 }
