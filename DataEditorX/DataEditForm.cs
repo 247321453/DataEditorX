@@ -130,11 +130,6 @@ namespace DataEditorX
 				}
 				
 			}
-			if(!string.IsNullOrEmpty(nowCdbFile)){
-				Configuration cfa = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-				cfa.AppSettings.Settings["cdb"].Value = nowCdbFile;
-				cfa.Save(ConfigurationSaveMode.Modified);
-			}
 		}
 		void DataEditFormEnter(object sender, EventArgs e)
 		{
@@ -1133,13 +1128,6 @@ namespace DataEditorX
 					SetCards(DataBase.ReadImage(nowCdbFile, imagepath), false);
 				}
 			}
-		}
-		//打开最后的数据库
-		void Menuitem_openLastDataBaseClick(object sender, EventArgs e)
-		{
-			string cdb=System.Configuration.ConfigurationManager.AppSettings["cdb"];
-			if(File.Exists(cdb))
-				Open(cdb);
 		}
 		//关闭
 		void Menuitem_quitClick(object sender, EventArgs e)

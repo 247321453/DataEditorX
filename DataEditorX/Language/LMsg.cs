@@ -75,6 +75,7 @@ namespace DataEditorX.Language
         IfCancelTask,
         CopyCards,
         PasteCards,
+        ClearHistory,
         COUNT,
     }
 }

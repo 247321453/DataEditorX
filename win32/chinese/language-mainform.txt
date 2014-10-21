@@ -3,7 +3,7 @@ MainForm->menuitem_new 新建(&N)
 MainForm->menuitem_open 打开(&O)
 MainForm->menuitem_copyselect 复制所选卡片
 MainForm->menuitem_pastecards 粘贴卡片
-MainForm->menuitem_openLastDataBase 最后打开的数据库
+MainForm->menuitem_history 历史(&H)
 MainForm->menuitem_quit 退出(&Q)
 MainForm->menuitem_windows 窗口(&W)
 MainForm->menuitem_dataeditor 新建标签

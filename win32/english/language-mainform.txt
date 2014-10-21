@@ -3,7 +3,7 @@ MainForm->menuitem_new New DataBase
 MainForm->menuitem_open Open DataBase
 MainForm->menuitem_copyselect Copy Select
 MainForm->menuitem_pastecards Paste Cards
-MainForm->menuitem_openLastDataBase Open Last DataBase
+MainForm->menuitem_history History(&H)
 MainForm->menuitem_quit Quit(&Q)
 MainForm->menuitem_windows Windwos(&W)
 MainForm->menuitem_dataeditor New DataEditor

@@ -59,8 +59,6 @@ namespace DataEditorX
 			this.menuitem_copyselect = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_pastecards = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-			this.menuitem_openLastDataBase = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuitem_quit = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_windows = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_dataeditor = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,6 +66,7 @@ namespace DataEditorX
 			this.menuitem_close = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_closeother = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_closeall = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuitem_history = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -130,6 +129,7 @@ namespace DataEditorX
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 									this.menuitem_file,
+									this.menuitem_history,
 									this.menuitem_windows});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.MdiWindowListItem = this.menuitem_windows;
@@ -147,8 +147,6 @@ namespace DataEditorX
 									this.menuitem_copyselect,
 									this.menuitem_pastecards,
 									this.toolStripSeparator4,
-									this.menuitem_openLastDataBase,
-									this.toolStripSeparator1,
 									this.menuitem_quit});
 			this.menuitem_file.Name = "menuitem_file";
 			this.menuitem_file.Size = new System.Drawing.Size(53, 21);
@@ -198,18 +196,6 @@ namespace DataEditorX
 			this.toolStripSeparator4.Name = "toolStripSeparator4";
 			this.toolStripSeparator4.Size = new System.Drawing.Size(258, 6);
 			// 
-			// menuitem_openLastDataBase
-			// 
-			this.menuitem_openLastDataBase.Name = "menuitem_openLastDataBase";
-			this.menuitem_openLastDataBase.Size = new System.Drawing.Size(261, 22);
-			this.menuitem_openLastDataBase.Text = "Open Last DataBase";
-			this.menuitem_openLastDataBase.Click += new System.EventHandler(this.Menuitem_openLastDataBaseClick);
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(258, 6);
-			// 
 			// menuitem_quit
 			// 
 			this.menuitem_quit.Name = "menuitem_quit";
@@ -232,35 +218,41 @@ namespace DataEditorX
 			// menuitem_dataeditor
 			// 
 			this.menuitem_dataeditor.Name = "menuitem_dataeditor";
-			this.menuitem_dataeditor.Size = new System.Drawing.Size(145, 22);
+			this.menuitem_dataeditor.Size = new System.Drawing.Size(152, 22);
 			this.menuitem_dataeditor.Text = "DataEditor";
 			this.menuitem_dataeditor.Click += new System.EventHandler(this.DataEditorToolStripMenuItemClick);
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(142, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
 			// 
 			// menuitem_close
 			// 
 			this.menuitem_close.Name = "menuitem_close";
-			this.menuitem_close.Size = new System.Drawing.Size(145, 22);
+			this.menuitem_close.Size = new System.Drawing.Size(152, 22);
 			this.menuitem_close.Text = "Close";
 			this.menuitem_close.Click += new System.EventHandler(this.CloseToolStripMenuItemClick);
 			// 
 			// menuitem_closeother
 			// 
 			this.menuitem_closeother.Name = "menuitem_closeother";
-			this.menuitem_closeother.Size = new System.Drawing.Size(145, 22);
+			this.menuitem_closeother.Size = new System.Drawing.Size(152, 22);
 			this.menuitem_closeother.Text = "Close Other";
 			this.menuitem_closeother.Click += new System.EventHandler(this.CloseOtherToolStripMenuItemClick);
 			// 
 			// menuitem_closeall
 			// 
 			this.menuitem_closeall.Name = "menuitem_closeall";
-			this.menuitem_closeall.Size = new System.Drawing.Size(145, 22);
+			this.menuitem_closeall.Size = new System.Drawing.Size(152, 22);
 			this.menuitem_closeall.Text = "Close All";
 			this.menuitem_closeall.Click += new System.EventHandler(this.CloseAllToolStripMenuItemClick);
+			// 
+			// menuitem_history
+			// 
+			this.menuitem_history.Name = "menuitem_history";
+			this.menuitem_history.Size = new System.Drawing.Size(78, 21);
+			this.menuitem_history.Text = "History(&H)";
 			// 
 			// MainForm
 			// 
@@ -286,8 +278,7 @@ namespace DataEditorX
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_copyselect;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		private System.Windows.Forms.ToolStripMenuItem menuitem_openLastDataBase;
+		private System.Windows.Forms.ToolStripMenuItem menuitem_history;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_new;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_quit;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_open;

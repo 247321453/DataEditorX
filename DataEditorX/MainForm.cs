@@ -28,6 +28,9 @@ namespace DataEditorX
 		public const int CLOSE_ALL=3;
 		public const int WM_OPEN=0x0401;
 		public const string TMPFILE="open.tmp";
+		public const int MAX_HISTORY=0x20;
+		string cdbHistoryFile;
+		List<string> cdblist;
 		string datapath;
 		string conflang,conflang_de,confmsg;
 		Card[] tCards;
@@ -46,8 +49,10 @@ namespace DataEditorX
 		void Init(string datapath)
 		{
 			tCards=null;
+			cdblist=new List<string>();
 			list=new Dictionary<DataEditForm,string>();
 			this.datapath=datapath;
+			cdbHistoryFile =Path.Combine(datapath, "history.txt");
 			conflang = Path.Combine(datapath, "language-mainform.txt");
 			conflang_de = Path.Combine(datapath, "language-dataeditor.txt");
 			confmsg = Path.Combine(datapath, "message.txt");
@@ -56,6 +61,78 @@ namespace DataEditorX
 			
 			LANG.LoadMessage(confmsg);
 			LANG.SetLanguage(this);
+		}
+		#endregion
+		#region History
+		void ReadHistory()
+		{
+			if(!File.Exists(cdbHistoryFile))
+				return;
+			string[] lines=File.ReadAllLines(cdbHistoryFile);
+			foreach(string line in lines)
+			{
+				if(string.IsNullOrEmpty(line) || line.StartsWith("#"))
+					continue;
+				if(File.Exists(line) && cdblist.IndexOf(line)<0){
+					cdblist.Add(line);
+				}
+			}
+		}
+		void AddHistory(string file)
+		{
+			int index=cdblist.IndexOf(file);
+			if(index>=0){
+				cdblist.RemoveAt(index);
+			}
+			else{
+				int i=cdblist.Count-MainForm.MAX_HISTORY+1;
+				while(i>=0 && i<cdblist.Count)
+				{
+					cdblist.RemoveAt(i);
+					i--;
+				}
+			}
+			cdblist.Add(file);
+			SaveHistory();
+			MenuHistory();
+		}
+		void SaveHistory()
+		{
+			string texts="# history";
+			foreach(string str in cdblist)
+			{
+				if(File.Exists(str))
+					texts += Environment.NewLine + str;
+			}
+			File.Delete(cdbHistoryFile);
+			File.WriteAllText(cdbHistoryFile, texts);
+		}
+		void MenuHistory()
+		{
+			menuitem_history.DropDownItems.Clear();
+			foreach(string str in cdblist)
+			{
+				ToolStripMenuItem tsmi=new ToolStripMenuItem(str);
+				tsmi.Click+=MenuHistoryItem_Click;
+				menuitem_history.DropDownItems.Add(tsmi);
+			}
+			menuitem_history.DropDownItems.Add(new ToolStripSeparator());
+			ToolStripMenuItem tsmiclear=new ToolStripMenuItem(LANG.GetMsg(LMSG.ClearHistory));
+			tsmiclear.Click+=MenuHistoryClear_Click;
+			menuitem_history.DropDownItems.Add(tsmiclear);
+			
+		}
+		void MenuHistoryClear_Click(object sender, EventArgs e)
+		{
+			cdblist.Clear();
+			MenuHistory();
+			SaveHistory();
+		}
+		void MenuHistoryItem_Click(object sender, EventArgs e)
+		{
+			ToolStripMenuItem tsmi=sender as ToolStripMenuItem;
+			if(tsmi!=null)
+				Open(tsmi.Text);
 		}
 		#endregion
 		
@@ -81,6 +158,9 @@ namespace DataEditorX
 		#region DataEditor
 		public void Open(string file)
 		{
+			if(!string.IsNullOrEmpty(file) && File.Exists(file)){
+				AddHistory(file);
+			}
 			if(checkOpen(file))
 				return;
 			if(OpenInNull(file))
@@ -144,7 +224,8 @@ namespace DataEditorX
 		#region form
 		void MainFormLoad(object sender, System.EventArgs e)
 		{
-
+			ReadHistory();
+			MenuHistory();
 		}
 		
 		void MainFormFormClosing(object sender, FormClosingEventArgs e)
@@ -213,13 +294,6 @@ namespace DataEditorX
 			Application.Exit();
 		}
 		
-		void Menuitem_openLastDataBaseClick(object sender, EventArgs e)
-		{
-			string cdb=System.Configuration.ConfigurationManager.AppSettings["cdb"];
-			if(File.Exists(cdb))
-				Open(cdb);
-		}
-		
 		void Menuitem_newClick(object sender, EventArgs e)
 		{
 			using(SaveFileDialog dlg=new SaveFileDialog())
@@ -281,7 +355,7 @@ namespace DataEditorX
 			df.SaveCards(tCards);
 			MyMsg.Show(LMSG.PasteCards);
 		}
-	
+		
 		#endregion
 	}
 }
