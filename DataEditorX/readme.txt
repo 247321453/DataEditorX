@@ -1,4 +1,4 @@
-﻿[DataEditorX]2.1.0.1[DataEditorX]
+﻿[DataEditorX]2.1.1.0[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★使用前，请关联lua的打开方式，例如记事本，notepad++，等。
@@ -66,6 +66,9 @@ DataEditorX.exe.config
 描述不详细的bug，我修复不了。（都不知道是bug是什么）
 
 ★更新历史
+2.1.1.0
+增加数据库对比
+待测试 数据库对比后的操作：按ydk读取，按图像读取，搜索按钮，卡名搜索。
 2.1.0.1
 添加导出zip
 2.1.0.0

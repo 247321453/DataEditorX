@@ -88,12 +88,7 @@ namespace DataEditorX.Core
 		{
 			return string.Format("{0} [{1}]", id.ToString("00000000"), name);
 		}
-		/// <summary>
-		/// 比较卡片是否一致？
-		/// </summary>
-		/// <param name="other">比较的卡片</param>
-		/// <returns>结果</returns>
-		public bool Equals(Card other)
+		public bool EqualsData(Card other)
 		{
 			bool equalBool = true;
 			if (this.id != other.id)
@@ -118,6 +113,18 @@ namespace DataEditorX.Core
 				equalBool = false;
 			else if (this.category != other.category)
 				equalBool = false;
+			return equalBool;
+		}
+		/// <summary>
+		/// 比较卡片是否一致？
+		/// </summary>
+		/// <param name="other">比较的卡片</param>
+		/// <returns>结果</returns>
+		public bool Equals(Card other)
+		{
+			bool equalBool=EqualsData(other);
+			if(!equalBool)
+				return false;
 			else if (!this.name.Equals(other.name))
 				equalBool = false;
 			else if (!this.desc.Equals(other.desc))
@@ -155,15 +162,6 @@ namespace DataEditorX.Core
 		{
 			return left.Equals(right);
 		}
-		/// <summary>
-		/// 卡片是否不相等
-		/// </summary>
-		public static bool operator !=(Card left, Card right)
-		{
-			return !left.Equals(right);
-		}
-		#endregion
-
 		public bool IsType(CardType type){
 			if((this.type & (long)type) == (long)type)
 				return true;
@@ -180,9 +178,19 @@ namespace DataEditorX.Core
 				return true;
 			else if(((this.setcode>>0x30)&0xffff)==sc)
 				return true;
-			else 
+			else
 				return false;
 		}
+		/// <summary>
+		/// 卡片是否不相等
+		/// </summary>
+		public static bool operator !=(Card left, Card right)
+		{
+			return !left.Equals(right);
+		}
+		#endregion
+
+
 	}
 	
 }

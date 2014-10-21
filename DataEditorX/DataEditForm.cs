@@ -33,6 +33,7 @@ namespace DataEditorX
 		/// <summary>搜索条件</summary>
 		Card srcCard=new Card(0);
 		string[] strs=null;
+		Dictionary<long,Card> complist;
 		string title;
 		string nowCdbFile="";
 		int MaxRow=20;
@@ -85,6 +86,7 @@ namespace DataEditorX
 		}
 		void Initialize()
 		{
+			complist=new Dictionary<long, Card>();
 			InitializeComponent();
 			title=this.Text;
 			nowCdbFile="";
@@ -642,6 +644,7 @@ namespace DataEditorX
 			}
 			ydkfile=null;
 			imagepath=null;
+			complist=null;
 			SetCDB(cdbFile);
 			cardlist.Clear();
 			DataBase.CheckTable(cdbFile);
@@ -696,6 +699,10 @@ namespace DataEditorX
 				SetCards(DataBase.ReadYdk(nowCdbFile, ydkfile), false);
 			else if(!string.IsNullOrEmpty(imagepath))
 				SetCards(DataBase.ReadImage(nowCdbFile, imagepath), false);
+			else if(complist !=null){
+				UpdateCompCards();
+				SetCards(getCompCards(), false);
+			}
 			else{
 				srcCard=c;
 				string sql=DataBase.GetSelectSQL(c);
@@ -703,6 +710,21 @@ namespace DataEditorX
 				MyMsg.Show(sql);
 				#endif
 				SetCards(DataBase.Read(nowCdbFile, true, sql),isfresh);
+			}
+		}
+		
+		void UpdateCompCards()
+		{
+			
+			Card[] mcards=DataBase.Read(nowCdbFile,true,"");
+			if(mcards==null){
+				complist.Clear();
+				return;
+			}
+			foreach(Card c in mcards)
+			{
+				if(complist.ContainsKey(c.id))
+					complist[c.id]=c;
 			}
 		}
 		
@@ -874,6 +896,7 @@ namespace DataEditorX
 		{
 			ydkfile=null;
 			imagepath=null;
+			complist=null;
 			Search(GetCard(), false);
 		}
 		//重置卡片
@@ -935,6 +958,7 @@ namespace DataEditorX
 				{
 					ydkfile=null;
 					imagepath=null;
+					complist=null;
 					Search(c, false);
 				}
 			}
@@ -949,6 +973,7 @@ namespace DataEditorX
 				if(c.name.Length>0){
 					ydkfile=null;
 					imagepath=null;
+					complist=null;
 					Search(c, false);
 				}
 			}
@@ -1464,6 +1489,61 @@ namespace DataEditorX
 				return;
 			tasker.SetTask(MyTask.ExportData, null, nowCdbFile);
 			Run(LANG.GetMsg(LMSG.ExportData));
+		}
+		#endregion
+		
+		#region 对比数据
+		/// <summary>
+		/// 数据一致，返回true，不存在和数据不同，则返回false
+		/// </summary>
+		/// <param name="cards"></param>
+		/// <param name="card"></param>
+		/// <returns></returns>
+		bool CheckCard(Card[] cards,Card card,bool checktext)
+		{
+			foreach(Card c in cards)
+			{
+				if(c.id!=card.id)
+					continue;
+				//data数据不一样
+				bool isSame=false;
+				if(checktext)
+					isSame=card.Equals(c);
+				else
+					isSame=card.EqualsData(c);
+				if(isSame)
+					return true;
+			}
+			return false;
+		}
+		Card[] getCompCards()
+		{
+			if(complist.Count==0)
+				return null;
+			Card[] tmps=new Card[complist.Count];
+			complist.Values.CopyTo(tmps,0);
+			return tmps;
+		}
+		public void CompareCards(string cdbfile,bool checktext)
+		{
+			if(!Check())
+				return;
+			ydkfile=null;
+			imagepath=null;
+			srcCard=new Card();
+			Card[] mcards=DataBase.Read(nowCdbFile,true,"");
+			Card[] cards=DataBase.Read(cdbfile,true,"");
+			complist =new Dictionary<long, Card>();
+			foreach(Card card in mcards)
+			{
+				if(!CheckCard(cards, card, checktext))
+					complist.Add(card.id, card);
+			}
+			if(complist.Count==0){
+				SetCards(null, false);
+				return;
+			}
+			SetCards(getCompCards(), false);
 		}
 		#endregion
 	}

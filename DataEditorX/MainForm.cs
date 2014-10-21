@@ -23,6 +23,7 @@ namespace DataEditorX
 	/// </summary>
 	public partial class MainForm : Form
 	{
+		#region member
 		public const int CLOSE_ONE=1;
 		public const int CLOSE_OTHER=2;
 		public const int CLOSE_ALL=3;
@@ -33,8 +34,10 @@ namespace DataEditorX
 		List<string> cdblist;
 		string datapath;
 		string conflang,conflang_de,confmsg;
+		DataEditForm compare1,compare2;
 		Card[] tCards;
 		Dictionary<DataEditForm,string> list;
+		#endregion
 		
 		#region init
 		public MainForm(string datapath, string file)
@@ -63,6 +66,7 @@ namespace DataEditorX
 			LANG.SetLanguage(this);
 		}
 		#endregion
+		
 		#region History
 		void ReadHistory()
 		{
@@ -357,5 +361,42 @@ namespace DataEditorX
 		}
 		
 		#endregion
+		
+		void Menuitem_comp1Click(object sender, EventArgs e)
+		{
+			compare1 = GetActive();
+			if(compare1 != null && !string.IsNullOrEmpty(compare1.getNowCDB()))
+			{
+				menuitem_comp2.Enabled=true;
+				CompareDB();
+			}
+		}
+		void CompareDB()
+		{
+			if(compare1 == null || compare2 == null)
+				return;
+			string cdb1=compare1.getNowCDB();
+			string cdb2=compare2.getNowCDB();
+			if(string.IsNullOrEmpty(cdb1)
+			   || string.IsNullOrEmpty(cdb2)
+			   ||cdb1==cdb2)
+				return;
+			
+			bool checktext=MyMsg.Question(LMSG.CheckText);
+			compare1.CompareCards(cdb2, checktext);
+			compare2.CompareCards(cdb1, checktext);
+			MyMsg.Show(LMSG.CompareOK);
+			menuitem_comp2.Enabled=false;
+			compare1=null;
+			compare2=null;
+		}
+		void Menuitem_comp2Click(object sender, EventArgs e)
+		{
+			compare2 = GetActive();
+			if(compare2 != null && !string.IsNullOrEmpty(compare2.getNowCDB()))
+			{
+				CompareDB();
+			}
+		}
 	}
 }

@@ -78,6 +78,8 @@ namespace DataEditorX.Language
         ClearHistory,
         ExportData,
         ExportDataOK,
+        CheckText,
+        CompareOK,
         COUNT,
     }
 }

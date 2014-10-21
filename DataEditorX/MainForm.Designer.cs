@@ -59,14 +59,17 @@ namespace DataEditorX
 			this.menuitem_copyselect = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_pastecards = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+			this.menuitem_comp1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuitem_comp2 = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuitem_quit = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuitem_history = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_windows = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_dataeditor = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuitem_close = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_closeother = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_closeall = new System.Windows.Forms.ToolStripMenuItem();
-			this.menuitem_history = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -147,6 +150,9 @@ namespace DataEditorX
 									this.menuitem_copyselect,
 									this.menuitem_pastecards,
 									this.toolStripSeparator4,
+									this.menuitem_comp1,
+									this.menuitem_comp2,
+									this.toolStripSeparator1,
 									this.menuitem_quit});
 			this.menuitem_file.Name = "menuitem_file";
 			this.menuitem_file.Size = new System.Drawing.Size(53, 21);
@@ -196,12 +202,38 @@ namespace DataEditorX
 			this.toolStripSeparator4.Name = "toolStripSeparator4";
 			this.toolStripSeparator4.Size = new System.Drawing.Size(258, 6);
 			// 
+			// menuitem_comp1
+			// 
+			this.menuitem_comp1.Name = "menuitem_comp1";
+			this.menuitem_comp1.Size = new System.Drawing.Size(261, 22);
+			this.menuitem_comp1.Text = "Compare DB 1";
+			this.menuitem_comp1.Click += new System.EventHandler(this.Menuitem_comp1Click);
+			// 
+			// menuitem_comp2
+			// 
+			this.menuitem_comp2.Enabled = false;
+			this.menuitem_comp2.Name = "menuitem_comp2";
+			this.menuitem_comp2.Size = new System.Drawing.Size(261, 22);
+			this.menuitem_comp2.Text = "Compare DB 2";
+			this.menuitem_comp2.Click += new System.EventHandler(this.Menuitem_comp2Click);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(258, 6);
+			// 
 			// menuitem_quit
 			// 
 			this.menuitem_quit.Name = "menuitem_quit";
 			this.menuitem_quit.Size = new System.Drawing.Size(261, 22);
 			this.menuitem_quit.Text = "Quit";
 			this.menuitem_quit.Click += new System.EventHandler(this.QuitToolStripMenuItemClick);
+			// 
+			// menuitem_history
+			// 
+			this.menuitem_history.Name = "menuitem_history";
+			this.menuitem_history.Size = new System.Drawing.Size(78, 21);
+			this.menuitem_history.Text = "History(&H)";
 			// 
 			// menuitem_windows
 			// 
@@ -218,41 +250,35 @@ namespace DataEditorX
 			// menuitem_dataeditor
 			// 
 			this.menuitem_dataeditor.Name = "menuitem_dataeditor";
-			this.menuitem_dataeditor.Size = new System.Drawing.Size(152, 22);
+			this.menuitem_dataeditor.Size = new System.Drawing.Size(145, 22);
 			this.menuitem_dataeditor.Text = "DataEditor";
 			this.menuitem_dataeditor.Click += new System.EventHandler(this.DataEditorToolStripMenuItemClick);
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(142, 6);
 			// 
 			// menuitem_close
 			// 
 			this.menuitem_close.Name = "menuitem_close";
-			this.menuitem_close.Size = new System.Drawing.Size(152, 22);
+			this.menuitem_close.Size = new System.Drawing.Size(145, 22);
 			this.menuitem_close.Text = "Close";
 			this.menuitem_close.Click += new System.EventHandler(this.CloseToolStripMenuItemClick);
 			// 
 			// menuitem_closeother
 			// 
 			this.menuitem_closeother.Name = "menuitem_closeother";
-			this.menuitem_closeother.Size = new System.Drawing.Size(152, 22);
+			this.menuitem_closeother.Size = new System.Drawing.Size(145, 22);
 			this.menuitem_closeother.Text = "Close Other";
 			this.menuitem_closeother.Click += new System.EventHandler(this.CloseOtherToolStripMenuItemClick);
 			// 
 			// menuitem_closeall
 			// 
 			this.menuitem_closeall.Name = "menuitem_closeall";
-			this.menuitem_closeall.Size = new System.Drawing.Size(152, 22);
+			this.menuitem_closeall.Size = new System.Drawing.Size(145, 22);
 			this.menuitem_closeall.Text = "Close All";
 			this.menuitem_closeall.Click += new System.EventHandler(this.CloseAllToolStripMenuItemClick);
-			// 
-			// menuitem_history
-			// 
-			this.menuitem_history.Name = "menuitem_history";
-			this.menuitem_history.Size = new System.Drawing.Size(78, 21);
-			this.menuitem_history.Text = "History(&H)";
 			// 
 			// MainForm
 			// 
@@ -273,6 +299,9 @@ namespace DataEditorX
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripMenuItem menuitem_comp2;
+		private System.Windows.Forms.ToolStripMenuItem menuitem_comp1;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_pastecards;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
