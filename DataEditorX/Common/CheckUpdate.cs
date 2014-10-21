@@ -16,8 +16,12 @@ namespace DataEditorX
     /// <summary>
     /// Description of CheckUpdate.
     /// </summary>
-    public class CheckUpdate
+    public static class CheckUpdate
     {
+    	static CheckUpdate()
+    	{
+    		ServicePointManager.DefaultConnectionLimit=255;
+    	}
         public static string URL="";
         static string HEAD="[DataEditorX]",HEAD2="[URL]";
         public static bool isOK=false;
