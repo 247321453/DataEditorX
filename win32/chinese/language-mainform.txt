@@ -6,7 +6,7 @@ MainForm->menuitem_pastecards 粘贴卡片
 MainForm->menuitem_history 历史(&H)
 MainForm->menuitem_quit 退出(&Q)
 MainForm->menuitem_windows 窗口(&W)
-MainForm->menuitem_dataeditor 新建标签
+MainForm->menuitem_dataeditor DataEditor
 MainForm->menuitem_closeall 关闭所有
 MainForm->menuitem_closeother 关闭其他
 MainForm->menuitem_close 关闭当前
