@@ -66,6 +66,8 @@ DataEditorX.exe.config
 描述不详细的bug，我修复不了。（都不知道是bug是什么）
 
 ★更新历史
+2.0.0.3
+更新mse-config.txt
 2.0.0.2
 复制卡片，粘贴卡片
 2.0.0.1

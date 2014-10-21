@@ -1,16 +1,21 @@
 ﻿###########################
 # Magic Set Editor 2
-###########################
+########################### Chs 2 Cht 
 cn2tw = true
 ########################### Spell/Trap
+#jp setting
+# spell = %%
+# trap = %%
 spell = [魔法卡%%]
 trap = [陷阱卡%%]
 ############################ Text
+# chs jp
 pendulum-text = 】[\s\S]*?\n([\S\s]*?)\n【
-# pendulum-text = ([\S\s]*?)\n【
-# pendulum-text = Text:\n([\S\s]*?)\n[\S\s]*?Text:
+# cht pendulum-text = ([\S\s]*?)\n【
+# en  pendulum-text = Text:\n([\S\s]*?)\n[\S\s]*?Text:
+# chs jp cht
 monster-text = [果|介|述|報]】\n([\S\s]*)
-# monster-text = Text:[\s\S]*?Text:\n([\S\s]*)
+# en  monster-text = Text:[\s\S]*?Text:\n([\S\s]*)
 ########################### Replace
 replace = ([鮟|鱇]) <i>$1</i>
 # replace = ([A-Z]) <i>$1</i>
