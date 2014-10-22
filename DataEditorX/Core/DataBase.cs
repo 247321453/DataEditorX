@@ -128,26 +128,26 @@ namespace DataEditorX.Core
 		static Card ReadCard(SQLiteDataReader reader,bool reNewLine)
 		{
 			Card c = new Card(0);
-			c.id = reader.GetInt64(0);
-			c.ot = reader.GetInt32(1);
-			c.alias = reader.GetInt64(2);
-			c.setcode = reader.GetInt64(3);
-			c.type = reader.GetInt64(4);
-			c.atk = reader.GetInt32(5);
-			c.def = reader.GetInt32(6);
-			c.level = reader.GetInt64(7);
-			c.race = reader.GetInt64(8);
-			c.attribute = reader.GetInt32(9);
-			c.category = reader.GetInt64(10);
-			c.name = reader.GetString(12);
+			c.id = reader.GetInt64(reader.GetOrdinal("id"));
+			c.ot = reader.GetInt32(reader.GetOrdinal("ot"));
+			c.alias = reader.GetInt64(reader.GetOrdinal("alias"));
+			c.setcode = reader.GetInt64(reader.GetOrdinal("setcode"));
+			c.type = reader.GetInt64(reader.GetOrdinal("type"));
+			c.atk = reader.GetInt32(reader.GetOrdinal("atk"));
+			c.def = reader.GetInt32(reader.GetOrdinal("def"));
+			c.level = reader.GetInt64(reader.GetOrdinal("level"));
+			c.race = reader.GetInt64(reader.GetOrdinal("race"));
+			c.attribute = reader.GetInt32(reader.GetOrdinal("attribute"));
+			c.category = reader.GetInt64(reader.GetOrdinal("category"));
+			c.name = reader.GetString(reader.GetOrdinal("name"));
 			
-			c.desc = reader.GetString(13);
+			c.desc = reader.GetString(reader.GetOrdinal("desc"));
 			if(reNewLine)
 				c.desc=Retext(c.desc);
 			string temp = null;
 			for ( int i = 0; i < 0x10; i++ )
 			{
-				temp = reader.GetString(14 + i);
+				temp = reader.GetString(reader.GetOrdinal("str"+(i+1).ToString()));
 				c.str[i]= ( temp == null ) ? "":temp;
 			}
 			return c;
@@ -170,6 +170,7 @@ namespace DataEditorX.Core
 		public static Card[] Read(string DB,bool reNewLine, params string[] SQLs)
 		{
 			List<Card> list=new List<Card>();
+			List<long> idlist=new List<long>();
 			string SQLstr = "";
 			if ( File.Exists(DB) && SQLs != null )
 			{
@@ -182,18 +183,29 @@ namespace DataEditorX.Core
 						{
 							foreach ( string str in SQLs )
 							{
+								int tmp;
+								int.TryParse(str, out tmp);
+								
 								if ( string.IsNullOrEmpty(str) )
 									SQLstr = defaultSQL;
-								else if ( str.Length < 20 )
-									SQLstr = defaultSQL + " and datas.id=" + str;
-								else
+								else if ( tmp >0)
+									SQLstr = defaultSQL + " and datas.id=" + tmp.ToString();
+								else if ( str.StartsWith("select",StringComparison.OrdinalIgnoreCase))
 									SQLstr = str;
+								else if(str.IndexOf("and ")>=0)
+									SQLstr = defaultSQL + str;
+								else
+									SQLstr = defaultSQL + " and texts.name like '%" + str+"%'";
 								sqlitecommand.CommandText = SQLstr;
 								using ( SQLiteDataReader reader = sqlitecommand.ExecuteReader() )
 								{
 									while ( reader.Read() )
 									{
-										list.Add(ReadCard(reader,reNewLine));
+										Card c=ReadCard(reader,reNewLine);
+										if(idlist.IndexOf(c.id)<0){//不存在，则添加
+											idlist.Add(c.id);
+											list.Add(c);
+										}
 									}
 									reader.Close();
 								}
@@ -369,14 +381,14 @@ namespace DataEditorX.Core
 				sb.Append(" and datas.atk = "+c.atk.ToString());
 			else if(c.atk==-1)
 				sb.Append(" and datas.atk = 0");
-				
+			
 			if(c.def>0)
 				sb.Append(" and datas.def >= "+c.def.ToString());
 			else if(c.def==-2)
 				sb.Append(" and datas.def = "+c.def.ToString());
 			else if(c.def==-1)
 				sb.Append(" and datas.def = 0");
-				          
+			
 			if(c.id>0 && c.alias>0)
 				sb.Append(" and datas.id BETWEEN "+c.alias.ToString()+" and "+c.id.ToString());
 			else if(c.id>0)
