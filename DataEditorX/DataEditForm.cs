@@ -1440,11 +1440,18 @@ namespace DataEditorX
 		void Menuitem_importmseimgClick(object sender, EventArgs e)
 		{
 			bool ischk=menuitem_importmseimg.Checked;
+			string f;
+			string tid=tb_cardcode.Text;
 			if(ischk){
 				pl_image.BackgroundImageLayout= ImageLayout.Stretch;
-			}else{
-				pl_image.BackgroundImageLayout= ImageLayout.Center;
+				f=Path.Combine(PICPATH, tid+".jpg");
 			}
+			else
+			{
+				pl_image.BackgroundImageLayout= ImageLayout.Center;
+				f=Path.Combine(IMAGEPATH, tid+".jpg");
+			}
+			setImage(f);
 			menuitem_importmseimg.Checked=!ischk;
 		}
 		void InportImage(string file,string tid)
@@ -1452,9 +1459,9 @@ namespace DataEditorX
 			string f;
 			bool isPics=!menuitem_importmseimg.Checked;
 			if(isPics)
-				f=Path.Combine(IMAGEPATH, tid+".jpg");
-			else
 				f=Path.Combine(PICPATH,tid+".jpg");
+			else
+				f=Path.Combine(IMAGEPATH, tid+".jpg");
 			if(File.Exists(f))
 			{
 				pl_image.BackgroundImage.Dispose();
