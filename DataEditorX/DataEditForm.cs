@@ -362,12 +362,7 @@ namespace DataEditorX
 			tb_def.Text=(c.def<0)?"?":c.def.ToString();
 			tb_cardcode.Text=c.id.ToString();
 			tb_cardalias.Text=c.alias.ToString();
-			string f;
-			if(menuitem_importmseimg.Checked)
-				f=Path.Combine(IMAGEPATH, c.id.ToString()+".jpg");
-			else
-				f=Path.Combine(PICPATH, c.id.ToString()+".jpg");
-			setImage(f);
+			setImage(c.id.ToString());
 		}
 		
 		//设置checkbox
@@ -944,7 +939,7 @@ namespace DataEditorX
 				if(dlg.ShowDialog()==DialogResult.OK)
 				{
 					//dlg.FileName;
-					InportImage(dlg.FileName, tid);
+					ImportImage(dlg.FileName, tid);
 				}
 			}
 		}
@@ -1427,7 +1422,7 @@ namespace DataEditorX
 			MessageBox.Show(files[0]);
 			#endif
 			if(File.Exists(files[0]))
-				InportImage(files[0], tb_cardcode.Text);
+				ImportImage(files[0], tb_cardcode.Text);
 		}
 		
 		void Pl_imageDragEnter(object sender, DragEventArgs e)
@@ -1439,45 +1434,58 @@ namespace DataEditorX
 		}
 		void Menuitem_importmseimgClick(object sender, EventArgs e)
 		{
-			bool ischk=menuitem_importmseimg.Checked;
-			string f;
 			string tid=tb_cardcode.Text;
-			if(ischk){
-				pl_image.BackgroundImageLayout= ImageLayout.Stretch;
-				f=Path.Combine(PICPATH, tid+".jpg");
-			}
-			else
-			{
-				pl_image.BackgroundImageLayout= ImageLayout.Center;
-				f=Path.Combine(IMAGEPATH, tid+".jpg");
-			}
-			setImage(f);
-			menuitem_importmseimg.Checked=!ischk;
+			menuitem_importmseimg.Checked=!menuitem_importmseimg.Checked;
+			setImage(tid);
 		}
-		void InportImage(string file,string tid)
+		void ImportImage(string file,string tid)
 		{
 			string f;
-			bool isPics=!menuitem_importmseimg.Checked;
-			if(isPics)
-				f=Path.Combine(PICPATH,tid+".jpg");
-			else
+			pl_image.BackgroundImage.Dispose();
+			pl_image.BackgroundImage=m_cover;
+			if(menuitem_importmseimg.Checked){
+				if(!Directory.Exists(IMAGEPATH))
+					Directory.CreateDirectory(IMAGEPATH);
 				f=Path.Combine(IMAGEPATH, tid+".jpg");
-			if(File.Exists(f))
-			{
-				pl_image.BackgroundImage.Dispose();
-				pl_image.BackgroundImage=m_cover;
+				File.Copy(file, f, true);
 			}
-			if(isPics)
+			else{
+				f=Path.Combine(PICPATH,tid+".jpg");
 				tasker.ToImg(file,f,
 				             Path.Combine(PICPATH2,tid+".jpg"));
-			else
-				File.Copy(file, f, true);
-			setImage(f);
+			}
+			setImage(tid);
 		}
-		void setImage(string f){
-			if(File.Exists(f)){
-				Bitmap temp=new Bitmap(f);
+		void setImage(string id)
+		{
+			long t;
+			long.TryParse(id, out t);
+			setImage(t);
+		}
+		void setImage(long id){
+			if(pl_image.BackgroundImage != null 
+			   && pl_image.BackgroundImage!=m_cover)
+				pl_image.BackgroundImage.Dispose();
+			Bitmap temp;
+			string pic=Path.Combine(PICPATH, id+".jpg");
+			string pic2=Path.Combine(IMAGEPATH, id+".jpg");
+			string pic3=Path.Combine(IMAGEPATH, new Card(id).idString+".jpg");
+			if(menuitem_importmseimg.Checked && File.Exists(pic2))
+			{
+				temp=new Bitmap(pic2);
 				pl_image.BackgroundImage=temp;
+				pl_image.BackgroundImageLayout=ImageLayout.Center;
+			}
+			else if(menuitem_importmseimg.Checked && File.Exists(pic3))
+			{
+				temp=new Bitmap(pic3);
+				pl_image.BackgroundImage=temp;
+				pl_image.BackgroundImageLayout=ImageLayout.Center;
+			}
+			else if(File.Exists(pic)){
+				temp=new Bitmap(pic);
+				pl_image.BackgroundImage=temp;
+				pl_image.BackgroundImageLayout= ImageLayout.Stretch;
 			}
 			else
 				pl_image.BackgroundImage=m_cover;

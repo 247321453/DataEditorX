@@ -1,4 +1,4 @@
 # history
 F:\games\ygocore\my.cdb
-F:\games\ygopro\cards.cdb
 F:\games\ygocore\cards.cdb
+F:\games\ygopro\cards.cdb
