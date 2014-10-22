@@ -42,11 +42,6 @@ namespace DataEditorX.Core
 			mRacedic = racedic;
 			cfg=_cfg;
 		}
-		
-		public string Code(long id)
-		{
-			return id.ToString("00000000");
-		}
 		public string GetST(Card c,bool isSpell)
 		{
 			string level;

@@ -351,7 +351,7 @@ namespace DataEditorX.Core
 			if(!string.IsNullOrEmpty(c.desc))
 				sb.Append(" and texts.desc like '%"+c.desc+"%' ");
 			if(c.ot>0)
-				sb.Append(" and datas.ot & "+c.ot.ToString()+" = "+c.ot.ToString());
+				sb.Append(" and datas.ot = "+c.ot.ToString());
 			if(c.attribute>0)
 				sb.Append(" and datas.attribute & "+c.attribute.ToString()+" = "+c.attribute.ToString());
 			if(c.level>0)

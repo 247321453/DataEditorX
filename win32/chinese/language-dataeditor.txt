@@ -27,6 +27,7 @@ DataEditForm->menuitem_exportdata 导出所有卡片数据为zip
 DataEditForm->menuitem_cancelTask 取消当前任务
 DataEditForm->menuitem_compdb 压缩当前数据库
 DataEditForm->menuitem_convertimage 批量导入卡图
+DataEditForm->menuitem_importmseimg MSE图片库
 DataEditForm->menuitem_openLastDataBase 最后打开的数据库
 DataEditForm->menuitem_cutimages 裁剪列表卡片的图片
 DataEditForm->menuitem_saveasmse_select 所选卡片导出MSE存档

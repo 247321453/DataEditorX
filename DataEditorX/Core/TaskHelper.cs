@@ -212,6 +212,8 @@ namespace DataEditorX.Core
 			string path=Path.GetDirectoryName(cdbfile);
 			string name=Path.GetFileNameWithoutExtension(cdbfile);
 			string zipname=Path.Combine(path, name+".zip");
+			string readme=Path.Combine(path, name+".txt");
+			string deckydk=Path.Combine(path, "deck/"+name+".ydk");
 			string pics=Path.Combine(path,"pics");
 			string thumb=Path.Combine(pics,"thumbnail");
 			string script=Path.Combine(path,"script");
@@ -221,6 +223,10 @@ namespace DataEditorX.Core
 			using(ZipStorer zips=ZipStorer.Create(zipname, ""))
 			{
 				zips.AddFile(cdbfile, name+".cdb","");
+				if(File.Exists(readme))
+					zips.AddFile(readme, "readme_"+name+".txt","");
+				if(File.Exists(deckydk))
+					zips.AddFile(deckydk, "deck/"+name+".ydk","");
 				foreach(Card c in cards)
 				{
 					i++;

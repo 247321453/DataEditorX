@@ -44,7 +44,12 @@ namespace DataEditorX.Core
 				foreach(Card c in cards)
 				{
 					string jpg=Path.Combine(pic,c.id+".jpg");
-					if(File.Exists(jpg)){
+					string jpg1=Path.Combine(pic,c.idString+".jpg");
+					if(File.Exists(jpg1)){
+						list.Add(jpg1);
+						jpg=Path.GetFileName(jpg1);
+					}
+					else if(File.Exists(jpg)){
 						list.Add(jpg);
 						jpg=Path.GetFileName(jpg);
 					}
@@ -93,7 +98,7 @@ namespace DataEditorX.Core
 			sb.Replace("%atk%", (c.atk<0)?"?":c.atk.ToString());
 			sb.Replace("%def%", (c.def<0)?"?":c.def.ToString());
 			
-			sb.Replace("%code%", conv.Code(c.id));
+			sb.Replace("%code%", c.idString);
 			return sb.ToString();
 		}
 		string getSpellTrap(Card c,string img,bool isSpell)
@@ -105,7 +110,7 @@ namespace DataEditorX.Core
 			sb.Replace("%level%", conv.GetST(c, isSpell));
 			sb.Replace("%image%", img);
 			sb.Replace("%desc%", conv.ReDesc(c.desc));
-			sb.Replace("%code%", conv.Code(c.id));
+			sb.Replace("%code%", c.idString);
 			return sb.ToString();
 		}
 	}

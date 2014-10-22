@@ -86,7 +86,7 @@ namespace DataEditorX.Core
 		/// </summary>
 		public override string ToString()
 		{
-			return string.Format("{0} [{1}]", id.ToString("00000000"), name);
+			return string.Format("{0} [{1}]", idString, name);
 		}
 		public bool EqualsData(Card other)
 		{
@@ -113,6 +113,10 @@ namespace DataEditorX.Core
 				equalBool = false;
 			else if (this.category != other.category)
 				equalBool = false;
+			else if (!this.name.Equals(other.name))
+				equalBool = false;
+			else if (!this.desc.Equals(other.desc))
+				equalBool = false;
 			return equalBool;
 		}
 		/// <summary>
@@ -125,10 +129,6 @@ namespace DataEditorX.Core
 			bool equalBool=EqualsData(other);
 			if(!equalBool)
 				return false;
-			else if (!this.name.Equals(other.name))
-				equalBool = false;
-			else if (!this.desc.Equals(other.desc))
-				equalBool = false;
 			else if (this.str.Length != other.str.Length)
 				equalBool = false;
 			else
@@ -166,6 +166,11 @@ namespace DataEditorX.Core
 			if((this.type & (long)type) == (long)type)
 				return true;
 			return false;
+		}
+		
+		public string idString
+		{
+			get{return id.ToString("00000000");}
 		}
 		
 		public bool IsSetCode(long sc)

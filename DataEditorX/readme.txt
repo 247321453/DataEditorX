@@ -1,4 +1,4 @@
-﻿[DataEditorX]2.1.2.0[DataEditorX]
+﻿[DataEditorX]2.1.3.0[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★使用前，请关联lua的打开方式，例如记事本，notepad++，等。
@@ -66,6 +66,17 @@ DataEditorX.exe.config
 描述不详细的bug，我修复不了。（都不知道是bug是什么）
 
 ★更新历史
+2.1.3.0
+导出MSE存档，支持8位密码前面带0（00012345）
+支持浏览和导入MSE图片库的图片
+对比，仅密码或者卡片信息
+复制当前列表卡片
+导出zip：
+【名字】.cdb
+【名字】.txt
+desck/【名字】.ydk
+pics/*.jpg
+pics/thumbnail/*.jpg
 2.1.2.0
 修改网络连接数
 2.1.1.1

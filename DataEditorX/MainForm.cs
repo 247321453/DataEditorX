@@ -339,6 +339,18 @@ namespace DataEditorX
 				}
 			}
 		}
+		void Menuitem_copyallClick(object sender, EventArgs e)
+		{
+			DataEditForm df =GetActive();
+			if(df!=null)
+			{
+				tCards=df.getCardList(false);
+				if(tCards!=null){
+					SetCopyNumber(tCards.Length);
+					MyMsg.Show(LMSG.CopyCards);
+				}
+			}
+		}
 		void SetCopyNumber(int c)
 		{
 			string tmp=menuitem_pastecards.Text;
@@ -362,6 +374,7 @@ namespace DataEditorX
 		
 		#endregion
 		
+		#region compare
 		void Menuitem_comp1Click(object sender, EventArgs e)
 		{
 			compare1 = GetActive();
@@ -398,5 +411,7 @@ namespace DataEditorX
 				CompareDB();
 			}
 		}
+		#endregion
+
 	}
 }

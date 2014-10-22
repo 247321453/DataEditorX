@@ -362,7 +362,11 @@ namespace DataEditorX
 			tb_def.Text=(c.def<0)?"?":c.def.ToString();
 			tb_cardcode.Text=c.id.ToString();
 			tb_cardalias.Text=c.alias.ToString();
-			string f=Path.Combine(PICPATH, c.id.ToString()+".jpg");
+			string f;
+			if(menuitem_importmseimg.Checked)
+				f=Path.Combine(IMAGEPATH, c.id.ToString()+".jpg");
+			else
+				f=Path.Combine(PICPATH, c.id.ToString()+".jpg");
 			setImage(f);
 		}
 		
@@ -1433,16 +1437,34 @@ namespace DataEditorX
 			else
 				e.Effect = DragDropEffects.None;
 		}
+		void Menuitem_importmseimgClick(object sender, EventArgs e)
+		{
+			bool ischk=menuitem_importmseimg.Checked;
+			if(ischk){
+				pl_image.BackgroundImageLayout= ImageLayout.Stretch;
+			}else{
+				pl_image.BackgroundImageLayout= ImageLayout.Center;
+			}
+			menuitem_importmseimg.Checked=!ischk;
+		}
 		void InportImage(string file,string tid)
 		{
-			string f=Path.Combine(PICPATH,tid+".jpg");
+			string f;
+			bool isPics=!menuitem_importmseimg.Checked;
+			if(isPics)
+				f=Path.Combine(IMAGEPATH, tid+".jpg");
+			else
+				f=Path.Combine(PICPATH,tid+".jpg");
 			if(File.Exists(f))
 			{
 				pl_image.BackgroundImage.Dispose();
 				pl_image.BackgroundImage=m_cover;
 			}
-			tasker.ToImg(file,f,
-			             Path.Combine(PICPATH2,tid+".jpg"));
+			if(isPics)
+				tasker.ToImg(file,f,
+				             Path.Combine(PICPATH2,tid+".jpg"));
+			else
+				File.Copy(file, f, true);
 			setImage(f);
 		}
 		void setImage(string f){
@@ -1499,19 +1521,16 @@ namespace DataEditorX
 		/// <param name="cards"></param>
 		/// <param name="card"></param>
 		/// <returns></returns>
-		bool CheckCard(Card[] cards,Card card,bool checktext)
+		bool CheckCard(Card[] cards,Card card,bool checkinfo)
 		{
 			foreach(Card c in cards)
 			{
 				if(c.id!=card.id)
 					continue;
 				//data数据不一样
-				bool isSame=false;
-				if(checktext)
-					isSame=card.Equals(c);
+				if(checkinfo)
+					return card.EqualsData(c);
 				else
-					isSame=card.EqualsData(c);
-				if(isSame)
 					return true;
 			}
 			return false;
@@ -1546,5 +1565,6 @@ namespace DataEditorX
 			SetCards(getCompCards(), false);
 		}
 		#endregion
+		
 	}
 }

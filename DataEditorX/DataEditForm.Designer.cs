@@ -47,15 +47,17 @@ namespace DataEditorX
         	this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
         	this.menuitem_quit = new System.Windows.Forms.ToolStripMenuItem();
         	this.menu_tools = new System.Windows.Forms.ToolStripMenuItem();
-        	this.menuitem_compdb = new System.Windows.Forms.ToolStripMenuItem();
         	this.menuitem_readydk = new System.Windows.Forms.ToolStripMenuItem();
         	this.menuitem_readimages = new System.Windows.Forms.ToolStripMenuItem();
+        	this.menuitem_compdb = new System.Windows.Forms.ToolStripMenuItem();
+        	this.menuitem_exportdata = new System.Windows.Forms.ToolStripMenuItem();
         	this.tsep5 = new System.Windows.Forms.ToolStripSeparator();
         	this.menuitem_saveasmse_select = new System.Windows.Forms.ToolStripMenuItem();
         	this.menuitem_saveasmse = new System.Windows.Forms.ToolStripMenuItem();
         	this.tsep3 = new System.Windows.Forms.ToolStripSeparator();
         	this.menuitem_cutimages = new System.Windows.Forms.ToolStripMenuItem();
         	this.menuitem_convertimage = new System.Windows.Forms.ToolStripMenuItem();
+        	this.menuitem_importmseimg = new System.Windows.Forms.ToolStripMenuItem();
         	this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
         	this.menuitem_cancelTask = new System.Windows.Forms.ToolStripMenuItem();
         	this.menuitem_help = new System.Windows.Forms.ToolStripMenuItem();
@@ -113,7 +115,6 @@ namespace DataEditorX
         	this.tb_setcode3 = new System.Windows.Forms.TextBox();
         	this.tb_setcode4 = new System.Windows.Forms.TextBox();
         	this.lb_cardcode = new System.Windows.Forms.Label();
-        	this.menuitem_exportdata = new System.Windows.Forms.ToolStripMenuItem();
         	this.menuStrip1.SuspendLayout();
         	this.SuspendLayout();
         	// 
@@ -211,18 +212,12 @@ namespace DataEditorX
         	        	        	this.tsep3,
         	        	        	this.menuitem_cutimages,
         	        	        	this.menuitem_convertimage,
+        	        	        	this.menuitem_importmseimg,
         	        	        	this.toolStripSeparator1,
         	        	        	this.menuitem_cancelTask});
         	this.menu_tools.Name = "menu_tools";
         	this.menu_tools.Size = new System.Drawing.Size(67, 21);
         	this.menu_tools.Text = "Tools(&T)";
-        	// 
-        	// menuitem_compdb
-        	// 
-        	this.menuitem_compdb.Name = "menuitem_compdb";
-        	this.menuitem_compdb.Size = new System.Drawing.Size(212, 22);
-        	this.menuitem_compdb.Text = "Compression DataBase";
-        	this.menuitem_compdb.Click += new System.EventHandler(this.Menuitem_compdbClick);
         	// 
         	// menuitem_readydk
         	// 
@@ -237,6 +232,20 @@ namespace DataEditorX
         	this.menuitem_readimages.Size = new System.Drawing.Size(212, 22);
         	this.menuitem_readimages.Text = "Cards From Images(&I)";
         	this.menuitem_readimages.Click += new System.EventHandler(this.Menuitem_readimagesClick);
+        	// 
+        	// menuitem_compdb
+        	// 
+        	this.menuitem_compdb.Name = "menuitem_compdb";
+        	this.menuitem_compdb.Size = new System.Drawing.Size(212, 22);
+        	this.menuitem_compdb.Text = "Compression DataBase";
+        	this.menuitem_compdb.Click += new System.EventHandler(this.Menuitem_compdbClick);
+        	// 
+        	// menuitem_exportdata
+        	// 
+        	this.menuitem_exportdata.Name = "menuitem_exportdata";
+        	this.menuitem_exportdata.Size = new System.Drawing.Size(212, 22);
+        	this.menuitem_exportdata.Text = "Export Data";
+        	this.menuitem_exportdata.Click += new System.EventHandler(this.Menuitem_exportdataClick);
         	// 
         	// tsep5
         	// 
@@ -273,8 +282,15 @@ namespace DataEditorX
         	// 
         	this.menuitem_convertimage.Name = "menuitem_convertimage";
         	this.menuitem_convertimage.Size = new System.Drawing.Size(212, 22);
-        	this.menuitem_convertimage.Text = "Inport Images";
+        	this.menuitem_convertimage.Text = "Import Images";
         	this.menuitem_convertimage.Click += new System.EventHandler(this.Menuitem_convertimageClick);
+        	// 
+        	// menuitem_importmseimg
+        	// 
+        	this.menuitem_importmseimg.Name = "menuitem_importmseimg";
+        	this.menuitem_importmseimg.Size = new System.Drawing.Size(212, 22);
+        	this.menuitem_importmseimg.Text = "Drop Image to MSE";
+        	this.menuitem_importmseimg.Click += new System.EventHandler(this.Menuitem_importmseimgClick);
         	// 
         	// toolStripSeparator1
         	// 
@@ -884,13 +900,6 @@ namespace DataEditorX
         	this.lb_cardcode.TabIndex = 7;
         	this.lb_cardcode.Text = "Card Code";
         	// 
-        	// menuitem_exportdata
-        	// 
-        	this.menuitem_exportdata.Name = "menuitem_exportdata";
-        	this.menuitem_exportdata.Size = new System.Drawing.Size(212, 22);
-        	this.menuitem_exportdata.Text = "Export Data";
-        	this.menuitem_exportdata.Click += new System.EventHandler(this.Menuitem_exportdataClick);
-        	// 
         	// DataEditForm
         	// 
         	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -959,6 +968,7 @@ namespace DataEditorX
         	this.ResumeLayout(false);
         	this.PerformLayout();
         }
+        private System.Windows.Forms.ToolStripMenuItem menuitem_importmseimg;
         private System.Windows.Forms.ToolStripMenuItem menuitem_exportdata;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;

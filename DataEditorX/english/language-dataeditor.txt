@@ -26,7 +26,8 @@ DataEditForm->menu_tools Tools
 DataEditForm->menuitem_exportdata Export Data
 DataEditForm->menuitem_cancelTask Cancel Task
 DataEditForm->menuitem_compdb Compression DataBase
-DataEditForm->menuitem_convertimage Inport Images
+DataEditForm->menuitem_importmseimg Drop Image to MSE
+DataEditForm->menuitem_convertimage Import Images
 DataEditForm->menuitem_openLastDataBase Open Last DataBase
 DataEditForm->menuitem_cutimages Cut Images For Game
 DataEditForm->menuitem_saveasmse_select Select Cards Save As...
