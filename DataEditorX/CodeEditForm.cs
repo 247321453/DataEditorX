@@ -145,12 +145,11 @@ namespace DataEditorX
 		#region title
 		void SetTitle()
 		{
-			string name=fctb.GetLineText(0);
 			string str=title;
 			if(string.IsNullOrEmpty(nowFile))
 				str=title;
 			else
-				str=nowFile+name;
+				str=nowFile;
 			if(this.MdiParent !=null)
 			{
 				if(string.IsNullOrEmpty(nowFile))
@@ -249,8 +248,8 @@ namespace DataEditorX
 		}
 		#endregion
 		
-		
-		void SaveToolStripMenuItemClick(object sender, EventArgs e)
+		#region menu
+		public void Save()
 		{
 			if(string.IsNullOrEmpty(nowFile))
 			{
@@ -260,6 +259,7 @@ namespace DataEditorX
 					if(sfdlg.ShowDialog()==DialogResult.OK)
 					{
 						nowFile=sfdlg.FileName;
+						SetTitle();
 					}
 					else
 						return;
@@ -267,7 +267,7 @@ namespace DataEditorX
 			}
 			fctb.SaveToFile(nowFile, new UTF8Encoding(false));
 		}
-		void SaveAsToolStripMenuItemClick(object sender, EventArgs e)
+		public void SaveAs()
 		{
 			using(SaveFileDialog sfdlg=new SaveFileDialog())
 			{
@@ -282,6 +282,14 @@ namespace DataEditorX
 			fctb.SaveToFile(nowFile, new UTF8Encoding(false));
 		}
 		
+		void SaveToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			Save();
+		}
+		void SaveAsToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			SaveAs();
+		}
 		
 		void QuitToolStripMenuItemClick(object sender, EventArgs e)
 		{
@@ -309,5 +317,7 @@ namespace DataEditorX
 				}
 			}
 		}
+	
+		#endregion
 	}
 }

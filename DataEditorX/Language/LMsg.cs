@@ -80,6 +80,10 @@ namespace DataEditorX.Language
         ExportDataOK,
         CheckText,
         CompareOK,
+        OpenFile,
+        OpenFileFilter,
+        NewFile,
+        SaveFileOK,
         COUNT,
     }
 }

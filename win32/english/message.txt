@@ -64,3 +64,7 @@
 0x3f	Export Data OK
 0x40	Compare Cards With Text?
 0x41	Cards is Compared.
+0x42	Open File
+0x43	DataBase(*.cdb)|*.cdb|Script(*.lua)|*.lua|all files(*.*)|*.*
+0x44	New File
+0x45	Save OK

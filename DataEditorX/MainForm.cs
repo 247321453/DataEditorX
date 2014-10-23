@@ -28,13 +28,6 @@ namespace DataEditorX
 		#region member
 		bool isInitAuto=false;
 		bool isInitDataEditor=false;
-		public const int CLOSE_ONE=1;
-		public const int CLOSE_OTHER=2;
-		public const int CLOSE_ALL=3;
-		public const int WM_OPEN=0x0401;
-		public const int WM_OPEN_SCRIPT=0x0402;
-		public const string TMPFILE="open.tmp";
-		public const int MAX_HISTORY=0x20;
 		string cdbHistoryFile;
 		List<string> cdblist;
 		string datapath;
@@ -89,12 +82,21 @@ namespace DataEditorX
 		}
 		#endregion
 		
+		#region const
+		public const int CLOSE_ONE=1;
+		public const int CLOSE_OTHER=2;
+		public const int CLOSE_ALL=3;
+		public const int WM_OPEN=0x0401;
+		public const int WM_OPEN_SCRIPT=0x0402;
+		public const string TMPFILE="open.tmp";
+		public const int MAX_HISTORY=0x20;
 		public static bool isScript(string file)
 		{
 			if(file.EndsWith("lua",StringComparison.OrdinalIgnoreCase))
 				return true;
 			return false;
 		}
+		#endregion
 		
 		#region History
 		void ReadHistory()
@@ -303,7 +305,10 @@ namespace DataEditorX
 		{
 			CloseMdi(MainForm.CLOSE_ONE);
 		}
-		
+		void Menuitem_codeeditorClick(object sender, EventArgs e)
+		{
+			OpenScript(null);
+		}
 		void CloseMdi(int type)
 		{
 			DockContentCollection contents = dockPanel1.Contents;
@@ -342,8 +347,8 @@ namespace DataEditorX
 		{
 			using(OpenFileDialog dlg=new OpenFileDialog())
 			{
-				dlg.Title=LANG.GetMsg(LMSG.SelectDataBasePath);
-				dlg.Filter=LANG.GetMsg(LMSG.CdbType);
+				dlg.Title=LANG.GetMsg(LMSG.OpenFile);
+				dlg.Filter=LANG.GetMsg(LMSG.OpenFileFilter);
 				if(dlg.ShowDialog()==DialogResult.OK)
 				{
 					string file=dlg.FileName;
@@ -357,15 +362,15 @@ namespace DataEditorX
 		
 		void QuitToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			Application.Exit();
+			this.Close();
 		}
 		
 		void Menuitem_newClick(object sender, EventArgs e)
 		{
 			using(SaveFileDialog dlg=new SaveFileDialog())
 			{
-				dlg.Title=LANG.GetMsg(LMSG.SelectDataBasePath);
-				dlg.Filter=LANG.GetMsg(LMSG.CdbType);
+				dlg.Title=LANG.GetMsg(LMSG.NewFile);
+				dlg.Filter=LANG.GetMsg(LMSG.OpenFileFilter);
 				if(dlg.ShowDialog()==DialogResult.OK)
 				{
 					string file=dlg.FileName;
@@ -380,6 +385,15 @@ namespace DataEditorX
 						}
 					}
 				}
+			}
+		}
+		void Menuitem_saveClick(object sender, EventArgs e)
+		{
+			CodeEditForm cf= dockPanel1.ActiveContent as CodeEditForm;
+			if(cf!=null)
+			{
+				cf.Save();
+				MyMsg.Show(LMSG.SaveFileOK);
 			}
 		}
 		#endregion
@@ -481,6 +495,7 @@ namespace DataEditorX
 		}
 		#endregion
 
+		#region complate
 		void InitCodeEditor(string funtxt,string conlua)
 		{
 			if(!isInitDataEditor)
@@ -500,6 +515,8 @@ namespace DataEditorX
 			}
 			
 		}
+		#endregion
+		
 		#region function
 		void AddFunction(string funtxt)
 		{
@@ -564,7 +581,8 @@ namespace DataEditorX
 			{
 				string fname=GetFunName(name);
 				if(!tooltipDic.ContainsKey(fname)){
-					tooltipDic.Add(fname, desc);
+					tooltipDic.Add(fname, desc
+					              );
 					AutocompleteItem aitem=new AutocompleteItem(fname);
 					aitem.ToolTipTitle = fname;
 					aitem.ToolTipText = desc;
@@ -615,9 +633,5 @@ namespace DataEditorX
 		}
 		#endregion
 		
-		void Menuitem_codeeditorClick(object sender, EventArgs e)
-		{
-			OpenScript(null);
-		}
 	}
 }

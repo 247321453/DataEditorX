@@ -1,6 +1,7 @@
 ﻿MainForm->menuitem_file File
-MainForm->menuitem_new New DataBase
-MainForm->menuitem_open Open DataBase
+MainForm->menuitem_new New
+MainForm->menuitem_open Open
+MainForm->menuitem_save Save
 MainForm->menuitem_copyselect Copy Select Cards
 MainForm->menuitem_copyall Copy All Cards
 MainForm->menuitem_pastecards Paste Cards

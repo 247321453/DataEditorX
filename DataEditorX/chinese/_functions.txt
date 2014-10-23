@@ -407,8 +407,6 @@ o_range表示可选择的表示形式。
 设置Label属性
 ●void Effect.SetCategory(Effect e, integer cate)
 设置Category属性
-●void Effect.SetCategory(Effect e, integer cate)
-设置Category属性
 ●void Effect.SetCondition(Effect e, function con_func)
 设置Condition属性
 ●void Effect.SetCost(Effect e, function cost_func)
@@ -999,8 +997,6 @@ integer target_player=player])
 召唤被无效视作进行过召唤行为。
 ●boolean Duel.CheckNormalSummonActivity(integer player)
 检查玩家player本回合有没有进行过通常召唤的行为。包括召唤和set
-●boolean Duel.CheckFlipSummonActivity(integer player)
-检查玩家player本回合有没有进行过反转召唤的行为。
 ●boolean Duel.CheckFlipSummonActivity(integer player)
 检查玩家player本回合有没有进行过特殊召唤的行为。
 特殊召唤的行为包括：
