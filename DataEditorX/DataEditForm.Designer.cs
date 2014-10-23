@@ -761,7 +761,7 @@ namespace DataEditorX
         	this.pl_cardtype.Anchor = System.Windows.Forms.AnchorStyles.Top;
         	this.pl_cardtype.AutoScroll = true;
         	this.pl_cardtype.Location = new System.Drawing.Point(548, 46);
-        	this.pl_cardtype.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+        	this.pl_cardtype.Margin = new System.Windows.Forms.Padding(1);
         	this.pl_cardtype.Name = "pl_cardtype";
         	this.pl_cardtype.Padding = new System.Windows.Forms.Padding(2);
         	this.pl_cardtype.Size = new System.Drawing.Size(310, 123);
@@ -772,7 +772,7 @@ namespace DataEditorX
         	this.pl_category.Anchor = System.Windows.Forms.AnchorStyles.Top;
         	this.pl_category.AutoScroll = true;
         	this.pl_category.Location = new System.Drawing.Point(548, 189);
-        	this.pl_category.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+        	this.pl_category.Margin = new System.Windows.Forms.Padding(1);
         	this.pl_category.Name = "pl_category";
         	this.pl_category.Padding = new System.Windows.Forms.Padding(2);
         	this.pl_category.Size = new System.Drawing.Size(310, 174);
@@ -850,6 +850,7 @@ namespace DataEditorX
         	// 
         	this.tb_setcode1.Anchor = System.Windows.Forms.AnchorStyles.Top;
         	this.tb_setcode1.Location = new System.Drawing.Point(512, 158);
+        	this.tb_setcode1.MaxLength = 4;
         	this.tb_setcode1.Name = "tb_setcode1";
         	this.tb_setcode1.Size = new System.Drawing.Size(30, 21);
         	this.tb_setcode1.TabIndex = 18;
@@ -861,6 +862,7 @@ namespace DataEditorX
         	// 
         	this.tb_setcode2.Anchor = System.Windows.Forms.AnchorStyles.Top;
         	this.tb_setcode2.Location = new System.Drawing.Point(512, 182);
+        	this.tb_setcode2.MaxLength = 4;
         	this.tb_setcode2.Name = "tb_setcode2";
         	this.tb_setcode2.Size = new System.Drawing.Size(30, 21);
         	this.tb_setcode2.TabIndex = 18;
@@ -872,6 +874,7 @@ namespace DataEditorX
         	// 
         	this.tb_setcode3.Anchor = System.Windows.Forms.AnchorStyles.Top;
         	this.tb_setcode3.Location = new System.Drawing.Point(512, 207);
+        	this.tb_setcode3.MaxLength = 4;
         	this.tb_setcode3.Name = "tb_setcode3";
         	this.tb_setcode3.Size = new System.Drawing.Size(30, 21);
         	this.tb_setcode3.TabIndex = 18;
@@ -883,6 +886,7 @@ namespace DataEditorX
         	// 
         	this.tb_setcode4.Anchor = System.Windows.Forms.AnchorStyles.Top;
         	this.tb_setcode4.Location = new System.Drawing.Point(512, 232);
+        	this.tb_setcode4.MaxLength = 4;
         	this.tb_setcode4.Name = "tb_setcode4";
         	this.tb_setcode4.Size = new System.Drawing.Size(30, 21);
         	this.tb_setcode4.TabIndex = 18;

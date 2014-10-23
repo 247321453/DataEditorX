@@ -1,4 +1,4 @@
-﻿[DataEditorX]2.1.4.0[DataEditorX]
+﻿[DataEditorX]2.2.0.0[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★使用前，请关联lua的打开方式，例如记事本，notepad++，等。
@@ -66,6 +66,12 @@ DataEditorX.exe.config
 描述不详细的bug，我修复不了。（都不知道是bug是什么）
 
 ★更新历史
+2.2.0.0
+增加lua编辑器，支持关联lua文件
+等待：
+lua编辑器的文件菜单整合
+常用函数模板
+根据函数提示搜索
 2.1.4.0
 改善：
 浏览和导入MSE图片库的图片

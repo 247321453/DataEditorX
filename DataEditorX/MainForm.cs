@@ -13,8 +13,10 @@ using System.Windows.Forms;
 using System.Configuration;
 using WeifenLuo.WinFormsUI.Docking;
 
+using FastColoredTextBoxNS;
 using DataEditorX.Language;
 using DataEditorX.Core;
+using System.Text;
 
 namespace DataEditorX
 {
@@ -24,26 +26,40 @@ namespace DataEditorX
 	public partial class MainForm : Form
 	{
 		#region member
+		bool isInitAuto=false;
+		bool isInitDataEditor=false;
 		public const int CLOSE_ONE=1;
 		public const int CLOSE_OTHER=2;
 		public const int CLOSE_ALL=3;
 		public const int WM_OPEN=0x0401;
+		public const int WM_OPEN_SCRIPT=0x0402;
 		public const string TMPFILE="open.tmp";
 		public const int MAX_HISTORY=0x20;
 		string cdbHistoryFile;
 		List<string> cdblist;
 		string datapath;
-		string conflang,conflang_de,confmsg;
+		string conflang,conflang_de,conflang_ce,confmsg;
+		string funtxt,conlua;
 		DataEditForm compare1,compare2;
 		Card[] tCards;
 		Dictionary<DataEditForm,string> list;
+		//
+		DataConfig datacfg;
+		//函数提示
+		Dictionary<string,string> tooltipDic;
+		//自动完成
+		List<AutocompleteItem> funList;
+		List<AutocompleteItem> conList;
 		#endregion
 		
 		#region init
 		public MainForm(string datapath, string file)
 		{
 			Init(datapath);
-			Open(file);
+			if(file.EndsWith("lua",StringComparison.OrdinalIgnoreCase))
+				OpenScript(file);
+			else
+				Open(file);
 		}
 		public MainForm(string datapath)
 		{
@@ -53,19 +69,32 @@ namespace DataEditorX
 		{
 			tCards=null;
 			cdblist=new List<string>();
+			tooltipDic=new Dictionary<string, string>();
+			funList=new List<AutocompleteItem>();
+			conList=new List<AutocompleteItem>();
 			list=new Dictionary<DataEditForm,string>();
 			this.datapath=datapath;
+			datacfg=new DataConfig(datapath);
 			cdbHistoryFile =Path.Combine(datapath, "history.txt");
 			conflang = Path.Combine(datapath, "language-mainform.txt");
 			conflang_de = Path.Combine(datapath, "language-dataeditor.txt");
+			conflang_ce = Path.Combine(datapath, "language-codeeditor.txt");
 			confmsg = Path.Combine(datapath, "message.txt");
+			funtxt = Path.Combine(datapath, "_functions.txt");
+			conlua = Path.Combine(datapath, "constant.lua");
 			InitializeComponent();
 			LANG.InitForm(this, conflang);
-			
 			LANG.LoadMessage(confmsg);
 			LANG.SetLanguage(this);
 		}
 		#endregion
+		
+		public static bool isScript(string file)
+		{
+			if(file.EndsWith("lua",StringComparison.OrdinalIgnoreCase))
+				return true;
+			return false;
+		}
 		
 		#region History
 		void ReadHistory()
@@ -135,20 +164,33 @@ namespace DataEditorX
 		void MenuHistoryItem_Click(object sender, EventArgs e)
 		{
 			ToolStripMenuItem tsmi=sender as ToolStripMenuItem;
-			if(tsmi!=null)
-				Open(tsmi.Text);
+			if(tsmi!=null){
+				string file=tsmi.Text;
+				if(MainForm.isScript(file))
+					OpenScript(file);
+				else
+					Open(tsmi.Text);
+			}
 		}
 		#endregion
 		
 		#region message
 		protected override void DefWndProc(ref System.Windows.Forms.Message m)
 		{
+			string file=null;
 			switch (m.Msg)
 			{
 				case MainForm.WM_OPEN://处理消息
-					string file=Path.Combine(Application.StartupPath, MainForm.TMPFILE);
+					file=Path.Combine(Application.StartupPath, MainForm.TMPFILE);
 					if(File.Exists(file)){
 						Open(File.ReadAllText(file));
+						File.Delete(file);
+					}
+					break;
+				case MainForm.WM_OPEN_SCRIPT:
+					file=Path.Combine(Application.StartupPath, MainForm.TMPFILE);
+					if(File.Exists(file)){
+						OpenScript(File.ReadAllText(file));
 						File.Delete(file);
 					}
 					break;
@@ -160,6 +202,19 @@ namespace DataEditorX
 		#endregion
 		
 		#region DataEditor
+		public void OpenScript(string file)
+		{
+			CodeEditForm cf=new CodeEditForm(file);
+			LANG.InitForm(cf, conflang_ce);
+			LANG.SetLanguage(cf);
+			if(!isInitAuto)
+			{
+				isInitAuto=true;
+				InitCodeEditor(funtxt, conlua);
+			}
+			cf.InitTooltip(tooltipDic, funList.ToArray(), conList.ToArray());
+			cf.Show(dockPanel1, DockState.Document);
+		}
 		public void Open(string file)
 		{
 			if(!string.IsNullOrEmpty(file) && File.Exists(file)){
@@ -176,6 +231,9 @@ namespace DataEditorX
 				def=new DataEditForm(datapath,file);
 			LANG.InitForm(def, conflang_de);
 			LANG.SetLanguage(def);
+			if(!isInitDataEditor)
+				datacfg.Init();
+			def.InitGameData(datacfg);
 			def.FormClosed+=new FormClosedEventHandler(def_FormClosed);
 			def.Show(dockPanel1, DockState.Document);
 			list.Add(def, "");
@@ -288,7 +346,11 @@ namespace DataEditorX
 				dlg.Filter=LANG.GetMsg(LMSG.CdbType);
 				if(dlg.ShowDialog()==DialogResult.OK)
 				{
-					Open(dlg.FileName);
+					string file=dlg.FileName;
+					if(MainForm.isScript(file))
+						OpenScript(file);
+					else
+						Open(file);
 				}
 			}
 		}
@@ -306,10 +368,16 @@ namespace DataEditorX
 				dlg.Filter=LANG.GetMsg(LMSG.CdbType);
 				if(dlg.ShowDialog()==DialogResult.OK)
 				{
-					if(DataBase.Create(dlg.FileName))
+					string file=dlg.FileName;
+					if(MainForm.isScript(file))
+						OpenScript(file);
+					else
 					{
-						if(MyMsg.Question(LMSG.IfOpenDataBase))
-							Open(dlg.FileName);
+						if(DataBase.Create(file))
+						{
+							if(MyMsg.Question(LMSG.IfOpenDataBase))
+								Open(file);
+						}
 					}
 				}
 			}
@@ -413,5 +481,143 @@ namespace DataEditorX
 		}
 		#endregion
 
+		void InitCodeEditor(string funtxt,string conlua)
+		{
+			if(!isInitDataEditor)
+				datacfg.Init();
+			tooltipDic.Clear();
+			funList.Clear();
+			conList.Clear();
+			AddFunction(funtxt);
+			AddConstant(conlua);
+			foreach(long k in datacfg.dicSetnames.Keys)
+			{
+				string key="0x"+k.ToString("x");
+				if(!tooltipDic.ContainsKey(key))
+				{
+					AddConToolTip(key, datacfg.dicSetnames[k]);
+				}
+			}
+			
+		}
+		#region function
+		void AddFunction(string funtxt)
+		{
+			if(File.Exists(funtxt))
+			{
+				string[] lines=File.ReadAllLines(funtxt);
+				bool isFind=false;
+				string name="";
+				string desc="";
+				foreach(string line in lines)
+				{
+					if(string.IsNullOrEmpty(line)
+					   || line.StartsWith("=="))
+						continue;
+					if(line.StartsWith("●"))
+					{
+						//add
+						AddFuncTooltip(name, desc);
+						int t=line.IndexOf(" ");
+						int w=line.IndexOf("(");
+						if(t<w && t>0){
+							name=line.Substring(t+1,w-t-1);
+							isFind=true;
+							desc=line;
+						}
+					}
+					else if(isFind){
+						desc+=Environment.NewLine+line;
+					}
+				}
+				AddFuncTooltip(name, desc);
+			}
+		}
+		string GetFunName(string str)
+		{
+			int t=str.IndexOf(".");
+			if(t>0)
+				return str.Substring(t+1);
+			return str;
+		}
+		bool isANSIChar(char c)
+		{
+			if((int)c>127)
+				return false;
+			return true;
+		}
+		int CheckReturn(char[] chars, int index, int MAX)
+		{
+			int k=0;
+			for(k=0;k<MAX;k++)
+			{
+				if((index+k)<chars.Length){
+					if(chars[index+k]=='\n')
+						return k+1;
+				}
+			}
+			return -1;
+		}
+		void AddFuncTooltip(string name,string desc)
+		{
+			if(!string.IsNullOrEmpty(name))
+			{
+				string fname=GetFunName(name);
+				if(!tooltipDic.ContainsKey(fname)){
+					tooltipDic.Add(fname, desc);
+					AutocompleteItem aitem=new AutocompleteItem(fname);
+					aitem.ToolTipTitle = fname;
+					aitem.ToolTipText = desc;
+					funList.Add(aitem);
+				}
+				else
+					tooltipDic[fname] += Environment.NewLine + desc;
+			}
+		}
+		#endregion
+		
+		#region constant
+		void AddConToolTip(string key, string desc)
+		{
+			AutocompleteItem aitem=new AutocompleteItem(key);
+			aitem.ToolTipTitle = key;
+			aitem.ToolTipText = desc;
+			conList.Add(aitem);
+			tooltipDic.Add(key, desc);
+		}
+		
+		
+		
+		void AddConstant(string conlua)
+		{
+			//conList.Add("con");
+			if(File.Exists(conlua))
+			{
+				string[] lines=File.ReadAllLines(conlua);
+				foreach(string line in lines)
+				{
+					if(line.StartsWith("--"))
+						continue;
+					string k=line,desc=line;
+					int t=line.IndexOf("=");
+					int t2=line.IndexOf("--");
+					k = (t>0)?line.Substring(0,t).TrimEnd(new char[]{' ','\t'})
+						:line;
+					desc = (t>0)?line.Substring(t+1).Replace("--","\n")
+						:line;
+					if(!tooltipDic.ContainsKey(k)){
+						AddConToolTip(k, desc);
+					}
+					else
+						tooltipDic[k] += Environment.NewLine + desc;
+				}
+			}
+		}
+		#endregion
+		
+		void Menuitem_codeeditorClick(object sender, EventArgs e)
+		{
+			OpenScript(null);
+		}
 	}
 }

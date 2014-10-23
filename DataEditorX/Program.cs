@@ -42,8 +42,11 @@ namespace DataEditorX
 			}
 			else
 			{
+				int msg=MainForm.WM_OPEN;
+				if(MainForm.isScript(arg))
+					msg=MainForm.WM_OPEN_SCRIPT;
 				File.WriteAllText(Path.Combine(Application.StartupPath, MainForm.TMPFILE), arg);
-				SendMessage(instance.MainWindowHandle, MainForm.WM_OPEN, 0 ,0);
+				SendMessage(instance.MainWindowHandle, msg, 0 ,0);
 				//Thread.Sleep(1000);
 				Environment.Exit(1);
 			}

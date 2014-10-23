@@ -43,6 +43,9 @@
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FastColoredTextBox">
+      <HintPath>DLL\FastColoredTextBox.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -58,6 +61,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeEditForm.cs" />
+    <Compile Include="CodeEditForm.Designer.cs">
+      <DependentUpon>CodeEditForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Common\CheckUpdate.cs" />
     <Compile Include="Common\DoubleContorl.cs" />
     <Compile Include="Common\MyBitmap.cs" />
@@ -67,6 +74,7 @@
     <Compile Include="Core\CardRace.cs" />
     <Compile Include="Core\CardType.cs" />
     <Compile Include="Core\DataBase.cs" />
+    <Compile Include="Core\DataConfig.cs" />
     <Compile Include="Core\DataManager.cs" />
     <Compile Include="Core\ImageSet.cs" />
     <Compile Include="Core\MSE.cs" />
@@ -88,6 +96,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CodeEditForm.resx">
+      <DependentUpon>CodeEditForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DataEditForm.resx">
       <DependentUpon>DataEditForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -129,7 +140,13 @@
     <None Include="chinese\card-type.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="chinese\constant.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="chinese\cover.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="chinese\language-codeeditor.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="chinese\language-dataeditor.txt">
@@ -156,6 +173,9 @@
     <None Include="chinese\mse-spelltrap.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="chinese\_functions.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="english\card-attribute.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -177,7 +197,13 @@
     <None Include="english\card-type.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="english\constant.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="english\cover.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="english\language-codeeditor.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="english\language-dataeditor.txt">
@@ -202,6 +228,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="english\mse-spelltrap.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="english\_functions.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Magic Set Editor 2\download.bat">

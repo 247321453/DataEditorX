@@ -47,15 +47,8 @@ namespace DataEditorX
 		bool setcodeIsedit4;
 		
 		Image m_cover;
-		Dictionary<long, string> dicCardRules=null;
-		Dictionary<long, string> dicCardAttributes=null;
-		Dictionary<long, string> dicCardRaces=null;
-		Dictionary<long, string> dicCardLevels=null;
-		Dictionary<long, string> dicSetnames=null;
-		Dictionary<long, string> dicCardTypes=null;
-		Dictionary<long, string> dicCardcategorys=null;
-		string datapath, confrule, confattribute, confrace, conflevel;
-		string confsetname, conftype, confcategory, confcover;
+		DataConfig datacfg;
+		string datapath, confcover;
 		
 		public string getNowCDB()
 		{
@@ -86,6 +79,7 @@ namespace DataEditorX
 		}
 		void Initialize()
 		{
+			datacfg=null;
 			complist=new Dictionary<long, Card>();
 			InitializeComponent();
 			title=this.Text;
@@ -108,8 +102,13 @@ namespace DataEditorX
 			#endif
 			SetTitle();
 			
-			InitGameData();
-			tasker=new TaskHelper(datapath, bgWorker1, dicCardTypes, dicCardRaces);
+			if(datacfg==null){
+				datacfg=new DataConfig(datapath);
+				datacfg.Init();
+			}
+			tasker=new TaskHelper(datapath, bgWorker1, 
+			                      datacfg.dicCardTypes,
+			                      datacfg.dicCardRaces);
 			
 			SetCDB(nowCdbFile);
 			//设置空白卡片
@@ -143,6 +142,7 @@ namespace DataEditorX
 				return;
 			menuStrip1.Visible=false;
 			menuitem_file.Visible=false;
+			menuitem_file.Enabled=false;
 			//this.SuspendLayout();
 			this.ResumeLayout(true);
 			foreach(Control c in this.Controls)
@@ -208,16 +208,14 @@ namespace DataEditorX
 		void InitPath(string datapath)
 		{
 			this.datapath=datapath;
-			confrule=Path.Combine(datapath, "card-rule.txt");
-			confattribute=Path.Combine(datapath, "card-attribute.txt");
-			confrace=Path.Combine(datapath, "card-race.txt");
-			conflevel=Path.Combine(datapath, "card-level.txt");
-			confsetname=Path.Combine(datapath, "card-setname.txt");
-			conftype=Path.Combine(datapath, "card-type.txt");
-			confcategory=Path.Combine(datapath, "card-category.txt");
 			confcover= Path.Combine(datapath, "cover.jpg");
 
 			IMAGEPATH=Path.Combine(Application.StartupPath,"Images");
+			
+			if(File.Exists(confcover))
+				m_cover=Image.FromFile(confcover);
+			else
+				m_cover=null;
 		}
 		
 		//保存dic
@@ -236,31 +234,29 @@ namespace DataEditorX
 		}
 		
 		//初始化游戏数据
-		public void InitGameData()
+		public void InitGameData(DataConfig dataconfig)
 		{
 			//初始化
-			dicCardRules=InitComboBox(cb_cardrule,confrule);
-			dicCardAttributes=InitComboBox(cb_cardattribute,confattribute);
-			dicCardRaces=InitComboBox(cb_cardrace, confrace);
-			dicCardLevels=InitComboBox(cb_cardlevel, conflevel);
-			dicSetnames=DataManager.Read(confsetname);
+			this.datacfg=dataconfig.Clone();
+			InitControl();
+		}
+		void InitControl()
+		{
+			InitComboBox(cb_cardrace, datacfg.dicCardRaces);
+			InitComboBox(cb_cardattribute, datacfg.dicCardAttributes);
+			InitComboBox(cb_cardrule, datacfg.dicCardRules);
+			InitComboBox(cb_cardlevel, datacfg.dicCardLevels);
+			//card types
+			InitCheckPanel(pl_cardtype, datacfg.dicCardTypes);
+			//card categorys
+			InitCheckPanel(pl_category, datacfg.dicCardcategorys);
 			//setname
-			string[] setnames=DataManager.GetValues(dicSetnames);
+			string[] setnames=DataManager.GetValues(datacfg.dicSetnames);
 			cb_setname1.Items.AddRange(setnames);
 			cb_setname2.Items.AddRange(setnames);
 			cb_setname3.Items.AddRange(setnames);
 			cb_setname4.Items.AddRange(setnames);
-			//card types
-			dicCardTypes=DataManager.Read(conftype);
-			InitCheckPanel(pl_cardtype, dicCardTypes);
-			//card categorys
-			dicCardcategorys=DataManager.Read(confcategory);
-			InitCheckPanel(pl_category, dicCardcategorys);
 			//
-			if(File.Exists(confcover))
-				m_cover=Image.FromFile(confcover);
-			else
-				m_cover=null;
 		}
 		
 		//初始化FlowLayoutPanel
@@ -289,13 +285,11 @@ namespace DataEditorX
 		}
 
 		//初始化ComboBox
-		Dictionary<long, string> InitComboBox(ComboBox cb, string file)
+		void InitComboBox(ComboBox cb, Dictionary<long, string> tempdic)
 		{
-			Dictionary<long, string> tempdic=DataManager.Read(file);
 			cb.Items.Clear();
 			cb.Items.AddRange(DataManager.GetValues(tempdic));
 			cb.SelectedIndex=0;
-			return tempdic;
 		}
 		
 		//计算list最大行数
@@ -335,10 +329,10 @@ namespace DataEditorX
 			lb_scripttext.Items.AddRange(c.str);
 			tb_edittext.Text="";
 
-			SetSelect(dicCardRules,cb_cardrule,(long)c.ot);
-			SetSelect(dicCardAttributes,cb_cardattribute,(long)c.attribute);
-			SetSelect(dicCardLevels,cb_cardlevel,(long)(c.level&0xff));
-			SetSelect(dicCardRaces,cb_cardrace,c.race);
+			SetSelect(datacfg.dicCardRules,cb_cardrule,(long)c.ot);
+			SetSelect(datacfg.dicCardAttributes,cb_cardattribute,(long)c.attribute);
+			SetSelect(datacfg.dicCardLevels,cb_cardlevel,(long)(c.level&0xff));
+			SetSelect(datacfg.dicCardRaces,cb_cardrace,c.race);
 			
 			long sc1=c.setcode&0xffff;
 			long sc2=(c.setcode>>0x10)&0xffff;
@@ -348,10 +342,10 @@ namespace DataEditorX
 			tb_setcode2.Text=sc2.ToString("x");
 			tb_setcode3.Text=sc3.ToString("x");
 			tb_setcode4.Text=sc4.ToString("x");
-			SetSelect(dicSetnames, cb_setname1, sc1);
-			SetSelect(dicSetnames, cb_setname2, sc2);
-			SetSelect(dicSetnames, cb_setname3, sc3);
-			SetSelect(dicSetnames, cb_setname4, sc4);
+			SetSelect(datacfg.dicSetnames, cb_setname1, sc1);
+			SetSelect(datacfg.dicSetnames, cb_setname2, sc2);
+			SetSelect(datacfg.dicSetnames, cb_setname3, sc3);
+			SetSelect(datacfg.dicSetnames, cb_setname4, sc4);
 			
 			SetCheck(pl_cardtype,c.type);
 			SetCheck(pl_category,c.category);
@@ -437,10 +431,10 @@ namespace DataEditorX
 			c.desc=tb_cardtext.Text;
 			
 			Array.Copy(strs,c.str, c.str.Length);
-			int.TryParse(GetSelect(dicCardRules,cb_cardrule),out c.ot);
-			int.TryParse(GetSelect(dicCardAttributes,cb_cardattribute),out c.attribute);
-			long.TryParse(GetSelect(dicCardLevels,cb_cardlevel),out c.level);
-			long.TryParse(GetSelect(dicCardRaces,cb_cardrace),out c.race);
+			int.TryParse(GetSelect(datacfg.dicCardRules,cb_cardrule),out c.ot);
+			int.TryParse(GetSelect(datacfg.dicCardAttributes,cb_cardattribute),out c.attribute);
+			long.TryParse(GetSelect(datacfg.dicCardLevels,cb_cardlevel),out c.level);
+			long.TryParse(GetSelect(datacfg.dicCardRaces,cb_cardrace),out c.race);
 			
 			int.TryParse(tb_setcode1.Text, NumberStyles.HexNumber,null,out temp);
 			c.setcode =temp;
@@ -624,6 +618,8 @@ namespace DataEditorX
 		//检查是否打开数据库
 		public bool Check()
 		{
+			if(datacfg == null)
+				return false;
 			if(File.Exists(nowCdbFile))
 				return true;
 			else
@@ -1141,7 +1137,7 @@ namespace DataEditorX
 		//关闭
 		void Menuitem_quitClick(object sender, EventArgs e)
 		{
-			Application.Exit();
+			this.Close();
 		}
 		#endregion
 		
@@ -1222,7 +1218,7 @@ namespace DataEditorX
 			if(setcodeIsedit2)
 				return;
 			setcodeIsedit2=true;
-			tb_setcode2.Text=GetSelectHex(dicSetnames, cb_setname2);
+			tb_setcode2.Text=GetSelectHex(datacfg.dicSetnames, cb_setname2);
 			setcodeIsedit2=false;
 		}
 		
@@ -1231,7 +1227,7 @@ namespace DataEditorX
 			if(setcodeIsedit1)
 				return;
 			setcodeIsedit1=true;
-			tb_setcode1.Text=GetSelectHex(dicSetnames, cb_setname1);
+			tb_setcode1.Text=GetSelectHex(datacfg.dicSetnames, cb_setname1);
 			setcodeIsedit1=false;
 		}
 		
@@ -1240,7 +1236,7 @@ namespace DataEditorX
 			if(setcodeIsedit3)
 				return;
 			setcodeIsedit3=true;
-			tb_setcode3.Text=GetSelectHex(dicSetnames, cb_setname3);
+			tb_setcode3.Text=GetSelectHex(datacfg.dicSetnames, cb_setname3);
 			setcodeIsedit3=false;
 		}
 		
@@ -1249,7 +1245,7 @@ namespace DataEditorX
 			if(setcodeIsedit4)
 				return;
 			setcodeIsedit4=true;
-			tb_setcode4.Text=GetSelectHex(dicSetnames, cb_setname4);
+			tb_setcode4.Text=GetSelectHex(datacfg.dicSetnames, cb_setname4);
 			setcodeIsedit4=false;
 		}
 
@@ -1260,7 +1256,7 @@ namespace DataEditorX
 			setcodeIsedit4=true;
 			long temp;
 			long.TryParse(tb_setcode4.Text,NumberStyles.HexNumber, null ,out temp);
-			SetSelect(dicSetnames, cb_setname4, temp);
+			SetSelect(datacfg.dicSetnames, cb_setname4, temp);
 			setcodeIsedit4=false;
 		}
 		
@@ -1271,7 +1267,7 @@ namespace DataEditorX
 			setcodeIsedit3=true;
 			long temp;
 			long.TryParse(tb_setcode3.Text,NumberStyles.HexNumber, null ,out temp);
-			SetSelect(dicSetnames, cb_setname3, temp);
+			SetSelect(datacfg.dicSetnames, cb_setname3, temp);
 			setcodeIsedit3=false;
 		}
 		
@@ -1282,7 +1278,7 @@ namespace DataEditorX
 			setcodeIsedit2=true;
 			long temp;
 			long.TryParse(tb_setcode2.Text,NumberStyles.HexNumber, null ,out temp);
-			SetSelect(dicSetnames, cb_setname2, temp);
+			SetSelect(datacfg.dicSetnames, cb_setname2, temp);
 			setcodeIsedit2=false;
 		}
 		
@@ -1293,7 +1289,7 @@ namespace DataEditorX
 			setcodeIsedit1=true;
 			long temp;
 			long.TryParse(tb_setcode1.Text,NumberStyles.HexNumber, null ,out temp);
-			SetSelect(dicSetnames, cb_setname1, temp);
+			SetSelect(datacfg.dicSetnames, cb_setname1, temp);
 			setcodeIsedit1=false;
 		}
 		#endregion
@@ -1463,7 +1459,7 @@ namespace DataEditorX
 			setImage(t);
 		}
 		void setImage(long id){
-			if(pl_image.BackgroundImage != null 
+			if(pl_image.BackgroundImage != null
 			   && pl_image.BackgroundImage!=m_cover)
 				pl_image.BackgroundImage.Dispose();
 			Bitmap temp;

@@ -10,6 +10,7 @@ MainForm->menuitem_history History(&H)
 MainForm->menuitem_quit Quit(&Q)
 MainForm->menuitem_windows Windwos(&W)
 MainForm->menuitem_dataeditor New DataEditor
+MainForm->menuitem_codeeditor New CodeEditor
 MainForm->menuitem_closeall Close All
 MainForm->menuitem_closeother Close Other
 MainForm->menuitem_close Close
