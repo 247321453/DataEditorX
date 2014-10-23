@@ -1,5 +1,7 @@
 # history
 F:\games\ygocore\cards (2).cdb
-F:\games\ygocore\script\c126218.lua
-F:\games\ygocore\script\c131182.lua
 F:\games\ygopro\cards.cdb
+F:\games\ygocore\script\c126218.lua
+F:\games\ygopro\script\c168917.lua
+F:\games\ygocore\script\c131182.lua
+F:\games\ygopro\script\c126218.lua

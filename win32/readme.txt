@@ -1,4 +1,4 @@
-﻿[DataEditorX]2.2.1.1[DataEditorX]
+﻿[DataEditorX]2.2.1.2[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★使用前，请关联lua的打开方式，例如记事本，notepad++，等。
@@ -34,6 +34,8 @@ mse-pendulum	P怪兽模版
 mse-spelltrap	魔陷模版
 mse-config		设置pendulum文本和普通文本的正则正则表达式，用来分离文本
 
+★支持关联lua文件
+
 ★支持关联cdb文件，命令参数启动。
 关联cdb文件：
 请确保DataEditorX的文件夹名固定不变，然后右键随意一个cdb文件，打开方式--浏览--DataEditorX.exe。确定。
@@ -66,6 +68,8 @@ DataEditorX.exe.config
 描述不详细的bug，我修复不了。（都不知道是bug是什么）
 
 ★更新历史
+2.2.1.2
+lua编辑器的风格
 2.2.1.1
 修复文件关联打开文件，无法记录打开历史
 修复新建lua，没有覆盖旧文件
