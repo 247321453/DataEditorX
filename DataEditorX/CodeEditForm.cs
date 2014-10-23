@@ -300,7 +300,7 @@ namespace DataEditorX
 		{
 			MyMsg.Show(
 				LANG.GetMsg(LMSG.About)+"\t"+Application.ProductName+"\n"
-				+LANG.GetMsg(LMSG.Version)+"\t1.0.0.0\n"
+				+LANG.GetMsg(LMSG.Version)+"\t1.1.0.0\n"
 				+LANG.GetMsg(LMSG.Author)+"\t247321453\n"
 				+"Email:\t247321453@qq.com");
 		}

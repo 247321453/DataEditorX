@@ -1,4 +1,4 @@
-﻿[DataEditorX]2.2.1.0[DataEditorX]
+﻿[DataEditorX]2.2.1.1[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★使用前，请关联lua的打开方式，例如记事本，notepad++，等。
@@ -66,6 +66,9 @@ DataEditorX.exe.config
 描述不详细的bug，我修复不了。（都不知道是bug是什么）
 
 ★更新历史
+2.2.1.1
+修复文件关联打开文件，无法记录打开历史
+修复新建lua，没有覆盖旧文件
 2.2.1.0
 lua编辑器的文件菜单整合
 2.2.0.0

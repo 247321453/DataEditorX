@@ -79,6 +79,8 @@ namespace DataEditorX
 			LANG.InitForm(this, conflang);
 			LANG.LoadMessage(confmsg);
 			LANG.SetLanguage(this);
+			ReadHistory();
+			MenuHistory();
 		}
 		#endregion
 		
@@ -206,6 +208,9 @@ namespace DataEditorX
 		#region DataEditor
 		public void OpenScript(string file)
 		{
+			if(!string.IsNullOrEmpty(file) && File.Exists(file)){
+				AddHistory(file);
+			}
 			CodeEditForm cf=new CodeEditForm(file);
 			LANG.InitForm(cf, conflang_ce);
 			LANG.SetLanguage(cf);
@@ -288,8 +293,7 @@ namespace DataEditorX
 		#region form
 		void MainFormLoad(object sender, System.EventArgs e)
 		{
-			ReadHistory();
-			MenuHistory();
+
 		}
 		
 		void MainFormFormClosing(object sender, FormClosingEventArgs e)
@@ -374,8 +378,10 @@ namespace DataEditorX
 				if(dlg.ShowDialog()==DialogResult.OK)
 				{
 					string file=dlg.FileName;
-					if(MainForm.isScript(file))
+					if(MainForm.isScript(file)){
+						File.Delete(file);
 						OpenScript(file);
+					}
 					else
 					{
 						if(DataBase.Create(file))
