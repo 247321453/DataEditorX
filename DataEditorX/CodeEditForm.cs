@@ -23,6 +23,7 @@ namespace DataEditorX
 	/// </summary>
 	public partial class CodeEditForm : DockContent
 	{
+		#region Style
 		TextStyle KeyStyle = new TextStyle(Brushes.DeepSkyBlue, null, FontStyle.Regular);
 		TextStyle BoldStyle = new TextStyle(null, null, FontStyle.Bold|FontStyle.Italic);
 		TextStyle GrayStyle = new TextStyle(Brushes.Gray, null, FontStyle.Regular);
@@ -31,10 +32,13 @@ namespace DataEditorX
 		TextStyle YellowStyle = new TextStyle(Brushes.Yellow, null, FontStyle.Italic);
 		TextStyle FunStyle = new TextStyle(Brushes.SlateGray, null, FontStyle.Bold);
 		MarkerStyle SameWordsStyle = new MarkerStyle(new SolidBrush(Color.FromArgb(40, Color.White)));
+		#endregion
+		
 		#region init
 		AutocompleteMenu popupMenu;
 		AutocompleteMenu popupMenu_fun;
 		AutocompleteMenu popupMenu_con;
+		AutocompleteMenu popupMenu_find;
 		string nowFile;
 		string title;
 		Dictionary<string,string> tooltipDic;
@@ -69,6 +73,12 @@ namespace DataEditorX
 			popupMenu_con.Items.Font = ft;
 			popupMenu_con.Items.MaximumSize = new System.Drawing.Size(200, 400);
 			popupMenu_con.Items.Width = 300;
+			
+			popupMenu_find = new FastColoredTextBoxNS.AutocompleteMenu(fctb);
+			popupMenu_find.MinFragmentLength = 2;
+			popupMenu_find.Items.Font = ft;
+			popupMenu_find.Items.MaximumSize = new System.Drawing.Size(200, 400);
+			popupMenu_find.Items.Width = 300;
 			title=this.Text;
 		}
 
@@ -392,5 +402,29 @@ namespace DataEditorX
 		{
 			fctb.ShowReplaceDialog();
 		}
+		
+		#region find
+		void Tb_inputKeyDown(object sender, KeyEventArgs e)
+		{
+			if(e.KeyCode==Keys.Enter)
+			{
+				//
+				string key=tb_input.Text;
+				List<AutocompleteItem> tlist=new List<AutocompleteItem>();
+				foreach(string k in tooltipDic.Keys)
+				{
+					if(tooltipDic[k].IndexOf(key)>=0)
+					{
+						AutocompleteItem ai=new AutocompleteItem(k);
+						ai.ToolTipTitle=k;
+						ai.ToolTipText=tooltipDic[k];
+						tlist.Add(ai);
+					}
+				}
+				popupMenu_find.Items.SetAutocompleteItems(tlist.ToArray());
+				popupMenu_find.Show(true);
+			}
+		}
+		#endregion
 	}
 }

@@ -130,28 +130,32 @@ namespace DataEditorX
 			// menuitem_showmap
 			// 
 			this.menuitem_showmap.Name = "menuitem_showmap";
-			this.menuitem_showmap.Size = new System.Drawing.Size(163, 22);
+			this.menuitem_showmap.Size = new System.Drawing.Size(168, 22);
 			this.menuitem_showmap.Text = "Show Map";
 			this.menuitem_showmap.Click += new System.EventHandler(this.ShowMapToolStripMenuItemClick);
 			// 
 			// menuitem_showinput
 			// 
+			this.menuitem_showinput.Checked = true;
+			this.menuitem_showinput.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.menuitem_showinput.Name = "menuitem_showinput";
-			this.menuitem_showinput.Size = new System.Drawing.Size(163, 22);
+			this.menuitem_showinput.Size = new System.Drawing.Size(168, 22);
 			this.menuitem_showinput.Text = "Show InputBox";
 			this.menuitem_showinput.Click += new System.EventHandler(this.Menuitem_showinputClick);
 			// 
 			// menuitem_find
 			// 
 			this.menuitem_find.Name = "menuitem_find";
-			this.menuitem_find.Size = new System.Drawing.Size(163, 22);
+			this.menuitem_find.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
+			this.menuitem_find.Size = new System.Drawing.Size(168, 22);
 			this.menuitem_find.Text = "Find";
 			this.menuitem_find.Click += new System.EventHandler(this.Menuitem_findClick);
 			// 
 			// menuitem_replace
 			// 
 			this.menuitem_replace.Name = "menuitem_replace";
-			this.menuitem_replace.Size = new System.Drawing.Size(163, 22);
+			this.menuitem_replace.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
+			this.menuitem_replace.Size = new System.Drawing.Size(168, 22);
 			this.menuitem_replace.Text = "Replace";
 			this.menuitem_replace.Click += new System.EventHandler(this.Menuitem_replaceClick);
 			// 
@@ -220,6 +224,7 @@ namespace DataEditorX
 			// 
 			// documentMap1
 			// 
+			this.documentMap1.BackColor = System.Drawing.Color.DimGray;
 			this.documentMap1.Dock = System.Windows.Forms.DockStyle.Right;
 			this.documentMap1.ForeColor = System.Drawing.Color.Maroon;
 			this.documentMap1.Location = new System.Drawing.Point(498, 25);
@@ -232,12 +237,13 @@ namespace DataEditorX
 			// 
 			// tb_input
 			// 
+			this.tb_input.BackColor = System.Drawing.SystemColors.Control;
 			this.tb_input.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.tb_input.Location = new System.Drawing.Point(0, 394);
 			this.tb_input.Name = "tb_input";
 			this.tb_input.Size = new System.Drawing.Size(498, 21);
 			this.tb_input.TabIndex = 1;
-			this.tb_input.Visible = false;
+			this.tb_input.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Tb_inputKeyDown);
 			// 
 			// CodeEditForm
 			// 
