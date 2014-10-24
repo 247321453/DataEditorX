@@ -84,6 +84,7 @@ namespace DataEditorX.Language
         OpenFileFilter,
         NewFile,
         SaveFileOK,
+        IfSaveScript,
         COUNT,
     }
 }

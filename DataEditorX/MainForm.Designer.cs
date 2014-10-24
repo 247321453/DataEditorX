@@ -278,40 +278,41 @@ namespace DataEditorX
 			// menuitem_dataeditor
 			// 
 			this.menuitem_dataeditor.Name = "menuitem_dataeditor";
-			this.menuitem_dataeditor.Size = new System.Drawing.Size(145, 22);
+			this.menuitem_dataeditor.Size = new System.Drawing.Size(157, 22);
 			this.menuitem_dataeditor.Text = "DataEditor";
 			this.menuitem_dataeditor.Click += new System.EventHandler(this.DataEditorToolStripMenuItemClick);
 			// 
 			// menuitem_codeeditor
 			// 
 			this.menuitem_codeeditor.Name = "menuitem_codeeditor";
-			this.menuitem_codeeditor.Size = new System.Drawing.Size(145, 22);
+			this.menuitem_codeeditor.Size = new System.Drawing.Size(157, 22);
 			this.menuitem_codeeditor.Text = "CodeEditor";
 			this.menuitem_codeeditor.Click += new System.EventHandler(this.Menuitem_codeeditorClick);
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(142, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(154, 6);
 			// 
 			// menuitem_close
 			// 
 			this.menuitem_close.Name = "menuitem_close";
-			this.menuitem_close.Size = new System.Drawing.Size(145, 22);
+			this.menuitem_close.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
+			this.menuitem_close.Size = new System.Drawing.Size(157, 22);
 			this.menuitem_close.Text = "Close";
 			this.menuitem_close.Click += new System.EventHandler(this.CloseToolStripMenuItemClick);
 			// 
 			// menuitem_closeother
 			// 
 			this.menuitem_closeother.Name = "menuitem_closeother";
-			this.menuitem_closeother.Size = new System.Drawing.Size(145, 22);
+			this.menuitem_closeother.Size = new System.Drawing.Size(157, 22);
 			this.menuitem_closeother.Text = "Close Other";
 			this.menuitem_closeother.Click += new System.EventHandler(this.CloseOtherToolStripMenuItemClick);
 			// 
 			// menuitem_closeall
 			// 
 			this.menuitem_closeall.Name = "menuitem_closeall";
-			this.menuitem_closeall.Size = new System.Drawing.Size(145, 22);
+			this.menuitem_closeall.Size = new System.Drawing.Size(157, 22);
 			this.menuitem_closeall.Text = "Close All";
 			this.menuitem_closeall.Click += new System.EventHandler(this.CloseAllToolStripMenuItemClick);
 			// 

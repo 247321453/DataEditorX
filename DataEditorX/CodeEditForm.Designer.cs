@@ -50,7 +50,7 @@ namespace DataEditorX
 			this.menuitem_replace = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_help = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_about = new System.Windows.Forms.ToolStripMenuItem();
-			this.fctb = new FastColoredTextBoxNS.FastColoredTextBox();
+			this.fctb = new FastColoredTextBoxNS.FastColoredTextBoxEx();
 			this.documentMap1 = new FastColoredTextBoxNS.DocumentMap();
 			this.tb_input = new System.Windows.Forms.TextBox();
 			this.menuStrip1.SuspendLayout();
@@ -201,11 +201,12 @@ namespace DataEditorX
 			this.fctb.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.fctb.Font = new System.Drawing.Font("Consolas", 14.25F);
 			this.fctb.ForeColor = System.Drawing.Color.GhostWhite;
-			this.fctb.IndentBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+			this.fctb.IndentBackColor = System.Drawing.SystemColors.WindowFrame;
 			this.fctb.IsReplaceMode = false;
+			this.fctb.Language = FastColoredTextBoxNS.Language.Lua;
 			this.fctb.LeftBracket = '(';
 			this.fctb.LeftBracket2 = '{';
-			this.fctb.LineNumberColor = System.Drawing.SystemColors.Control;
+			this.fctb.LineNumberColor = System.Drawing.Color.Gainsboro;
 			this.fctb.Location = new System.Drawing.Point(0, 25);
 			this.fctb.Name = "fctb";
 			this.fctb.Paddings = new System.Windows.Forms.Padding(0);
@@ -217,7 +218,6 @@ namespace DataEditorX
 			this.fctb.WordWrap = true;
 			this.fctb.Zoom = 100;
 			this.fctb.ToolTipNeeded += new System.EventHandler<FastColoredTextBoxNS.ToolTipNeededEventArgs>(this.FctbToolTipNeeded);
-			this.fctb.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(this.FctbTextChanged);
 			this.fctb.SelectionChanged += new System.EventHandler(this.FctbSelectionChanged);
 			this.fctb.TextChangedDelayed += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(this.FctbTextChangedDelayed);
 			this.fctb.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FctbKeyDown);
@@ -258,6 +258,7 @@ namespace DataEditorX
 			this.Name = "CodeEditForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "CodeEditor";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CodeEditFormFormClosing);
 			this.Load += new System.EventHandler(this.CodeEditFormLoad);
 			this.Enter += new System.EventHandler(this.CodeEditFormEnter);
 			this.menuStrip1.ResumeLayout(false);
@@ -272,7 +273,7 @@ namespace DataEditorX
 		private System.Windows.Forms.ToolStripMenuItem menuitem_showinput;
 		private System.Windows.Forms.TextBox tb_input;
 		private FastColoredTextBoxNS.DocumentMap documentMap1;
-		private FastColoredTextBoxNS.FastColoredTextBox fctb;
+		private FastColoredTextBoxNS.FastColoredTextBoxEx fctb;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_showmap;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_about;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_help;

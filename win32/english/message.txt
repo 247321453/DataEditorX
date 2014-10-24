@@ -68,3 +68,4 @@
 0x43	DataBase(*.cdb)|*.cdb|Script(*.lua)|*.lua|all files(*.*)|*.*
 0x44	New File
 0x45	Save OK
+0x46	If Save Script?

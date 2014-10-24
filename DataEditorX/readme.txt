@@ -1,4 +1,4 @@
-﻿[DataEditorX]2.2.2.0[DataEditorX]
+﻿[DataEditorX]2.2.2.1[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★使用前，请关联lua的打开方式，例如记事本，notepad++，等。
@@ -68,6 +68,10 @@ DataEditorX.exe.config
 描述不详细的bug，我修复不了。（都不知道是bug是什么）
 
 ★更新历史
+2.2.2.1
+添加关闭标签快捷键 Ctrl+W
+修复lua编辑器打开大文件，无响应
+lua内容变动，在关闭提示保存
 2.2.2.0
 lua编辑器增加根据功能说明搜索函数名
 在下面的文本框输入关键字，按Enter

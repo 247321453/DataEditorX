@@ -24,13 +24,6 @@ namespace DataEditorX
 	public partial class CodeEditForm : DockContent
 	{
 		#region Style
-		TextStyle KeyStyle = new TextStyle(Brushes.DeepSkyBlue, null, FontStyle.Regular);
-		TextStyle BoldStyle = new TextStyle(null, null, FontStyle.Bold|FontStyle.Italic);
-		TextStyle GrayStyle = new TextStyle(Brushes.Gray, null, FontStyle.Regular);
-		TextStyle NumberStyle = new TextStyle(Brushes.Orange, null, FontStyle.Regular);
-		TextStyle ConStyle = new TextStyle(Brushes.YellowGreen, null, FontStyle.Regular);
-		TextStyle YellowStyle = new TextStyle(Brushes.Yellow, null, FontStyle.Italic);
-		TextStyle FunStyle = new TextStyle(Brushes.SlateGray, null, FontStyle.Bold);
 		MarkerStyle SameWordsStyle = new MarkerStyle(new SolidBrush(Color.FromArgb(40, Color.White)));
 		#endregion
 		
@@ -41,6 +34,7 @@ namespace DataEditorX
 		AutocompleteMenu popupMenu_find;
 		string nowFile;
 		string title;
+		string oldtext;
 		Dictionary<string,string> tooltipDic;
 		public CodeEditForm()
 		{
@@ -80,6 +74,7 @@ namespace DataEditorX
 			popupMenu_find.Items.MaximumSize = new System.Drawing.Size(200, 400);
 			popupMenu_find.Items.Width = 300;
 			title=this.Text;
+			fctb.SyntaxHighlighter=new MySyntaxHighlighter();
 		}
 
 		public void LoadXml(string xmlfile)
@@ -101,6 +96,7 @@ namespace DataEditorX
 				}
 				nowFile=file;
 				fctb.OpenFile(nowFile, new UTF8Encoding(false));
+				oldtext=fctb.Text;
 				SetTitle();
 			}
 		}
@@ -168,7 +164,7 @@ namespace DataEditorX
 			if(string.IsNullOrEmpty(nowFile))
 				str=title;
 			else
-				str=nowFile;
+				str=nowFile+"-"+title;
 			if(this.MdiParent !=null)
 			{
 				if(string.IsNullOrEmpty(nowFile))
@@ -281,6 +277,15 @@ namespace DataEditorX
 		#endregion
 		
 		#region menu
+		void Menuitem_findClick(object sender, EventArgs e)
+		{
+			fctb.ShowFindDialog();
+		}
+		
+		void Menuitem_replaceClick(object sender, EventArgs e)
+		{
+			fctb.ShowReplaceDialog();
+		}
 		public void Save()
 		{
 			if(string.IsNullOrEmpty(nowFile))
@@ -334,7 +339,7 @@ namespace DataEditorX
 				LANG.GetMsg(LMSG.About)+"\t"+Application.ProductName+"\n"
 				+LANG.GetMsg(LMSG.Version)+"\t1.1.0.0\n"
 				+LANG.GetMsg(LMSG.Author)+"\t247321453\n"
-				+"Email:\t247321453@qq.com");
+				+"Email:\tkeyoyu@foxmail.com");
 		}
 		
 		void Menuitem_openClick(object sender, EventArgs e)
@@ -351,58 +356,7 @@ namespace DataEditorX
 		}
 		
 		#endregion
-		
-		void FctbTextChanged(object sender, TextChangedEventArgs e)
-		{
-			LuaSyntaxHighlight(e);
-		}
-		private void LuaSyntaxHighlight(TextChangedEventArgs e)
-		{
-			//fctb.LeftBracket = '(';
-			//fctb.RightBracket = ')';
-			//fctb.LeftBracket2 = '\x0';
-			//fctb.RightBracket2 = '\x0';
-			//clear style of changed range
-			e.ChangedRange.ClearStyle(YellowStyle, BoldStyle, GrayStyle, NumberStyle, FunStyle, ConStyle);
-
-			//string highlighting
-			e.ChangedRange.SetStyle(YellowStyle, @"""""|@""""|''|@"".*?""|(?<!@)(?<range>"".*?[^\\]"")|'.*?[^\\]'");
-			//comment highlighting
-			e.ChangedRange.SetStyle(GrayStyle, @"--.*$", RegexOptions.Multiline);
-			e.ChangedRange.SetStyle(GrayStyle, @"--\[\[[\S\s]*?|--\[\[[\S\s]*?\]\]--|[\S\s]*?\]\]--",  RegexOptions.Multiline);
-			e.ChangedRange.SetStyle(GrayStyle, @"--\[\[[\S\s]*?|--\[\[[\S\s]*?\]\]--|[\S\s]*?\]\]--", RegexOptions.Multiline|RegexOptions.RightToLeft);
-			//number highlighting
-			e.ChangedRange.SetStyle(NumberStyle, @"\b\d+[\.]?\d*([eE]\-?\d+)?[lLdDfF]?\b|\b0x[a-fA-F\d]+\b|\bc[0-9]+\b");
-			//attribute highlighting
-			//e.ChangedRange.SetStyle(GrayStyle, @"^\s*(?<range>\[.+?\])\s*$", RegexOptions.Multiline);
-			//class name highlighting
-			e.ChangedRange.SetStyle(BoldStyle, @"\b(Effect|Card|Group|Duel|Debug)\b");
-			//keyword highlighting
-			e.ChangedRange.SetStyle(KeyStyle, @"\b(and|break|do|else|elseif|end|false|for|function|goto|if|in|local|nil|not|or|repeat|return|then|true|until|while)\b");
-			//constant
-			e.ChangedRange.SetStyle(ConStyle, @"[\s|\(|+|,]{0,1}(?<range>[A-Z_]+?)[\)|+|\s|,]");
-			//function
-			//e.ChangedRange.SetStyle(FunStyle, @"[:|.|\s](?<range>[^\(]*?)[\(|\)|\s]");
-			
-			//clear folding markers
-			e.ChangedRange.ClearFoldingMarkers();
-
-			//set folding markers
-			//e.ChangedRange.SetFoldingMarkers(@"--\[\[[\S\s]*?\]\]--", RegexOptions.Multiline);//allow to collapse comment block
-			e.ChangedRange.SetFoldingMarkers("if\b", "end\b");//allow to collapse brackets block
-			e.ChangedRange.SetFoldingMarkers("function\b", "end\b");//allow to collapse #region blocks
-			
-		}
-		void Menuitem_findClick(object sender, EventArgs e)
-		{
-			fctb.ShowFindDialog();
-		}
-		
-		void Menuitem_replaceClick(object sender, EventArgs e)
-		{
-			fctb.ShowReplaceDialog();
-		}
-		
+	
 		#region find
 		void Tb_inputKeyDown(object sender, KeyEventArgs e)
 		{
@@ -426,5 +380,23 @@ namespace DataEditorX
 			}
 		}
 		#endregion
+		
+		public void SetIMEMode(ImeMode im)
+		{
+			fctb.ImeMode=im;
+		}
+		void CodeEditFormFormClosing(object sender, FormClosingEventArgs e)
+		{
+			if(!string.IsNullOrEmpty(oldtext))
+			{
+				if(fctb.Text != oldtext){
+					if(MyMsg.Question(LMSG.IfSaveScript))
+						Save();
+				}
+			}else if(fctb.Text.Length>0){
+				if(MyMsg.Question(LMSG.IfSaveScript))
+					Save();
+			}
+		}
 	}
 }

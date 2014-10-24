@@ -67,6 +67,8 @@
     </Compile>
     <Compile Include="Common\CheckUpdate.cs" />
     <Compile Include="Common\DoubleContorl.cs" />
+    <Compile Include="Common\FastColoredTextBoxEx.cs" />
+    <Compile Include="Common\MySyntaxHighlighter.cs" />
     <Compile Include="Common\MyBitmap.cs" />
     <Compile Include="Common\ZipStorer.cs" />
     <Compile Include="Core\Card.cs" />

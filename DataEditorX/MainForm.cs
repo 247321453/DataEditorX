@@ -85,9 +85,6 @@ namespace DataEditorX
 		#endregion
 		
 		#region const
-		public const int CLOSE_ONE=1;
-		public const int CLOSE_OTHER=2;
-		public const int CLOSE_ALL=3;
 		public const int WM_OPEN=0x0401;
 		public const int WM_OPEN_SCRIPT=0x0402;
 		public const string TMPFILE="open.tmp";
@@ -205,7 +202,7 @@ namespace DataEditorX
 		}
 		#endregion
 		
-		#region DataEditor
+		#region open
 		public void OpenScript(string file)
 		{
 			if(!string.IsNullOrEmpty(file) && File.Exists(file)){
@@ -220,6 +217,7 @@ namespace DataEditorX
 				InitCodeEditor(funtxt, conlua);
 			}
 			cf.InitTooltip(tooltipDic, funList.ToArray(), conList.ToArray());
+			//cf.SetIMEMode(ImeMode.Inherit);
 			cf.Show(dockPanel1, DockState.Document);
 		}
 		public void Open(string file)
@@ -307,13 +305,13 @@ namespace DataEditorX
 		#region windows
 		void CloseToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			CloseMdi(MainForm.CLOSE_ONE);
+			dockPanel1.ActiveContent.DockHandler.Close();
 		}
 		void Menuitem_codeeditorClick(object sender, EventArgs e)
 		{
 			OpenScript(null);
 		}
-		void CloseMdi(int type)
+		void CloseMdi(bool isall)
 		{
 			DockContentCollection contents = dockPanel1.Contents;
 			int num = contents.Count-1;
@@ -322,13 +320,9 @@ namespace DataEditorX
 				{
 					if (contents[num].DockHandler.DockState == DockState.Document)
 					{
-						if(type==MainForm.CLOSE_ALL)
+						if(isall)
 							contents[num].DockHandler.Close();
-						else if(type==MainForm.CLOSE_ONE
-						        && dockPanel1.ActiveContent == contents[num])
-							contents[num].DockHandler.Close();
-						else if(type==MainForm.CLOSE_OTHER
-						        && dockPanel1.ActiveContent != contents[num])
+						else if(dockPanel1.ActiveContent != contents[num])
 							contents[num].DockHandler.Close();
 					}
 					num--;
@@ -337,12 +331,12 @@ namespace DataEditorX
 		}
 		void CloseOtherToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			CloseMdi(MainForm.CLOSE_OTHER);
+			CloseMdi(false);
 		}
 		
 		void CloseAllToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			CloseMdi(MainForm.CLOSE_ALL);
+			CloseMdi(true);
 		}
 		#endregion
 		

@@ -774,7 +774,7 @@ Duel.GetChainInfo(0,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TARGET_CARDS)
 将会返回当前连锁发生的位置和对象卡。
 ●integer Duel.GetCurrentPhase()
 返回当前的阶段
-●void Duel.SkipPhase
+●void Duel.SkipPhase()
 (integer player, integer phase, integer reset_flag, integer reset_count)
 跳过玩家player的phase阶段，并在特定的阶段后reset。reset参数和效果相同。
 ●boolean Duel.IsDamageCalculated()
