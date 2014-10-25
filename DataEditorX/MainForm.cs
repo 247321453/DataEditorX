@@ -592,10 +592,9 @@ namespace DataEditorX
 			{
 				string fname=GetFunName(name);
 				if(!tooltipDic.ContainsKey(fname)){
-					tooltipDic.Add(fname, desc
-					              );
-					AutocompleteItem aitem=new AutocompleteItem(fname);
-					aitem.ToolTipTitle = fname;
+					tooltipDic.Add(fname, desc );
+					AutocompleteItem aitem=new AutocompleteItem(name);
+					aitem.ToolTipTitle = name;
 					aitem.ToolTipText = desc;
 					funList.Add(aitem);
 				}
