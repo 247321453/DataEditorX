@@ -48,6 +48,7 @@ namespace DataEditorX
 			this.menuitem_showinput = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_find = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_replace = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuitem_setcard = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_help = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_about = new System.Windows.Forms.ToolStripMenuItem();
 			this.fctb = new FastColoredTextBoxNS.FastColoredTextBoxEx();
@@ -122,7 +123,8 @@ namespace DataEditorX
 									this.menuitem_showmap,
 									this.menuitem_showinput,
 									this.menuitem_find,
-									this.menuitem_replace});
+									this.menuitem_replace,
+									this.menuitem_setcard});
 			this.menuitem_setting.Name = "menuitem_setting";
 			this.menuitem_setting.Size = new System.Drawing.Size(67, 21);
 			this.menuitem_setting.Text = "Tools(&S)";
@@ -159,6 +161,12 @@ namespace DataEditorX
 			this.menuitem_replace.Text = "Replace";
 			this.menuitem_replace.Click += new System.EventHandler(this.Menuitem_replaceClick);
 			// 
+			// menuitem_setcard
+			// 
+			this.menuitem_setcard.Name = "menuitem_setcard";
+			this.menuitem_setcard.Size = new System.Drawing.Size(168, 22);
+			this.menuitem_setcard.Text = "Set Cards";
+			// 
 			// menuitem_help
 			// 
 			this.menuitem_help.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -176,6 +184,9 @@ namespace DataEditorX
 			// 
 			// fctb
 			// 
+			this.fctb.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+									| System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
 			this.fctb.AutoCompleteBracketsList = new char[] {
 						'(',
 						')',
@@ -198,7 +209,6 @@ namespace DataEditorX
 			this.fctb.CommentPrefix = "--";
 			this.fctb.Cursor = System.Windows.Forms.Cursors.IBeam;
 			this.fctb.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-			this.fctb.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.fctb.Font = new System.Drawing.Font("Consolas", 14.25F);
 			this.fctb.ForeColor = System.Drawing.Color.GhostWhite;
 			this.fctb.IndentBackColor = System.Drawing.SystemColors.WindowFrame;
@@ -208,12 +218,13 @@ namespace DataEditorX
 			this.fctb.LeftBracket2 = '{';
 			this.fctb.LineNumberColor = System.Drawing.Color.Gainsboro;
 			this.fctb.Location = new System.Drawing.Point(0, 25);
+			this.fctb.Margin = new System.Windows.Forms.Padding(0);
 			this.fctb.Name = "fctb";
 			this.fctb.Paddings = new System.Windows.Forms.Padding(0);
 			this.fctb.RightBracket = ')';
 			this.fctb.RightBracket2 = '}';
 			this.fctb.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
-			this.fctb.Size = new System.Drawing.Size(498, 390);
+			this.fctb.Size = new System.Drawing.Size(695, 369);
 			this.fctb.TabIndex = 0;
 			this.fctb.WordWrap = true;
 			this.fctb.Zoom = 100;
@@ -227,9 +238,9 @@ namespace DataEditorX
 			this.documentMap1.BackColor = System.Drawing.Color.DimGray;
 			this.documentMap1.Dock = System.Windows.Forms.DockStyle.Right;
 			this.documentMap1.ForeColor = System.Drawing.Color.Maroon;
-			this.documentMap1.Location = new System.Drawing.Point(498, 25);
+			this.documentMap1.Location = new System.Drawing.Point(504, 25);
 			this.documentMap1.Name = "documentMap1";
-			this.documentMap1.Size = new System.Drawing.Size(197, 390);
+			this.documentMap1.Size = new System.Drawing.Size(191, 369);
 			this.documentMap1.TabIndex = 5;
 			this.documentMap1.Target = this.fctb;
 			this.documentMap1.Text = "documentMap1";
@@ -240,8 +251,9 @@ namespace DataEditorX
 			this.tb_input.BackColor = System.Drawing.SystemColors.Control;
 			this.tb_input.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.tb_input.Location = new System.Drawing.Point(0, 394);
+			this.tb_input.Margin = new System.Windows.Forms.Padding(0);
 			this.tb_input.Name = "tb_input";
-			this.tb_input.Size = new System.Drawing.Size(498, 21);
+			this.tb_input.Size = new System.Drawing.Size(695, 21);
 			this.tb_input.TabIndex = 1;
 			this.tb_input.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Tb_inputKeyDown);
 			// 
@@ -249,9 +261,9 @@ namespace DataEditorX
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.ClientSize = new System.Drawing.Size(695, 415);
+			this.Controls.Add(this.documentMap1);
 			this.Controls.Add(this.tb_input);
 			this.Controls.Add(this.fctb);
-			this.Controls.Add(this.documentMap1);
 			this.Controls.Add(this.menuStrip1);
 			this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
 			this.MainMenuStrip = this.menuStrip1;
@@ -267,6 +279,7 @@ namespace DataEditorX
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.ToolStripMenuItem menuitem_setcard;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_replace;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_find;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;

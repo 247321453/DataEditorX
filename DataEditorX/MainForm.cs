@@ -186,6 +186,7 @@ namespace DataEditorX
 				case MainForm.WM_OPEN://处理消息
 					file=Path.Combine(Application.StartupPath, MainForm.TMPFILE);
 					if(File.Exists(file)){
+						this.Activate();
 						Open(File.ReadAllText(file));
 						File.Delete(file);
 					}
@@ -193,6 +194,7 @@ namespace DataEditorX
 				case MainForm.WM_OPEN_SCRIPT:
 					file=Path.Combine(Application.StartupPath, MainForm.TMPFILE);
 					if(File.Exists(file)){
+						this.Activate();
 						OpenScript(File.ReadAllText(file));
 						File.Delete(file);
 					}
@@ -219,6 +221,7 @@ namespace DataEditorX
 				isInitAuto=true;
 				InitCodeEditor(funtxt, conlua);
 			}
+			cf.SetCDBList(cdblist.ToArray());
 			cf.InitTooltip(tooltipDic, funList.ToArray(), conList.ToArray());
 			//cf.SetIMEMode(ImeMode.Inherit);
 			cf.Show(dockPanel1, DockState.Document);

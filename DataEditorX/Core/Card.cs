@@ -86,7 +86,30 @@ namespace DataEditorX.Core
 		/// </summary>
 		public override string ToString()
 		{
-			return string.Format("{0} [{1}]", idString, name);
+			if(IsType(CardType.TYPE_MONSTER))
+			return string.Format("{0}[{1}]\nType: 0x{2}\n{3}{4}/{5}\n {6}", 
+				                     name, idString,type.ToString("x"),
+				                     levelString(),atk,def,redesc());
+			return string.Format("{0}[{1}]\nType: 0x{2}\n{3}", 
+			                     name, idString,type.ToString("x"),redesc());
+		}
+		string levelString()
+		{
+			string star="";
+			long i=0,j=level&0xff;
+			for(i=0;i<j;i++)
+				star +="★";
+			return star+Environment.NewLine;
+		}
+		string redesc()
+		{
+			return desc
+				.Replace("，","，\n")
+				.Replace("。","。\n")
+				.Replace("？","？\n")
+				.Replace(",",",\n")
+				.Replace(".",".\n")
+				.Replace("?","?\n");
 		}
 		public bool EqualsData(Card other)
 		{

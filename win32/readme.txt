@@ -1,4 +1,4 @@
-﻿[DataEditorX]2.2.3.1[DataEditorX]
+﻿[DataEditorX]2.2.3.2[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★使用前，请关联lua的打开方式，例如记事本，notepad++，等。
@@ -71,6 +71,10 @@ DataEditorX.exe.config
 描述不详细的bug，我修复不了。（都不知道是bug是什么）
 
 ★更新历史
+2.2.3.2
+lua编辑器，
+设置卡片库，鼠标悬停在密码时，提示卡片信息
+在config可以设置lua编辑器的字体和大小
 2.2.3.1
 lua编辑器的函数提示带所属名
 2.2.3.0

@@ -56,6 +56,7 @@ namespace DataEditorX
 			this.menuitem_open = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_new = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_save = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuitem_findluafunc = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuitem_copyselect = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_copyall = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,7 +75,6 @@ namespace DataEditorX
 			this.menuitem_close = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_closeother = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_closeall = new System.Windows.Forms.ToolStripMenuItem();
-			this.menuitem_findluafunc = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -190,6 +190,13 @@ namespace DataEditorX
 			this.menuitem_save.Size = new System.Drawing.Size(261, 22);
 			this.menuitem_save.Text = "Save";
 			this.menuitem_save.Click += new System.EventHandler(this.Menuitem_saveClick);
+			// 
+			// menuitem_findluafunc
+			// 
+			this.menuitem_findluafunc.Name = "menuitem_findluafunc";
+			this.menuitem_findluafunc.Size = new System.Drawing.Size(261, 22);
+			this.menuitem_findluafunc.Text = "Find LuaFunctons";
+			this.menuitem_findluafunc.Click += new System.EventHandler(this.Menuitem_findluafuncClick);
 			// 
 			// toolStripSeparator3
 			// 
@@ -317,13 +324,6 @@ namespace DataEditorX
 			this.menuitem_closeall.Size = new System.Drawing.Size(157, 22);
 			this.menuitem_closeall.Text = "Close All";
 			this.menuitem_closeall.Click += new System.EventHandler(this.CloseAllToolStripMenuItemClick);
-			// 
-			// menuitem_findluafunc
-			// 
-			this.menuitem_findluafunc.Name = "menuitem_findluafunc";
-			this.menuitem_findluafunc.Size = new System.Drawing.Size(261, 22);
-			this.menuitem_findluafunc.Text = "Find LuaFunctons";
-			this.menuitem_findluafunc.Click += new System.EventHandler(this.Menuitem_findluafuncClick);
 			// 
 			// MainForm
 			// 

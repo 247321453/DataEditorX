@@ -15,6 +15,8 @@ using WeifenLuo.WinFormsUI.Docking;
 using FastColoredTextBoxNS;
 using DataEditorX.Language;
 using System.Text.RegularExpressions;
+using DataEditorX.Core;
+using System.Configuration;
 
 namespace DataEditorX
 {
@@ -24,6 +26,7 @@ namespace DataEditorX
 	public partial class CodeEditForm : DockContent
 	{
 		#region Style
+		SortedDictionary<long,string> cardlist;
 		MarkerStyle SameWordsStyle = new MarkerStyle(new SolidBrush(Color.FromArgb(40, Color.White)));
 		#endregion
 		
@@ -47,6 +50,7 @@ namespace DataEditorX
 		}
 		void InitForm()
 		{
+			cardlist=new SortedDictionary<long, string>();
 			tooltipDic=new Dictionary<string, string>();
 			InitializeComponent();
 			Font ft=new Font(fctb.Font.Name,fctb.Font.Size/1.2f,FontStyle.Regular);
@@ -75,6 +79,13 @@ namespace DataEditorX
 			popupMenu_find.Items.Width = 300;
 			title=this.Text;
 			fctb.SyntaxHighlighter=new MySyntaxHighlighter();
+			
+			string fontname=ConfigurationManager.AppSettings["fontname"];
+			float fontsize=0;
+			if(float.TryParse(ConfigurationManager.AppSettings["fontsize"]
+			                  , out fontsize))
+				fctb.Font=new Font(fontname,fontsize);
+				
 		}
 
 		public void LoadXml(string xmlfile)
@@ -95,6 +106,10 @@ namespace DataEditorX
 					fs.Close();
 				}
 				nowFile=file;
+				string cdb=Path.Combine(
+					Path.GetDirectoryName(file),"../cards.cdb");
+				if(File.Exists(cdb))
+					SetCards(cdb);
 				fctb.OpenFile(nowFile, new UTF8Encoding(false));
 				oldtext=fctb.Text;
 				SetTitle();
@@ -104,6 +119,8 @@ namespace DataEditorX
 		{
 			if(this.MdiParent ==null)
 				return;
+			fctb.Location=new Point(0,0);
+			fctb.Height -= 14;
 			menuStrip1.Visible=false;
 			menuitem_file.Visible=false;
 			menuitem_file.Enabled=false;
@@ -123,9 +140,11 @@ namespace DataEditorX
 			{
 				documentMap1.Visible=false;
 				menuitem_showmap.Checked=false;
+				fctb.Width += documentMap1.Width;
 			}else{
 				documentMap1.Visible=true;
 				menuitem_showmap.Checked=true;
+				fctb.Width -= documentMap1.Width;
 			}
 		}
 		#endregion
@@ -216,7 +235,21 @@ namespace DataEditorX
 		{
 			if (!string.IsNullOrEmpty(e.HoveredWord))
 			{
-				string desc=FindTooltip(e.HoveredWord);
+				long tl=0;
+				string name=e.HoveredWord;
+				string desc="";
+				if(!name.StartsWith("0x") && name.Length<=9)
+				{
+					name=name.Replace("c","");
+					long.TryParse(name, out tl);
+				}
+				
+				if(tl>0){
+					if(cardlist.ContainsKey(tl))
+						desc=cardlist[tl];
+				}
+				else
+					desc=FindTooltip(e.HoveredWord);
 				if(!string.IsNullOrEmpty(desc))
 				{
 					e.ToolTipTitle = e.HoveredWord;
@@ -381,10 +414,6 @@ namespace DataEditorX
 		}
 		#endregion
 		
-		public void SetIMEMode(ImeMode im)
-		{
-			fctb.ImeMode=im;
-		}
 		void CodeEditFormFormClosing(object sender, FormClosingEventArgs e)
 		{
 			if(!string.IsNullOrEmpty(oldtext))
@@ -399,5 +428,61 @@ namespace DataEditorX
 			}
 		}
 		
+		public void SetCDBList(string[] cdbs)
+		{
+			if(cdbs == null)
+				return;
+			foreach(string cdb in cdbs)
+			{
+				if(".cdb"==Path.GetExtension(cdb).ToLower())
+				{
+					ToolStripMenuItem tsmi=new ToolStripMenuItem(cdb);
+					tsmi.Click+=MenuItem_Click;
+					menuitem_setcard.DropDownItems.Add(tsmi);
+				}
+			}
+		}
+		void MenuItem_Click(object sender, EventArgs e)
+		{
+			ToolStripMenuItem tsmi=sender as ToolStripMenuItem;
+			if(tsmi!=null){
+				string file=tsmi.Text;
+				SetCards(file);
+			}
+		}
+		public void SetCards(string name)
+		{
+			SetCards(DataBase.Read(name, true,""));
+		}
+		public void SetCards(Card[] cards)
+		{
+			if(cards ==null)
+				return;
+			cardlist.Clear();
+			foreach(Card c in cards)
+			{
+				cardlist.Add(c.id,c.ToString());
+			}
+		}
+		
+		/*
+		void UseIMEToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			ToolStripMenuItem tsmi =sender as ToolStripMenuItem;
+			if(tsmi!=null)
+			{
+				
+				if(tsmi.Checked)
+				{
+					fctb.ImeMode= ImeMode.Inherit;
+				}
+				else{
+					fctb.ImeMode= ImeMode.On;
+				}
+				tsmi.Checked=!tsmi.Checked;
+				fctb.Invalidate();
+			}
+		}
+		 */
 	}
 }

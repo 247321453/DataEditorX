@@ -106,7 +106,7 @@ namespace DataEditorX
 				datacfg=new DataConfig(datapath);
 				datacfg.Init();
 			}
-			tasker=new TaskHelper(datapath, bgWorker1, 
+			tasker=new TaskHelper(datapath, bgWorker1,
 			                      datacfg.dicCardTypes,
 			                      datacfg.dicCardRaces);
 			
@@ -1296,6 +1296,8 @@ namespace DataEditorX
 		
 		#region 复制卡片
 		public Card[] getCardList(bool onlyselect){
+			if(!Check())
+				return null;
 			List<Card> cards=new List<Card>();
 			if(onlyselect)
 			{

@@ -6,13 +6,11 @@
  * 
  */
 using System;
-using System.IO;
-using System.Runtime.InteropServices;
 using System.Configuration;
-using System.Windows.Forms;
-using System.Threading;
 using System.Diagnostics;
+using System.IO;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace DataEditorX
 {
@@ -21,8 +19,7 @@ namespace DataEditorX
 	/// </summary>
 	internal sealed class Program
 	{
-		[DllImport("User32.dll", EntryPoint = "SendMessage")]
-		private static extern int SendMessage(IntPtr hWnd, int msg, uint wParam, uint lParam);
+		
 		/// <summary>
 		/// <summary>
 		/// Program entry point.
@@ -46,7 +43,7 @@ namespace DataEditorX
 				if(MainForm.isScript(arg))
 					msg=MainForm.WM_OPEN_SCRIPT;
 				File.WriteAllText(Path.Combine(Application.StartupPath, MainForm.TMPFILE), arg);
-				SendMessage(instance.MainWindowHandle, msg, 0 ,0);
+				User32.SendMessage(instance.MainWindowHandle, msg, 0 ,0);
 				//Thread.Sleep(1000);
 				Environment.Exit(1);
 			}

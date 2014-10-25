@@ -7,6 +7,7 @@ CodeEditForm->menuitem_quit Quit
 CodeEditForm->menuitem_setting Tools(&S)
 CodeEditForm->menuitem_showmap Show/Hide Map
 CodeEditForm->menuitem_showinput Show/Hide TextBox
+CodeEditForm->menuitem_setcard Set Cards
 CodeEditForm->menuitem_find Find
 CodeEditForm->menuitem_replace Replace
 CodeEditForm->menuitem_help Help(&H)
