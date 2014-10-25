@@ -8,5 +8,8 @@ trap = [Trap Card%%]
 ############################ Text
 pendulum-text = Text:\n([\S\s]*?)\n[\S\s]*?Text:
 monster-text = Text:[\s\S]*?Text:\n([\S\s]*)
+# pendulum-text = Pendulum Effect[\S\s]*?\n([\S\s]*?)\n=================
+# pendulum-text = Pendulum Effect\n([\S\s]*?)\n\n
+# monster-text = Monster Effect\n([\S\s]*)
 ########################### Replace
 # replace = ([A-Z]) <i>$1</i>

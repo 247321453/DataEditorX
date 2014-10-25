@@ -93,7 +93,6 @@ namespace DataEditorX.Core
 			sb.Replace(Environment.NewLine, "\n");
 			sb.Replace("\n\n","\n");
 			sb.Replace("\n","\n\t\t");
-			sb.Replace(" ","^");
 			return sb.ToString();
 		}
 		public string[] GetTypes(Card c)

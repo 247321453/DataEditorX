@@ -356,7 +356,7 @@ namespace DataEditorX
 		}
 		
 		#endregion
-	
+		
 		#region find
 		void Tb_inputKeyDown(object sender, KeyEventArgs e)
 		{
@@ -398,5 +398,6 @@ namespace DataEditorX
 					Save();
 			}
 		}
+		
 	}
 }

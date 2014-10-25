@@ -31,8 +31,8 @@ namespace DataEditorX
 		string cdbHistoryFile;
 		List<string> cdblist;
 		string datapath;
-		string conflang,conflang_de,conflang_ce,confmsg;
-		string funtxt,conlua;
+		string conflang,conflang_de,conflang_ce,confmsg,conflang_pe;
+		string funtxt,conlua,fieldtxt;
 		DataEditForm compare1,compare2;
 		Card[] tCards;
 		Dictionary<DataEditForm,string> list;
@@ -72,6 +72,8 @@ namespace DataEditorX
 			conflang = Path.Combine(datapath, "language-mainform.txt");
 			conflang_de = Path.Combine(datapath, "language-dataeditor.txt");
 			conflang_ce = Path.Combine(datapath, "language-codeeditor.txt");
+			conflang_pe = Path.Combine(datapath, "language-puzzleditor.txt");
+			fieldtxt= Path.Combine(datapath, "Puzzle.txt");
 			confmsg = Path.Combine(datapath, "message.txt");
 			funtxt = Path.Combine(datapath, "_functions.txt");
 			conlua = Path.Combine(datapath, "constant.lua");
@@ -203,6 +205,7 @@ namespace DataEditorX
 		#endregion
 		
 		#region open
+
 		public void OpenScript(string file)
 		{
 			if(!string.IsNullOrEmpty(file) && File.Exists(file)){
@@ -513,7 +516,7 @@ namespace DataEditorX
 					AddConToolTip(key, datacfg.dicSetnames[k]);
 				}
 			}
-			
+			//MessageBox.Show(funList.Count.ToString());
 		}
 		#endregion
 		
@@ -529,14 +532,16 @@ namespace DataEditorX
 				foreach(string line in lines)
 				{
 					if(string.IsNullOrEmpty(line)
-					   || line.StartsWith("=="))
+					   || line.StartsWith("==")
+					   || line.StartsWith("#"))
 						continue;
 					if(line.StartsWith("●"))
 					{
 						//add
 						AddFuncTooltip(name, desc);
-						int t=line.IndexOf(" ");
 						int w=line.IndexOf("(");
+						int t=line.IndexOf(" ");
+						
 						if(t<w && t>0){
 							name=line.Substring(t+1,w-t-1);
 							isFind=true;
@@ -553,6 +558,12 @@ namespace DataEditorX
 		string GetFunName(string str)
 		{
 			int t=str.IndexOf(".");
+			//if(str.StartsWith("Debug.")
+			//   || str.StartsWith("Duel.")
+			//   || str.StartsWith("bit.")
+			//   || str.StartsWith("aux.")
+			//  )
+			//	return str;
 			if(t>0)
 				return str.Substring(t+1);
 			return str;
@@ -633,5 +644,18 @@ namespace DataEditorX
 		}
 		#endregion
 		
+		void Menuitem_findluafuncClick(object sender, EventArgs e)
+		{
+			using(FolderBrowserDialog fd=new FolderBrowserDialog())
+			{
+				fd.Description="Folder Name: ocgcore";
+				if(fd.ShowDialog()==DialogResult.OK)
+				{
+					LuaFunction.Read(funtxt);
+					LuaFunction.Find(fd.SelectedPath);
+					MessageBox.Show("OK");
+				}
+			}
+		}
 	}
 }

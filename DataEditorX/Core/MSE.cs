@@ -86,8 +86,10 @@ namespace DataEditorX.Core
 			sb.Replace("%type2%",types[2]);
 			sb.Replace("%type3%",types[3]);
 			if(isPendulum){
-				sb.Replace("%desc%", conv.ReDesc(
-					conv.GetDesc(c.desc, cfg.regx_monster)));
+				string text= conv.GetDesc(c.desc, cfg.regx_monster);
+				if(string.IsNullOrEmpty(text))
+					text=c.desc;
+				sb.Replace("%desc%", conv.ReDesc(text));
 				sb.Replace("%pl%", ((c.level >> 0x18) & 0xff).ToString());
 				sb.Replace("%pr%", ((c.level >> 0x10) & 0xff).ToString());
 				sb.Replace("%pdesc%", conv.ReDesc(

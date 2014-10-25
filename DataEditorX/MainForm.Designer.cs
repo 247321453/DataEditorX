@@ -74,6 +74,7 @@ namespace DataEditorX
 			this.menuitem_close = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_closeother = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_closeall = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuitem_findluafunc = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -150,6 +151,7 @@ namespace DataEditorX
 									this.menuitem_open,
 									this.menuitem_new,
 									this.menuitem_save,
+									this.menuitem_findluafunc,
 									this.toolStripSeparator3,
 									this.menuitem_copyselect,
 									this.menuitem_copyall,
@@ -316,6 +318,13 @@ namespace DataEditorX
 			this.menuitem_closeall.Text = "Close All";
 			this.menuitem_closeall.Click += new System.EventHandler(this.CloseAllToolStripMenuItemClick);
 			// 
+			// menuitem_findluafunc
+			// 
+			this.menuitem_findluafunc.Name = "menuitem_findluafunc";
+			this.menuitem_findluafunc.Size = new System.Drawing.Size(261, 22);
+			this.menuitem_findluafunc.Text = "Find LuaFunctons";
+			this.menuitem_findluafunc.Click += new System.EventHandler(this.Menuitem_findluafuncClick);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -335,6 +344,7 @@ namespace DataEditorX
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.ToolStripMenuItem menuitem_findluafunc;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_save;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_codeeditor;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_copyall;

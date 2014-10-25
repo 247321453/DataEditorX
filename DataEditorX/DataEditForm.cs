@@ -1470,18 +1470,15 @@ namespace DataEditorX
 			{
 				temp=new Bitmap(pic2);
 				pl_image.BackgroundImage=temp;
-				pl_image.BackgroundImageLayout=ImageLayout.Center;
 			}
 			else if(menuitem_importmseimg.Checked && File.Exists(pic3))
 			{
 				temp=new Bitmap(pic3);
 				pl_image.BackgroundImage=temp;
-				pl_image.BackgroundImageLayout=ImageLayout.Center;
 			}
 			else if(File.Exists(pic)){
 				temp=new Bitmap(pic);
 				pl_image.BackgroundImage=temp;
-				pl_image.BackgroundImageLayout= ImageLayout.Stretch;
 			}
 			else
 				pl_image.BackgroundImage=m_cover;

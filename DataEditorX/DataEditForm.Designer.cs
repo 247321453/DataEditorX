@@ -783,7 +783,7 @@ namespace DataEditorX
         	this.pl_image.AllowDrop = true;
         	this.pl_image.Anchor = System.Windows.Forms.AnchorStyles.Top;
         	this.pl_image.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-        	this.pl_image.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+        	this.pl_image.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
         	this.pl_image.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
         	this.pl_image.Location = new System.Drawing.Point(218, 52);
         	this.pl_image.Name = "pl_image";

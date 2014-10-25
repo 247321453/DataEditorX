@@ -79,6 +79,7 @@
     <Compile Include="Core\DataConfig.cs" />
     <Compile Include="Core\DataManager.cs" />
     <Compile Include="Core\ImageSet.cs" />
+    <Compile Include="Core\LuaFunction.cs" />
     <Compile Include="Core\MSE.cs" />
     <Compile Include="Core\MSEConfig.cs" />
     <Compile Include="Core\MSEConvert.cs" />
@@ -233,6 +234,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="english\_functions.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="lua function tmp.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Magic Set Editor 2\download.bat">

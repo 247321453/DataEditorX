@@ -4,6 +4,7 @@ MainForm->menuitem_open Open
 MainForm->menuitem_save Save
 MainForm->menuitem_copyselect Copy Select Cards
 MainForm->menuitem_copyall Copy All Cards
+MainForm->menuitem_findluafunc Find Lua Functions
 MainForm->menuitem_pastecards Paste Cards
 MainForm->menuitem_comp1 Compare-Cards 1
 MainForm->menuitem_comp2 Compare-Cards 2

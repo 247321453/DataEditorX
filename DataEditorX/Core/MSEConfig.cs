@@ -23,7 +23,7 @@ namespace DataEditorX.Core
 		}
 		string Re(string str)
 		{
-			return str.Replace("\\n","\n").Replace("\\t","\t");
+			return str.Replace("\\n","\n").Replace("\\t","\t").Replace("\\s"," ");
 		}
 		public string pstr;
 		public string rstr;
