@@ -184,9 +184,6 @@ namespace DataEditorX
 			// 
 			// fctb
 			// 
-			this.fctb.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-									| System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
 			this.fctb.AutoCompleteBracketsList = new char[] {
 						'(',
 						')',
@@ -209,6 +206,7 @@ namespace DataEditorX
 			this.fctb.CommentPrefix = "--";
 			this.fctb.Cursor = System.Windows.Forms.Cursors.IBeam;
 			this.fctb.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+			this.fctb.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.fctb.Font = new System.Drawing.Font("Consolas", 14.25F);
 			this.fctb.ForeColor = System.Drawing.Color.GhostWhite;
 			this.fctb.IndentBackColor = System.Drawing.SystemColors.WindowFrame;
@@ -224,7 +222,7 @@ namespace DataEditorX
 			this.fctb.RightBracket = ')';
 			this.fctb.RightBracket2 = '}';
 			this.fctb.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
-			this.fctb.Size = new System.Drawing.Size(695, 369);
+			this.fctb.Size = new System.Drawing.Size(695, 390);
 			this.fctb.TabIndex = 0;
 			this.fctb.WordWrap = true;
 			this.fctb.Zoom = 100;
@@ -261,9 +259,9 @@ namespace DataEditorX
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.ClientSize = new System.Drawing.Size(695, 415);
-			this.Controls.Add(this.documentMap1);
-			this.Controls.Add(this.tb_input);
 			this.Controls.Add(this.fctb);
+			this.Controls.Add(this.tb_input);
+			this.Controls.Add(this.documentMap1);
 			this.Controls.Add(this.menuStrip1);
 			this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
 			this.MainMenuStrip = this.menuStrip1;

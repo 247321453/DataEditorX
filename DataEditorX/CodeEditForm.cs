@@ -85,6 +85,8 @@ namespace DataEditorX
 			if(float.TryParse(ConfigurationManager.AppSettings["fontsize"]
 			                  , out fontsize))
 				fctb.Font=new Font(fontname,fontsize);
+			if(ConfigurationManager.AppSettings["IME"].ToLower()=="true")
+				fctb.ImeMode=ImeMode.On;
 				
 		}
 
@@ -119,8 +121,6 @@ namespace DataEditorX
 		{
 			if(this.MdiParent ==null)
 				return;
-			fctb.Location=new Point(0,0);
-			fctb.Height -= 14;
 			menuStrip1.Visible=false;
 			menuitem_file.Visible=false;
 			menuitem_file.Enabled=false;
