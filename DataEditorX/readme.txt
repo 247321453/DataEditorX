@@ -1,4 +1,4 @@
-﻿[DataEditorX]2.2.2.2[DataEditorX]
+﻿[DataEditorX]2.2.3.0[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★使用前，请关联lua的打开方式，例如记事本，notepad++，等。
@@ -41,6 +41,9 @@ mse-config		设置pendulum文本和普通文本的正则正则表达式，用来
 请确保DataEditorX的文件夹名固定不变，然后右键随意一个cdb文件，打开方式--浏览--DataEditorX.exe。确定。
 以后双击cdb文件即可打开DataEditorX。
 
+★lua编辑器 函数搜索
+在下面的文本框输入关键字，按Enter
+
 ★支持 新建文本文档.txt 直接改名 新建文本文档.cdb
 
 ★文件夹pics和script和cdb所在文件夹一致。
@@ -68,6 +71,8 @@ DataEditorX.exe.config
 描述不详细的bug，我修复不了。（都不知道是bug是什么）
 
 ★更新历史
+2.2.3.0
+支持卡片名做为MSE存档的图片名，但是必须哈数据库的一致
 2.2.2.2
 增加从源码获取Lua的函数，并且自动排序函数
 更新cpp的函数库，未包括utility.lua

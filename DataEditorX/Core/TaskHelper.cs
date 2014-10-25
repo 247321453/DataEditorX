@@ -187,6 +187,7 @@ namespace DataEditorX.Core
 			int count=images.Length;
 			using(ZipStorer zips=ZipStorer.Create(file, ""))
 			{
+				zips.EncodeUTF8=true;
 				zips.AddFile(setFile,"set","");
 				foreach ( string img in images )
 				{

@@ -45,13 +45,23 @@ namespace DataEditorX.Core
 				{
 					string jpg=Path.Combine(pic,c.id+".jpg");
 					string jpg1=Path.Combine(pic,c.idString+".jpg");
-					if(File.Exists(jpg1)){
+					string jpg2=Path.Combine(pic,c.name+".jpg");
+					if(File.Exists(jpg)){
+						list.Add(jpg);
+						jpg=Path.GetFileName(jpg);
+					}
+					else if(File.Exists(jpg1)){
 						list.Add(jpg1);
 						jpg=Path.GetFileName(jpg1);
 					}
-					else if(File.Exists(jpg)){
-						list.Add(jpg);
-						jpg=Path.GetFileName(jpg);
+					else if(File.Exists(jpg2)){
+						File.Copy(jpg2, jpg, true);
+						if(File.Exists(jpg)){//复制失败
+							list.Add(jpg);
+							jpg=Path.GetFileName(jpg);
+						}
+						else
+							jpg="";
 					}
 					else
 						jpg="";

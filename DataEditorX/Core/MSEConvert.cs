@@ -109,6 +109,7 @@ namespace DataEditorX.Core
 						types[0]="token card";
 					else
 						types[0]="token monster";
+					types[1]=GetType(CardType.TYPE_TOKEN);
 				}
 				else if(c.IsType(CardType.TYPE_RITUAL)){
 					types[0]="ritual monster";
@@ -159,11 +160,9 @@ namespace DataEditorX.Core
 				}
 				else
 				{//效果怪兽
+					types[2]=GetType(CardType.TYPE_EFFECT);
 					if(c.IsType(CardType.TYPE_PENDULUM))
-					{
 						types[1]=GetType(CardType.TYPE_PENDULUM);
-						types[2]=GetType(CardType.TYPE_EFFECT);
-					}
 					else if(c.IsType(CardType.TYPE_TUNER))
 						types[1]=GetType(CardType.TYPE_TUNER);
 					else if(c.IsType(CardType.TYPE_SPIRIT))
@@ -174,8 +173,10 @@ namespace DataEditorX.Core
 						types[1]=GetType(CardType.TYPE_UNION);
 					else if(c.IsType(CardType.TYPE_DUAL))
 						types[1]=GetType(CardType.TYPE_DUAL);
-					else
+					else{
 						types[1]=GetType(CardType.TYPE_EFFECT);
+						types[2]="";
+					}
 				}
 				
 			}
