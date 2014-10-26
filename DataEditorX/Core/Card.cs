@@ -95,11 +95,11 @@ namespace DataEditorX.Core
 		}
 		string levelString()
 		{
-			string star="";
+			string star="[";
 			long i=0,j=level&0xff;
 			for(i=0;i<j;i++)
 				star +="★";
-			return star+Environment.NewLine;
+			return star+"] "+j.ToString()+" ";
 		}
 		string redesc()
 		{

@@ -56,6 +56,7 @@ namespace FastColoredTextBoxNS
 			range.SetStyle(mGrayStyle, base.LuaCommentRegex3);
 			//number highlighting
 			range.SetStyle(mNumberStyle, base.LuaNumberRegex);
+			range.SetStyle(mNumberStyle, @"\bc\d+\b");
 			//keyword highlighting
 			range.SetStyle(mKeywordStyle, base.LuaKeywordRegex);
 			//functions highlighting

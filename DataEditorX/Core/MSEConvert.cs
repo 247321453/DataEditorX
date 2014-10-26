@@ -180,6 +180,12 @@ namespace DataEditorX.Core
 				}
 				
 			}
+			if(c.race==0)
+			{
+				types[0]="";
+				types[1]="";
+				types[2]="";
+			}
 			return types;
 		}
 		

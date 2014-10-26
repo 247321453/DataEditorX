@@ -87,7 +87,7 @@ namespace DataEditorX
 				fctb.Font=new Font(fontname,fontsize);
 			if(ConfigurationManager.AppSettings["IME"].ToLower()=="true")
 				fctb.ImeMode=ImeMode.On;
-				
+			
 		}
 
 		public void LoadXml(string xmlfile)
@@ -273,27 +273,11 @@ namespace DataEditorX
 				popupMenu_con.Show(true);
 				e.Handled = true;
 			}
+			//else if(e.KeyData == Keys(Keys.Control | Keys
 		}
 		#endregion
 		
 		#region input
-		void FctbSelectionChanged(object sender, EventArgs e)
-		{
-			tb_input.Text=fctb.SelectedText;
-			fctb.VisibleRange.ClearStyle(SameWordsStyle);
-			if (!fctb.Selection.IsEmpty)
-				return;//user selected diapason
-
-			//get fragment around caret
-			var fragment = fctb.Selection.GetFragment(@"\w");
-			string text = fragment.Text;
-			if (text.Length == 0)
-				return;
-			//highlight same words
-			var ranges = fctb.VisibleRange.GetRanges("\\b" + text + "\\b");
-			foreach(var r in ranges)
-				r.SetStyle(SameWordsStyle);
-		}
 		
 		void Menuitem_showinputClick(object sender, EventArgs e)
 		{
@@ -465,24 +449,34 @@ namespace DataEditorX
 			}
 		}
 		
-		/*
-		void UseIMEToolStripMenuItemClick(object sender, EventArgs e)
+		void FctbSelectionChangedDelayed(object sender, EventArgs e)
 		{
-			ToolStripMenuItem tsmi =sender as ToolStripMenuItem;
-			if(tsmi!=null)
+			tb_input.Text=fctb.SelectedText;
+			fctb.VisibleRange.ClearStyle(SameWordsStyle);
+			if (!fctb.Selection.IsEmpty)
+				return;//user selected diapason
+
+			//get fragment around caret
+			var fragment = fctb.Selection.GetFragment(@"\w");
+			string text = fragment.Text;
+			if (text.Length == 0)
+				return;
+			//highlight same words
+			var ranges = fctb.VisibleRange.GetRanges("\\b" + text + "\\b");
+			foreach(var r in ranges)
+				r.SetStyle(SameWordsStyle);
+		}
+		void FctbMouseClick(object sender, MouseEventArgs e)
+		{
+			var fragment = fctb.Selection.GetFragment(@"\w");
+			string text = fragment.Text;
+			if (text.Length == 0)
+				return;
+			if(e.Button == MouseButtons.Left && Control.ModifierKeys == Keys.Control)
 			{
-				
-				if(tsmi.Checked)
-				{
-					fctb.ImeMode= ImeMode.Inherit;
-				}
-				else{
-					fctb.ImeMode= ImeMode.On;
-				}
-				tsmi.Checked=!tsmi.Checked;
-				fctb.Invalidate();
+				//MessageBox.Show("GO");
+				fctb.SelectNext(@"function\s+?\S+?\."+text+@"\(",false,RegexOptions.Singleline);
 			}
 		}
-		 */
 	}
 }

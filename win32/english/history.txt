@@ -1,4 +1,4 @@
 # history
 F:\games\ygocore\cards.cdb
-F:\cards.cdb
-F:\cards2.cdb
+F:\Propro的翻译\EN的cards.cdb
+F:\Propro的翻译\test.cdb

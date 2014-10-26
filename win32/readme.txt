@@ -1,4 +1,4 @@
-﻿[DataEditorX]2.2.3.3[DataEditorX]
+﻿[DataEditorX]2.2.3.4[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★使用前，请关联lua的打开方式，例如记事本，notepad++，等。
@@ -43,6 +43,8 @@ mse-config		设置pendulum文本和普通文本的正则正则表达式，用来
 
 ★lua编辑器 函数搜索
 在下面的文本框输入关键字，按Enter
+Ctrl+鼠标左键 	跳转到函数定义
+Ctrl+鼠标滑轮 	缩放文字
 
 ★支持 新建文本文档.txt 直接改名 新建文本文档.cdb
 
@@ -71,6 +73,8 @@ DataEditorX.exe.config
 描述不详细的bug，我修复不了。（都不知道是bug是什么）
 
 ★更新历史
+2.2.3.4
+english pengulum text
 2.2.3.3
 修复lua编辑器的控件遮挡问题
 2.2.3.2

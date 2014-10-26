@@ -178,7 +178,7 @@ namespace DataEditorX
 			// menuitem_about
 			// 
 			this.menuitem_about.Name = "menuitem_about";
-			this.menuitem_about.Size = new System.Drawing.Size(111, 22);
+			this.menuitem_about.Size = new System.Drawing.Size(152, 22);
 			this.menuitem_about.Text = "About";
 			this.menuitem_about.Click += new System.EventHandler(this.AboutToolStripMenuItemClick);
 			// 
@@ -222,14 +222,15 @@ namespace DataEditorX
 			this.fctb.RightBracket = ')';
 			this.fctb.RightBracket2 = '}';
 			this.fctb.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
-			this.fctb.Size = new System.Drawing.Size(695, 390);
+			this.fctb.Size = new System.Drawing.Size(504, 369);
 			this.fctb.TabIndex = 0;
 			this.fctb.WordWrap = true;
 			this.fctb.Zoom = 100;
 			this.fctb.ToolTipNeeded += new System.EventHandler<FastColoredTextBoxNS.ToolTipNeededEventArgs>(this.FctbToolTipNeeded);
-			this.fctb.SelectionChanged += new System.EventHandler(this.FctbSelectionChanged);
 			this.fctb.TextChangedDelayed += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(this.FctbTextChangedDelayed);
+			this.fctb.SelectionChangedDelayed += new System.EventHandler(this.FctbSelectionChangedDelayed);
 			this.fctb.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FctbKeyDown);
+			this.fctb.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FctbMouseClick);
 			// 
 			// documentMap1
 			// 
@@ -238,7 +239,7 @@ namespace DataEditorX
 			this.documentMap1.ForeColor = System.Drawing.Color.Maroon;
 			this.documentMap1.Location = new System.Drawing.Point(504, 25);
 			this.documentMap1.Name = "documentMap1";
-			this.documentMap1.Size = new System.Drawing.Size(191, 369);
+			this.documentMap1.Size = new System.Drawing.Size(191, 390);
 			this.documentMap1.TabIndex = 5;
 			this.documentMap1.Target = this.fctb;
 			this.documentMap1.Text = "documentMap1";
@@ -251,7 +252,7 @@ namespace DataEditorX
 			this.tb_input.Location = new System.Drawing.Point(0, 394);
 			this.tb_input.Margin = new System.Windows.Forms.Padding(0);
 			this.tb_input.Name = "tb_input";
-			this.tb_input.Size = new System.Drawing.Size(695, 21);
+			this.tb_input.Size = new System.Drawing.Size(504, 21);
 			this.tb_input.TabIndex = 1;
 			this.tb_input.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Tb_inputKeyDown);
 			// 
@@ -295,5 +296,7 @@ namespace DataEditorX
 		private System.Windows.Forms.ToolStripMenuItem menuitem_open;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_file;
 		private System.Windows.Forms.MenuStrip menuStrip1;
+		
+
 	}
 }
