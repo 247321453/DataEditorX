@@ -43,9 +43,9 @@ namespace DataEditorX.Core
 				sw.WriteLine(cfg.head);
 				foreach(Card c in cards)
 				{
-					string jpg=Path.Combine(pic,c.id+".jpg");
-					string jpg1=Path.Combine(pic,c.idString+".jpg");
-					string jpg2=Path.Combine(pic,c.name+".jpg");
+					string jpg=MyPath.Combine(pic,c.id+".jpg");
+					string jpg1=MyPath.Combine(pic,c.idString+".jpg");
+					string jpg2=MyPath.Combine(pic,c.name+".jpg");
 					if(File.Exists(jpg)){
 						list.Add(jpg);
 						jpg=Path.GetFileName(jpg);

@@ -95,7 +95,7 @@ namespace DataEditorX.Core
 				return;
 			}
 			if(CheckUpdate.DownLoad(
-				Path.Combine(Application.StartupPath, newver+".zip")))
+				MyPath.Combine(Application.StartupPath, newver+".zip")))
 				MyMsg.Show(LMSG.DownloadSucceed);
 			else
 				MyMsg.Show(LMSG.DownloadFail);
@@ -110,8 +110,8 @@ namespace DataEditorX.Core
 					break;
 				i++;
 				worker.ReportProgress((i/count), string.Format("{0}/{1}",i,count));
-				string jpg=Path.Combine(imgpath, c.id+".jpg");
-				string savejpg=Path.Combine(savepath, c.id+".jpg");
+				string jpg=MyPath.Combine(imgpath, c.id+".jpg");
+				string savejpg=MyPath.Combine(savepath, c.id+".jpg");
 				if(File.Exists(jpg) && (isreplace || !File.Exists(savejpg))){
 					Bitmap bp=new Bitmap(jpg);
 					Bitmap bmp=null;
@@ -145,8 +145,8 @@ namespace DataEditorX.Core
 		}
 		public void ConvertImages(string imgpath,string gamepath,bool isreplace)
 		{
-			string picspath=Path.Combine(gamepath,"pics");
-			string thubpath=Path.Combine(picspath,"thumbnail");
+			string picspath=MyPath.Combine(gamepath,"pics");
+			string thubpath=MyPath.Combine(picspath,"thumbnail");
 			string[] files=Directory.GetFiles(imgpath);
 			int i=0;
 			int count=files.Length;
@@ -158,8 +158,8 @@ namespace DataEditorX.Core
 				worker.ReportProgress(i/count, string.Format("{0}/{1}",i,count));
 				string ex=Path.GetExtension(f).ToLower();
 				string name=Path.GetFileNameWithoutExtension(f);
-				string jpg_b=Path.Combine(picspath,name+".jpg");
-				string jpg_s=Path.Combine(thubpath,name+".jpg");
+				string jpg_b=MyPath.Combine(picspath,name+".jpg");
+				string jpg_s=MyPath.Combine(thubpath,name+".jpg");
 				if(ex==".jpg"||ex==".png"||ex==".bmp"){
 					if(File.Exists(f)){
 						//存在大图
@@ -212,12 +212,12 @@ namespace DataEditorX.Core
 			int count=cards.Length;
 			string path=Path.GetDirectoryName(cdbfile);
 			string name=Path.GetFileNameWithoutExtension(cdbfile);
-			string zipname=Path.Combine(path, name+".zip");
-			string readme=Path.Combine(path, name+".txt");
-			string deckydk=Path.Combine(path, "deck/"+name+".ydk");
-			string pics=Path.Combine(path,"pics");
-			string thumb=Path.Combine(pics,"thumbnail");
-			string script=Path.Combine(path,"script");
+			string zipname=MyPath.Combine(path, name+".zip");
+			string readme=MyPath.Combine(path, name+".txt");
+			string deckydk=MyPath.Combine(path, "deck/"+name+".ydk");
+			string pics=MyPath.Combine(path,"pics");
+			string thumb=MyPath.Combine(pics,"thumbnail");
+			string script=MyPath.Combine(path,"script");
 
 			if(File.Exists(zipname))
 				File.Delete(zipname);
@@ -233,9 +233,9 @@ namespace DataEditorX.Core
 					i++;
 					worker.ReportProgress(i/count, string.Format("{0}/{1}",i,count));
 					//zips.AddFile(
-					string jpg1=Path.Combine(pics, c.id.ToString()+".jpg");
-					string jpg2=Path.Combine(thumb, c.id.ToString()+".jpg");
-					string lua=Path.Combine(script, "c"+c.id.ToString()+".lua");
+					string jpg1=MyPath.Combine(pics, c.id.ToString()+".jpg");
+					string jpg2=MyPath.Combine(thumb, c.id.ToString()+".jpg");
+					string lua=MyPath.Combine(script, "c"+c.id.ToString()+".lua");
 					
 					if(File.Exists(jpg1))
 						zips.AddFile(jpg1,"pics/"+c.id.ToString()+".jpg","");

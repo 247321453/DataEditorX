@@ -73,7 +73,7 @@ namespace DataEditorX
 			{
 				Application.Exit();
 			}
-			datapath=Path.Combine(Application.StartupPath, dir);
+			datapath=MyPath.Combine(Application.StartupPath, dir);
 			InitPath(datapath);
 			Initialize();
 		}
@@ -200,17 +200,17 @@ namespace DataEditorX
 			}
 			else
 				GAMEPATH=Application.StartupPath;
-			PICPATH=Path.Combine(GAMEPATH,"pics");
-			PICPATH2=Path.Combine(PICPATH,"thumbnail");
-			LUAPTH=Path.Combine(GAMEPATH,"script");
+			PICPATH=MyPath.Combine(GAMEPATH,"pics");
+			PICPATH2=MyPath.Combine(PICPATH,"thumbnail");
+			LUAPTH=MyPath.Combine(GAMEPATH,"script");
 		}
 		//初始化文件路径
 		void InitPath(string datapath)
 		{
 			this.datapath=datapath;
-			confcover= Path.Combine(datapath, "cover.jpg");
+			confcover= MyPath.Combine(datapath, "cover.jpg");
 
-			IMAGEPATH=Path.Combine(Application.StartupPath,"Images");
+			IMAGEPATH=MyPath.Combine(Application.StartupPath,"Images");
 			
 			if(File.Exists(confcover))
 				m_cover=Image.FromFile(confcover);
@@ -845,7 +845,7 @@ namespace DataEditorX
 		{
 			if(!Check())
 				return false;
-			string lua=Path.Combine(LUAPTH,"c"+tb_cardcode.Text+".lua");
+			string lua=MyPath.Combine(LUAPTH,"c"+tb_cardcode.Text+".lua");
 			if(!File.Exists(lua))
 			{
 				if(! Directory.Exists(LUAPTH))
@@ -1444,13 +1444,13 @@ namespace DataEditorX
 			if(menuitem_importmseimg.Checked){
 				if(!Directory.Exists(IMAGEPATH))
 					Directory.CreateDirectory(IMAGEPATH);
-				f=Path.Combine(IMAGEPATH, tid+".jpg");
+				f=MyPath.Combine(IMAGEPATH, tid+".jpg");
 				File.Copy(file, f, true);
 			}
 			else{
-				f=Path.Combine(PICPATH,tid+".jpg");
+				f=MyPath.Combine(PICPATH,tid+".jpg");
 				tasker.ToImg(file,f,
-				             Path.Combine(PICPATH2,tid+".jpg"));
+				             MyPath.Combine(PICPATH2,tid+".jpg"));
 			}
 			setImage(tid);
 		}
@@ -1465,9 +1465,9 @@ namespace DataEditorX
 			   && pl_image.BackgroundImage!=m_cover)
 				pl_image.BackgroundImage.Dispose();
 			Bitmap temp;
-			string pic=Path.Combine(PICPATH, id+".jpg");
-			string pic2=Path.Combine(IMAGEPATH, id+".jpg");
-			string pic3=Path.Combine(IMAGEPATH, new Card(id).idString+".jpg");
+			string pic=MyPath.Combine(PICPATH, id+".jpg");
+			string pic2=MyPath.Combine(IMAGEPATH, id+".jpg");
+			string pic3=MyPath.Combine(IMAGEPATH, new Card(id).idString+".jpg");
 			if(menuitem_importmseimg.Checked && File.Exists(pic2))
 			{
 				temp=new Bitmap(pic2);

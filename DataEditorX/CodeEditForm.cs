@@ -108,7 +108,7 @@ namespace DataEditorX
 					fs.Close();
 				}
 				nowFile=file;
-				string cdb=Path.Combine(
+				string cdb=MyPath.Combine(
 					Path.GetDirectoryName(file),"../cards.cdb");
 				if(File.Exists(cdb))
 					SetCards(cdb);
@@ -474,8 +474,12 @@ namespace DataEditorX
 				return;
 			if(e.Button == MouseButtons.Left && Control.ModifierKeys == Keys.Control)
 			{
-				//MessageBox.Show("GO");
-				fctb.SelectNext(@"function\s+?\S+?\."+text+@"\(",false,RegexOptions.Singleline);
+				List<int> linenums=fctb.FindLines(@"function\s+?\S+?\."+text+@"\(",RegexOptions.Singleline);
+				if(linenums.Count>0)
+				{
+					fctb.Navigate(linenums[0]);
+					//MessageBox.Show(linenums[0].ToString());
+				}
 			}
 		}
 	}

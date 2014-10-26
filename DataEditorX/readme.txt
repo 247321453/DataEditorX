@@ -1,4 +1,4 @@
-﻿[DataEditorX]2.2.3.4[DataEditorX]
+﻿[DataEditorX]2.2.4.0[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★使用前，请关联lua的打开方式，例如记事本，notepad++，等。
@@ -54,14 +54,14 @@ Ctrl+鼠标滑轮 	缩放文字
 替换复制：如果存在卡片，就用最新的替换
 不替换复制：如果存在卡片，就跳过
 
-★bug反馈
-Email:247321453@qq.com
-提交版本前，请检查更新。
-
-支持多语言化
+★支持多语言化
 DataEditorX.exe.config
 <add key="language" value="chinese" />简体
 <add key="language" value="english" />英文
+
+★bug反馈
+Email:247321453@qq.com
+提交版本前，请检查更新。
 
 标题：(DataEditorX+版本号)
 内容：
@@ -73,6 +73,8 @@ DataEditorX.exe.config
 描述不详细的bug，我修复不了。（都不知道是bug是什么）
 
 ★更新历史
+2.2.4.0
+lua编辑器,Ctrl+鼠标左键 	跳转到函数定义
 2.2.3.4
 english pengulum text
 2.2.3.3
