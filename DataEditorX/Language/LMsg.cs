@@ -81,7 +81,7 @@ namespace DataEditorX.Language
         CheckText,
         CompareOK,
         OpenFile,
-        OpenFileFilter,
+        ScriptFilter,
         NewFile,
         SaveFileOK,
         IfSaveScript,

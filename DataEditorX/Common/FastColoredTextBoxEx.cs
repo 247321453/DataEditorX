@@ -19,12 +19,16 @@ namespace FastColoredTextBoxNS
 	public class FastColoredTextBoxEx : FastColoredTextBox
 	{
 		Point lastMouseCoord;
+		public FastColoredTextBoxEx() : base()
+		{
+		}
 		public new event EventHandler<ToolTipNeededEventArgs> ToolTipNeeded;
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
 			base.OnMouseMove(e);
 			lastMouseCoord = e.Location;
 		}
+		
 		protected override void OnToolTip()
 		{
 			if (ToolTip == null)

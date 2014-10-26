@@ -352,7 +352,10 @@ namespace DataEditorX
 			using(OpenFileDialog dlg=new OpenFileDialog())
 			{
 				dlg.Title=LANG.GetMsg(LMSG.OpenFile);
-				dlg.Filter=LANG.GetMsg(LMSG.OpenFileFilter);
+				if(GetActive() !=null)
+					dlg.Filter=LANG.GetMsg(LMSG.CdbType);
+				else
+					dlg.Filter=LANG.GetMsg(LMSG.ScriptFilter);
 				if(dlg.ShowDialog()==DialogResult.OK)
 				{
 					string file=dlg.FileName;
@@ -374,7 +377,10 @@ namespace DataEditorX
 			using(SaveFileDialog dlg=new SaveFileDialog())
 			{
 				dlg.Title=LANG.GetMsg(LMSG.NewFile);
-				dlg.Filter=LANG.GetMsg(LMSG.OpenFileFilter);
+				if(GetActive() !=null)
+					dlg.Filter=LANG.GetMsg(LMSG.CdbType);
+				else
+					dlg.Filter=LANG.GetMsg(LMSG.ScriptFilter);
 				if(dlg.ShowDialog()==DialogResult.OK)
 				{
 					string file=dlg.FileName;

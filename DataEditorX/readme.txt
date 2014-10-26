@@ -1,4 +1,4 @@
-﻿[DataEditorX]2.2.4.0[DataEditorX]
+﻿[DataEditorX]2.2.4.1[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★使用前，请关联lua的打开方式，例如记事本，notepad++，等。
@@ -41,7 +41,7 @@ mse-config		设置pendulum文本和普通文本的正则正则表达式，用来
 请确保DataEditorX的文件夹名固定不变，然后右键随意一个cdb文件，打开方式--浏览--DataEditorX.exe。确定。
 以后双击cdb文件即可打开DataEditorX。
 
-★lua编辑器 函数搜索
+★lua编辑器
 在下面的文本框输入关键字，按Enter
 Ctrl+鼠标左键 	跳转到函数定义
 Ctrl+鼠标滑轮 	缩放文字
@@ -73,6 +73,8 @@ Email:247321453@qq.com
 描述不详细的bug，我修复不了。（都不知道是bug是什么）
 
 ★更新历史
+2.2.4.1
+修复部分条件搜索
 2.2.4.0
 lua编辑器,Ctrl+鼠标左键 	跳转到函数定义
 2.2.3.4

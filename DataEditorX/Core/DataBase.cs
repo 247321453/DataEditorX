@@ -365,11 +365,11 @@ namespace DataEditorX.Core
 			if(c.ot>0)
 				sb.Append(" and datas.ot = "+c.ot.ToString());
 			if(c.attribute>0)
-				sb.Append(" and datas.attribute & "+c.attribute.ToString()+" = "+c.attribute.ToString());
+				sb.Append(" and datas.attribute = "+c.attribute.ToString());
 			if(c.level>0)
-				sb.Append(" and datas.level & "+toInt(c.level)+" = "+toInt(c.level));
+				sb.Append(" and (datas.level & 255) = "+toInt(c.level));
 			if(c.race>0)
-				sb.Append(" and datas.race & "+toInt(c.race)+" = "+toInt(c.race));
+				sb.Append(" and datas.race = "+toInt(c.race));
 			if(c.type>0)
 				sb.Append(" and datas.type & "+toInt(c.type)+" = "+toInt(c.type));
 			if(c.category>0)

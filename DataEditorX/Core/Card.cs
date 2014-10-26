@@ -104,11 +104,11 @@ namespace DataEditorX.Core
 		string redesc()
 		{
 			return desc
-				.Replace("，","，\n")
+				//.Replace("，","，\n")
 				.Replace("。","。\n")
 				.Replace("？","？\n")
-				.Replace(",",",\n")
-				.Replace(".",".\n")
+				//.Replace(",",",\n")
+				//.Replace(".",".\n")
 				.Replace("?","?\n");
 		}
 		public bool EqualsData(Card other)
