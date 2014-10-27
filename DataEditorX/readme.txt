@@ -1,4 +1,4 @@
-﻿[DataEditorX]2.2.6.0[DataEditorX]
+﻿[DataEditorX]2.2.6.1[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★文件关联
@@ -57,6 +57,9 @@ Ctrl+鼠标左键 	跳转到函数定义
 Ctrl+鼠标滑轮 	缩放文字
 
 ★更新历史
+2.2.6.1
+修复english的race的兽战士
+导出MSE存档,添加反转/filp
 2.2.6.0
 文件历史记录的顺序，从上到下。
 导出MSE存档，支持设置每个存档的最大卡片数量

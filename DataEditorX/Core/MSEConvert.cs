@@ -173,6 +173,8 @@ namespace DataEditorX.Core
 						types[1]=GetType(CardType.TYPE_UNION);
 					else if(c.IsType(CardType.TYPE_DUAL))
 						types[1]=GetType(CardType.TYPE_DUAL);
+					else if(c.IsType(CardType.TYPE_FLIP))
+						types[1]=GetType(CardType.TYPE_FLIP);
 					else{
 						types[1]=GetType(CardType.TYPE_EFFECT);
 						types[2]="";

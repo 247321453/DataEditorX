@@ -14,7 +14,7 @@
 0x1000 Thunder
 0x2000 Dragon
 0x4000 Beast
-0x80000 Beast-Warrior
+0x8000 Beast-Warrior
 0x10000 Dinosaur
 0x20000 Fish
 0x40000 Sea Serpent
