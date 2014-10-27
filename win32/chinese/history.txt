@@ -5,11 +5,8 @@ F:\games\ygocore\script\constant.lua
 F:\games\ygocore\script\utility.lua
 F:\games\ygocore\script\c99995595.lua
 F:\games\ygocore\single\[sample]BerserkDragon.lua
-F:\games\ygopro\script\c102380.lua
 F:\games\ygocore\script\c131182.lua
 F:\games\ygopro\script\c123709.lua
-F:\games\ygopro\script\c126218.lua
-F:\games\ygopro\script\c168917.lua
 F:\games\ygopro\script\c191749.lua
 F:\games\ygocore\script\c135598.lua
 F:\games\ygocore\script\c126218.lua
@@ -17,3 +14,7 @@ E:\github\DataEditorX\DataEditorX\chinese\constant.lua
 F:\games\ygocore\script\c900787.lua
 F:\games\ygocore\script\c114932.lua
 F:\games\ygopro\cards.cdb
+F:\single.lua
+F:\games\ygopro\script\c126218.lua
+F:\games\ygopro\script\c102380.lua
+F:\games\ygopro\script\c168917.lua

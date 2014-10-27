@@ -32,7 +32,7 @@ namespace DataEditorX
 		List<string> cdblist;
 		string datapath;
 		string conflang,conflang_de,conflang_ce,confmsg,conflang_pe;
-		string funtxt,conlua,fieldtxt;
+		string funtxt,conlua,fieldtxt,confstring;
 		DataEditForm compare1,compare2;
 		Card[] tCards;
 		Dictionary<DataEditForm,string> list;
@@ -77,6 +77,7 @@ namespace DataEditorX
 			confmsg = MyPath.Combine(datapath, "message.txt");
 			funtxt = MyPath.Combine(datapath, "_functions.txt");
 			conlua = MyPath.Combine(datapath, "constant.lua");
+			confstring = MyPath.Combine(datapath, "strings.conf");
 			InitializeComponent();
 			LANG.InitForm(this, conflang);
 			LANG.LoadMessage(confmsg);
@@ -517,6 +518,7 @@ namespace DataEditorX
 			conList.Clear();
 			AddFunction(funtxt);
 			AddConstant(conlua);
+			
 			foreach(long k in datacfg.dicSetnames.Keys)
 			{
 				string key="0x"+k.ToString("x");
@@ -525,7 +527,29 @@ namespace DataEditorX
 					AddConToolTip(key, datacfg.dicSetnames[k]);
 				}
 			}
+			
+			if(File.Exists(confstring))
+			{
+				string[] lines=File.ReadAllLines(confstring);
+				foreach(string line in lines)
+				{
+					if(line.StartsWith("!victory")
+					   || line.StartsWith("!counter"))
+					{
+						string[] ws = line.Split(' ');
+						if(ws.Length>2)
+						{
+							AddConToolTip(ws[1], ws[2]);
+						}
+					}
+				}
+			}
+			ReadStrings(confstring);
 			//MessageBox.Show(funList.Count.ToString());
+		}
+		void ReadStrings(string txt)
+		{
+			
 		}
 		#endregion
 		
@@ -599,30 +623,44 @@ namespace DataEditorX
 		{
 			if(!string.IsNullOrEmpty(name))
 			{
+				AddAutoMenuItem(funList, name, desc);
 				string fname=GetFunName(name);
 				if(!tooltipDic.ContainsKey(fname)){
 					tooltipDic.Add(fname, desc );
-					AutocompleteItem aitem=new AutocompleteItem(name);
-					aitem.ToolTipTitle = name;
-					aitem.ToolTipText = desc;
-					funList.Add(aitem);
 				}
 				else
-					tooltipDic[fname] += Environment.NewLine + desc;
+					tooltipDic[fname] += Environment.NewLine + "●"+desc;
 			}
 		}
 		#endregion
 		
+		void AddAutoMenuItem(List<AutocompleteItem> list,string key,string desc)
+		{
+			bool isExists=false;
+			foreach(AutocompleteItem ai in list)
+			{
+				if(ai.Text==key)
+				{
+					isExists=true;
+					ai.ToolTipText += Environment.NewLine + desc;
+				}
+			}
+			if(!isExists){
+				AutocompleteItem aitem=new AutocompleteItem(key);
+				aitem.ToolTipTitle = key;
+				aitem.ToolTipText = desc;
+				list.Add(aitem);
+			}
+		}
 		#region constant
 		void AddConToolTip(string key, string desc)
 		{
-			AutocompleteItem aitem=new AutocompleteItem(key);
-			aitem.ToolTipTitle = key;
-			aitem.ToolTipText = desc;
-			conList.Add(aitem);
-			tooltipDic.Add(key, desc);
+			AddAutoMenuItem(conList, key,desc);
+			if(tooltipDic.ContainsKey(key))
+				tooltipDic[key] += Environment.NewLine + desc;
+			else
+				tooltipDic.Add(key, desc);
 		}
-		
 		
 		
 		void AddConstant(string conlua)
