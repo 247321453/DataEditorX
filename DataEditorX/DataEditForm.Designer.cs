@@ -499,7 +499,7 @@ namespace DataEditorX
         	this.tb_edittext.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
         	this.tb_edittext.Size = new System.Drawing.Size(310, 21);
         	this.tb_edittext.TabIndex = 4;
-        	this.tb_edittext.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Tb_edittextKeyPress);
+        	this.tb_edittext.TextChanged += new System.EventHandler(this.Tb_edittextTextChanged);
         	// 
         	// lb_pleft_right
         	// 

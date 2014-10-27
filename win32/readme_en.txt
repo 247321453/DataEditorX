@@ -13,15 +13,13 @@ DataEditorX.exe.config
 <add key="language" value="english" />
 
 ★DataEditor：
-1.tips text：Click line and Edit，"Enter" save Edit.
-2.Atk/Eef=？ , input ? or -2 or ？
-Foldet:
-pics,script and cdb's folder is a same
+1.Atk/Eef=？ , input ? or -2 or ？
+2.pics,script and cdb's folder is a same
 
-Cards Copy：
+3.Cards Copy：
 Replace：Yes:If exists then replace old /NO:If exists then ignore
 
-Search Cards:
+4.Search Cards:
 1.Search By setcode: only one
 2.Search By Desc，Rule，attribute，level，race，card type，category
 3.search By ATK/DEF：
@@ -35,7 +33,6 @@ Search Cards:
 --code  = 10000000          card code： 10000000 card alias: 0
 --alias = 10000000          card code： 10000000 card alias:10000000 
 --10000000<=code<=20000000  card code： 10000000 card alias:20000000
-
 
 ★Magic Set Editor 2
 Download/Update："Magic Set Editor 2/download.bat"

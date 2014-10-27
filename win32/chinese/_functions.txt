@@ -49,7 +49,7 @@ a与b的位异或
 ●void Card.AddTrapMonsterAttribute(Card c, int extra_type,int attribute,int race,int level,int atk,int def)
 【新】为c添加陷阱怪物属性。
 	extra_type 额外卡片类型
-void Card.AddTrapMonsterAttribute(Card c, bool is_effect)
+●void Card.AddTrapMonsterAttribute(Card c, bool is_effect)
 【旧】为c添加陷阱怪物属性。is_effect=true表示视作效果怪物，否则视为通常怪物
 注：陷阱怪物属性指的是同时作为怪物和陷阱，
 并且额外使一个魔法陷阱的格子不能使用。

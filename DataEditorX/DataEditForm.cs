@@ -208,7 +208,7 @@ namespace DataEditorX
 		void InitPath(string datapath)
 		{
 			this.datapath=datapath;
-			confcover= MyPath.Combine(datapath, "cover.jpg");			
+			confcover= MyPath.Combine(datapath, "cover.jpg");
 			if(File.Exists(confcover))
 				m_cover=Image.FromFile(confcover);
 			else
@@ -1013,10 +1013,9 @@ namespace DataEditorX
 		}
 		
 		//脚本文本
-		void Tb_edittextKeyPress(object sender, KeyPressEventArgs e)
+		void Tb_edittextTextChanged(object sender, EventArgs e)
 		{
-			if(e.KeyChar==(char)Keys.Enter)
-				Setscripttext(tb_edittext.Text);
+			Setscripttext(tb_edittext.Text);
 		}
 		#endregion
 		
@@ -1567,6 +1566,7 @@ namespace DataEditorX
 			SetCards(getCompCards(), false);
 		}
 		#endregion
+		
 		
 	}
 }

@@ -596,24 +596,6 @@ namespace DataEditorX
 				return str.Substring(t+1);
 			return str;
 		}
-		bool isANSIChar(char c)
-		{
-			if((int)c>127)
-				return false;
-			return true;
-		}
-		int CheckReturn(char[] chars, int index, int MAX)
-		{
-			int k=0;
-			for(k=0;k<MAX;k++)
-			{
-				if((index+k)<chars.Length){
-					if(chars[index+k]=='\n')
-						return k+1;
-				}
-			}
-			return -1;
-		}
 		void AddFuncTooltip(string name,string desc)
 		{
 			if(!string.IsNullOrEmpty(name))
@@ -624,11 +606,12 @@ namespace DataEditorX
 					tooltipDic.Add(fname, desc );
 				}
 				else
-					tooltipDic[fname] += Environment.NewLine + "●"+desc;
+					tooltipDic[fname] += Environment.NewLine
+						+Environment.NewLine +desc;
 			}
 		}
 		#endregion
-		
+		#region constant
 		void AddAutoMenuItem(List<AutocompleteItem> list,string key,string desc)
 		{
 			bool isExists=false;
@@ -637,7 +620,8 @@ namespace DataEditorX
 				if(ai.Text==key)
 				{
 					isExists=true;
-					ai.ToolTipText += Environment.NewLine + desc;
+					ai.ToolTipText += Environment.NewLine 
+						+Environment.NewLine+ desc;
 				}
 			}
 			if(!isExists){
@@ -647,12 +631,13 @@ namespace DataEditorX
 				list.Add(aitem);
 			}
 		}
-		#region constant
+		
 		void AddConToolTip(string key, string desc)
 		{
 			AddAutoMenuItem(conList, key,desc);
 			if(tooltipDic.ContainsKey(key))
-				tooltipDic[key] += Environment.NewLine + desc;
+				tooltipDic[key] += Environment.NewLine
+					+Environment.NewLine +desc;
 			else
 				tooltipDic.Add(key, desc);
 		}
@@ -679,7 +664,8 @@ namespace DataEditorX
 						AddConToolTip(k, desc);
 					}
 					else
-						tooltipDic[k] += Environment.NewLine + desc;
+						tooltipDic[k] += Environment.NewLine
+							+Environment.NewLine+ desc;
 				}
 			}
 		}
