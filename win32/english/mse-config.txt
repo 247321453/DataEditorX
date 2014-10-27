@@ -2,6 +2,9 @@
 # Magic Set Editor 2
 ########################### Chs 2 Cht 
 cn2tw = true
+########################### Setting
+maxcount = 200
+imagepath = ./Images
 ########################### Spell/Trap
 spell = [Sepll Card%%]
 trap = [Trap Card%%]

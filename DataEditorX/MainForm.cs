@@ -121,15 +121,10 @@ namespace DataEditorX
 			if(index>=0){
 				cdblist.RemoveAt(index);
 			}
-			else{
-				int i=cdblist.Count-MainForm.MAX_HISTORY+1;
-				while(i>=0 && i<cdblist.Count)
-				{
-					cdblist.RemoveAt(i);
-					i--;
-				}
-			}
+			string[] tmps=cdblist.ToArray();
+			cdblist.Clear();
 			cdblist.Add(file);
+			cdblist.AddRange(tmps);
 			SaveHistory();
 			MenuHistory();
 		}

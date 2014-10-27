@@ -100,7 +100,7 @@ namespace DataEditorX.Core
 			else
 				MyMsg.Show(LMSG.DownloadFail);
 		}
-		public void CutImages(string imgpath,string savepath,bool isreplace)
+		public void CutImages(string imgpath,bool isreplace)
 		{
 			int count=cardlist.Length;
 			int i=0;
@@ -111,7 +111,7 @@ namespace DataEditorX.Core
 				i++;
 				worker.ReportProgress((i/count), string.Format("{0}/{1}",i,count));
 				string jpg=MyPath.Combine(imgpath, c.id+".jpg");
-				string savejpg=MyPath.Combine(savepath, c.id+".jpg");
+				string savejpg=MyPath.Combine(mseHelper.ImagePath, c.id+".jpg");
 				if(File.Exists(jpg) && (isreplace || !File.Exists(savejpg))){
 					Bitmap bp=new Bitmap(jpg);
 					Bitmap bmp=null;
@@ -178,9 +178,39 @@ namespace DataEditorX.Core
 				}
 			}
 		}
-		public void SaveMSE(string file, Card[] cards,string pic,bool isUpdate){
+		public string MSEImage
+		{
+			get{return mseHelper.ImagePath;}
+		}
+		public void SaveMSEs(string file, Card[] cards,bool isUpdate){
+			if(mseHelper.MaxNum==0)
+				SaveMSE(1,file, cards, isUpdate);
+			else
+			{
+				int c=cards.Length;
+				int nums=c/mseHelper.MaxNum;
+				if(nums*mseHelper.MaxNum<c)
+					nums++;
+				List<Card> clist=new List<Card>();
+				for(int i=0;i<nums;i++)
+				{
+					clist.Clear();
+					for(int j=0;j<mseHelper.MaxNum;j++)
+					{
+						int index=i*mseHelper.MaxNum+j;
+						if(index<c)
+							clist.Add(cards[index]);
+					}
+					int t=file.LastIndexOf(".mse-set");
+					string fname=(t>0)?file.Substring(0,t):file;
+					fname=fname+string.Format("_{0}.mse-set",i+1);
+					SaveMSE(i+1,fname,clist.ToArray(),isUpdate);
+				}
+			}
+		}
+		public void SaveMSE(int num,string file, Card[] cards,bool isUpdate){
 			string setFile=file+".txt";
-			string[] images=mseHelper.WriteSet(setFile, cards, pic);
+			string[] images=mseHelper.WriteSet(setFile, cards);
 			if(isUpdate)//仅更新文字
 				return;
 			int i=0;
@@ -194,7 +224,7 @@ namespace DataEditorX.Core
 					if(isCancel)
 						break;
 					i++;
-					worker.ReportProgress(i/count, string.Format("{0}/{1}",i,count));
+					worker.ReportProgress(i/count, string.Format("{0}/{1}-{2}",i,count,num));
 					zips.AddFile(img, Path.GetFileName(img),"");
 				}
 			}
@@ -268,21 +298,21 @@ namespace DataEditorX.Core
 				case MyTask.CutImages:
 					if(mArgs!=null && mArgs.Length>=2){
 						replace=true;
-						if(mArgs.Length>=3){
-							if(mArgs[2]==Boolean.FalseString)
+						if(mArgs.Length>=2){
+							if(mArgs[1]==Boolean.FalseString)
 								replace=false;
 						}
-						CutImages(mArgs[0],mArgs[1],replace);
+						CutImages(mArgs[0],replace);
 					}
 					break;
 				case MyTask.SaveAsMSE:
 					if(mArgs!=null && mArgs.Length>=2){
 						replace=false;
-						if(mArgs.Length>=3){
-							if(mArgs[2]==Boolean.TrueString)
+						if(mArgs.Length>=2){
+							if(mArgs[1]==Boolean.TrueString)
 								replace=true;
 						}
-						SaveMSE(mArgs[0], cardlist, mArgs[1], replace);
+						SaveMSEs(mArgs[0], cardlist, replace);
 					}
 					break;
 				case MyTask.ConvertImages:

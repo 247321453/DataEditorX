@@ -26,6 +26,16 @@ namespace DataEditorX.Core
 		MSEConfig cfg;
 		MSEConvert conv;
 		
+		public int MaxNum
+		{
+			get{return cfg.maxcount;}
+		}
+		
+		public string ImagePath
+		{
+			get {return cfg.imagepath;}
+		}
+		
 		public MSE(string path,
 		           Dictionary<long,string> typedic,
 		           Dictionary<long,string> racedic)
@@ -33,9 +43,10 @@ namespace DataEditorX.Core
 			cfg=new MSEConfig(path);
 			conv=new MSEConvert(typedic, racedic, cfg);
 		}
-		public string[] WriteSet(string file,Card[] cards,string pic)
+		public string[] WriteSet(string file,Card[] cards)
 		{
 			List<string> list=new List<string>();
+			string pic=cfg.imagepath;
 			using(FileStream fs=new FileStream(file,
 			                                   FileMode.Create, FileAccess.Write))
 			{

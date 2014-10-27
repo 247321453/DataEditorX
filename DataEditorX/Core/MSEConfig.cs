@@ -33,9 +33,11 @@ namespace DataEditorX.Core
 	/// </summary>
 	public class MSEConfig
 	{
+		string _path;
 		public MSEConfig(string path)
 		{
 			Iscn2tw=false;
+			_path=path;
 			regx_monster="(\\s\\S*?)";
 			regx_pendulum="(\\s\\S*?)";
 
@@ -64,6 +66,10 @@ namespace DataEditorX.Core
 						regx_pendulum=getRegex(getValue(line));
 					else if(line.StartsWith("monster-text"))
 						regx_monster=getRegex(getValue(line));
+					else if(line.StartsWith("maxcount"))
+						int.TryParse(getValue(line),out maxcount);
+					else if(line.StartsWith("imagepath"))
+						imagepath = CheckDir(getValue(line));
 					else if(line.StartsWith("replace")){
 						string word=getValue(line);
 						int t=word.IndexOf(" ");
@@ -86,6 +92,25 @@ namespace DataEditorX.Core
 				Iscn2tw=false;
 			}
 		}
+		string CheckDir(string dir)
+		{
+			DirectoryInfo fo;
+			try
+			{
+				fo=new DirectoryInfo(dir);
+			}
+			catch
+			{
+				//路径不合法
+				dir=MyPath.Combine(_path,"Images");
+				fo=new DirectoryInfo(dir);
+			}
+			
+			if(!fo.Exists)
+				fo.Create();
+			dir=fo.FullName;
+			return dir;
+		}
 		string getRegex(string word)
 		{
 			return word.Replace("\\n","\n").Replace("\\t","\t");
@@ -102,6 +127,8 @@ namespace DataEditorX.Core
 			string tmp=Path.Combine(path, name);
 			return File.Exists(tmp)?File.ReadAllText(tmp):"";
 		}
+		public int maxcount;
+		public string imagepath;
 		public bool st_is_symbol;
 		public string str_spell;
 		public string str_trap;

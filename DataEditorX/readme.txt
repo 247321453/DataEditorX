@@ -1,12 +1,31 @@
-﻿[DataEditorX]2.2.5.0[DataEditorX]
+﻿[DataEditorX]2.2.6.0[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
-★使用前，请关联lua的打开方式，例如记事本，notepad++，等。
+★文件关联
+.lua notepad++/sublime text/DataEditorX
+.cdb DataEditorX
 
-★注意：
+★bug反馈
+Email:247321453@qq.com
+提交版本前，请检查更新。
+
+标题：(DataEditorX+版本号)
+内容：
+错误提示文字：（弹出出错框，请按Ctrl+C，然后找地方粘贴）
+详细描述：（卡片信息，杀毒软件，本程序目录等等）
+
+★支持多语言化
+DataEditorX.exe.config
+<add key="language" value="chinese" />简体
+<add key="language" value="english" />英文
+
+★DataEditor：
 1.脚本提示文字修改：点击列表，编辑文本，按Enter确定输入。
 2.攻击力为？，可以输入？，?，-2任意一个都可以。
-
+★文件夹pics和script和cdb所在文件夹一致。
+★卡片复制：
+替换复制：如果存在卡片，就用最新的替换
+不替换复制：如果存在卡片，就跳过
 ★卡片搜索
 1.仅支持第一个系列名搜索,暂不支持P的刻度搜索
 2.支持卡片名称，描述，规则，属性，等级，种族，卡片类型，效果类型，密码
@@ -22,57 +41,25 @@
 --同名卡为10000000的卡片               卡片密码：  0       同名卡: 10000000 
 --大于密码10000000，小于20000000的卡片  同名卡：  10000000   卡片密码: 20000000
 
-
-★支援Magic Set Editor 2
-下载/更新：
-Magic Set Editor 2/update/download.bat
+★Magic Set Editor 2
+下载/更新："Magic Set Editor 2/download.bat"
 
 ★MSE存档生成设置
 mse-head 		MSE的风格设置文件
 mse-monster		普通怪兽模版
 mse-pendulum	P怪兽模版
 mse-spelltrap	魔陷模版
-mse-config		设置pendulum文本和普通文本的正则正则表达式，用来分离文本
-
-★支持关联lua文件
-
-★支持关联cdb文件，命令参数启动。
-关联cdb文件：
-请确保DataEditorX的文件夹名固定不变，然后右键随意一个cdb文件，打开方式--浏览--DataEditorX.exe。确定。
-以后双击cdb文件即可打开DataEditorX。
+mse-config		设置pendulum文本和普通文本的正则正则表达式，用来分离文本,支持设置每个存档的最大卡片数量
 
 ★lua编辑器
 在下面的文本框输入关键字，按Enter
 Ctrl+鼠标左键 	跳转到函数定义
 Ctrl+鼠标滑轮 	缩放文字
 
-★支持 新建文本文档.txt 直接改名 新建文本文档.cdb
-
-★文件夹pics和script和cdb所在文件夹一致。
-
-★卡片复制：
-替换复制：如果存在卡片，就用最新的替换
-不替换复制：如果存在卡片，就跳过
-
-★支持多语言化
-DataEditorX.exe.config
-<add key="language" value="chinese" />简体
-<add key="language" value="english" />英文
-
-★bug反馈
-Email:247321453@qq.com
-提交版本前，请检查更新。
-
-标题：(DataEditorX+版本号)
-内容：
-错误提示文字：（弹出出错框，请按Ctrl+C，然后找地方粘贴）
-详细描述：（卡片信息，杀毒软件，本程序目录等等）
-
-注意：
-我之修复Email提交的bug。
-描述不详细的bug，我修复不了。（都不知道是bug是什么）
-
 ★更新历史
+2.2.6.0
+文件历史记录的顺序，从上到下。
+导出MSE存档，支持设置每个存档的最大卡片数量
 2.2.5.0
 lua编辑器支持，读取和提示指示物代码。
 添加残局示例single.lua

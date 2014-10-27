@@ -474,7 +474,6 @@ namespace DataEditorX
         	this.tb_cardtext.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
         	this.tb_cardtext.Size = new System.Drawing.Size(326, 200);
         	this.tb_cardtext.TabIndex = 4;
-        	this.tb_cardtext.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Tb_cardtextKeyDown);
         	// 
         	// lb_scripttext
         	// 

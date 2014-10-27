@@ -375,19 +375,15 @@ namespace DataEditorX.Core
 			if(c.category>0)
 				sb.Append(" and datas.category & "+toInt(c.category)+" = "+toInt(c.category));
 			
-			if(c.atk>0)
-				sb.Append(" and datas.atk >= "+c.atk.ToString());
-			else if(c.atk==-2)
+			if(c.atk==-1)
+				sb.Append(" and datas.type & 1 = 1 and datas.atk = 0");
+			else if(c.atk<0 || c.atk>0)
 				sb.Append(" and datas.atk = "+c.atk.ToString());
-			else if(c.atk==-1)
-				sb.Append(" and datas.atk = 0");
 			
-			if(c.def>0)
-				sb.Append(" and datas.def >= "+c.def.ToString());
-			else if(c.def==-2)
+			if(c.def==-1)
+				sb.Append(" and datas.type & 1 = 1 and datas.def = 0");
+			else if(c.def<0 || c.def>0)
 				sb.Append(" and datas.def = "+c.def.ToString());
-			else if(c.def==-1)
-				sb.Append(" and datas.def = 0");
 			
 			if(c.id>0 && c.alias>0)
 				sb.Append(" and datas.id BETWEEN "+c.alias.ToString()+" and "+c.id.ToString());

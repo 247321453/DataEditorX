@@ -27,7 +27,7 @@ namespace DataEditorX
 		string taskname;
 		string ydkfile=null;
 		string imagepath=null;
-		string GAMEPATH,PICPATH,PICPATH2,LUAPTH,IMAGEPATH;
+		string GAMEPATH,PICPATH,PICPATH2,LUAPTH;
 		/// <summary>当前卡片</summary>
 		Card oldCard=new Card(0);
 		/// <summary>搜索条件</summary>
@@ -208,10 +208,7 @@ namespace DataEditorX
 		void InitPath(string datapath)
 		{
 			this.datapath=datapath;
-			confcover= MyPath.Combine(datapath, "cover.jpg");
-
-			IMAGEPATH=MyPath.Combine(Application.StartupPath,"Images");
-			
+			confcover= MyPath.Combine(datapath, "cover.jpg");			
 			if(File.Exists(confcover))
 				m_cover=Image.FromFile(confcover);
 			else
@@ -974,11 +971,6 @@ namespace DataEditorX
 			}
 		}
 		//卡片描述编辑
-		void Tb_cardtextKeyDown(object sender, KeyEventArgs e)
-		{
-			
-		}
-		
 		void Setscripttext(string str)
 		{
 			int index=-1;
@@ -1373,7 +1365,7 @@ namespace DataEditorX
 				return;
 			bool isreplace=MyMsg.Question(LMSG.IfReplaceExistingImage);
 			tasker.SetTask(MyTask.CutImages, cardlist.ToArray(),
-			               PICPATH, IMAGEPATH, isreplace.ToString());
+			               PICPATH, isreplace.ToString());
 			Run(LANG.GetMsg(LMSG.CutImage));
 		}
 		void Menuitem_saveasmse_selectClick(object sender, EventArgs e)
@@ -1405,7 +1397,7 @@ namespace DataEditorX
 					isUpdate=MyMsg.Question(LMSG.OnlySet);
 					#endif
 					tasker.SetTask(MyTask.SaveAsMSE,cards,
-					               dlg.FileName,IMAGEPATH,isUpdate.ToString());
+					               dlg.FileName,isUpdate.ToString());
 					Run(LANG.GetMsg(LMSG.SaveMse));
 				}
 			}
@@ -1442,9 +1434,9 @@ namespace DataEditorX
 			pl_image.BackgroundImage.Dispose();
 			pl_image.BackgroundImage=m_cover;
 			if(menuitem_importmseimg.Checked){
-				if(!Directory.Exists(IMAGEPATH))
-					Directory.CreateDirectory(IMAGEPATH);
-				f=MyPath.Combine(IMAGEPATH, tid+".jpg");
+				if(!Directory.Exists(tasker.MSEImage))
+					Directory.CreateDirectory(tasker.MSEImage);
+				f=MyPath.Combine(tasker.MSEImage, tid+".jpg");
 				File.Copy(file, f, true);
 			}
 			else{
@@ -1466,8 +1458,8 @@ namespace DataEditorX
 				pl_image.BackgroundImage.Dispose();
 			Bitmap temp;
 			string pic=MyPath.Combine(PICPATH, id+".jpg");
-			string pic2=MyPath.Combine(IMAGEPATH, id+".jpg");
-			string pic3=MyPath.Combine(IMAGEPATH, new Card(id).idString+".jpg");
+			string pic2=MyPath.Combine(tasker.MSEImage, id+".jpg");
+			string pic3=MyPath.Combine(tasker.MSEImage, new Card(id).idString+".jpg");
 			if(menuitem_importmseimg.Checked && File.Exists(pic2))
 			{
 				temp=new Bitmap(pic2);

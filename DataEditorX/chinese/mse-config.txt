@@ -2,6 +2,9 @@
 # Magic Set Editor 2
 ########################### Chs 2 Cht 
 cn2tw = true
+########################### Setting
+maxcount = 0
+imagepath = ./Images
 ########################### Spell/Trap
 #jp setting
 # spell = %%
