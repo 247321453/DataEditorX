@@ -1510,8 +1510,16 @@ namespace DataEditorX
 				return;
 			if(isRun())
 				return;
-			tasker.SetTask(MyTask.ExportData, null, nowCdbFile);
-			Run(LANG.GetMsg(LMSG.ExportData));
+			using(SaveFileDialog dlg=new SaveFileDialog())
+			{
+				dlg.Filter="Zip|(*.zip|All Files(*.*)|*.*";
+				if(dlg.ShowDialog()==DialogResult.OK)
+				{
+					tasker.SetTask(MyTask.ExportData, getCardList(false), dlg.FileName);
+					Run(LANG.GetMsg(LMSG.ExportData));
+				}
+			}
+
 		}
 		#endregion
 		

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.IO.Compression;
 using System.Windows.Forms;
@@ -131,6 +132,7 @@ namespace DataEditorX.Core
 						                   imgSet.other_w,imgSet.other_h);
 					}
 					MyBitmap.SaveAsJPEG(bmp, savejpg, imgSet.quilty);
+					//bmp.Save(savejpg, ImageFormat.Png);
 				}
 			}
 		}
@@ -231,23 +233,25 @@ namespace DataEditorX.Core
 			File.Delete(setFile);
 		}
 		
-		public void ExportData(string cdbfile)
+		public void ExportData(string zipname)
 		{
-			if(!File.Exists(cdbfile))
-				return;
 			int i=0;
-			Card[] cards=DataBase.Read(cdbfile, false, "");
+			Card[] cards=cardlist;
 			if(cards == null || cards.Length == 0)
 				return;
 			int count=cards.Length;
-			string path=Path.GetDirectoryName(cdbfile);
-			string name=Path.GetFileNameWithoutExtension(cdbfile);
-			string zipname=MyPath.Combine(path, name+".zip");
+			string path=Path.GetDirectoryName(zipname);
+			string name=Path.GetFileNameWithoutExtension(zipname);
+			string cdbfile=zipname+".cdb";
 			string readme=MyPath.Combine(path, name+".txt");
 			string deckydk=MyPath.Combine(path, "deck/"+name+".ydk");
 			string pics=MyPath.Combine(path,"pics");
 			string thumb=MyPath.Combine(pics,"thumbnail");
 			string script=MyPath.Combine(path,"script");
+			
+			File.Delete(cdbfile);
+			DataBase.Create(cdbfile);
+			DataBase.CopyDB(cdbfile,false,cardlist);
 
 			if(File.Exists(zipname))
 				File.Delete(zipname);
