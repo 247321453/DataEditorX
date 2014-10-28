@@ -218,6 +218,7 @@ namespace DataEditorX
 				InitCodeEditor(funtxt, conlua);
 			}
 			cf.SetCDBList(cdblist.ToArray());
+			cf.DockAreas = DockAreas.Document;
 			cf.InitTooltip(tooltipDic, funList.ToArray(), conList.ToArray());
 			//cf.SetIMEMode(ImeMode.Inherit);
 			cf.Show(dockPanel1, DockState.Document);
@@ -241,6 +242,7 @@ namespace DataEditorX
 			if(!isInitDataEditor)
 				datacfg.Init();
 			def.InitGameData(datacfg);
+			def.DockAreas = DockAreas.Document;
 			def.FormClosed+=new FormClosedEventHandler(def_FormClosed);
 			def.Show(dockPanel1, DockState.Document);
 			list.Add(def, "");
@@ -611,6 +613,7 @@ namespace DataEditorX
 			}
 		}
 		#endregion
+		
 		#region constant
 		void AddAutoMenuItem(List<AutocompleteItem> list,string key,string desc)
 		{

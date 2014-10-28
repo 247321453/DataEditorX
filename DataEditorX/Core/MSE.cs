@@ -55,21 +55,41 @@ namespace DataEditorX.Core
 				foreach(Card c in cards)
 				{
 					string jpg=MyPath.Combine(pic,c.id+".jpg");
-					string jpg1=MyPath.Combine(pic,c.idString+".jpg");
-					string jpg2=MyPath.Combine(pic,c.name+".jpg");
+					string jpg2=MyPath.Combine(pic,c.idString+".jpg");
+					string jpg3=MyPath.Combine(pic,c.name+".jpg");
+					string png=MyPath.Combine(pic,c.id+".png");
+					string png2=MyPath.Combine(pic,c.idString+".png");
+					string png3=MyPath.Combine(pic,c.name+".png");
 					if(File.Exists(jpg)){
 						list.Add(jpg);
 						jpg=Path.GetFileName(jpg);
 					}
-					else if(File.Exists(jpg1)){
-						list.Add(jpg1);
-						jpg=Path.GetFileName(jpg1);
-					}
 					else if(File.Exists(jpg2)){
-						File.Copy(jpg2, jpg, true);
+						list.Add(jpg2);
+						jpg=Path.GetFileName(jpg2);
+					}
+					else if(File.Exists(jpg3)){
+						File.Copy(jpg3, jpg, true);
 						if(File.Exists(jpg)){//复制失败
 							list.Add(jpg);
 							jpg=Path.GetFileName(jpg);
+						}
+						else
+							jpg="";
+					}
+					else if(File.Exists(png)){
+						list.Add(png);
+						jpg=Path.GetFileName(png);
+					}
+					else if(File.Exists(png2)){
+						list.Add(png2);
+						jpg=Path.GetFileName(png2);
+					}
+					else if(File.Exists(png3)){
+						File.Copy(png3, png, true);
+						if(File.Exists(png)){//复制失败
+							list.Add(png);
+							jpg=Path.GetFileName(png);
 						}
 						else
 							jpg="";
