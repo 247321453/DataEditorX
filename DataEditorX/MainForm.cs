@@ -588,12 +588,6 @@ namespace DataEditorX
 		string GetFunName(string str)
 		{
 			int t=str.IndexOf(".");
-			//if(str.StartsWith("Debug.")
-			//   || str.StartsWith("Duel.")
-			//   || str.StartsWith("bit.")
-			//   || str.StartsWith("aux.")
-			//  )
-			//	return str;
 			if(t>0)
 				return str.Substring(t+1);
 			return str;
@@ -602,8 +596,8 @@ namespace DataEditorX
 		{
 			if(!string.IsNullOrEmpty(name))
 			{
-				AddAutoMenuItem(funList, name, desc);
 				string fname=GetFunName(name);
+				AddAutoMenuItem(funList, fname, desc);
 				if(!tooltipDic.ContainsKey(fname)){
 					tooltipDic.Add(fname, desc );
 				}
