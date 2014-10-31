@@ -26,7 +26,9 @@ namespace FastColoredTextBoxNS
 		TextStyle ConStyle = new TextStyle(Brushes.YellowGreen, null, FontStyle.Regular);
 		TextStyle mKeywordStyle = new TextStyle(Brushes.DeepSkyBlue, null, FontStyle.Regular);
 		TextStyle mGrayStyle = new TextStyle(Brushes.Gray, null, FontStyle.Regular);
-		TextStyle mFunStyle = new TextStyle(Brushes.DeepSkyBlue, null, FontStyle.Regular);
+		TextStyle mFunStyle = new TextStyle(Brushes.LightGray, null, FontStyle.Bold);
+		
+		
 		/// <summary>
 		/// Highlights Lua code
 		/// </summary>
@@ -44,7 +46,7 @@ namespace FastColoredTextBoxNS
 				= @"^\s*[\w\.]+(\s\w+)?\s*(?<range>=)\s*(?<range>.+)";
 
 			//clear style of changed range
-			range.ClearStyle(mStrStyle, mGrayStyle, ConStyle, mNumberStyle, mKeywordStyle, mFunStyle);
+			range.ClearStyle(mStrStyle, mGrayStyle,ConStyle, mNumberStyle, mKeywordStyle, mFunStyle);
 			//
 			if (base.LuaStringRegex == null)
 				base.InitLuaRegex();
@@ -56,18 +58,15 @@ namespace FastColoredTextBoxNS
 			range.SetStyle(mGrayStyle, base.LuaCommentRegex3);
 			//number highlighting
 			range.SetStyle(mNumberStyle, base.LuaNumberRegex);
-			range.SetStyle(mNumberStyle, @"\bc\d+\b");
+
 			//keyword highlighting
 			range.SetStyle(mKeywordStyle, base.LuaKeywordRegex);
 			//functions highlighting
 			range.SetStyle(mFunStyle, base.LuaFunctionsRegex);
+			range.SetStyle(mNumberStyle, @"\bc\d+\b");
 			
-			//range.SetStyle(mBoldStyle, @"\b(?<range>[a-zA-Z0-9_]+?)[.|:|=|\s]");
-			//constant
-			range.SetStyle(ConStyle, @"[\s|\(|+|,]{0,1}(?<range>[A-Z_]+?)[\)|+|\s|,]");
-			//function
-			//range.SetStyle(FunStyle, @"[:|.|\s](?<range>[^\(]*?)[\(|\)|\s]");
-			
+			range.SetStyle(ConStyle, @"[\s|\(|+|,]{0,1}(?<range>[A-Z_]+?)[\)|+|\s|,|;]");
+			//range.SetStyle(mFunStyle, @"[:|\.|\s](?<range>[a-zA-Z0-9_]*?)[\(|\)|\s]");
 			
 			//clear folding markers
 			range.ClearFoldingMarkers();

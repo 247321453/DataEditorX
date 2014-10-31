@@ -26,23 +26,16 @@ namespace DataEditorX
 	public partial class MainForm : Form
 	{
 		#region member
-		bool isInitAuto=false;
-		bool isInitDataEditor=false;
 		string cdbHistoryFile;
-		List<string> cdblist;
+		List<string> hittorylist;
 		string datapath;
 		string conflang,conflang_de,conflang_ce,confmsg,conflang_pe;
-		string funtxt,conlua,fieldtxt,confstring;
 		DataEditForm compare1,compare2;
 		Card[] tCards;
 		Dictionary<DataEditForm,string> list;
 		//
-		DataConfig datacfg;
-		//函数提示
-		Dictionary<string,string> tooltipDic;
-		//自动完成
-		List<AutocompleteItem> funList;
-		List<AutocompleteItem> conList;
+        DataConfig datacfg = null;
+        CodeConfig codecfg = null;
 		#endregion
 		
 		#region init
@@ -60,24 +53,21 @@ namespace DataEditorX
 		}
 		void Init(string datapath)
 		{
-			tCards=null;
-			cdblist=new List<string>();
-			tooltipDic=new Dictionary<string, string>();
-			funList=new List<AutocompleteItem>();
-			conList=new List<AutocompleteItem>();
-			list=new Dictionary<DataEditForm,string>();
-			this.datapath=datapath;
-			datacfg=new DataConfig(datapath);
+			tCards = null;
+			hittorylist = new List<string>();
+            
+			list = new Dictionary<DataEditForm,string>();
+			this.datapath = datapath;
+            InitDataEditor();
+            InitCodeEditor();
+
 			cdbHistoryFile =MyPath.Combine(datapath, "history.txt");
 			conflang = MyPath.Combine(datapath, "language-mainform.txt");
 			conflang_de = MyPath.Combine(datapath, "language-dataeditor.txt");
 			conflang_ce = MyPath.Combine(datapath, "language-codeeditor.txt");
 			conflang_pe = MyPath.Combine(datapath, "language-puzzleditor.txt");
-			fieldtxt= MyPath.Combine(datapath, "Puzzle.txt");
 			confmsg = MyPath.Combine(datapath, "message.txt");
-			funtxt = MyPath.Combine(datapath, "_functions.txt");
-			conlua = MyPath.Combine(datapath, "constant.lua");
-			confstring = MyPath.Combine(datapath, "strings.conf");
+
 			InitializeComponent();
 			LANG.InitForm(this, conflang);
 			LANG.LoadMessage(confmsg);
@@ -110,28 +100,28 @@ namespace DataEditorX
 			{
 				if(string.IsNullOrEmpty(line) || line.StartsWith("#"))
 					continue;
-				if(File.Exists(line) && cdblist.IndexOf(line)<0){
-					cdblist.Add(line);
+				if(File.Exists(line) && hittorylist.IndexOf(line)<0){
+					hittorylist.Add(line);
 				}
 			}
 		}
 		void AddHistory(string file)
 		{
-			int index=cdblist.IndexOf(file);
+			int index=hittorylist.IndexOf(file);
 			if(index>=0){
-				cdblist.RemoveAt(index);
+				hittorylist.RemoveAt(index);
 			}
-			string[] tmps=cdblist.ToArray();
-			cdblist.Clear();
-			cdblist.Add(file);
-			cdblist.AddRange(tmps);
+			string[] tmps=hittorylist.ToArray();
+			hittorylist.Clear();
+			hittorylist.Add(file);
+			hittorylist.AddRange(tmps);
 			SaveHistory();
 			MenuHistory();
 		}
 		void SaveHistory()
 		{
 			string texts="# history";
-			foreach(string str in cdblist)
+			foreach(string str in hittorylist)
 			{
 				if(File.Exists(str))
 					texts += Environment.NewLine + str;
@@ -142,7 +132,7 @@ namespace DataEditorX
 		void MenuHistory()
 		{
 			menuitem_history.DropDownItems.Clear();
-			foreach(string str in cdblist)
+			foreach(string str in hittorylist)
 			{
 				ToolStripMenuItem tsmi=new ToolStripMenuItem(str);
 				tsmi.Click+=MenuHistoryItem_Click;
@@ -156,7 +146,7 @@ namespace DataEditorX
 		}
 		void MenuHistoryClear_Click(object sender, EventArgs e)
 		{
-			cdblist.Clear();
+			hittorylist.Clear();
 			MenuHistory();
 			SaveHistory();
 		}
@@ -203,26 +193,43 @@ namespace DataEditorX
 		#endregion
 		
 		#region open
-
 		public void OpenScript(string file)
 		{
 			if(!string.IsNullOrEmpty(file) && File.Exists(file)){
 				AddHistory(file);
 			}
-			CodeEditForm cf=new CodeEditForm(file);
+			CodeEditForm cf=new CodeEditForm();
 			LANG.InitForm(cf, conflang_ce);
 			LANG.SetLanguage(cf);
-			if(!isInitAuto)
-			{
-				isInitAuto=true;
-				InitCodeEditor(funtxt, conlua);
-			}
-			cf.SetCDBList(cdblist.ToArray());
+            InitCodeEditor();
+			cf.SetCDBList(hittorylist.ToArray());
 			cf.DockAreas = DockAreas.Document;
-			cf.InitTooltip(tooltipDic, funList.ToArray(), conList.ToArray());
+            cf.InitTooltip(codecfg.TooltipDic, 
+			               codecfg.FunList, codecfg.ConList);
 			//cf.SetIMEMode(ImeMode.Inherit);
+			cf.Open(file);
 			cf.Show(dockPanel1, DockState.Document);
 		}
+        void InitCodeEditor()
+        {
+            if (codecfg == null)
+            {
+                codecfg = new CodeConfig(datapath);
+                codecfg.Init();
+                InitDataEditor();
+                codecfg.SetNames(datacfg.dicSetnames);
+                codecfg.AddStrings();
+            }
+        }
+        void InitDataEditor()
+        {
+            if (datacfg == null)
+            {
+                datacfg = new DataConfig(datapath);
+                datacfg.Init();
+                YGOUtil.SetConfig(datacfg);
+            }
+        }
 		public void Open(string file)
 		{
 			if(!string.IsNullOrEmpty(file) && File.Exists(file)){
@@ -239,8 +246,7 @@ namespace DataEditorX
 				def=new DataEditForm(datapath,file);
 			LANG.InitForm(def, conflang_de);
 			LANG.SetLanguage(def);
-			if(!isInitDataEditor)
-				datacfg.Init();
+            InitDataEditor();
 			def.InitGameData(datacfg);
 			def.DockAreas = DockAreas.Document;
 			def.FormClosed+=new FormClosedEventHandler(def_FormClosed);
@@ -290,6 +296,7 @@ namespace DataEditorX
 		{
 			Open(null);
 		}
+
 		#endregion
 		
 		#region form
@@ -345,6 +352,11 @@ namespace DataEditorX
 		#endregion
 		
 		#region file
+        DataEditForm GetActive()
+        {
+            DataEditForm df = dockPanel1.ActiveContent as DataEditForm;
+            return df;
+        }
 		void Menuitem_openClick(object sender, EventArgs e)
 		{
 			using(OpenFileDialog dlg=new OpenFileDialog())
@@ -409,16 +421,6 @@ namespace DataEditorX
 		#endregion
 		
 		#region copy
-		DataEditForm GetActive()
-		{
-			foreach(DataEditForm df in list.Keys)
-			{
-				if(df==dockPanel1.ActiveContent)
-					return df;
-			}
-			return null;
-		}
-		
 		void Menuitem_copyselecttoClick(object sender, EventArgs e)
 		{
 			DataEditForm df =GetActive();
@@ -506,180 +508,19 @@ namespace DataEditorX
 		#endregion
 
 		#region complate
-		void InitCodeEditor(string funtxt,string conlua)
-		{
-			if(!isInitDataEditor)
-				datacfg.Init();
-			tooltipDic.Clear();
-			funList.Clear();
-			conList.Clear();
-			AddFunction(funtxt);
-			AddConstant(conlua);
-			
-			foreach(long k in datacfg.dicSetnames.Keys)
-			{
-				string key="0x"+k.ToString("x");
-				if(!tooltipDic.ContainsKey(key))
-				{
-					AddConToolTip(key, datacfg.dicSetnames[k]);
-				}
-			}
-			
-			if(File.Exists(confstring))
-			{
-				string[] lines=File.ReadAllLines(confstring);
-				foreach(string line in lines)
-				{
-					if(line.StartsWith("!victory")
-					   || line.StartsWith("!counter"))
-					{
-						string[] ws = line.Split(' ');
-						if(ws.Length>2)
-						{
-							AddConToolTip(ws[1], ws[2]);
-						}
-					}
-				}
-			}
-			ReadStrings(confstring);
-			//MessageBox.Show(funList.Count.ToString());
-		}
-		void ReadStrings(string txt)
-		{
-			
-		}
+        void Menuitem_findluafuncClick(object sender, EventArgs e)
+        {
+            using (FolderBrowserDialog fd = new FolderBrowserDialog())
+            {
+                fd.Description = "Folder Name: ocgcore";
+                if (fd.ShowDialog() == DialogResult.OK)
+                {
+                    LuaFunction.Read(codecfg.funtxt);
+                    LuaFunction.Find(fd.SelectedPath);
+                    MessageBox.Show("OK");
+                }
+            }
+        }
 		#endregion
-		
-		#region function
-		void AddFunction(string funtxt)
-		{
-			if(File.Exists(funtxt))
-			{
-				string[] lines=File.ReadAllLines(funtxt);
-				bool isFind=false;
-				string name="";
-				string desc="";
-				foreach(string line in lines)
-				{
-					if(string.IsNullOrEmpty(line)
-					   || line.StartsWith("==")
-					   || line.StartsWith("#"))
-						continue;
-					if(line.StartsWith("●"))
-					{
-						//add
-						AddFuncTooltip(name, desc);
-						int w=line.IndexOf("(");
-						int t=line.IndexOf(" ");
-						
-						if(t<w && t>0){
-							name=line.Substring(t+1,w-t-1);
-							isFind=true;
-							desc=line;
-						}
-					}
-					else if(isFind){
-						desc+=Environment.NewLine+line;
-					}
-				}
-				AddFuncTooltip(name, desc);
-			}
-		}
-		string GetFunName(string str)
-		{
-			int t=str.IndexOf(".");
-			if(t>0)
-				return str.Substring(t+1);
-			return str;
-		}
-		void AddFuncTooltip(string name,string desc)
-		{
-			if(!string.IsNullOrEmpty(name))
-			{
-				string fname=GetFunName(name);
-				AddAutoMenuItem(funList, fname, desc);
-				if(!tooltipDic.ContainsKey(fname)){
-					tooltipDic.Add(fname, desc );
-				}
-				else
-					tooltipDic[fname] += Environment.NewLine
-						+Environment.NewLine +desc;
-			}
-		}
-		#endregion
-		
-		#region constant
-		void AddAutoMenuItem(List<AutocompleteItem> list,string key,string desc)
-		{
-			bool isExists=false;
-			foreach(AutocompleteItem ai in list)
-			{
-				if(ai.Text==key)
-				{
-					isExists=true;
-					ai.ToolTipText += Environment.NewLine 
-						+Environment.NewLine+ desc;
-				}
-			}
-			if(!isExists){
-				AutocompleteItem aitem=new AutocompleteItem(key);
-				aitem.ToolTipTitle = key;
-				aitem.ToolTipText = desc;
-				list.Add(aitem);
-			}
-		}
-		
-		void AddConToolTip(string key, string desc)
-		{
-			AddAutoMenuItem(conList, key,desc);
-			if(tooltipDic.ContainsKey(key))
-				tooltipDic[key] += Environment.NewLine
-					+Environment.NewLine +desc;
-			else
-				tooltipDic.Add(key, desc);
-		}
-		
-		
-		void AddConstant(string conlua)
-		{
-			//conList.Add("con");
-			if(File.Exists(conlua))
-			{
-				string[] lines=File.ReadAllLines(conlua);
-				foreach(string line in lines)
-				{
-					if(line.StartsWith("--"))
-						continue;
-					string k=line,desc=line;
-					int t=line.IndexOf("=");
-					int t2=line.IndexOf("--");
-					k = (t>0)?line.Substring(0,t).TrimEnd(new char[]{' ','\t'})
-						:line;
-					desc = (t>0)?line.Substring(t+1).Replace("--","\n")
-						:line;
-					if(!tooltipDic.ContainsKey(k)){
-						AddConToolTip(k, desc);
-					}
-					else
-						tooltipDic[k] += Environment.NewLine
-							+Environment.NewLine+ desc;
-				}
-			}
-		}
-		#endregion
-		
-		void Menuitem_findluafuncClick(object sender, EventArgs e)
-		{
-			using(FolderBrowserDialog fd=new FolderBrowserDialog())
-			{
-				fd.Description="Folder Name: ocgcore";
-				if(fd.ShowDialog()==DialogResult.OK)
-				{
-					LuaFunction.Read(funtxt);
-					LuaFunction.Find(fd.SelectedPath);
-					MessageBox.Show("OK");
-				}
-			}
-		}
 	}
 }

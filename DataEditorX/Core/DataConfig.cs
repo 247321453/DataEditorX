@@ -18,22 +18,23 @@ namespace DataEditorX.Core
 	{
 		public DataConfig()
 		{
-			InitMember();
+            InitMember(System.Windows.Forms.Application.StartupPath);
 		}
 		public DataConfig(string datapath)
 		{
-			confrule=Path.Combine(datapath, "card-rule.txt");
-			confattribute=Path.Combine(datapath, "card-attribute.txt");
-			confrace=Path.Combine(datapath, "card-race.txt");
-			conflevel=Path.Combine(datapath, "card-level.txt");
-			confsetname=Path.Combine(datapath, "card-setname.txt");
-			conftype=Path.Combine(datapath, "card-type.txt");
-			confcategory=Path.Combine(datapath, "card-category.txt");
-			
-			InitMember();
+            InitMember(datapath);
 		}
-		void InitMember()
-		{
+		void InitMember(string datapath)
+        {
+            this.datapath = datapath;
+            confrule = Path.Combine(datapath, "card-rule.txt");
+            confattribute = Path.Combine(datapath, "card-attribute.txt");
+            confrace = Path.Combine(datapath, "card-race.txt");
+            conflevel = Path.Combine(datapath, "card-level.txt");
+            confsetname = Path.Combine(datapath, "card-setname.txt");
+            conftype = Path.Combine(datapath, "card-type.txt");
+            confcategory = Path.Combine(datapath, "card-category.txt");
+
 			dicCardRules=new Dictionary<long, string>();
 			dicSetnames=new Dictionary<long, string>();
 			dicCardTypes=new Dictionary<long, string>();
@@ -41,26 +42,6 @@ namespace DataEditorX.Core
 			dicCardAttributes=new Dictionary<long, string>();
 			dicCardRaces=new Dictionary<long, string>();
 			dicCardLevels=new Dictionary<long, string>();
-		}
-		public DataConfig Clone()
-		{
-			DataConfig datacfg=new DataConfig();
-			datacfg.confrule = confrule;
-			datacfg.confattribute = confattribute;
-			datacfg.confrace = confrace;
-			datacfg.conflevel = conflevel;
-			datacfg.confsetname = confsetname;
-			datacfg.conftype = conftype;
-			datacfg.confcategory = confcategory;
-			
-			datacfg.dicCardRules = CopyDic(dicCardRules);
-			datacfg.dicSetnames = CopyDic(dicSetnames);
-			datacfg.dicCardTypes = CopyDic(dicCardTypes);
-			datacfg.dicCardcategorys = CopyDic(dicCardcategorys);
-			datacfg.dicCardAttributes = CopyDic(dicCardAttributes);
-			datacfg.dicCardRaces = CopyDic(dicCardRaces);
-			datacfg.dicCardLevels = CopyDic(dicCardLevels);
-			return datacfg;
 		}
 		Dictionary<long, string> CopyDic(Dictionary<long, string> dic)
 		{
@@ -81,8 +62,10 @@ namespace DataEditorX.Core
 			dicCardRaces=DataManager.Read(confrace);
 			dicCardLevels=DataManager.Read(conflevel);
 		}
+        string datapath;
 		public string confrule, confattribute, confrace, conflevel;
 		public string confsetname, conftype, confcategory;
+
 		public Dictionary<long, string> dicCardRules=null;
 		public Dictionary<long, string> dicCardAttributes=null;
 		public Dictionary<long, string> dicCardRaces=null;

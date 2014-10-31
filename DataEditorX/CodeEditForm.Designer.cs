@@ -178,7 +178,7 @@ namespace DataEditorX
 			// menuitem_about
 			// 
 			this.menuitem_about.Name = "menuitem_about";
-			this.menuitem_about.Size = new System.Drawing.Size(152, 22);
+			this.menuitem_about.Size = new System.Drawing.Size(111, 22);
 			this.menuitem_about.Text = "About";
 			this.menuitem_about.Click += new System.EventHandler(this.AboutToolStripMenuItemClick);
 			// 

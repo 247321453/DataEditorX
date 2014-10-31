@@ -25,15 +25,13 @@ namespace DataEditorX
 		#region 成员变量
 		TaskHelper tasker=null;
 		string taskname;
-		string ydkfile=null;
-		string imagepath=null;
-		string GAMEPATH,PICPATH,PICPATH2,LUAPTH;
+		string GAMEPATH="",PICPATH="",PICPATH2="",LUAPTH="";
 		/// <summary>当前卡片</summary>
 		Card oldCard=new Card(0);
 		/// <summary>搜索条件</summary>
 		Card srcCard=new Card(0);
 		string[] strs=null;
-		Dictionary<long,Card> complist;
+        List<long> tmpCodes;
 		string title;
 		string nowCdbFile="";
 		int MaxRow=20;
@@ -41,10 +39,7 @@ namespace DataEditorX
 		int cardcount;
 		string undoString;
 		List<Card> cardlist=new List<Card>();
-		bool setcodeIsedit1;
-		bool setcodeIsedit2;
-		bool setcodeIsedit3;
-		bool setcodeIsedit4;
+        bool[] setcodeIsedit = new bool[5];
 		
 		Image m_cover;
 		DataConfig datacfg;
@@ -80,26 +75,20 @@ namespace DataEditorX
 		void Initialize()
 		{
 			datacfg=null;
-			complist=new Dictionary<long, Card>();
+            tmpCodes = new List<long>();
 			InitializeComponent();
 			title=this.Text;
 			nowCdbFile="";
 		}
 		
 		#endregion
-		
-		#region 界面初始化
-		//窗体第一次加载
+
+        #region 窗体
+        //窗体第一次加载
 		void DataEditFormLoad(object sender, EventArgs e)
 		{
 			InitListRows();
-			//界面初始化
-
-			HideMenu();
-			
-			#if DEBUG
-			title=title+"(DEBUG)";
-			#endif
+            HideMenu();//是否需要隐藏菜单
 			SetTitle();
 			
 			if(datacfg==null){
@@ -109,15 +98,13 @@ namespace DataEditorX
 			tasker=new TaskHelper(datapath, bgWorker1,
 			                      datacfg.dicCardTypes,
 			                      datacfg.dicCardRaces);
-			
-			SetCDB(nowCdbFile);
 			//设置空白卡片
 			oldCard=new Card(0);
 			SetCard(oldCard);
 			
 			if(File.Exists(nowCdbFile))
 				Open(nowCdbFile);
-			//checkupdate(false);
+			//checkupdate(false);//检查更新
 		}
 		//窗体关闭
 		void DataEditFormFormClosing(object sender, FormClosingEventArgs e)
@@ -132,10 +119,15 @@ namespace DataEditorX
 				
 			}
 		}
-		void DataEditFormEnter(object sender, EventArgs e)
+		//窗体激活
+        void DataEditFormEnter(object sender, EventArgs e)
 		{
 			SetTitle();
 		}
+        #endregion
+        
+        #region 初始化设置
+        //隐藏菜单
 		void HideMenu()
 		{
 			if(this.MdiParent ==null)
@@ -155,7 +147,7 @@ namespace DataEditorX
 			this.ResumeLayout(false);
 			//this.PerformLayout();
 		}
-		
+		//移除Tag
 		string RemoveTag(string text)
 		{
 			int t=text.LastIndexOf(" (");
@@ -165,7 +157,8 @@ namespace DataEditorX
 			}
 			return text;
 		}
-		void SetTitle()
+		//设置标题
+        void SetTitle()
 		{
 			string str=title;
 			string str2=RemoveTag(title);
@@ -213,8 +206,7 @@ namespace DataEditorX
 				m_cover=Image.FromFile(confcover);
 			else
 				m_cover=null;
-		}
-		
+		}		
 		//保存dic
 		void SaveDic(string file, Dictionary<long, string> dic)
 		{
@@ -228,16 +220,19 @@ namespace DataEditorX
 				sw.Close();
 				fs.Close();
 			}
-		}
-		
+		}		
 		//初始化游戏数据
 		public void InitGameData(DataConfig dataconfig)
 		{
 			//初始化
-			this.datacfg=dataconfig.Clone();
+            this.datacfg = dataconfig;
 			InitControl();
 		}
-		void InitControl()
+        #endregion
+        
+        #region 界面控件
+        //初始化控件
+        void InitControl()
 		{
 			InitComboBox(cb_cardrace, datacfg.dicCardRaces);
 			InitComboBox(cb_cardattribute, datacfg.dicCardAttributes);
@@ -255,7 +250,6 @@ namespace DataEditorX
 			cb_setname4.Items.AddRange(setnames);
 			//
 		}
-		
 		//初始化FlowLayoutPanel
 		void InitCheckPanel(FlowLayoutPanel fpanel, Dictionary<long, string> dic)
 		{
@@ -274,13 +268,11 @@ namespace DataEditorX
 			fpanel.ResumeLayout(false);
 			fpanel.PerformLayout();
 		}
-		
 		//FlowLayoutPanel点击CheckBox
 		void PanelOnCheckClick(object sender, EventArgs e)
 		{
 			
 		}
-
 		//初始化ComboBox
 		void InitComboBox(ComboBox cb, Dictionary<long, string> tempdic)
 		{
@@ -288,7 +280,6 @@ namespace DataEditorX
 			cb.Items.AddRange(DataManager.GetValues(tempdic));
 			cb.SelectedIndex=0;
 		}
-		
 		//计算list最大行数
 		void InitListRows()
 		{
@@ -310,8 +301,149 @@ namespace DataEditorX
 			if ( MaxRow<10 )
 				MaxRow=20;
 		}
-		
-		#endregion
+        //设置checkbox
+        string SetCheck(FlowLayoutPanel fpl, long number)
+        {
+            long temp;
+            string strType = "";
+            foreach (Control c in fpl.Controls)
+            {
+                if (c is CheckBox)
+                {
+                    CheckBox cbox = (CheckBox)c;
+                    long.TryParse(cbox.Name.Substring(fpl.Name.Length), out temp);
+
+                    if ((temp & number) == temp && temp != 0)
+                    {
+                        cbox.Checked = true;
+                        strType += "/" + c.Text;
+                    }
+                    else
+                        cbox.Checked = false;
+                }
+            }
+            return strType;
+        }
+        //设置combobox
+        int SetSelect(Dictionary<long, string> dic, ComboBox cb, long k)
+        {
+            int index = 0;
+            if (k == 0)
+            {
+                cb.SelectedIndex = 0;
+                return index;
+            }
+            foreach (long key in dic.Keys)
+            {
+                if (k == key)
+                    break;
+                index++;
+            }
+            if (index == cb.Items.Count)
+            {
+                string word = k.ToString("x");
+                if (!dic.ContainsKey(k))
+                    dic.Add(k, word);
+                if (cb.Name == cb_setname1.Name
+                   || cb.Name == cb_setname2.Name
+                   || cb.Name == cb_setname3.Name
+                   || cb.Name == cb_setname4.Name)
+                {
+                    cb_setname1.Items.Add(word);
+                    cb_setname2.Items.Add(word);
+                    cb_setname3.Items.Add(word);
+                    cb_setname4.Items.Add(word);
+                }
+                else
+                    cb.Items.Add(word);
+            }
+            cb.SelectedIndex = index;
+            return index;
+        }
+        //得到所选值16进制
+        string GetSelectHex(Dictionary<long, string> dic, ComboBox cb)
+        {
+            long temp;
+            long.TryParse(GetSelect(dic, cb), out temp);
+            return temp.ToString("x");
+        }
+        //得到所选值
+        string GetSelect(Dictionary<long, string> dic, ComboBox cb)
+        {
+            long fkey = 0;
+            bool isfind = false;
+            foreach (long key in dic.Keys)
+            {
+                if (cb.Text == dic[key])
+                {
+                    fkey = key;
+                    isfind = true;
+                    break;
+                }
+            }
+            if (!isfind)
+            {
+                long.TryParse(cb.Text, NumberStyles.HexNumber, null, out fkey);
+            }
+            return fkey.ToString();
+        }
+        //得到checkbox的总值
+        long GetCheck(FlowLayoutPanel fpl)
+        {
+            long number = 0;
+            long temp;
+            foreach (Control c in fpl.Controls)
+            {
+                if (c is CheckBox)
+                {
+                    CheckBox cbox = (CheckBox)c;
+                    long.TryParse(cbox.Name.Substring(fpl.Name.Length), out temp);
+                    if (cbox.Checked)
+                        number += temp;
+                }
+            }
+            return number;
+        }
+        //添加列表行
+        void AddListView(int p)
+        {
+            int i, j, istart, iend;
+
+            if (p <= 0)
+                p = 1;
+            else if (p >= pageNum)
+                p = pageNum;
+            istart = (p - 1) * MaxRow;
+            iend = p * MaxRow;
+            if (iend > cardcount)
+                iend = cardcount;
+            page = p;
+            lv_cardlist.BeginUpdate();
+            lv_cardlist.Items.Clear();
+            if ((iend - istart) > 0)
+            {
+                ListViewItem[] items = new ListViewItem[iend - istart];
+                Card mcard;
+                for (i = istart, j = 0; i < iend; i++, j++)
+                {
+                    mcard = cardlist[i];
+                    items[j] = new ListViewItem();
+                    items[j].Text = mcard.id.ToString();
+                    if (mcard.id == oldCard.id)
+                        items[j].Checked = true;
+                    if (i % 2 == 0)
+                        items[j].BackColor = Color.GhostWhite;
+                    else
+                        items[j].BackColor = Color.White;
+                    items[j].SubItems.Add(mcard.name);
+                }
+                lv_cardlist.Items.AddRange(items);
+            }
+            lv_cardlist.EndUpdate();
+            tb_page.Text = page.ToString();
+
+        }
+        #endregion
 		
 		#region 设置卡片
 		void SetCard(Card c)
@@ -325,12 +457,12 @@ namespace DataEditorX
 			lb_scripttext.Items.Clear();
 			lb_scripttext.Items.AddRange(c.str);
 			tb_edittext.Text="";
-
+            //data
 			SetSelect(datacfg.dicCardRules,cb_cardrule,(long)c.ot);
 			SetSelect(datacfg.dicCardAttributes,cb_cardattribute,(long)c.attribute);
 			SetSelect(datacfg.dicCardLevels,cb_cardlevel,(long)(c.level&0xff));
 			SetSelect(datacfg.dicCardRaces,cb_cardrace,c.race);
-			
+			//setcode
 			long sc1=c.setcode&0xffff;
 			long sc2=(c.setcode>>0x10)&0xffff;
 			long sc3=(c.setcode>>0x20)&0xffff;
@@ -343,10 +475,10 @@ namespace DataEditorX
 			SetSelect(datacfg.dicSetnames, cb_setname2, sc2);
 			SetSelect(datacfg.dicSetnames, cb_setname3, sc3);
 			SetSelect(datacfg.dicSetnames, cb_setname4, sc4);
-			
+			//type,category
 			SetCheck(pl_cardtype,c.type);
 			SetCheck(pl_category,c.category);
-			
+			//text
 			tb_pleft.Text=((c.level >> 0x18) & 0xff).ToString();
 			tb_pright.Text=((c.level >> 0x10) & 0xff).ToString();
 			tb_atk.Text=(c.atk<0)?"?":c.atk.ToString();
@@ -354,69 +486,7 @@ namespace DataEditorX
 			tb_cardcode.Text=c.id.ToString();
 			tb_cardalias.Text=c.alias.ToString();
 			setImage(c.id.ToString());
-		}
-		
-		//设置checkbox
-		string SetCheck(FlowLayoutPanel fpl,long number)
-		{
-			long temp;
-			string strType="";
-			foreach(Control c in fpl.Controls)
-			{
-				if(c is CheckBox)
-				{
-					CheckBox cbox=(CheckBox)c;
-					long.TryParse(cbox.Name.Substring(fpl.Name.Length), out temp);
-					
-					if((temp & number)==temp && temp!=0)
-					{
-						cbox.Checked=true;
-						strType+="/"+c.Text;
-					}
-					else
-						cbox.Checked=false;
-				}
-			}
-			return strType;
-		}
-		
-		//设置combobox
-		int SetSelect(Dictionary<long, string> dic,ComboBox cb, long k)
-		{
-			int index=0;
-			if(k==0)
-			{
-				cb.SelectedIndex=0;
-				return index;
-			}
-			foreach(long key in dic.Keys)
-			{
-				if(k==key)
-					break;
-				index++;
-			}
-			if(index==cb.Items.Count)
-			{
-				string word=k.ToString("x");
-				if(!dic.ContainsKey(k))
-					dic.Add(k, word);
-				if(cb.Name==cb_setname1.Name
-				   ||cb.Name==cb_setname2.Name
-				   ||cb.Name==cb_setname3.Name
-				   ||cb.Name==cb_setname4.Name)
-				{
-					cb_setname1.Items.Add(word);
-					cb_setname2.Items.Add(word);
-					cb_setname3.Items.Add(word);
-					cb_setname4.Items.Add(word);
-				}
-				else
-					cb.Items.Add(word);
-			}
-			cb.SelectedIndex=index;
-			return index;
-		}
-		
+		}	
 		#endregion
 		
 		#region 获取卡片
@@ -432,7 +502,7 @@ namespace DataEditorX
 			int.TryParse(GetSelect(datacfg.dicCardAttributes,cb_cardattribute),out c.attribute);
 			long.TryParse(GetSelect(datacfg.dicCardLevels,cb_cardlevel),out c.level);
 			long.TryParse(GetSelect(datacfg.dicCardRaces,cb_cardrace),out c.race);
-			
+			//setcode
 			int.TryParse(tb_setcode1.Text, NumberStyles.HexNumber,null,out temp);
 			c.setcode =temp;
 			int.TryParse(tb_setcode2.Text, NumberStyles.HexNumber,null,out temp);
@@ -467,54 +537,10 @@ namespace DataEditorX
 
 			return c;
 		}
-		
-		//得到所选值
-		string GetSelectHex(Dictionary<long, string> dic,ComboBox cb)
-		{
-			long temp;
-			long.TryParse(GetSelect(dic,cb),out temp);
-			return temp.ToString("x");
-		}
-		string GetSelect(Dictionary<long, string> dic,ComboBox cb)
-		{
-			long fkey=0;
-			bool isfind=false;
-			foreach(long key in dic.Keys)
-			{
-				if(cb.Text==dic[key])
-				{
-					fkey=key;
-					isfind=true;
-					break;
-				}
-			}
-			if(!isfind)
-			{
-				long.TryParse(cb.Text, NumberStyles.HexNumber, null, out fkey);
-			}
-			return fkey.ToString();
-		}
-		
-		//得到checkbox的总值
-		long GetCheck(FlowLayoutPanel fpl)
-		{
-			long number=0;
-			long temp;
-			foreach(Control c in fpl.Controls)
-			{
-				if(c is CheckBox)
-				{
-					CheckBox cbox=(CheckBox)c;
-					long.TryParse(cbox.Name.Substring(fpl.Name.Length), out temp);
-					if(cbox.Checked)
-						number+=temp;
-				}
-			}
-			return number;
-		}
 		#endregion
 		
 		#region 卡片列表
+        //列表选择
 		void Lv_cardlistSelectedIndexChanged(object sender, EventArgs e)
 		{
 			if(lv_cardlist.SelectedItems.Count>0)
@@ -527,48 +553,7 @@ namespace DataEditorX
 					SetCard(c);
 				}
 			}
-		}
-		
-		//添加行
-		void AddListView(int p)
-		{
-			int i,j,istart,iend;
-
-			if(p<=0)
-				p=1;
-			else if(p>=pageNum)
-				p=pageNum;
-			istart=(p-1)*MaxRow;
-			iend=p*MaxRow;
-			if(iend>cardcount)
-				iend=cardcount;
-			page=p;
-			lv_cardlist.BeginUpdate();
-			lv_cardlist.Items.Clear();
-			if((iend-istart)>0)
-			{
-				ListViewItem[] items=new ListViewItem[iend-istart];
-				Card mcard;
-				for(i=istart,j=0;i < iend;i++,j++)
-				{
-					mcard=cardlist[i];
-					items[j]=new ListViewItem();
-					items[j].Text=mcard.id.ToString();
-					if(mcard.id==oldCard.id)
-						items[j].Checked=true;
-					if ( i % 2 == 0 )
-						items[j].BackColor = Color.GhostWhite;
-					else
-						items[j].BackColor = Color.White;
-					items[j].SubItems.Add(mcard.name);
-				}
-				lv_cardlist.Items.AddRange(items);
-			}
-			lv_cardlist.EndUpdate();
-			tb_page.Text=page.ToString();
-			
-		}
-		
+		}		
 		//列表按键
 		void Lv_cardlistKeyDown(object sender, KeyEventArgs e)
 		{
@@ -579,7 +564,6 @@ namespace DataEditorX
 					case Keys.Left:Btn_PageUpClick(null,null);break;
 			}
 		}
-		
 		//上一页
 		void Btn_PageUpClick(object sender, EventArgs e)
 		{
@@ -587,8 +571,7 @@ namespace DataEditorX
 				return;
 			page--;
 			AddListView(page);
-		}
-		
+		}		
 		//下一页
 		void Btn_PageDownClick(object sender, EventArgs e)
 		{
@@ -596,8 +579,7 @@ namespace DataEditorX
 				return;
 			page++;
 			AddListView(page);
-		}
-		
+		}	
 		//跳转到指定页数
 		void Tb_pageKeyPress(object sender, KeyPressEventArgs e)
 		{
@@ -625,27 +607,26 @@ namespace DataEditorX
 				return false;
 			}
 		}
-		
 		//打开数据库
 		public bool Open(string cdbFile)
 		{
+            SetCDB(cdbFile);
 			if(!File.Exists(cdbFile))
 			{
 				MyMsg.Error(LMSG.FileIsNotExists);
 				return false;
 			}
-			ydkfile=null;
-			imagepath=null;
-			complist=null;
-			SetCDB(cdbFile);
+            //清空
+            tmpCodes.Clear();
 			cardlist.Clear();
+            //检查表是否存在
 			DataBase.CheckTable(cdbFile);
 			srcCard=new Card();
 			SetCards(DataBase.Read(cdbFile,true,""),false);
 
 			return true;
 		}
-
+        //设置卡片组
 		public void SetCards(Card[] cards, bool isfresh)
 		{
 			if(cards!=null)
@@ -682,17 +663,15 @@ namespace DataEditorX
 				SetCard(new Card(0));
 			}
 		}
-		
+		//搜索卡片
 		public void Search(Card c, bool isfresh)
 		{
 			if(!Check())
 				return;
-			if(!string.IsNullOrEmpty(ydkfile))
-				SetCards(DataBase.ReadYdk(nowCdbFile, ydkfile), false);
-			else if(!string.IsNullOrEmpty(imagepath))
-				SetCards(DataBase.ReadImage(nowCdbFile, imagepath), false);
-			else if(complist !=null){
-				UpdateCompCards();
+            if (tmpCodes.Count>0)
+            {
+                Card[] mcards = DataBase.Read(nowCdbFile,
+                true, tmpCodes.ToArray());
 				SetCards(getCompCards(), false);
 			}
 			else{
@@ -704,28 +683,12 @@ namespace DataEditorX
 				SetCards(DataBase.Read(nowCdbFile, true, sql),isfresh);
 			}
 		}
-		
-		void UpdateCompCards()
-		{
-			
-			Card[] mcards=DataBase.Read(nowCdbFile,true,"");
-			if(mcards==null){
-				complist.Clear();
-				return;
-			}
-			foreach(Card c in mcards)
-			{
-				if(complist.ContainsKey(c.id))
-					complist[c.id]=c;
-			}
-		}
-		
+		//更新临时卡片
 		public void Reset()
 		{
 			oldCard=new Card(0);
 			SetCard(oldCard);
-		}
-		
+		}	
 		#endregion
 		
 		#region 卡片编辑
@@ -886,9 +849,7 @@ namespace DataEditorX
 		//搜索卡片
 		void Btn_serachClick(object sender, EventArgs e)
 		{
-			ydkfile=null;
-			imagepath=null;
-			complist=null;
+            tmpCodes.Clear();
 			Search(GetCard(), false);
 		}
 		//重置卡片
@@ -948,9 +909,7 @@ namespace DataEditorX
 				long.TryParse(tb_cardcode.Text, out c.id);
 				if(c.id>0)
 				{
-					ydkfile=null;
-					imagepath=null;
-					complist=null;
+                    tmpCodes.Clear();
 					Search(c, false);
 				}
 			}
@@ -963,9 +922,7 @@ namespace DataEditorX
 				Card c=new Card(0);
 				c.name=tb_cardname.Text;
 				if(c.name.Length>0){
-					ydkfile=null;
-					imagepath=null;
-					complist=null;
+                    tmpCodes.Clear();
 					Search(c, false);
 				}
 			}
@@ -1105,8 +1062,8 @@ namespace DataEditorX
 				dlg.Filter=LANG.GetMsg(LMSG.ydkType);
 				if(dlg.ShowDialog()==DialogResult.OK)
 				{
-					ydkfile=dlg.FileName;
-					SetCards(DataBase.ReadYdk(nowCdbFile, ydkfile), false);
+					SetCards(DataBase.Read(nowCdbFile, true,
+                        YGOUtil.ReadYDK(dlg.FileName)), false);
 				}
 			}
 		}
@@ -1120,8 +1077,8 @@ namespace DataEditorX
 				fdlg.Description= LANG.GetMsg(LMSG.SelectImagePath);
 				if(fdlg.ShowDialog()==DialogResult.OK)
 				{
-					imagepath=fdlg.SelectedPath;
-					SetCards(DataBase.ReadImage(nowCdbFile, imagepath), false);
+					SetCards(DataBase.Read(nowCdbFile, true,
+                        YGOUtil.ReadImage(fdlg.SelectedPath)), false);
 				}
 			}
 		}
@@ -1206,82 +1163,82 @@ namespace DataEditorX
 		#region setcode
 		void Cb_setname2SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if(setcodeIsedit2)
+			if(setcodeIsedit[2])
 				return;
-			setcodeIsedit2=true;
+			setcodeIsedit[2]=true;
 			tb_setcode2.Text=GetSelectHex(datacfg.dicSetnames, cb_setname2);
-			setcodeIsedit2=false;
+			setcodeIsedit[2]=false;
 		}
 		
 		void Cb_setname1SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if(setcodeIsedit1)
+			if(setcodeIsedit[1])
 				return;
-			setcodeIsedit1=true;
+			setcodeIsedit[1]=true;
 			tb_setcode1.Text=GetSelectHex(datacfg.dicSetnames, cb_setname1);
-			setcodeIsedit1=false;
+			setcodeIsedit[1]=false;
 		}
 		
 		void Cb_setname3SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if(setcodeIsedit3)
+			if(setcodeIsedit[3])
 				return;
-			setcodeIsedit3=true;
+			setcodeIsedit[3]=true;
 			tb_setcode3.Text=GetSelectHex(datacfg.dicSetnames, cb_setname3);
-			setcodeIsedit3=false;
+			setcodeIsedit[3]=false;
 		}
 		
 		void Cb_setname4SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if(setcodeIsedit4)
+			if(setcodeIsedit[4])
 				return;
-			setcodeIsedit4=true;
+			setcodeIsedit[4]=true;
 			tb_setcode4.Text=GetSelectHex(datacfg.dicSetnames, cb_setname4);
-			setcodeIsedit4=false;
+			setcodeIsedit[4]=false;
 		}
 
 		void Tb_setcode4TextChanged(object sender, EventArgs e)
 		{
-			if(setcodeIsedit4)
+			if(setcodeIsedit[4])
 				return;
-			setcodeIsedit4=true;
+			setcodeIsedit[4]=true;
 			long temp;
 			long.TryParse(tb_setcode4.Text,NumberStyles.HexNumber, null ,out temp);
 			SetSelect(datacfg.dicSetnames, cb_setname4, temp);
-			setcodeIsedit4=false;
+			setcodeIsedit[4]=false;
 		}
 		
 		void Tb_setcode3TextChanged(object sender, EventArgs e)
 		{
-			if(setcodeIsedit3)
+			if(setcodeIsedit[3])
 				return;
-			setcodeIsedit3=true;
+			setcodeIsedit[3]=true;
 			long temp;
 			long.TryParse(tb_setcode3.Text,NumberStyles.HexNumber, null ,out temp);
 			SetSelect(datacfg.dicSetnames, cb_setname3, temp);
-			setcodeIsedit3=false;
+			setcodeIsedit[3]=false;
 		}
 		
 		void Tb_setcode2TextChanged(object sender, EventArgs e)
 		{
-			if(setcodeIsedit2)
+			if(setcodeIsedit[2])
 				return;
-			setcodeIsedit2=true;
+			setcodeIsedit[2]=true;
 			long temp;
 			long.TryParse(tb_setcode2.Text,NumberStyles.HexNumber, null ,out temp);
 			SetSelect(datacfg.dicSetnames, cb_setname2, temp);
-			setcodeIsedit2=false;
+			setcodeIsedit[2]=false;
 		}
 		
 		void Tb_setcode1TextChanged(object sender, EventArgs e)
 		{
-			if(setcodeIsedit1)
+			if(setcodeIsedit[1])
 				return;
-			setcodeIsedit1=true;
+			setcodeIsedit[1]=true;
 			long temp;
 			long.TryParse(tb_setcode1.Text,NumberStyles.HexNumber, null ,out temp);
 			SetSelect(datacfg.dicSetnames, cb_setname1, temp);
-			setcodeIsedit1=false;
+			setcodeIsedit[1]=false;
 		}
 		#endregion
 		
@@ -1430,8 +1387,12 @@ namespace DataEditorX
 		void ImportImage(string file,string tid)
 		{
 			string f;
-			pl_image.BackgroundImage.Dispose();
-			pl_image.BackgroundImage=m_cover;
+            if (pl_image.BackgroundImage != null
+               && pl_image.BackgroundImage != m_cover)
+            {
+                pl_image.BackgroundImage.Dispose();
+                pl_image.BackgroundImage = m_cover;
+            }
 			if(menuitem_importmseimg.Checked){
 				if(!Directory.Exists(tasker.MSEImage))
 					Directory.CreateDirectory(tasker.MSEImage);
@@ -1546,35 +1507,33 @@ namespace DataEditorX
 		}
 		Card[] getCompCards()
 		{
-			if(complist.Count==0)
+            if (tmpCodes.Count == 0)
 				return null;
-			Card[] tmps=new Card[complist.Count];
-			complist.Values.CopyTo(tmps,0);
-			return tmps;
+            if (!Check())
+                return null;
+            return DataBase.Read(nowCdbFile, true, tmpCodes.ToArray());
 		}
 		public void CompareCards(string cdbfile,bool checktext)
 		{
 			if(!Check())
 				return;
-			ydkfile=null;
-			imagepath=null;
+            tmpCodes.Clear();
 			srcCard=new Card();
 			Card[] mcards=DataBase.Read(nowCdbFile,true,"");
 			Card[] cards=DataBase.Read(cdbfile,true,"");
-			complist =new Dictionary<long, Card>();
 			foreach(Card card in mcards)
 			{
-				if(!CheckCard(cards, card, checktext))
-					complist.Add(card.id, card);
+                if (!CheckCard(cards, card, checktext))
+                    tmpCodes.Add(card.id);
 			}
-			if(complist.Count==0){
+            if (tmpCodes.Count == 0)
+            {
 				SetCards(null, false);
 				return;
 			}
 			SetCards(getCompCards(), false);
 		}
 		#endregion
-		
-		
+			
 	}
 }

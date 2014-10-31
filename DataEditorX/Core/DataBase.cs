@@ -122,8 +122,6 @@ namespace DataEditorX.Core
 		}
 		#endregion
 
-		#region 数据读取
-		
 		#region 根据SQL读取
 		static Card ReadCard(SQLiteDataReader reader,bool reNewLine)
 		{
@@ -161,7 +159,17 @@ namespace DataEditorX.Core
 			sr.Remove(0, sr.Length);
 			return text;
 		}
-		/// <summary>
+
+        public static Card[] Read(string DB, bool reNewLine, params long[] ids)
+        {
+            List<string> idlist = new List<string>();
+            foreach (long id in ids)
+            {
+                idlist.Add(id.ToString());
+            }
+            return Read(DB, reNewLine, idlist.ToArray());
+        }
+        /// <summary>
 		/// 根据密码集合，读取数据
 		/// </summary>
 		/// <param name="DB">数据库</param>
@@ -220,70 +228,6 @@ namespace DataEditorX.Core
 				return null;
 			return list.ToArray();
 		}
-		#endregion
-
-		#region 根据文件读取数据库
-		public static Card[] ReadYdk(string dbfile, string ydkfile)
-		{
-			if ( File.Exists(dbfile) )
-			{
-				string[] ids = ReadYDK(ydkfile);
-				if(ids!=null)
-					return DataBase.Read(dbfile, true, ids);
-			}
-			return null;
-		}
-		/// <summary>
-		/// 读取ydk文件为密码数组
-		/// </summary>
-		/// <param name="file">ydk文件</param>
-		/// <returns>密码数组</returns>
-		static string[] ReadYDK(string ydkfile)
-		{
-			string str;
-			List<string> IDs = new List<string>();
-			if ( File.Exists(ydkfile) )
-			{
-				using ( FileStream f = new FileStream(ydkfile, FileMode.Open, FileAccess.Read) )
-				{
-					StreamReader sr = new StreamReader(f, Encoding.Default);
-					str = sr.ReadLine();
-					while ( str != null )
-					{
-						if ( !str.StartsWith("!") && !str.StartsWith("#") &&str.Length>0)
-						{
-							if ( IDs.IndexOf(str) < 0 )
-								IDs.Add(str);
-						}
-						str = sr.ReadLine();
-					}
-					sr.Close();
-					f.Close();
-				}
-			}
-			if(IDs.Count==0)
-				return null;
-			return IDs.ToArray();
-		}
-		#endregion
-
-		#region 根据图像读取数据库
-		public static Card[] ReadImage(string dbfile, string path)
-		{
-			if ( File.Exists(dbfile) )
-			{
-				string[] files = Directory.GetFiles(path, "*.jpg");
-				int n = files.Length;
-				for ( int i = 0; i < n; i++ )
-				{
-					files[i] = Path.GetFileNameWithoutExtension(files[i]);
-				}
-				return DataBase.Read(dbfile, true,files);
-			}
-			return null;
-		}
-		#endregion
-
 		#endregion
 		
 		#region 复制数据库

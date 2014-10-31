@@ -1,4 +1,13 @@
 # history
-F:\games\ygopro\script\c33396948.lua
+F:\games\ygopro\script\c242146.lua
 F:\games\ygopro\cards.cdb
+F:\games\ygopro\script\c126218.lua
+F:\games\ygopro\script\c131182.lua
+F:\games\ygocore\script\c135598.lua
+F:\games\ygocore\script\c126218.lua
+F:\games\ygocore\script\c114932.lua
+F:\games\ygocore\single\[sample]BerserkDragon.lua
+F:\games\ygopro\script\c57774843.lua
+F:\games\ygopro\script\c33396948.lua
 F:\games\ygopro\script\c255998.lua
+F:\games\ygopro\script\utility.lua

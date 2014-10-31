@@ -43,11 +43,6 @@ namespace DataEditorX
 		{
 			InitForm();
 		}
-		public CodeEditForm(string file)
-		{
-			InitForm();
-			Open(file);
-		}
 		void InitForm()
 		{
 			cardlist=new SortedDictionary<long, string>();
@@ -208,7 +203,6 @@ namespace DataEditorX
 		                        ,AutocompleteItem[] conlist)
 		{
 			this.tooltipDic=tooltipDic;
-			
 			List<AutocompleteItem> items=new List<AutocompleteItem>();
 			items.AddRange(funlist);
 			items.AddRange(conlist);
@@ -397,8 +391,9 @@ namespace DataEditorX
 			}
 		}
 		#endregion
-		
-		void CodeEditFormFormClosing(object sender, FormClosingEventArgs e)
+
+        #region close
+        void CodeEditFormFormClosing(object sender, FormClosingEventArgs e)
 		{
 			if(!string.IsNullOrEmpty(oldtext))
 			{
@@ -411,8 +406,10 @@ namespace DataEditorX
 					Save();
 			}
 		}
-		
-		public void SetCDBList(string[] cdbs)
+        #endregion
+
+        #region card tooltip
+        public void SetCDBList(string[] cdbs)
 		{
 			if(cdbs == null)
 				return;
@@ -448,8 +445,10 @@ namespace DataEditorX
 				cardlist.Add(c.id,c.ToString());
 			}
 		}
-		
-		void FctbSelectionChangedDelayed(object sender, EventArgs e)
+        #endregion
+
+        #region selection
+        void FctbSelectionChangedDelayed(object sender, EventArgs e)
 		{
 			tb_input.Text=fctb.SelectedText;
 			fctb.VisibleRange.ClearStyle(SameWordsStyle);
@@ -466,7 +465,10 @@ namespace DataEditorX
 			foreach(var r in ranges)
 				r.SetStyle(SameWordsStyle);
 		}
-		void FctbMouseClick(object sender, MouseEventArgs e)
+        #endregion
+
+        #region goto function define
+        void FctbMouseClick(object sender, MouseEventArgs e)
 		{
 			var fragment = fctb.Selection.GetFragment(@"\w");
 			string text = fragment.Text;
@@ -481,6 +483,7 @@ namespace DataEditorX
 					//MessageBox.Show(linenums[0].ToString());
 				}
 			}
-		}
-	}
+        }
+        #endregion
+    }
 }

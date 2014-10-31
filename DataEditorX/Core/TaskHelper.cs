@@ -279,6 +279,7 @@ namespace DataEditorX.Core
 						zips.AddFile(lua,"script/c"+c.id.ToString()+".lua","");
 				}
 			}
+            File.Delete(cdbfile);
 		}
 		
 		public void Run(){

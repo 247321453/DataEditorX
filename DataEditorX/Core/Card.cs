@@ -218,7 +218,6 @@ namespace DataEditorX.Core
 		}
 		#endregion
 
-
 	}
 	
 }

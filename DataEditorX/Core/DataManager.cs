@@ -86,7 +86,8 @@ namespace DataEditorX.Core
             return lkey;
         }
         #endregion
-        
+
+        #region value
         public static string[] GetValues(Dictionary<long, string> dic)
         {
             int length=dic.Count;
@@ -104,5 +105,6 @@ namespace DataEditorX.Core
         		return dic[key];
         	return key.ToString("x");
         }
+        #endregion
     }
 }
