@@ -104,6 +104,7 @@ namespace DataEditorX.Core
 		string redesc()
 		{
 			return desc
+                .Replace(Environment.NewLine, "")
 				//.Replace("，","，\n")
 				.Replace("。","。\n")
 				.Replace("？","？\n")

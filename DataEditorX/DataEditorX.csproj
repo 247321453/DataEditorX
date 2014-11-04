@@ -68,6 +68,9 @@
       <DependentUpon>CodeEditForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Common\CheckUpdate.cs" />
+    <Compile Include="Common\CodeEdit.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Common\DoubleContorl.cs">
       <SubType>Component</SubType>
     </Compile>

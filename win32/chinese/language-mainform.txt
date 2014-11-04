@@ -8,7 +8,8 @@ MainForm->menuitem_findluafunc 从源码获取Lua函数
 MainForm->menuitem_pastecards 粘贴卡片
 MainForm->menuitem_comp1 对比-卡片数据 1
 MainForm->menuitem_comp2 对比-卡片数据 2
-MainForm->menuitem_history 历史(&H)
+MainForm->menuitem_history 数据库历史记录(&H)
+MainForm->menuitem_shistory 脚本历史记录
 MainForm->menuitem_quit 退出(&Q)
 MainForm->menuitem_windows 窗口(&W)
 MainForm->menuitem_dataeditor DataEditor

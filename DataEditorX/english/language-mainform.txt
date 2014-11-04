@@ -9,6 +9,7 @@ MainForm->menuitem_pastecards Paste Cards
 MainForm->menuitem_comp1 Compare-Cards 1
 MainForm->menuitem_comp2 Compare-Cards 2
 MainForm->menuitem_history History(&H)
+MainForm->menuitem_shistory Script History
 MainForm->menuitem_quit Quit(&Q)
 MainForm->menuitem_windows Windwos(&W)
 MainForm->menuitem_dataeditor New DataEditor

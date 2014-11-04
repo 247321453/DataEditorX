@@ -76,6 +76,7 @@ namespace DataEditorX
             this.menuitem_close = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_closeother = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_closeall = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuitem_shistory = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -162,6 +163,7 @@ namespace DataEditorX
             this.menuitem_comp2,
             this.toolStripSeparator1,
             this.menuitem_history,
+            this.menuitem_shistory,
             this.toolStripSeparator5,
             this.menuitem_quit});
             this.menuitem_file.Name = "menuitem_file";
@@ -326,6 +328,12 @@ namespace DataEditorX
             this.menuitem_closeall.Text = "Close All";
             this.menuitem_closeall.Click += new System.EventHandler(this.CloseAllToolStripMenuItemClick);
             // 
+            // menuitem_shistory
+            // 
+            this.menuitem_shistory.Name = "menuitem_shistory";
+            this.menuitem_shistory.Size = new System.Drawing.Size(261, 22);
+            this.menuitem_shistory.Text = "Script History";
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -372,6 +380,7 @@ namespace DataEditorX
 		private System.Windows.Forms.ToolStripMenuItem menuitem_file;
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel1;
+        private System.Windows.Forms.ToolStripMenuItem menuitem_shistory;
 	
 	}
 }

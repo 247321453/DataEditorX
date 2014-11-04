@@ -27,6 +27,7 @@ namespace DataEditorX
 	{
 		#region member
 		string cdbHistoryFile;
+        const int MAX_HIS = 0x20;
 		List<string> hittorylist;
 		string datapath;
 		string conflang,conflang_de,conflang_ce,confmsg,conflang_pe;
@@ -132,21 +133,46 @@ namespace DataEditorX
 		void MenuHistory()
 		{
 			menuitem_history.DropDownItems.Clear();
+            menuitem_shistory.DropDownItems.Clear();
 			foreach(string str in hittorylist)
 			{
 				ToolStripMenuItem tsmi=new ToolStripMenuItem(str);
 				tsmi.Click+=MenuHistoryItem_Click;
-				menuitem_history.DropDownItems.Add(tsmi);
+                if(MainForm.isScript(str))
+                    menuitem_shistory.DropDownItems.Add(tsmi);
+                else
+				    menuitem_history.DropDownItems.Add(tsmi);
 			}
 			menuitem_history.DropDownItems.Add(new ToolStripSeparator());
 			ToolStripMenuItem tsmiclear=new ToolStripMenuItem(LANG.GetMsg(LMSG.ClearHistory));
 			tsmiclear.Click+=MenuHistoryClear_Click;
 			menuitem_history.DropDownItems.Add(tsmiclear);
-			
+            menuitem_shistory.DropDownItems.Add(new ToolStripSeparator());
+            ToolStripMenuItem tsmiclear2 = new ToolStripMenuItem(LANG.GetMsg(LMSG.ClearHistory));
+            tsmiclear2.Click += MenuHistoryClear2_Click;
+            menuitem_shistory.DropDownItems.Add(tsmiclear2);
 		}
+        void MenuHistoryClear2_Click(object sender, EventArgs e)
+        {
+            int i = hittorylist.Count - 1;
+            while (i >= 0)
+            {
+                if (MainForm.isScript(hittorylist[i]))
+                    hittorylist.RemoveAt(i);
+                i--;
+            }
+            MenuHistory();
+            SaveHistory();
+        }
 		void MenuHistoryClear_Click(object sender, EventArgs e)
 		{
-			hittorylist.Clear();
+            int i=hittorylist.Count-1;
+            while (i >= 0)
+            {
+                if (!MainForm.isScript(hittorylist[i]))
+                    hittorylist.RemoveAt(i);
+                i--;
+            }
 			MenuHistory();
 			SaveHistory();
 		}
