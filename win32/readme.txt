@@ -1,4 +1,4 @@
-﻿[DataEditorX]2.2.7.1[DataEditorX]
+﻿[DataEditorX]2.2.7.2[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★文件关联
@@ -58,6 +58,8 @@ Ctrl+鼠标左键 	跳转到函数定义
 Ctrl+鼠标滑轮 	缩放文字
 
 ★更新历史
+2.2.7.2
+打开脚本，重复的时候，显示标签
 2.2.7.1
 历史记录分离，脚本编辑器的卡片信息描述
 2.2.7.0

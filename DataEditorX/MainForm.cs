@@ -33,7 +33,6 @@ namespace DataEditorX
 		string conflang,conflang_de,conflang_ce,confmsg,conflang_pe;
 		DataEditForm compare1,compare2;
 		Card[] tCards;
-		Dictionary<DataEditForm,string> list;
 		//
         DataConfig datacfg = null;
         CodeConfig codecfg = null;
@@ -57,7 +56,6 @@ namespace DataEditorX
 			tCards = null;
 			hittorylist = new List<string>();
             
-			list = new Dictionary<DataEditForm,string>();
 			this.datapath = datapath;
             InitDataEditor();
             InitCodeEditor();
@@ -180,11 +178,13 @@ namespace DataEditorX
 		{
 			ToolStripMenuItem tsmi=sender as ToolStripMenuItem;
 			if(tsmi!=null){
-				string file=tsmi.Text;
-				if(MainForm.isScript(file))
-					OpenScript(file);
-				else
-					Open(tsmi.Text);
+                string file = tsmi.Text;
+                if (MainForm.isScript(file))
+                {
+                    OpenScript(file);
+                }
+                else
+                    Open(file);
 			}
 		}
 		#endregion
@@ -224,6 +224,10 @@ namespace DataEditorX
 			if(!string.IsNullOrEmpty(file) && File.Exists(file)){
 				AddHistory(file);
 			}
+            if (checkOpen(file))
+                return;
+            if (OpenInNull(file))
+                return;
 			CodeEditForm cf=new CodeEditForm();
 			LANG.InitForm(cf, conflang_ce);
 			LANG.SetLanguage(cf);
@@ -258,6 +262,11 @@ namespace DataEditorX
         }
 		public void Open(string file)
 		{
+            if (MainForm.isScript(file))
+            {
+                OpenScript(file);
+                return;
+            }
 			if(!string.IsNullOrEmpty(file) && File.Exists(file)){
 				AddHistory(file);
 			}
@@ -275,20 +284,38 @@ namespace DataEditorX
             InitDataEditor();
 			def.InitGameData(datacfg);
 			def.DockAreas = DockAreas.Document;
-			def.FormClosed+=new FormClosedEventHandler(def_FormClosed);
 			def.Show(dockPanel1, DockState.Document);
-			list.Add(def, "");
 		}
 		
 		bool checkOpen(string file)
 		{
-			foreach(DataEditForm df in list.Keys)
+            DockContentCollection contents = dockPanel1.Contents;
+            foreach (DockContent dc in contents)
 			{
-				if(df!=null && !df.IsDisposed)
-				{
-					if(df.getNowCDB()==file)
-						return true;
-				}
+                if (!MainForm.isScript(file))
+                {
+                    DataEditForm df = dc as DataEditForm;
+                    if (df != null && !df.IsDisposed)
+                    {
+                        if (df.getNowCDB() == file)
+                        {
+                            df.Show();
+                            return true;
+                        }
+                    }
+                }
+                else
+                {
+                    CodeEditForm cf = dc as CodeEditForm;
+                    if (cf != null && !cf.IsDisposed)
+                    {
+                        if (cf.NowFile == file)
+                        {
+                            cf.Show();
+                            return true;
+                        }
+                    }
+                }
 			}
 			return false;
 		}
@@ -296,26 +323,38 @@ namespace DataEditorX
 		{
 			if(string.IsNullOrEmpty(file) || !File.Exists(file))
 				return false;
-			foreach(DataEditForm df in list.Keys)
-			{
-				if(df!=null && !df.IsDisposed)
-				{
-					if(string.IsNullOrEmpty(df.getNowCDB())){
-						df.Open(file);
-						return true;
-					}
-				}
-			}
-			return false;
-		}
+            DockContentCollection contents = dockPanel1.Contents;
+            foreach (DockContent dc in contents)
+            {
+                if (!MainForm.isScript(file))
+                {
+                    DataEditForm df = dc as DataEditForm;
+                    if (df != null && !df.IsDisposed)
+                    {
+                        if (string.IsNullOrEmpty(df.getNowCDB()))
+                        {
+                            df.Open(file);
+                            df.Show();
+                            return true;
+                        }
+                    }
+                }
+                else
+                {
+                    CodeEditForm cf = dc as CodeEditForm;
+                    if (cf != null && !cf.IsDisposed)
+                    {
+                        if (string.IsNullOrEmpty(cf.NowFile))
+                        {
+                            cf.Open(file);
+                            cf.Show();
+                            return true;
+                        }
 
-		void def_FormClosed(object sender, FormClosedEventArgs e)
-		{
-			DataEditForm df=sender as DataEditForm;
-			if(df!=null)
-			{
-				list.Remove(df);
-			}
+                    }
+                }
+            }
+			return false;
 		}
 		
 		void DataEditorToolStripMenuItemClick(object sender, EventArgs e)

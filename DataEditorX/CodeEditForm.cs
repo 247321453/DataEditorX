@@ -36,6 +36,7 @@ namespace DataEditorX
 		AutocompleteMenu popupMenu_con;
 		AutocompleteMenu popupMenu_find;
 		string nowFile;
+        public string NowFile { get { return nowFile; } }
 		string title;
 		string oldtext;
 		Dictionary<string,string> tooltipDic;
@@ -84,7 +85,6 @@ namespace DataEditorX
 				fctb.ImeMode=ImeMode.On;
 			
 		}
-
 		public void LoadXml(string xmlfile)
 		{
 			fctb.DescriptionFile=xmlfile;
