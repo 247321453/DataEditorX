@@ -83,7 +83,7 @@ namespace DataEditorX
 		public const int MAX_HISTORY=0x20;
 		public static bool isScript(string file)
 		{
-			if(file.EndsWith("lua",StringComparison.OrdinalIgnoreCase))
+			if(file!=null && file.EndsWith("lua",StringComparison.OrdinalIgnoreCase))
 				return true;
 			return false;
 		}
@@ -479,8 +479,8 @@ namespace DataEditorX
 			CodeEditForm cf= dockPanel1.ActiveContent as CodeEditForm;
 			if(cf!=null)
 			{
-				cf.Save();
-				MyMsg.Show(LMSG.SaveFileOK);
+				if(cf.Save())
+				    MyMsg.Show(LMSG.SaveFileOK);
 			}
 		}
 		#endregion

@@ -40,6 +40,7 @@ namespace DataEditorX
 		string title;
 		string oldtext;
 		Dictionary<string,string> tooltipDic;
+        bool tabisspaces = false;
 		public CodeEditForm()
 		{
 			InitForm();
@@ -81,10 +82,25 @@ namespace DataEditorX
 			if(float.TryParse(ConfigurationManager.AppSettings["fontsize"]
 			                  , out fontsize))
 				fctb.Font=new Font(fontname,fontsize);
-			if(ConfigurationManager.AppSettings["IME"].ToLower()=="true")
+			if(ReadConfig("IME").ToLower()=="true")
 				fctb.ImeMode=ImeMode.On;
-			
+            if (ReadConfig("wordwrap").ToLower() == "true")
+                fctb.WordWrap = true;
+            else
+                fctb.WordWrap = false;
+            if (ReadConfig("tabisspace").ToLower() == "true")
+                tabisspaces = true;
+            else
+                tabisspaces = false;
 		}
+        string ReadConfig(string key)
+        {
+            string v = ConfigurationManager.AppSettings[key];
+            if (string.IsNullOrEmpty(v))
+                return "";
+            else
+                return v;
+        }
 		public void LoadXml(string xmlfile)
 		{
 			fctb.DescriptionFile=xmlfile;
@@ -297,37 +313,35 @@ namespace DataEditorX
 		{
 			fctb.ShowReplaceDialog();
 		}
-		public void Save()
+        bool savefile(bool saveas)
+        {
+            string alltext = fctb.Text;
+            if(!tabisspaces)
+                alltext = alltext.Replace("    ", "\t");
+            if (saveas)
+            {
+                using (SaveFileDialog sfdlg = new SaveFileDialog())
+                {
+                    sfdlg.Filter = "Script(*.lua)|*.lua|All Files(*.*)|*.*";
+                    if (sfdlg.ShowDialog() == DialogResult.OK)
+                    {
+                        nowFile = sfdlg.FileName;
+                        SetTitle();
+                    }
+                    else
+                        return false;
+                }
+            }
+            File.WriteAllText(nowFile, alltext, new UTF8Encoding(false));
+            return true;
+        }
+        public bool Save()
 		{
-			if(string.IsNullOrEmpty(nowFile))
-			{
-				using(SaveFileDialog sfdlg=new SaveFileDialog())
-				{
-					sfdlg.Filter="Script(*.lua)|*.lua|All Files(*.*)|*.*";
-					if(sfdlg.ShowDialog()==DialogResult.OK)
-					{
-						nowFile=sfdlg.FileName;
-						SetTitle();
-					}
-					else
-						return;
-				}
-			}
-			fctb.SaveToFile(nowFile, new UTF8Encoding(false));
+			return savefile(string.IsNullOrEmpty(nowFile));
 		}
-		public void SaveAs()
+        public bool SaveAs()
 		{
-			using(SaveFileDialog sfdlg=new SaveFileDialog())
-			{
-				sfdlg.Filter="Script(*.lua)|*.lua|All Files(*.*)|*.*";
-				if(sfdlg.ShowDialog()==DialogResult.OK)
-				{
-					nowFile=sfdlg.FileName;
-				}
-				else
-					return;
-			}
-			fctb.SaveToFile(nowFile, new UTF8Encoding(false));
+            return savefile(true);
 		}
 		
 		void SaveToolStripMenuItemClick(object sender, EventArgs e)
