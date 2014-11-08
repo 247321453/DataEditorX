@@ -31,7 +31,7 @@ namespace DataEditorX
 		/// <summary>搜索条件</summary>
 		Card srcCard=new Card(0);
 		string[] strs=null;
-        List<long> tmpCodes;
+        List<string> tmpCodes;
 		string title;
 		string nowCdbFile="";
 		int MaxRow=20;
@@ -75,7 +75,7 @@ namespace DataEditorX
 		void Initialize()
 		{
 			datacfg=null;
-            tmpCodes = new List<long>();
+            tmpCodes = new List<string>();
 			InitializeComponent();
 			title=this.Text;
 			nowCdbFile="";
@@ -1062,8 +1062,11 @@ namespace DataEditorX
 				dlg.Filter=LANG.GetMsg(LMSG.ydkType);
 				if(dlg.ShowDialog()==DialogResult.OK)
 				{
+                    tmpCodes.Clear();
+                    string[] ids = YGOUtil.ReadYDK(dlg.FileName);
+                    tmpCodes.AddRange(ids);
 					SetCards(DataBase.Read(nowCdbFile, true,
-                        YGOUtil.ReadYDK(dlg.FileName)), false);
+                        ids), false);
 				}
 			}
 		}
@@ -1077,8 +1080,11 @@ namespace DataEditorX
 				fdlg.Description= LANG.GetMsg(LMSG.SelectImagePath);
 				if(fdlg.ShowDialog()==DialogResult.OK)
 				{
+                    tmpCodes.Clear();
+                    string[] ids = YGOUtil.ReadImage(fdlg.SelectedPath);
+                    tmpCodes.AddRange(ids);
 					SetCards(DataBase.Read(nowCdbFile, true,
-                        YGOUtil.ReadImage(fdlg.SelectedPath)), false);
+                        ids), false);
 				}
 			}
 		}
@@ -1524,7 +1530,7 @@ namespace DataEditorX
 			foreach(Card card in mcards)
 			{
                 if (!CheckCard(cards, card, checktext))
-                    tmpCodes.Add(card.id);
+                    tmpCodes.Add(card.id.ToString());
 			}
             if (tmpCodes.Count == 0)
             {
