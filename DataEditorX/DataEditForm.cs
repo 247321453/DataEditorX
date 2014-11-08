@@ -672,7 +672,7 @@ namespace DataEditorX
             {
                 Card[] mcards = DataBase.Read(nowCdbFile,
                 true, tmpCodes.ToArray());
-				SetCards(getCompCards(), false);
+				SetCards(getCompCards(), true);
 			}
 			else{
 				srcCard=c;

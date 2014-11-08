@@ -1,4 +1,4 @@
-﻿[DataEditorX]2.2.7.4[DataEditorX]
+﻿[DataEditorX]2.2.7.5[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★文件关联
@@ -58,6 +58,8 @@ Ctrl+鼠标左键 	跳转到函数定义
 Ctrl+鼠标滑轮 	缩放文字
 
 ★更新历史
+2.2.7.5
+lua编辑器,编辑完，返回当前页数
 2.2.7.4
 lua编辑器，修复按ydk，图像读取，编辑卡片后列表结果bug
 2.2.7.3
