@@ -363,8 +363,8 @@ namespace DataEditorX
 			MyMsg.Show(
 				LANG.GetMsg(LMSG.About)+"\t"+Application.ProductName+"\n"
 				+LANG.GetMsg(LMSG.Version)+"\t1.1.0.0\n"
-				+LANG.GetMsg(LMSG.Author)+"\t247321453\n"
-				+"Email:\tkeyoyu@foxmail.com");
+                + LANG.GetMsg(LMSG.Author) + "\t柯永裕\n"
+				+"Email:\t247321453@qq.com\n\n我的支付宝账户就是Email，谢谢大家捐助。");
 		}
 		
 		void Menuitem_openClick(object sender, EventArgs e)

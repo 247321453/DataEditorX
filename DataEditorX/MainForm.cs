@@ -42,7 +42,7 @@ namespace DataEditorX
 		public MainForm(string datapath, string file)
 		{
 			Init(datapath);
-			if(file.EndsWith("lua",StringComparison.OrdinalIgnoreCase))
+			if(MainForm.isScript(file))
 				OpenScript(file);
 			else
 				Open(file);
@@ -73,6 +73,7 @@ namespace DataEditorX
 			LANG.SetLanguage(this);
 			ReadHistory();
 			MenuHistory();
+            bgWorker1.RunWorkerAsync();
 		}
 		#endregion
 		
@@ -283,7 +284,6 @@ namespace DataEditorX
 			LANG.SetLanguage(def);
             InitDataEditor();
 			def.InitGameData(datacfg);
-			def.DockAreas = DockAreas.Document;
 			def.Show(dockPanel1, DockState.Document);
 		}
 		
@@ -367,7 +367,7 @@ namespace DataEditorX
 		#region form
 		void MainFormLoad(object sender, System.EventArgs e)
 		{
-
+            //
 		}
 		
 		void MainFormFormClosing(object sender, FormClosingEventArgs e)
@@ -587,5 +587,10 @@ namespace DataEditorX
             }
         }
 		#endregion
+
+        private void bgWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            TaskHelper.CheckVersion(false);
+        }
 	}
 }

@@ -67,6 +67,7 @@ namespace DataEditorX
             this.menuitem_comp2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuitem_history = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuitem_shistory = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.menuitem_quit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_windows = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,7 +77,7 @@ namespace DataEditorX
             this.menuitem_close = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_closeother = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_closeall = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuitem_shistory = new System.Windows.Forms.ToolStripMenuItem();
+            this.bgWorker1 = new System.ComponentModel.BackgroundWorker();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -262,6 +263,12 @@ namespace DataEditorX
             this.menuitem_history.Size = new System.Drawing.Size(261, 22);
             this.menuitem_history.Text = "History(&H)";
             // 
+            // menuitem_shistory
+            // 
+            this.menuitem_shistory.Name = "menuitem_shistory";
+            this.menuitem_shistory.Size = new System.Drawing.Size(261, 22);
+            this.menuitem_shistory.Text = "Script History";
+            // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
@@ -328,11 +335,9 @@ namespace DataEditorX
             this.menuitem_closeall.Text = "Close All";
             this.menuitem_closeall.Click += new System.EventHandler(this.CloseAllToolStripMenuItemClick);
             // 
-            // menuitem_shistory
+            // bgWorker1
             // 
-            this.menuitem_shistory.Name = "menuitem_shistory";
-            this.menuitem_shistory.Size = new System.Drawing.Size(261, 22);
-            this.menuitem_shistory.Text = "Script History";
+            this.bgWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgWorker1_DoWork);
             // 
             // MainForm
             // 
@@ -381,6 +386,7 @@ namespace DataEditorX
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel1;
         private System.Windows.Forms.ToolStripMenuItem menuitem_shistory;
+        private System.ComponentModel.BackgroundWorker bgWorker1;
 	
 	}
 }

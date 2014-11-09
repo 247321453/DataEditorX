@@ -70,36 +70,40 @@ namespace DataEditorX.Core
 			cardlist=cards;
 			mArgs=args;
 		}
+        public static void CheckVersion(bool showNew)
+        {
+            string newver = CheckUpdate.Check(
+                ConfigurationManager.AppSettings["updateURL"]);
+            int iver, iver2;
+            int.TryParse(Application.ProductVersion.Replace(".", ""), out iver);
+            int.TryParse(newver.Replace(".", ""), out iver2);
+            if (iver2 > iver)
+            {//has new version
+                if (!MyMsg.Question(LMSG.HaveNewVersion))
+                    return;
+            }
+            else if (iver2 > 0)
+            {//now is last version
+                if (!showNew)
+                    return;
+                if (!MyMsg.Question(LMSG.NowIsNewVersion))
+                    return;
+            }
+            else
+            {
+                if (!showNew)
+                    return;
+                MyMsg.Error(LMSG.CheckUpdateFail);
+                return;
+            }
+            if (CheckUpdate.DownLoad(
+                MyPath.Combine(Application.StartupPath, newver + ".zip")))
+                MyMsg.Show(LMSG.DownloadSucceed);
+            else
+                MyMsg.Show(LMSG.DownloadFail);
+        }
 		public void OnCheckUpdate(bool showNew){
-			string newver=CheckUpdate.Check(
-				ConfigurationManager.AppSettings["updateURL"]);
-			int iver,iver2;
-			int.TryParse(Application.ProductVersion.Replace(".",""), out iver);
-			int.TryParse(newver.Replace(".",""), out iver2);
-			if(iver2>iver)
-			{//has new version
-				if(!MyMsg.Question(LMSG.HaveNewVersion))
-					return;
-			}
-			else if(iver2>0)
-			{//now is last version
-				if(!showNew)
-					return;
-				if(!MyMsg.Question(LMSG.NowIsNewVersion))
-					return;
-			}
-			else
-			{
-				if(!showNew)
-					return;
-				MyMsg.Error(LMSG.CheckUpdateFail);
-				return;
-			}
-			if(CheckUpdate.DownLoad(
-				MyPath.Combine(Application.StartupPath, newver+".zip")))
-				MyMsg.Show(LMSG.DownloadSucceed);
-			else
-				MyMsg.Show(LMSG.DownloadFail);
+            TaskHelper.CheckVersion(showNew);
 		}
 		public void CutImages(string imgpath,bool isreplace)
 		{

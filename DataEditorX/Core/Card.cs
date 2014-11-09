@@ -199,16 +199,16 @@ namespace DataEditorX.Core
 		
 		public bool IsSetCode(long sc)
 		{
-			if((this.setcode&0xffff)==sc)
-				return true;
-			else if(((this.setcode>>0x10)&0xffff)==sc)
-				return true;
-			else if(((this.setcode>>0x20)&0xffff)==sc)
-				return true;
-			else if(((this.setcode>>0x30)&0xffff)==sc)
-				return true;
-			else
-				return false;
+            long settype = sc & 0xfff;
+            long setsubtype = sc & 0xf000;
+            long setcode = this.setcode;
+            while (setcode != 0)
+            {
+                if ((setcode & 0xfff) == settype && (setcode & 0xf000 & setsubtype) == setsubtype)
+                    return true;
+                setcode = setcode >> 0x10;
+            }
+            return false;
 		}
 		/// <summary>
 		/// 卡片是否不相等

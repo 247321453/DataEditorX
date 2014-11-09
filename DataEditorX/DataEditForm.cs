@@ -101,10 +101,10 @@ namespace DataEditorX
 			//设置空白卡片
 			oldCard=new Card(0);
 			SetCard(oldCard);
-			
-			if(File.Exists(nowCdbFile))
+
+            if (nowCdbFile !=null && File.Exists(nowCdbFile))
 				Open(nowCdbFile);
-			//checkupdate(false);//检查更新
+			 //   CheckUpdate(false);//检查更新
 		}
 		//窗体关闭
 		void DataEditFormFormClosing(object sender, FormClosingEventArgs e)
@@ -982,15 +982,15 @@ namespace DataEditorX
 			MyMsg.Show(
 				LANG.GetMsg(LMSG.About)+"\t"+Application.ProductName+"\n"
 				+LANG.GetMsg(LMSG.Version)+"\t"+Application.ProductVersion+"\n"
-				+LANG.GetMsg(LMSG.Author)+"\t247321453\n"
-				+"Email:\tkeyoyu@foxmail.com");
+                + LANG.GetMsg(LMSG.Author) + "\t柯永裕\n"
+                + "Email:\t247321453@qq.com\n\n我的支付宝账户就是Email，谢谢大家捐助。");
 		}
 		
 		void Menuitem_checkupdateClick(object sender, EventArgs e)
 		{
-			checkupdate(true);
+			CheckUpdate(true);
 		}
-		void checkupdate(bool showNew)
+		public void CheckUpdate(bool showNew)
 		{
 			if(!isRun())
 			{
