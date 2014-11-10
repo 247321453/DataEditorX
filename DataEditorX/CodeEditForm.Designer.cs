@@ -53,6 +53,7 @@ namespace DataEditorX
             this.tb_input = new System.Windows.Forms.TextBox();
             this.fctb = new FastColoredTextBoxNS.FastColoredTextBoxEx();
             this.documentMap1 = new FastColoredTextBoxNS.DocumentMap();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fctb)).BeginInit();
             this.SuspendLayout();
@@ -257,6 +258,10 @@ namespace DataEditorX
             this.documentMap1.Text = "documentMap1";
             this.documentMap1.Visible = false;
             // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            // 
             // CodeEditForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -298,6 +303,7 @@ namespace DataEditorX
 		private System.Windows.Forms.ToolStripMenuItem menuitem_open;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_file;
 		private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
 		
 
 	}

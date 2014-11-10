@@ -283,7 +283,26 @@ namespace DataEditorX.Core
         {
             return DataManager.GetValue(datacfg.dicCardTypes, (long)type);
         }
-        
+
+        public static string GetTypeString(long type)
+        {
+            string str="";
+            foreach (long k in datacfg.dicCardTypes.Keys)
+            {
+                if ((type & k) == k)
+                    str += GetType((CardType)k)+"|";
+            }
+            if (str.Length > 0)
+                str = str.Substring(0, str.Length - 1);
+            else
+                str = "???";
+            return str;
+        }
+        public static string GetSetNameString(long type)
+        {
+            return "";
+        }
+
         public static string GetDesc(string desc, string regx)
         {
             desc = desc.Replace(Environment.NewLine, "\n");

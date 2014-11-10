@@ -4,6 +4,7 @@
  * ModiftyDate :2014-02-12
  */
 using System;
+using System.Text.RegularExpressions;
 
 namespace DataEditorX.Core
 {
@@ -86,31 +87,36 @@ namespace DataEditorX.Core
 		/// </summary>
 		public override string ToString()
 		{
+            string str = "";
 			if(IsType(CardType.TYPE_MONSTER))
-			return string.Format("{0}[{1}]\nType: 0x{2}\n{3}{4}/{5}\n {6}", 
-				                     name, idString,type.ToString("x"),
+			    str = string.Format("{0}[{1}]\n[{2}] {3}/{4}\n{5} {6}/{7}\n {8}", 
+				                     name, idString,YGOUtil.GetTypeString(type),
+                                     YGOUtil.GetRace(race),
+                                     YGOUtil.GetAttributeString(attribute),
 				                     levelString(),atk,def,redesc());
-			return string.Format("{0}[{1}]\nType: 0x{2}\n{3}", 
-			                     name, idString,type.ToString("x"),redesc());
-		}
+			else
+                str = string.Format("{0}[{1}]\n[{2}]\n{3}",
+                                 name, idString, YGOUtil.GetTypeString(type), redesc());
+            return str;
+        }
 		string levelString()
 		{
 			string star="[";
 			long i=0,j=level&0xff;
-			for(i=0;i<j;i++)
-				star +="★";
-			return star+"] "+j.ToString()+" ";
+            for (i = 0; i < j; i++)
+            {
+                if ( i>=0 && (i % 4) == 0)
+                    star += " ";
+                star += "★";
+            }
+			return star+"]";
 		}
 		string redesc()
 		{
-			return desc
-                .Replace(Environment.NewLine, "")
-				//.Replace("，","，\n")
-				.Replace("。","。\n")
-				.Replace("？","？\n")
-				//.Replace(",",",\n")
-				//.Replace(".",".\n")
-				.Replace("?","?\n");
+            string str = desc.Replace(Environment.NewLine, "\n");
+            str = Regex.Replace(str, "([。|？|?])", "$1\n");
+            str = str.Replace("\n\n", "\n");
+            return str;
 		}
 		public bool EqualsData(Card other)
 		{

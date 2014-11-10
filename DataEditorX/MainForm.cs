@@ -234,9 +234,7 @@ namespace DataEditorX
 			LANG.SetLanguage(cf);
             InitCodeEditor();
 			cf.SetCDBList(hittorylist.ToArray());
-			cf.DockAreas = DockAreas.Document;
-            cf.InitTooltip(codecfg.TooltipDic, 
-			               codecfg.FunList, codecfg.ConList);
+            cf.InitTooltip(codecfg.TooltipDic, codecfg.FunList, codecfg.ConList);
 			//cf.SetIMEMode(ImeMode.Inherit);
 			cf.Open(file);
 			cf.Show(dockPanel1, DockState.Document);

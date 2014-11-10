@@ -41,6 +41,7 @@ namespace DataEditorX
 		string oldtext;
 		Dictionary<string,string> tooltipDic;
         bool tabisspaces = false;
+        string nowcdb;
 		public CodeEditForm()
 		{
 			InitForm();
@@ -121,13 +122,13 @@ namespace DataEditorX
 				nowFile=file;
 				string cdb=MyPath.Combine(
 					Path.GetDirectoryName(file),"../cards.cdb");
-				if(File.Exists(cdb))
-					SetCards(cdb);
+                SetCards(cdb);
 				fctb.OpenFile(nowFile, new UTF8Encoding(false));
 				oldtext=fctb.Text;
 				SetTitle();
 			}
 		}
+
 		void HideMenu()
 		{
 			if(this.MdiParent ==null)
@@ -447,7 +448,9 @@ namespace DataEditorX
 		}
 		public void SetCards(string name)
 		{
-			SetCards(DataBase.Read(name, true,""));
+            nowcdb = name;
+            if (!backgroundWorker1.IsBusy)
+                backgroundWorker1.RunWorkerAsync();
 		}
 		public void SetCards(Card[] cards)
 		{
@@ -499,5 +502,11 @@ namespace DataEditorX
 			}
         }
         #endregion
+
+        private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            if (nowcdb !=null && File.Exists(nowcdb))
+                SetCards(DataBase.Read(nowcdb, true,""));
+        }
     }
 }
