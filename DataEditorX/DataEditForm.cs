@@ -828,7 +828,10 @@ namespace DataEditorX
 			}
 			if(File.Exists(lua))
 			{
-				System.Diagnostics.Process.Start(lua);
+				if(ConfigurationManager.AppSettings["useSystemLuaEditor"].ToLower() == "true")
+					System.Diagnostics.Process.Start(lua);
+				else
+					System.Diagnostics.Process.Start(Application.ExecutablePath,"\""+lua+"\"");
 			}
 			return false;
 		}
@@ -1482,7 +1485,7 @@ namespace DataEditorX
 				dlg.Filter="Zip|(*.zip|All Files(*.*)|*.*";
 				if(dlg.ShowDialog()==DialogResult.OK)
 				{
-					tasker.SetTask(MyTask.ExportData, getCardList(false), dlg.FileName);
+					tasker.SetTask(MyTask.ExportData, getCardList(false), dlg.FileName, GAMEPATH);
 					Run(LANG.GetMsg(LMSG.ExportData));
 				}
 			}

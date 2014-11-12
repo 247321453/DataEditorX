@@ -237,14 +237,14 @@ namespace DataEditorX.Core
 			File.Delete(setFile);
 		}
 		
-		public void ExportData(string zipname)
+		public void ExportData(string zipname, string path)
 		{
 			int i=0;
 			Card[] cards=cardlist;
 			if(cards == null || cards.Length == 0)
 				return;
 			int count=cards.Length;
-			string path=Path.GetDirectoryName(zipname);
+			//string path=Path.GetDirectoryName(zipname);
 			string name=Path.GetFileNameWithoutExtension(zipname);
 			string cdbfile=zipname+".cdb";
 			string readme=MyPath.Combine(path, name+".txt");
@@ -294,7 +294,7 @@ namespace DataEditorX.Core
 			switch(nowTask){
 				case MyTask.ExportData:
 					if(mArgs!=null && mArgs.Length>=1){
-						ExportData(mArgs[0]);
+						ExportData(mArgs[0], mArgs[1]);
 					}
 					break;
 				case MyTask.CheckUpdate:
