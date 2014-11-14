@@ -983,7 +983,7 @@ namespace DataEditorX
 				LANG.GetMsg(LMSG.About)+"\t"+Application.ProductName+"\n"
 				+LANG.GetMsg(LMSG.Version)+"\t"+Application.ProductVersion+"\n"
                 + LANG.GetMsg(LMSG.Author) + "\t柯永裕\n"
-                + "Email:\t247321453@qq.com\n\n我的支付宝账户就是Email，谢谢大家捐助。");
+                + "Email:\t247321453@qq.com");
 		}
 		
 		void Menuitem_checkupdateClick(object sender, EventArgs e)

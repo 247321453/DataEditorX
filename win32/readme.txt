@@ -1,4 +1,4 @@
-﻿[DataEditorX]2.2.8.1[DataEditorX]
+﻿[DataEditorX]2.2.8.2[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★捐助
@@ -49,6 +49,8 @@ DataEditorX.exe.config
 
 ★Magic Set Editor 2
 下载/更新："Magic Set Editor 2/download.bat"
+或者
+https://github.com/247321453/MagicSetEditor2
 
 ★MSE存档生成设置
 mse-head 		MSE的风格设置文件
@@ -63,6 +65,8 @@ Ctrl+鼠标左键 	跳转到函数定义
 Ctrl+鼠标滑轮 	缩放文字
 
 ★更新历史
+2.2.8.2
+MSE的图片库相对路径
 2.2.8.1
 卡片描述完善，加快打开lua的速度。
 2.2.8.0

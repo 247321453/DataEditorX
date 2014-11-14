@@ -97,7 +97,7 @@ namespace DataEditorX.Core
 			DirectoryInfo fo;
 			try
 			{
-				fo=new DirectoryInfo(dir);
+				fo=new DirectoryInfo(MyPath.GetFullPath(dir));
 			}
 			catch
 			{

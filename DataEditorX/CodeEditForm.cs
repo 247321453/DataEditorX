@@ -122,7 +122,7 @@ namespace DataEditorX
 				nowFile=file;
 				string cdb=MyPath.Combine(
 					Path.GetDirectoryName(file),"../cards.cdb");
-                SetCards(cdb);
+                SetCardDB(cdb);
 				fctb.OpenFile(nowFile, new UTF8Encoding(false));
 				oldtext=fctb.Text;
 				SetTitle();
@@ -365,7 +365,7 @@ namespace DataEditorX
 				LANG.GetMsg(LMSG.About)+"\t"+Application.ProductName+"\n"
 				+LANG.GetMsg(LMSG.Version)+"\t1.1.0.0\n"
                 + LANG.GetMsg(LMSG.Author) + "\t柯永裕\n"
-				+"Email:\t247321453@qq.com\n\n我的支付宝账户就是Email，谢谢大家捐助。");
+				+"Email:\t247321453@qq.com");
 		}
 		
 		void Menuitem_openClick(object sender, EventArgs e)
@@ -443,25 +443,31 @@ namespace DataEditorX
 			ToolStripMenuItem tsmi=sender as ToolStripMenuItem;
 			if(tsmi!=null){
 				string file=tsmi.Text;
-				SetCards(file);
+				SetCardDB(file);
 			}
 		}
-		public void SetCards(string name)
+		public void SetCardDB(string name)
 		{
             nowcdb = name;
             if (!backgroundWorker1.IsBusy)
                 backgroundWorker1.RunWorkerAsync();
 		}
-		public void SetCards(Card[] cards)
-		{
-			if(cards ==null)
-				return;
-			cardlist.Clear();
-			foreach(Card c in cards)
-			{
-				cardlist.Add(c.id,c.ToString());
-			}
-		}
+		
+        private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            if (nowcdb != null && File.Exists(nowcdb))
+                SetCards(DataBase.Read(nowcdb, true, ""));
+        }
+        public void SetCards(Card[] cards)
+        {
+            if (cards == null)
+                return;
+            cardlist.Clear();
+            foreach (Card c in cards)
+            {
+                cardlist.Add(c.id, c.ToString());
+            }
+        }
         #endregion
 
         #region selection
@@ -503,10 +509,6 @@ namespace DataEditorX
         }
         #endregion
 
-        private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
-        {
-            if (nowcdb !=null && File.Exists(nowcdb))
-                SetCards(DataBase.Read(nowcdb, true,""));
-        }
+
     }
 }

@@ -7,6 +7,7 @@
  */
 using System;
 using System.Text;
+using System.Windows.Forms;
 
 namespace System.IO
 {
@@ -15,6 +16,15 @@ namespace System.IO
 	/// </summary>
 	public class MyPath
 	{
+        public static string GetFullPath(string dir)
+        {
+            string path = Application.StartupPath;
+            if (dir.StartsWith("."))
+            {
+                dir = MyPath.Combine(path, dir.Substring(2));
+            }
+            return dir;
+        }
 		public static string Combine(params string[] paths)
 		{
 			if (paths.Length == 0)
