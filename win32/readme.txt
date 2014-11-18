@@ -1,4 +1,4 @@
-﻿[DataEditorX]2.2.8.2[DataEditorX]
+﻿[DataEditorX]2.2.8.4[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★捐助
@@ -65,6 +65,11 @@ Ctrl+鼠标左键 	跳转到函数定义
 Ctrl+鼠标滑轮 	缩放文字
 
 ★更新历史
+2.2.8.4
+japan
+历史记录修正
+2.2.8.3
+japan
 2.2.8.2
 MSE的图片库相对路径
 2.2.8.1

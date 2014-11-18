@@ -27,8 +27,8 @@ namespace DataEditorX
 	{
 		#region member
 		string cdbHistoryFile;
-        const int MAX_HIS = 0x20;
-		List<string> hittorylist;
+        List<string> cdbhistory;
+        List<string> luahistory;
 		string datapath;
 		string conflang,conflang_de,conflang_ce,confmsg,conflang_pe;
 		DataEditForm compare1,compare2;
@@ -54,8 +54,9 @@ namespace DataEditorX
 		void Init(string datapath)
 		{
 			tCards = null;
-			hittorylist = new List<string>();
-            
+            cdbhistory = new List<string>();
+            luahistory = new List<string>();
+
 			this.datapath = datapath;
             InitDataEditor();
             InitCodeEditor();
@@ -81,7 +82,7 @@ namespace DataEditorX
 		public const int WM_OPEN=0x0401;
 		public const int WM_OPEN_SCRIPT=0x0402;
 		public const string TMPFILE="open.tmp";
-		public const int MAX_HISTORY=0x20;
+		public const int MAX_HISTORY=0x10;
 		public static bool isScript(string file)
 		{
 			if(file!=null && file.EndsWith("lua",StringComparison.OrdinalIgnoreCase))
@@ -96,36 +97,60 @@ namespace DataEditorX
 			if(!File.Exists(cdbHistoryFile))
 				return;
 			string[] lines=File.ReadAllLines(cdbHistoryFile);
-			foreach(string line in lines)
-			{
-				if(string.IsNullOrEmpty(line) || line.StartsWith("#"))
-					continue;
-				if(File.Exists(line) && hittorylist.IndexOf(line)<0){
-					hittorylist.Add(line);
-				}
-			}
+            AddHistorys(lines);
 		}
+        void AddHistorys(string[] lines)
+        {
+            luahistory.Clear();
+            cdbhistory.Clear();
+            foreach (string line in lines)
+            {
+                if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
+                    continue;
+                if (File.Exists(line))
+                {
+                    if (MainForm.isScript(line))
+                    {
+                        if (luahistory.Count < MainForm.MAX_HISTORY
+                            && luahistory.IndexOf(line) < 0)
+                            luahistory.Add(line);
+                    }
+                    else
+                    {
+                        if (cdbhistory.Count < MainForm.MAX_HISTORY
+                            && cdbhistory.IndexOf(line) < 0)
+                            cdbhistory.Add(line);
+                    }
+                }
+            }
+        }
 		void AddHistory(string file)
 		{
-			int index=hittorylist.IndexOf(file);
-			if(index>=0){
-				hittorylist.RemoveAt(index);
-			}
-			string[] tmps=hittorylist.ToArray();
-			hittorylist.Clear();
-			hittorylist.Add(file);
-			hittorylist.AddRange(tmps);
+            List<string> tmplist = new List<string>();
+            //添加到开始
+            tmplist.Add(file);
+            //添加旧记录
+            tmplist.AddRange(cdbhistory.ToArray());
+            tmplist.AddRange(luahistory.ToArray());
+            //
+            AddHistorys(tmplist.ToArray());
 			SaveHistory();
 			MenuHistory();
 		}
 		void SaveHistory()
 		{
-			string texts="# history";
-			foreach(string str in hittorylist)
+			string texts="# database history";
+			foreach(string str in cdbhistory)
 			{
 				if(File.Exists(str))
 					texts += Environment.NewLine + str;
 			}
+            texts += Environment.NewLine + "# script history";
+            foreach (string str in luahistory)
+            {
+                if (File.Exists(str))
+                    texts += Environment.NewLine + str;
+            }
 			File.Delete(cdbHistoryFile);
 			File.WriteAllText(cdbHistoryFile, texts);
 		}
@@ -133,19 +158,23 @@ namespace DataEditorX
 		{
 			menuitem_history.DropDownItems.Clear();
             menuitem_shistory.DropDownItems.Clear();
-			foreach(string str in hittorylist)
+			foreach(string str in cdbhistory)
 			{
 				ToolStripMenuItem tsmi=new ToolStripMenuItem(str);
 				tsmi.Click+=MenuHistoryItem_Click;
-                if(MainForm.isScript(str))
-                    menuitem_shistory.DropDownItems.Add(tsmi);
-                else
-				    menuitem_history.DropDownItems.Add(tsmi);
+                menuitem_history.DropDownItems.Add(tsmi);
 			}
 			menuitem_history.DropDownItems.Add(new ToolStripSeparator());
 			ToolStripMenuItem tsmiclear=new ToolStripMenuItem(LANG.GetMsg(LMSG.ClearHistory));
 			tsmiclear.Click+=MenuHistoryClear_Click;
 			menuitem_history.DropDownItems.Add(tsmiclear);
+
+            foreach (string str in luahistory)
+            {
+                ToolStripMenuItem tsmi = new ToolStripMenuItem(str);
+                tsmi.Click += MenuHistoryItem_Click;
+                menuitem_shistory.DropDownItems.Add(tsmi);
+            }
             menuitem_shistory.DropDownItems.Add(new ToolStripSeparator());
             ToolStripMenuItem tsmiclear2 = new ToolStripMenuItem(LANG.GetMsg(LMSG.ClearHistory));
             tsmiclear2.Click += MenuHistoryClear2_Click;
@@ -153,25 +182,13 @@ namespace DataEditorX
 		}
         void MenuHistoryClear2_Click(object sender, EventArgs e)
         {
-            int i = hittorylist.Count - 1;
-            while (i >= 0)
-            {
-                if (MainForm.isScript(hittorylist[i]))
-                    hittorylist.RemoveAt(i);
-                i--;
-            }
+            luahistory.Clear();
             MenuHistory();
             SaveHistory();
         }
 		void MenuHistoryClear_Click(object sender, EventArgs e)
 		{
-            int i=hittorylist.Count-1;
-            while (i >= 0)
-            {
-                if (!MainForm.isScript(hittorylist[i]))
-                    hittorylist.RemoveAt(i);
-                i--;
-            }
+            cdbhistory.Clear();
 			MenuHistory();
 			SaveHistory();
 		}
@@ -233,7 +250,7 @@ namespace DataEditorX
 			LANG.InitForm(cf, conflang_ce);
 			LANG.SetLanguage(cf);
             InitCodeEditor();
-			cf.SetCDBList(hittorylist.ToArray());
+			cf.SetCDBList(cdbhistory.ToArray());
             cf.InitTooltip(codecfg.TooltipDic, codecfg.FunList, codecfg.ConList);
 			//cf.SetIMEMode(ImeMode.Inherit);
 			cf.Open(file);

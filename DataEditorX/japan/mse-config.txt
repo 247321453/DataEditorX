@@ -1,16 +1,14 @@
 ﻿###########################
 # Magic Set Editor 2
 ########################### Chs 2 Cht 
-cn2tw = true
+cn2tw = false
 ########################### Setting
 maxcount = 0
 imagepath = ./Images
 ########################### Spell/Trap
 #jp setting
-# spell = %%
-# trap = %%
-spell = [魔法卡%%]
-trap = [陷阱卡%%]
+spell = %%
+trap = %%
 ############################ Text
 # chs jp
 pendulum-text = 】[\s\S]*?\n([\S\s]*?)\n【
@@ -20,6 +18,6 @@ pendulum-text = 】[\s\S]*?\n([\S\s]*?)\n【
 monster-text = [果|介|述|報]】\n([\S\s]*)
 # en  monster-text = Text:[\s\S]*?Text:\n([\S\s]*)
 ########################### Replace
-replace = ([鮟|鱇|・|·]) <i>$1</i>
+#replace = ([鮟|鱇|・|·]) <i>$1</i>
 #replace = \s <sym-auto>^</sym-auto>
 #replace = ([A-Z]) <i>$1</i>

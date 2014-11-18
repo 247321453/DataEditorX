@@ -430,12 +430,9 @@ namespace DataEditorX
 				return;
 			foreach(string cdb in cdbs)
 			{
-				if(".cdb"==Path.GetExtension(cdb).ToLower())
-				{
-					ToolStripMenuItem tsmi=new ToolStripMenuItem(cdb);
-					tsmi.Click+=MenuItem_Click;
-					menuitem_setcard.DropDownItems.Add(tsmi);
-				}
+				ToolStripMenuItem tsmi=new ToolStripMenuItem(cdb);
+			    tsmi.Click+=MenuItem_Click;
+				menuitem_setcard.DropDownItems.Add(tsmi);
 			}
 		}
 		void MenuItem_Click(object sender, EventArgs e)
