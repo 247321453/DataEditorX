@@ -102,7 +102,7 @@ namespace DataEditorX.Core
         }
         public static string GetValue(Dictionary<long, string> dic,long key){
         	if(dic.ContainsKey(key))
-        		return dic[key];
+        		return dic[key].Trim();
         	return key.ToString("x");
         }
         #endregion

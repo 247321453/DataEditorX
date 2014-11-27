@@ -1,4 +1,4 @@
-﻿[DataEditorX]2.2.8.4[DataEditorX]
+﻿[DataEditorX]2.2.8.5[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★捐助

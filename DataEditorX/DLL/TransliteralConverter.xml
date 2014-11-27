@@ -1,0 +1,549 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JpnKanaConversion</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.International.Converters.State">
+            <summary>
+            Represents a state of the StateMachine.
+            </summary>
+            <remarks>
+            See <see cref="T:Microsoft.International.Converters.TransliteralConverter"/> for an example of using TransliteralConverter.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.International.Converters.State.Id">
+            <summary>
+            Gets the identity of a state.
+            </summary>
+            <value>
+            The identity of a state.
+            </value>
+            <remarks>
+            See <see cref="T:Microsoft.International.Converters.TransliteralConverter"/> for an example of using TransliteralConverter.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.International.Converters.State.IsStartState">
+             <summary>
+             Gets a value indicating whether the state is start state.
+             </summary>
+            <value>
+             A value indicating whether the state is a start state.
+            </value>
+             <remarks>
+             See <see cref="T:Microsoft.International.Converters.TransliteralConverter"/> for an example of using TransliteralConverter.
+             </remarks>
+        </member>
+        <member name="P:Microsoft.International.Converters.State.Transitions">
+            <summary>
+            Gets the list of transitions of states.
+            </summary>
+            <value>
+            The list of transitions of states.
+            </value>
+            <remarks>
+            See <see cref="T:Microsoft.International.Converters.TransliteralConverter"/> for an example of using TransliteralConverter.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.International.Converters.AssemblyResource">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Microsoft.International.Converters.AssemblyResource.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.International.Converters.AssemblyResource.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.International.Converters.AssemblyResource.INVALID_CONFIG_FILE_PATH">
+            <summary>
+              Looks up a localized string similar to Invalid configuration file path. Path cannot be empty..
+            </summary>
+        </member>
+        <member name="T:Microsoft.International.Converters.AutoConverterConfig">
+            <exclude/>
+        </member>
+        <member name="P:Microsoft.International.Converters.AutoConverterConfig.ConversionTableConfig">
+            <exclude/>
+        </member>
+        <member name="T:Microsoft.International.Converters.StateMachineConfig">
+            <exclude/>
+        </member>
+        <member name="P:Microsoft.International.Converters.StateMachineConfig.States">
+            <exclude/>
+        </member>
+        <member name="P:Microsoft.International.Converters.StateMachineConfig.EntryState">
+            <exclude/>
+        </member>
+        <member name="P:Microsoft.International.Converters.StateMachineConfig.CharSet">
+            <exclude/>
+        </member>
+        <member name="T:Microsoft.International.Converters.StateConfig">
+            <exclude/>
+        </member>
+        <member name="P:Microsoft.International.Converters.StateConfig.Transitions">
+            <exclude/>
+        </member>
+        <member name="P:Microsoft.International.Converters.StateConfig.ID">
+            <exclude/>
+        </member>
+        <member name="T:Microsoft.International.Converters.TransitionConfig">
+            <exclude/>
+        </member>
+        <member name="P:Microsoft.International.Converters.TransitionConfig.InputValidators">
+            <exclude/>
+        </member>
+        <member name="P:Microsoft.International.Converters.TransitionConfig.Actions">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.International.Converters.TransitionConfig.ID">
+            <remarks/>
+        </member>
+        <member name="T:Microsoft.International.Converters.RegexConfig">
+            <exclude/>
+        </member>
+        <member name="P:Microsoft.International.Converters.RegexConfig.Value">
+            <remarks/>
+        </member>
+        <member name="T:Microsoft.International.Converters.ActionConfig">
+            <exclude/>
+        </member>
+        <member name="P:Microsoft.International.Converters.ActionConfig.Value">
+            <remarks/>
+        </member>
+        <member name="T:Microsoft.International.Converters.ConversionTableConfig">
+            <exclude/>
+        </member>
+        <member name="P:Microsoft.International.Converters.ConversionTableConfig.Items">
+            <remarks/>
+        </member>
+        <member name="T:Microsoft.International.Converters.ConversionTableConversion">
+            <exclude/>
+        </member>
+        <member name="P:Microsoft.International.Converters.ConversionTableConversion.Input">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.International.Converters.ConversionTableConversion.Output">
+            <remarks/>
+        </member>
+        <member name="T:Microsoft.International.Converters.TransliteralConverter">
+            <summary>
+            <see cref="T:Microsoft.International.Converters.TransliteralConverter"/> provides a state machine
+            to convert one string contained in <see cref="P:Microsoft.International.Converters.TransliteralConverter.Input"/> property 
+            to another character set according to the xml configuration file.
+            <see cref="T:Microsoft.International.Converters.TransliteralConverter"/> is a method that produces transformed characters in <see cref="P:Microsoft.International.Converters.TransliteralConverter.Output"/> property, and also
+            produces an event as a state machine transition to a different state. The transition
+            data is configurable and read from an XML file.
+            </summary>
+            <remarks>
+            <FONT size="8"><p><b>Transliteral Converter Configuration Schema</b></p></FONT>
+            <FONT size="5">
+            <p>The configuration specifies the conversion rules for transliteral converter.</p>
+            <p>
+            <pre>&lt;AutoConverterConfig&gt;</pre><br/>
+            <pre>  &lt;StateMachineConfig&gt;</pre><br/>
+            <pre>    &lt;State&gt;</pre><br/>
+            <pre>      &lt;StateTransition&gt;</pre><br/>
+            <pre>        &lt;InputValidatiors&gt;</pre><br/>
+            <pre>          &lt;Regex&gt;</pre><br/>
+            <pre>        &lt;Actions&gt;</pre><br/>
+            <pre>          &lt;Action&gt;</pre><br/>
+            <pre>  &lt;ConversionTable&gt;</pre><br/>
+            <pre>    &lt;Conversion&gt;</pre><br/>
+            </p>
+            </FONT>
+            <p>
+            <table border="1" cellspacing="0" cellpadding="0" bordercolor="gray" width="100%">
+            <thead>
+            <tr bgcolor="gray">
+            <th>Element</th>
+            <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+            <td>AutoConverterConfig</td>
+            <td>The root element of configuration file.</td>
+            </tr>
+            <tr>
+            <td>StateMachineConfig</td>
+            <td>
+            Represents the configuration of state machine.<br/><br/>
+            <table align="middle" border="1" cellspacing="0" cellpadding="0" bordercolor="gray" width="80%">
+            <thead>
+            <tr bgcolor="gray">
+            <th>Attribute</th>
+            <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+            <td>EntryState</td>
+            <td>Specifies the identify of entry state.</td>
+            </tr>
+            <tr>
+            <td>CharSet</td>
+            <td>Specifies the valid characters which can be converted.</td>
+            </tr>
+            </tbody>
+            </table>
+            <br/>
+            </td>
+            </tr>
+            <tr>
+            <td>State</td>
+            <td>Represents a state in state machine.<br/><br/>
+            <table align="middle" border="1" cellspacing="0" cellpadding="0" bordercolor="gray" width="80%">
+            <thead>
+            <tr bgcolor="gray">
+            <th>Attribute</th>
+            <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+            <td>ID</td>
+            <td>Specifies the identity of this state.</td>
+            </tr>
+            </tbody>
+            </table>
+            <br/>
+            </td>
+            </tr>
+            <tr>
+            <td>StateTransition</td>
+            <td>
+            Represents a transition from current state to another.<br/><br/>
+            <table align="middle" border="1" cellspacing="0" cellpadding="0" bordercolor="gray" width="80%">
+            <thead>
+            <tr bgcolor="gray">
+            <th>Attribute</th>
+            <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+            <td>ID</td>
+            <td>Specifies the identity of next state.</td>
+            </tr>
+            </tbody>
+            </table>
+            <br/>
+            </td>
+            </tr>
+            <tr>
+            <td>InputValidators</td>
+            <td>Includes several regular expressions to verify user's input string. If one of the regular expressions is matched, the state machine will take actions indicated in <b>&lt;Actions&gt;</b> element.</td>
+            </tr>
+            <tr>
+            <td>Regex</td>
+            <td>Represents the regular expression to verify user's input.</td>
+            </tr>
+            <tr>
+            <td>Actions</td>
+            <td>Includes a series of actions state machine will undertake.</td>
+            </tr>
+            <tr>
+            <td>Action</td>
+            <td>
+            Represents one of state machine's actions. The following action types are supported:<br/>
+            <list type="bullet">
+            <item>Append(char)</item>
+            <item>AppendInput</item>
+            <item>ConvertToOutput</item>
+            <item>Clear</item>
+            </list>
+            </td>
+            </tr>
+            <tr>
+            <td>ConversionTable</td>
+            <td>Contains the <b>&lt;Conversion&gt;</b> elements.</td></tr>
+            <tr>
+            <td>Conversion</td>
+            <td>
+            A pair of strings which represent an atomic conversion unit in source and destination character sets. <br/><br/>
+            <table align="middle" border="1" cellspacing="0" cellpadding="0" bordercolor="gray" width="80%">
+            <thead>
+            <tr bgcolor="gray">
+            <th>Attribute</th>
+            <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+            <td>Input</td>
+            <td>Specifies the source string to be converted.</td>
+            </tr>
+            <tr>
+            <td>Output</td>
+            <td>Specifies the conversion result.</td>
+            </tr>
+            </tbody>
+            </table>
+            <br/>
+            </td>
+            </tr>
+            </tbody>
+            </table>
+            </p>
+            </remarks>
+            <example>
+            The following xml demonstrates a sample config xml with the behavior of transforming between English characters and Greek alphabet.
+            <code source="../Code/TransliteralConverter.xml" lang="xml"></code>
+            The following code demonstrates the behavior of <see cref="T:Microsoft.International.Converters.TransliteralConverter"/>.
+            Note, the configuration file must be named TransliteralConverter.xml and be located in the same folder with the application.
+            <code source="../../ExampleJpnKanaConversion_CS/Program.cs" lang="cs"></code>
+            <code source="../../ExampleJpnKanaConversion_VB/ConverterDemo.vb" lang="vbnet"></code>
+            <code source="../../ExampleJpnKanaConversion_CPP/ExampleJpnKanaConversion_CPP.cpp" lang="cpp"></code>
+            The preceding code produces the following output:
+            θαεζdefg
+            </example>
+        </member>
+        <member name="F:Microsoft.International.Converters.TransliteralConverter.input">
+            <summary>
+            This <see cref="T:System.IO.TextReader"/> contains string to be converted.
+            </summary>
+        </member>
+        <member name="F:Microsoft.International.Converters.TransliteralConverter.output">
+            <summary>
+            This <see cref="T:System.IO.TextWriter"/> contains the result of converted string.
+            </summary>
+        </member>
+        <member name="F:Microsoft.International.Converters.TransliteralConverter.stateMachine">
+            <summary>
+            This StateMachine is used to convert one character set to another.
+            </summary>
+        </member>
+        <member name="M:Microsoft.International.Converters.TransliteralConverter.#ctor">
+            <summary>
+            Creates a new instance of TransliteralConverter using current directory as 
+            default location of configuration file, <see cref="P:System.Console.In"/> as default input and 
+            <see cref="P:System.Console.Out"/> as default output.
+            </summary>
+            <remarks>
+            <p>The default input will be <see cref="P:System.Console.In"/>. 
+            The default output will be <see cref="P:System.Console.Out"/>.
+            The default location of the configuration file is the current directory. If the name of configuration file
+            is not provided, it will be "TransliteralConverter.xml". Its format can be found in <see cref="T:Microsoft.International.Converters.TransliteralConverter"/>. </p>
+            <p>See <see cref="T:Microsoft.International.Converters.TransliteralConverter"/> for an example of using TransliteralConverter.</p>
+            </remarks>
+        </member>
+        <member name="M:Microsoft.International.Converters.TransliteralConverter.#ctor(System.IO.TextReader)">
+            <summary>
+            Creates a new instance using current directory as
+            default location of configuration file and <see cref="P:System.Console.Out"/> as default output.
+            </summary>
+            <param name="input">This <see cref="T:System.IO.TextReader"/> contains user input to be converted</param>
+            <remarks>
+            <p>The default output will be <see cref="P:System.Console.Out"/>.
+            The default location of configuration file is the current directory. Its format can be found in <see cref="T:Microsoft.International.Converters.TransliteralConverter"/>.</p>
+            <p>See <see cref="T:Microsoft.International.Converters.TransliteralConverter"/> for an example of using TransliteralConverter.</p>
+            </remarks> 
+        </member>
+        <member name="M:Microsoft.International.Converters.TransliteralConverter.#ctor(System.IO.TextReader,System.IO.TextWriter)">
+            <summary>
+            Creates a new instance using current directory as 
+            default location of configuration file.
+            </summary>
+            <param name="input">This <see cref="T:System.IO.TextReader"/> contains user's input to be converted.</param>
+            <param name="output">This <see cref="T:System.IO.TextWriter"/> writes a sequential series of converted characters.</param>
+            <remarks>
+            <p>The default location of configuration file is the current directory. Its format can be found in <see cref="T:Microsoft.International.Converters.TransliteralConverter"/>.</p>
+            <p>See <see cref="T:Microsoft.International.Converters.TransliteralConverter"/> for an example of using TransliteralConverter.</p>
+            </remarks>
+        </member>
+        <member name="M:Microsoft.International.Converters.TransliteralConverter.#ctor(System.IO.TextReader,System.IO.TextWriter,System.String)">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="input">This <see cref="T:System.IO.TextReader"/> contains input to be converted</param>
+            <param name="output">This <see cref="T:System.IO.TextWriter"/> writes a sequential series of converted characters.</param>
+            <param name="configFilePath">The name of the configuration file.</param>
+            <exception cref="T:System.ArgumentNullException">
+            input,output and configFilePath are null references.
+            </exception>
+            <exception cref="T:System.ArgumentException">
+            Length of configFilePath is zero(0).
+            </exception>
+            <remarks>
+            <p>The format of the configuration file can be found in <see cref="T:Microsoft.International.Converters.TransliteralConverter"/>.</p>
+            <p>See <see cref="T:Microsoft.International.Converters.TransliteralConverter"/> for an example of using TransliteralConverter.</p>
+            </remarks>
+        </member>
+        <member name="M:Microsoft.International.Converters.TransliteralConverter.#ctor(System.IO.TextReader,System.IO.TextWriter,System.IO.Stream)">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="input">This <see cref="T:System.IO.TextReader"/> contains user's input to be converted</param>
+            <param name="output">This <see cref="T:System.IO.TextWriter"/> writes a sequential series of converted characters.</param>
+            <param name="configStream">Stream of config file.</param>
+            <exception cref="T:System.ArgumentNullException">
+            input,output and configStream are null references.
+            </exception>
+            <remarks>
+            See <see cref="T:Microsoft.International.Converters.TransliteralConverter"/> for an example of using TransliteralConverter.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.International.Converters.TransliteralConverter.Step">
+            <summary>
+            Processes the data in sequence and execution is completely controlled by the user.
+            </summary>
+            <returns>The output of state machine.</returns>
+            <remarks>
+            <p>The internal state changing process doesn’t have to be ended, but it still may produce a candidate stored in the buffer.
+            If there is no conversion possible, empty string ("") is returned.</p>
+            <p>See <see cref="T:Microsoft.International.Converters.TransliteralConverter"/> for an example of using TransliteralConverter.</p>
+            </remarks>
+        </member>
+        <member name="M:Microsoft.International.Converters.TransliteralConverter.StepWith(System.Char)">
+            <summary>
+            Processes the data in sequence and execution is completely controlled by the user.
+            </summary>
+            <param name="ch">Character to be converted.</param>
+            <returns>Converted result of buffer.</returns>
+            <seealso cref="M:Microsoft.International.Converters.TransliteralConverter.Step"/>
+            <remarks>
+            See <see cref="T:Microsoft.International.Converters.TransliteralConverter"/> for an example of using TransliteralConverter.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.International.Converters.TransliteralConverter.StepWith(System.String)">
+            <summary>
+            Processes the data in sequence and execution is completely controlled by the user.
+            </summary>
+            <param name="s">String to be converted.</param>
+            <returns>Converted result of buffer.</returns>
+            <seealso cref="M:Microsoft.International.Converters.TransliteralConverter.Step"/>
+            <exception cref="T:System.ArgumentNullException">
+            s is a null reference.
+            </exception>
+            <remarks>
+            See <see cref="T:Microsoft.International.Converters.TransliteralConverter"/> for an example of using TransliteralConverter.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.International.Converters.TransliteralConverter.Run">
+            <summary>
+            Processes the data using Transit(char ch) method in StateMachine class.
+            </summary>
+            <remarks>
+            See <see cref="T:Microsoft.International.Converters.TransliteralConverter"/> for an example of using TransliteralConverter.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.International.Converters.TransliteralConverter.OnStateChanged(Microsoft.International.Converters.StateChangedEventArgs)">
+            <summary>
+            Called when the state changes.
+            </summary>
+            <param name="e">Event data including previous state and next state.</param>
+        </member>
+        <member name="E:Microsoft.International.Converters.TransliteralConverter.StateChanged">
+            <summary>
+            Occurs when state changes.
+            </summary>
+            <remarks>
+            See <see cref="T:Microsoft.International.Converters.TransliteralConverter"/> for an example of using TransliteralConverter.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.International.Converters.TransliteralConverter.Input">
+            <summary>
+            Gets input characters.
+            </summary>
+            <value>
+            Input characters.
+            </value>
+            <remarks>
+            <p><see cref="T:Microsoft.International.Converters.TransliteralConverter"/> reads characters from Input property values and tries to convert them.
+            The default value of Input will be <see cref="P:System.Console.In"/>.</p>
+            <p>See <see cref="T:Microsoft.International.Converters.TransliteralConverter"/> for an example of using TransliteralConverter.</p>
+            </remarks>
+        </member>
+        <member name="P:Microsoft.International.Converters.TransliteralConverter.Output">
+            <summary>
+            Gets the result of converted string.
+            </summary>
+            <value>
+            The result of converted string.
+            </value>
+            <remarks>
+            <p>When conversion is possible, StateMachine puts the converted string into Output property value.
+            The default value of Output will be <see cref="P:System.Console.Out"/>.</p>
+            <p>See <see cref="T:Microsoft.International.Converters.TransliteralConverter"/> for an example of using TransliteralConverter.</p>
+            </remarks>
+        </member>
+        <member name="T:Microsoft.International.Converters.StateChangedEventArgs">
+            <summary>
+            Provides data for StateChanged event.
+            </summary>
+            <remarks>
+            See <see cref="T:Microsoft.International.Converters.TransliteralConverter"/> for an example of using TransliteralConverter.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.International.Converters.StateChangedEventArgs.Input">
+            <summary>
+            Gets user input character.
+            </summary>
+            <value>
+            User input character.
+            </value>
+            <remarks>
+            See <see cref="T:Microsoft.International.Converters.TransliteralConverter"/> for an example of using TransliteralConverter.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.International.Converters.StateChangedEventArgs.PreviousState">
+            <summary>
+            Gets previous <see cref="T:Microsoft.International.Converters.State"/>.
+            </summary>
+            <value>
+            Previous <see cref="T:Microsoft.International.Converters.State"/>.
+            </value>
+            <remarks>
+            See <see cref="T:Microsoft.International.Converters.TransliteralConverter"/> for an example of using TransliteralConverter.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.International.Converters.StateChangedEventArgs.NextState">
+            <summary>
+            Gets next <see cref="T:Microsoft.International.Converters.State"/>.
+            </summary>
+            <value>
+            Next <see cref="T:Microsoft.International.Converters.State"/>.
+            </value>
+            <remarks>
+            See <see cref="T:Microsoft.International.Converters.TransliteralConverter"/> for an example of using TransliteralConverter.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.International.Converters.StateChangedEventArgs.Transition">
+            <summary>
+            Gets the <see cref="T:Microsoft.International.Converters.Transition">Transition</see> between previous state and next state.
+            </summary>
+            <value>
+            The <see cref="T:Microsoft.International.Converters.Transition">Transition</see> between previous state and next state.
+            </value>
+            <remarks>
+            See <see cref="T:Microsoft.International.Converters.TransliteralConverter"/> for an example of using TransliteralConverter.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.International.Converters.Transition">
+            <summary>
+            Class that represents a transition from one <see cref="T:Microsoft.International.Converters.State"/> to another.
+            </summary>
+            <remarks>
+            See <see cref="T:Microsoft.International.Converters.TransliteralConverter"/> for an example of using TransliteralConverter.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.International.Converters.Transition.NextState">
+            <summary>
+            Gets the identity of next state.
+            </summary>
+            <value>
+            The identity of next state.
+            </value>
+            <remarks>
+            See <see cref="T:Microsoft.International.Converters.TransliteralConverter"/> for an example of using TransliteralConverter.
+            </remarks>
+        </member>
+    </members>
+</doc>
