@@ -1,11 +1,6 @@
 ﻿[DataEditorX]2.2.8.4[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
-★捐助
-如果你觉得这个软件做得好，可以捐助。
-姓名：柯永裕
-支付宝帐号：247321453@qq.com
-
 ★文件关联
 .lua notepad++/sublime text/DataEditorX
 .cdb DataEditorX
@@ -65,6 +60,8 @@ Ctrl+鼠标左键 	跳转到函数定义
 Ctrl+鼠标滑轮 	缩放文字
 
 ★更新历史
+2.2.8.6
+修复无种族的token，
 2.2.8.4
 japan
 历史记录修正

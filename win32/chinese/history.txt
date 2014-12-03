@@ -1,8 +1,9 @@
 # database history
-F:\games\[jp]cards.cdb
 F:\games\ygopro\cards.cdb
+F:\games\[jp]cards.cdb
 F:\games\ygopro\p.zip.cdb
 # script history
+F:\games\ygopro\script\c102380.lua
 F:\games\ygopro\script\c27551.lua
 F:\games\ygopro\script\c168917.lua
 F:\games\ygopro\script\c131182.lua
@@ -18,4 +19,3 @@ F:\games\ygopro\script\c78835747.lua
 F:\games\ygopro\script\c94415058.lua
 F:\games\ygopro\script\c26270847.lua
 F:\games\ygopro\script\c65025250.lua
-F:\games\ygopro\script\c295517.lua

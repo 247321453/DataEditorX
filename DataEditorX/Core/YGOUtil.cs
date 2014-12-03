@@ -126,10 +126,7 @@ namespace DataEditorX.Core
                 }
                 else if (c.IsType(CardType.TYPE_TOKEN))
                 {
-                    if (c.race == 0)
-                        types[0] = "token card";
-                    else
-                        types[0] = "token monster";
+                    types[0] = (c.race == 0)?"token card":"token monster";
                     types[1] = GetType(CardType.TYPE_TOKEN);
                 }
                 else if (c.IsType(CardType.TYPE_RITUAL))
@@ -210,7 +207,6 @@ namespace DataEditorX.Core
             }
             if (c.race == 0)
             {
-                types[0] = "";
                 types[1] = "";
                 types[2] = "";
             }

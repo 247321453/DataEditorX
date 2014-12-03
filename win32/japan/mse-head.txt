@@ -4,5 +4,5 @@ stylesheet: standard
 set info:
 	language: JP
 	edition: 
-	ST mark is text: yes
+	ST mark is text: no
 	pendulum image is small: yes
