@@ -1,6 +1,14 @@
 Images/
 Images_backup/
 *.tmp
+Magic Set Editor 2/data/
+Magic Set Editor 2/develop/
+Magic Set Editor 2/font/
+Magic Set Editor 2/fix don't open.bat
+Magic Set Editor 2/mse.com
+Magic Set Editor 2/mse.exe
+Magic Set Editor 2/README.md
+Magic Set Editor 2/readme.txt
 mse-set.txt
 #################
 ## Eclipse
