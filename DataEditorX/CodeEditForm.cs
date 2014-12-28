@@ -16,14 +16,16 @@ using FastColoredTextBoxNS;
 using DataEditorX.Language;
 using System.Text.RegularExpressions;
 using DataEditorX.Core;
+using DataEditorX.Config;
 using System.Configuration;
+using DataEditorX.Controls;
 
 namespace DataEditorX
 {
 	/// <summary>
 	/// Description of CodeEditForm.
 	/// </summary>
-	public partial class CodeEditForm : DockContent
+    public partial class CodeEditForm : DockContent, IEditForm
 	{
 		#region Style
 		SortedDictionary<long,string> cardlist;
@@ -36,7 +38,6 @@ namespace DataEditorX
 		AutocompleteMenu popupMenu_con;
 		AutocompleteMenu popupMenu_find;
 		string nowFile;
-        public string NowFile { get { return nowFile; } }
 		string title;
 		string oldtext;
 		Dictionary<string,string> tooltipDic;
@@ -76,32 +77,22 @@ namespace DataEditorX
 			popupMenu_find.Items.MaximumSize = new System.Drawing.Size(200, 400);
 			popupMenu_find.Items.Width = 300;
 			title=this.Text;
-			fctb.SyntaxHighlighter=new MySyntaxHighlighter();
-			
-			string fontname=ConfigurationManager.AppSettings["fontname"];
-			float fontsize=0;
-			if(float.TryParse(ConfigurationManager.AppSettings["fontsize"]
-			                  , out fontsize))
+
+            string fontname = MyConfig.readString(MyConfig.TAG_FONT_NAME);
+            float fontsize = MyConfig.readFloat(MyConfig.TAG_FONT_SIZE, 14);
 				fctb.Font=new Font(fontname,fontsize);
-			if(ReadConfig("IME").ToLower()=="true")
+			if(MyConfig.readBoolean(MyConfig.TAG_IME))
 				fctb.ImeMode=ImeMode.On;
-            if (ReadConfig("wordwrap").ToLower() == "true")
+            if (MyConfig.readBoolean(MyConfig.TAG_WORDWRAP))
                 fctb.WordWrap = true;
             else
                 fctb.WordWrap = false;
-            if (ReadConfig("tabisspace").ToLower() == "true")
+            if (MyConfig.readBoolean(MyConfig.TAG_TAB2SPACES))
                 tabisspaces = true;
             else
                 tabisspaces = false;
 		}
-        string ReadConfig(string key)
-        {
-            string v = ConfigurationManager.AppSettings[key];
-            if (string.IsNullOrEmpty(v))
-                return "";
-            else
-                return v;
-        }
+
 		public void LoadXml(string xmlfile)
 		{
 			fctb.DescriptionFile=xmlfile;
@@ -110,7 +101,23 @@ namespace DataEditorX
 		#endregion
 		
 		#region Open
-		public void Open(string file)
+        public void SetActived()
+        {
+            this.Activate();
+        }
+        public bool CanOpen(string file)
+        {
+            return YGOUtil.isScript(file);
+        }
+        public string GetOpenFile()
+        {
+            return nowFile;
+        }
+        public bool Create(string file)
+        {
+            return Open(file);
+        }
+		public bool Open(string file)
 		{
 			if(!string.IsNullOrEmpty(file))
 			{
@@ -126,7 +133,9 @@ namespace DataEditorX
 				fctb.OpenFile(nowFile, new UTF8Encoding(false));
 				oldtext=fctb.Text;
 				SetTitle();
+                return true;
 			}
+            return false;
 		}
 
 		void HideMenu()
@@ -323,7 +332,7 @@ namespace DataEditorX
             {
                 using (SaveFileDialog sfdlg = new SaveFileDialog())
                 {
-                    sfdlg.Filter = "Script(*.lua)|*.lua|All Files(*.*)|*.*";
+                    sfdlg.Filter = LANG.GetMsg(LMSG.ScriptFilter);
                     if (sfdlg.ShowDialog() == DialogResult.OK)
                     {
                         nowFile = sfdlg.FileName;

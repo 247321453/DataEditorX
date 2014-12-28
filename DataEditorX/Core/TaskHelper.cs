@@ -16,6 +16,8 @@ using System.Windows.Forms;
 using System.ComponentModel;
 
 using DataEditorX.Language;
+using DataEditorX.Common;
+using DataEditorX.Config;
 
 namespace DataEditorX.Core
 {
@@ -72,8 +74,7 @@ namespace DataEditorX.Core
 		}
         public static void CheckVersion(bool showNew)
         {
-            string newver = CheckUpdate.Check(
-                ConfigurationManager.AppSettings["updateURL"]);
+            string newver = CheckUpdate.Check(MyConfig.readString(MyConfig.TAG_UPDATE_URL));
             int iver, iver2;
             int.TryParse(Application.ProductVersion.Replace(".", ""), out iver);
             int.TryParse(newver.Replace(".", ""), out iver2);
@@ -121,19 +122,13 @@ namespace DataEditorX.Core
 					Bitmap bp=new Bitmap(jpg);
 					Bitmap bmp=null;
 					if(c.IsType(CardType.TYPE_XYZ)){
-						bmp = MyBitmap.Cut(bp,
-						                   imgSet.xyz_x,imgSet.xyz_y,
-						                   imgSet.xyz_w,imgSet.xyz_h);
+						bmp = MyBitmap.Cut(bp, imgSet.xyzArea);
 					}
 					else if(c.IsType(CardType.TYPE_PENDULUM)){
-						bmp = MyBitmap.Cut(bp,
-						                   imgSet.pendulum_x,imgSet.pendulum_y,
-						                   imgSet.pendulum_w,imgSet.pendulum_h);
+						bmp = MyBitmap.Cut(bp, imgSet.pendulumArea);
 					}
 					else{
-						bmp = MyBitmap.Cut(bp,
-						                   imgSet.other_x,imgSet.other_y,
-						                   imgSet.other_w,imgSet.other_h);
+						bmp = MyBitmap.Cut(bp, imgSet.normalArea);
 					}
 					MyBitmap.SaveAsJPEG(bmp, savejpg, imgSet.quilty);
 					//bmp.Save(savejpg, ImageFormat.Png);

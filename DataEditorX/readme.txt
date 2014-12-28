@@ -1,11 +1,11 @@
 ﻿[DataEditorX]2.2.8.4[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
-★文件关联
+★文件关联(File association)
 .lua notepad++/sublime text/DataEditorX
 .cdb DataEditorX
 
-★bug反馈
+★bug反馈(Feedback)
 Email:247321453@qq.com
 提交版本前，请检查更新。
 
@@ -14,7 +14,10 @@ Email:247321453@qq.com
 错误提示文字：（弹出出错框，请按Ctrl+C，然后找地方粘贴）
 详细描述：（卡片信息，杀毒软件，本程序目录等等）
 
-★支持多语言化
+Title：(DataEditorX+Version)
+Content：Error Message
+
+★支持多语言化(Language setting)
 DataEditorX.exe.config
 <add key="language" value="chinese" />简体
 <add key="language" value="english" />英文

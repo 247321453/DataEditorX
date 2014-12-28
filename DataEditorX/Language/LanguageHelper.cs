@@ -19,264 +19,246 @@ namespace DataEditorX.Language
     /// </summary>
     public static class LANG
     {
-        static Dictionary<string, SortedList<string, string>> wordslist;
-        static SortedList<LMSG, string> msglist;
-        static string SEP="->";
-        
-        static LANG()
-        {
-            wordslist=new Dictionary<string, SortedList<string, string>>();
-            msglist=new SortedList<LMSG, string>();
-        }
-        
-        public static void InitForm(Form fm, string langfile)
-        {
-            if(!wordslist.ContainsKey(fm.Name))
-            {
-                wordslist.Add(fm.Name, LoadLanguage(langfile));
-            }
-        }
-        
-        /// <summary>
-        /// 获取消息文字
-        /// </summary>
-        /// <param name="lMsg"></param>
-        /// <returns></returns>
+        static SortedList<string, string> mWordslist = new SortedList<string, string>();
+        static SortedList<LMSG, string> msglist = new SortedList<LMSG, string>();
+        static string SEP_CONTROL = ".";
+        static string SEP_LINE = " ";
+
+        #region 获取消息文字
         public static string GetMsg(LMSG lMsg)
         {
-            if(msglist.IndexOfKey(lMsg)>=0)
+            if (msglist.IndexOfKey(lMsg) >= 0)
                 return msglist[lMsg];
-            return lMsg.ToString();
+            else
+                return lMsg.ToString().Replace("_", " ");
         }
-        
+        #endregion
+
         #region 设置控件信息
         /// <summary>
         /// 设置控件文字
         /// </summary>
         /// <param name="fm"></param>
-        public static bool SetLanguage(Form fm)
+        public static void SetFormLabel(Form fm)
         {
-            if(wordslist.ContainsKey(fm.Name))
+            if (fm == null)
+                return;
+            // fm.SuspendLayout();
+            fm.ResumeLayout(true);
+            SetControlLabel(fm, "", fm.Name);
+            fm.ResumeLayout(false);
+            //fm.PerformLayout();
+        }
+
+        static bool GetLabel(string key, out string title)
+        {
+            string v;
+            if (mWordslist.TryGetValue(key, out v))
             {
-                SortedList<string, string> list=wordslist[fm.Name];
-               // fm.SuspendLayout();
-              	fm.ResumeLayout(true);
-                SetText(fm, list);
-                fm.ResumeLayout(false);
-                //fm.PerformLayout();
+                title = v;
                 return true;
             }
+            title = null;
             return false;
         }
-        static void SetText(Control c, SortedList<string, string> list)
+        
+        static void SetControlLabel(Control c, string pName, string formName)
         {
-            if ( c is ListView )
+            if (!string.IsNullOrEmpty(pName))
+                pName += SEP_CONTROL;
+            pName += c.Name;
+            string title;
+            if (c is ListView)
             {
                 ListView lv = (ListView)c;
-                int i,count=lv.Columns.Count;
-                for(i=0;i<count;i++)
+                int i, count = lv.Columns.Count;
+                for (i = 0; i < count; i++)
                 {
-                    ColumnHeader cn=lv.Columns[i];
-                    string v;
-                    list.TryGetValue(lv.Name+i.ToString(), out v);
-                    if(!string.IsNullOrEmpty(v))
-                        cn.Text = v;
+                    ColumnHeader ch = lv.Columns[i];
+                    if (GetLabel(pName + SEP_CONTROL + i.ToString(), out title))
+                        ch.Text = title;
                 }
             }
-            else if ( c is ToolStrip)
+            else if (c is ToolStrip)
             {
                 ToolStrip ms = (ToolStrip)c;
-                foreach ( ToolStripItem tsi in ms.Items )
+                foreach (ToolStripItem tsi in ms.Items)
                 {
-                    SetMenuItem(tsi, list);
+                    SetMenuItem(formName, tsi);
                 }
             }
             else
             {
-                string v;
-                list.TryGetValue(c.Name, out v);
-                if(!string.IsNullOrEmpty(v))
-                    c.Text = v;
+                if (GetLabel(pName, out title))
+                    c.Text = title;
             }
 
-            if ( c.Controls.Count > 0 )
+            if (c.Controls.Count > 0)
             {
-                foreach ( Control sc in c.Controls )
+                foreach (Control sc in c.Controls)
                 {
-                    SetText(sc, list);
+                    SetControlLabel(sc, pName, formName);
                 }
             }
-            ContextMenuStrip conms=c.ContextMenuStrip;
-            if ( conms!=null )
+            ContextMenuStrip conms = c.ContextMenuStrip;
+            if (conms != null)
             {
-                foreach ( ToolStripItem ts in conms.Items )
+                foreach (ToolStripItem ts in conms.Items)
                 {
-                    SetMenuItem(ts, list);
+                    SetMenuItem(formName, ts);
                 }
             }
         }
-        
 
-        static void SetMenuItem(ToolStripItem tsi, SortedList<string, string> list)
+        static void SetMenuItem(string pName, ToolStripItem tsi)
         {
-            if ( tsi is ToolStripMenuItem )
+            string tName = pName + SEP_CONTROL + tsi.Name;
+            string title;
+           
+            if (tsi is ToolStripMenuItem)
             {
                 ToolStripMenuItem tsmi = (ToolStripMenuItem)tsi;
-                string v;
-                list.TryGetValue(tsmi.Name, out v);
-                if(!string.IsNullOrEmpty(v))
-                    tsmi.Text = v;
-                if(tsmi.HasDropDownItems)
+                if (GetLabel(tName, out title))
+                    tsmi.Text = title;
+                if (tsmi.HasDropDownItems)
                 {
-                    foreach ( ToolStripItem subtsi in tsmi.DropDownItems )
+                    foreach (ToolStripItem subtsi in tsmi.DropDownItems)
                     {
-                        if ( subtsi is ToolStripMenuItem )
-                        {
-                            ToolStripMenuItem ts2 = (ToolStripMenuItem)subtsi;
-                            SetMenuItem(ts2, list);
-                        }
+                        SetMenuItem(tName, subtsi);
                     }
                 }
             }
-            else if ( tsi is ToolStripLabel )
+            else if (tsi is ToolStripLabel)
             {
-                ToolStripLabel tlbl=(ToolStripLabel)tsi;
-                string v;
-                list.TryGetValue(tlbl.Name, out v);
-                if(!string.IsNullOrEmpty(v))
-                    tlbl.Text = v;
+                ToolStripLabel tlbl = (ToolStripLabel)tsi;
+                if (GetLabel(tName, out title))
+                    tlbl.Text = title;
             }
         }
 
         #endregion
-        
+
         #region 获取控件信息
-        /// <summary>
-        /// 获取控件名
-        /// </summary>
-        /// <param name="fm"></param>
-        public static void GetLanguage(Form fm)
+        public static void GetFormLabel(Form fm)
         {
-            SortedList<string, string> list=new SortedList<string, string>();
-            GetText(fm, list);
-            if(wordslist.ContainsKey(fm.Name))
-                wordslist[fm.Name]=list;
-            else
-                wordslist.Add(fm.Name, list);
+            if (fm == null)
+                return;
+            // fm.SuspendLayout();
+          //fm.ResumeLayout(true);
+            GetControlLabel(fm, "", fm.Name);
+            //fm.ResumeLayout(false);
+            //fm.PerformLayout();
         }
-        static void GetText(Control c, SortedList<string, string> list)
+
+        static void AddLabel(string key, string title)
         {
-            if ( c is ListView )
+            if (!mWordslist.ContainsKey(key))
+                mWordslist.Add(key, title);
+        }
+
+        static void GetControlLabel(Control c, string pName, 
+            string formName)
+        {
+            if (!string.IsNullOrEmpty(pName))
+                pName += SEP_CONTROL;
+            if (string.IsNullOrEmpty(c.Name))
+                return;
+            pName += c.Name;
+            if (c is ListView)
             {
                 ListView lv = (ListView)c;
-                int i,count=lv.Columns.Count;
-                for(i=0;i<count;i++)
+                int i, count = lv.Columns.Count;
+                for (i = 0; i < count; i++)
                 {
-                    ColumnHeader cn=lv.Columns[i];
-                    if ( list.ContainsKey(lv.Name+i.ToString()) )
-                        list[cn.Name]=cn.Text;
-                    else
-                        list.Add(lv.Name+i.ToString(), cn.Text);
+                    AddLabel(pName + SEP_CONTROL + i.ToString(), 
+                        lv.Columns[i].Text);
                 }
             }
-            else if ( c is ToolStrip)
+            else if (c is ToolStrip)
             {
                 ToolStrip ms = (ToolStrip)c;
-                foreach ( ToolStripItem tsi in ms.Items )
+                foreach (ToolStripItem tsi in ms.Items)
                 {
-                    GetMenuItem(tsi, list);
+                    GetMenuItem(formName, tsi);
                 }
             }
             else
             {
-                if(list.ContainsKey(c.Name))
-                    list[c.Name]=c.Text;
-                else
-                    list.Add(c.Name, c.Text);
+                AddLabel(pName, c.Text);
             }
 
-            if ( c.Controls.Count > 0 )
+            if (c.Controls.Count > 0)
             {
-                foreach ( Control sc in c.Controls )
+                foreach (Control sc in c.Controls)
                 {
-                    GetText(sc, list);
+                    GetControlLabel(sc, pName, formName);
                 }
             }
-            ContextMenuStrip conms=c.ContextMenuStrip;
-            if ( conms!=null )
+            ContextMenuStrip conms = c.ContextMenuStrip;
+            if (conms != null)
             {
-                foreach ( ToolStripItem ts in conms.Items )
+                foreach (ToolStripItem ts in conms.Items)
                 {
-                    GetMenuItem(ts, list);
+                    GetMenuItem(formName, ts);
                 }
             }
         }
-        
 
-        static void GetMenuItem(ToolStripItem tsi, SortedList<string, string> list)
+        static void GetMenuItem(string pName, ToolStripItem tsi)
         {
-            if ( tsi is ToolStripMenuItem )
+            string tName = pName + SEP_CONTROL + tsi.Name;
+            if (string.IsNullOrEmpty(tsi.Name))
+                return;
+            if (tsi is ToolStripMenuItem)
             {
                 ToolStripMenuItem tsmi = (ToolStripMenuItem)tsi;
-                if(list.ContainsKey(tsmi.Name))
-                    list[tsi.Name] = tsmi.Text;
-                else
-                    list.Add(tsi.Name, tsmi.Text);
-                if(tsmi.HasDropDownItems)
+                AddLabel(tName, tsmi.Text);
+                if (tsmi.HasDropDownItems)
                 {
-                    foreach ( ToolStripItem subtsi in tsmi.DropDownItems )
+                    foreach (ToolStripItem subtsi in tsmi.DropDownItems)
                     {
-                        if ( subtsi is ToolStripMenuItem )
-                        {
-                            ToolStripMenuItem ts2 = (ToolStripMenuItem)subtsi;
-                            GetMenuItem(ts2, list);
-                        }
+                        GetMenuItem(tName, subtsi);
                     }
                 }
             }
-            else if ( tsi is ToolStripLabel )
+            else if (tsi is ToolStripLabel)
             {
-                ToolStripLabel tlbl=(ToolStripLabel)tsi;
-                if(list.ContainsKey(tlbl.Name))
-                    list[tlbl.Name] = tlbl.Text;
-                else
-                    list.Add(tlbl.Name, tlbl.Text);
+                ToolStripLabel tlbl = (ToolStripLabel)tsi;
+                AddLabel(tName, tlbl.Text);
             }
         }
+
         #endregion
-        
+
         #region 保存语言文件
-        public static bool SaveLanguage(Form fm, string f)
+        public static bool SaveLanguage(string conf)
         {
-            if(!wordslist.ContainsKey(fm.Name))
-                return false;
-            SortedList<string, string> fmlist=wordslist[fm.Name];
-            using(FileStream fs=new FileStream(f, FileMode.Create, FileAccess.Write))
+            using (FileStream fs = new FileStream(conf, FileMode.Create, FileAccess.Write))
             {
-                StreamWriter sw=new StreamWriter(fs, Encoding.UTF8);
-                foreach(string k in fmlist.Keys)
+                StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
+                foreach (string k in mWordslist.Keys)
                 {
-                    sw.WriteLine(fm.Name+SEP+k+" "+fmlist[k]);
+                    sw.WriteLine(k + SEP_LINE + mWordslist[k]);
                 }
                 sw.Close();
                 fs.Close();
             }
             return true;
         }
-        
+
         public static bool SaveMessage(string f)
         {
-            using(FileStream fs=new FileStream(f, FileMode.Create, FileAccess.Write))
+            using (FileStream fs = new FileStream(f, FileMode.Create, FileAccess.Write))
             {
-                StreamWriter sw=new StreamWriter(fs, Encoding.UTF8);
-                foreach(LMSG k in msglist.Keys)
+                StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
+                foreach (LMSG k in msglist.Keys)
                 {
-                    sw.WriteLine("0x"+((uint)k).ToString("x")+"\t"+msglist[k].Replace("\n","/n"));
+                    sw.WriteLine("0x" + ((uint)k).ToString("x") + "\t" + msglist[k].Replace("\n", "/n"));
                 }
-                foreach ( LMSG k in Enum.GetValues(typeof(LMSG)))
+                foreach (LMSG k in Enum.GetValues(typeof(LMSG)))
                 {
-                    if(!msglist.ContainsKey(k))
-                        sw.WriteLine("0x"+((uint)k).ToString("x")+"\t"+k.ToString());
+                    if (!msglist.ContainsKey(k))
+                        sw.WriteLine("0x" + ((uint)k).ToString("x") + "\t" + k.ToString());
                 }
                 sw.Close();
                 fs.Close();
@@ -284,74 +266,70 @@ namespace DataEditorX.Language
             return true;
         }
         #endregion
-        
-        #region 加载语言文件
-        public static SortedList<string, string> LoadLanguage(string f)
-        {
-            SortedList<string, string> list=new SortedList<string, string>();
-            if(File.Exists(f))
-            {
-                using(FileStream fs=new FileStream(f, FileMode.Open, FileAccess.Read))
-                {
-                    StreamReader sr=new StreamReader(fs, Encoding.UTF8);
-                    string line,sk,v;
-                    while((line=sr.ReadLine())!=null)
-                    {
-                        if(!line.StartsWith("#"))
-                        {
-                            int ss=line.IndexOf(SEP);
-                            int si=(ss>0)?line.IndexOf(" "):-1;
-                            if(si>0)
-                            {
-                                sk=line.Substring(ss+SEP.Length,si-ss-SEP.Length);
-                                v=line.Substring(si+1);
 
-                                if(!list.ContainsKey(sk))
-                                    list.Add(sk,v);
-                            }
+        #region 加载语言文件
+        public static void LoadFormLabels(string f)
+        {
+            if (!File.Exists(f))
+                return;
+            mWordslist.Clear();
+            using (FileStream fs = new FileStream(f, FileMode.Open, FileAccess.Read))
+            {
+                StreamReader sr = new StreamReader(fs, Encoding.UTF8);
+                string line, sk, v;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    if (!line.StartsWith("#")&&line.Length>0)
+                    {
+                        int si = line.IndexOf(SEP_LINE);
+                        if (si > 0)
+                        {
+                            sk = line.Substring(0, si);
+                            v = line.Substring(si + 1);
+
+                            if (!mWordslist.ContainsKey(sk))
+                                mWordslist.Add(sk, v);
                         }
                     }
-                    sr.Close();
-                    fs.Close();
                 }
+                sr.Close();
+                fs.Close();
             }
-            return list;
+
         }
-        
-        
+
         public static void LoadMessage(string f)
         {
-            if(File.Exists(f))
+            if (!File.Exists(f))
+                return;
+            msglist.Clear();
+            using (FileStream fs = new FileStream(f, FileMode.Open, FileAccess.Read))
             {
-                msglist.Clear();
-                using(FileStream fs=new FileStream(f, FileMode.Open, FileAccess.Read))
+                StreamReader sr = new StreamReader(fs, Encoding.UTF8);
+                string line, sk, v;
+                uint utemp;
+                LMSG ltemp;
+                while ((line = sr.ReadLine()) != null)
                 {
-                    StreamReader sr=new StreamReader(fs, Encoding.UTF8);
-                    string line,sk,v;
-                    uint utemp;
-                    LMSG ltemp;
-                    while((line=sr.ReadLine())!=null)
+                    if (!line.StartsWith("#"))
                     {
-                        if(!line.StartsWith("#"))
+                        int si = line.IndexOf("\t");
+                        if (si > 0)
                         {
-                            int si=line.IndexOf("\t");
-                            if(si>0)
-                            {
-                                sk=line.Substring(0,si);
-                                v=line.Substring(si+1);
-                                if(sk.StartsWith("0x"))
-                                    uint.TryParse(sk.Replace("0x",""), NumberStyles.HexNumber, null, out utemp);
-                                else
-                                    uint.TryParse(sk, out utemp);
-                                ltemp=(LMSG)utemp;
-                                if(msglist.IndexOfKey(ltemp)<0)
-                                    msglist.Add(ltemp, v.Replace("/n","\n"));
-                            }
+                            sk = line.Substring(0, si);
+                            v = line.Substring(si + 1);
+                            if (sk.StartsWith("0x"))
+                                uint.TryParse(sk.Replace("0x", ""), NumberStyles.HexNumber, null, out utemp);
+                            else
+                                uint.TryParse(sk, out utemp);
+                            ltemp = (LMSG)utemp;
+                            if (msglist.IndexOfKey(ltemp) < 0)
+                                msglist.Add(ltemp, v.Replace("/n", "\n"));
                         }
                     }
-                    sr.Close();
-                    fs.Close();
                 }
+                sr.Close();
+                fs.Close();
             }
         }
         #endregion

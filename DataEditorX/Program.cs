@@ -11,44 +11,38 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
+using DataEditorX.Config;
 
 namespace DataEditorX
 {
-	
-	/// Class with program entry point.
-	/// </summary>
 	internal sealed class Program
 	{
-		
-		/// <summary>
-		/// <summary>
-		/// Program entry point.
-		/// </summary>
 		[STAThread]
 		private static void Main(string[] args)
 		{
-			string arg="";
-			if(args.Length>0)
-			{
-				arg=args[0];
-			}
+            string file = (args.Length > 0) ? args[0] : "";
 			Process instance = RunningInstance();
+            //判断是否已经运行
 			if (instance == null)
 			{
-				ShowForm(arg);
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                MainForm mainForm = new MainForm();
+                mainForm.SetLanguage(MyConfig.readString(MyConfig.TAG_LANGUAGE));
+
+                mainForm.Open(file);
+                Application.Run(mainForm);
 			}
 			else
 			{
-				int msg=MainForm.WM_OPEN;
-				if(MainForm.isScript(arg))
-					msg=MainForm.WM_OPEN_SCRIPT;
-				File.WriteAllText(Path.Combine(Application.StartupPath, MainForm.TMPFILE), arg);
-				User32.SendMessage(instance.MainWindowHandle, msg, 0 ,0);
-				//Thread.Sleep(1000);
-				Environment.Exit(1);
+                //发送消息给窗口
+                string tmpfile = Path.Combine(Application.StartupPath, MyConfig.FILE_TEMP);
+                File.WriteAllText(tmpfile, file);
+                User32.SendMessage(instance.MainWindowHandle, MyConfig.WM_OPEN, 0, 0);
+                Environment.Exit(1);
 			}
 		}
-		private static Process RunningInstance()
+		static Process RunningInstance()
 		{
 			Process current = Process.GetCurrentProcess();
 			Process[] processes = Process.GetProcessesByName(current.ProcessName);
@@ -69,19 +63,6 @@ namespace DataEditorX
 				}
 			}
 			return null;
-		}
-		static void ShowForm(string file)
-		{
-			Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(false);
-			string dir=ConfigurationManager.AppSettings["language"];
-			if(string.IsNullOrEmpty(dir))
-			{
-				Application.Exit();
-			}
-			string datapath=Path.Combine(Application.StartupPath, dir);
-			
-			Application.Run(new MainForm(datapath, file));
 		}
 	}
 }

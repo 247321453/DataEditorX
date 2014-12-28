@@ -20,7 +20,18 @@ namespace DataEditorX.Core
         {
             datacfg = dcfg;
         }
-
+        public static bool isScript(string file)
+        {
+            if (file != null && file.EndsWith(".lua", StringComparison.OrdinalIgnoreCase))
+                return true;
+            return false;
+        }
+        public static bool isDataBase(string file)
+        {
+            if (file != null && file.EndsWith(".cdb", StringComparison.OrdinalIgnoreCase))
+                return true;
+            return false;
+        }
         public static string GetCardImagePath(string picpath,Card c)
         {
             string jpg = MyPath.Combine(picpath, c.id + ".jpg");

@@ -13,14 +13,13 @@ using System.Collections.Generic;
 
 namespace FastColoredTextBoxNS
 {
-	/// <summary>
-	/// Description of FastColoredTextBoxEx.
-	/// </summary>
 	public class FastColoredTextBoxEx : FastColoredTextBox
 	{
 		Point lastMouseCoord;
+        string mFile;
 		public FastColoredTextBoxEx() : base()
 		{
+            this.SyntaxHighlighter = new MySyntaxHighlighter();
 		}
 		public new event EventHandler<ToolTipNeededEventArgs> ToolTipNeeded;
 		protected override void OnMouseMove(MouseEventArgs e)

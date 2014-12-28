@@ -48,7 +48,7 @@
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite">
       <HintPath>DLL\System.Data.SQLite.dll</HintPath>
@@ -68,20 +68,21 @@
       <DependentUpon>CodeEditForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Common\CheckUpdate.cs" />
-    <Compile Include="Common\CodeEdit.cs">
+    <Compile Include="Controls\DoubleContorl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Common\DoubleContorl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Common\FastColoredTextBoxEx.cs">
+    <Compile Include="Controls\FastColoredTextBoxEx.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Common\MyPath.cs" />
-    <Compile Include="Common\MySyntaxHighlighter.cs" />
+    <Compile Include="Controls\History.cs" />
+    <Compile Include="Controls\IEditForm.cs" />
+    <Compile Include="Controls\MySyntaxHighlighter.cs" />
     <Compile Include="Common\MyBitmap.cs" />
     <Compile Include="Common\User32.cs" />
     <Compile Include="Common\ZipStorer.cs" />
+    <Compile Include="Common\Area.cs" />
+    <Compile Include="Config\Config.cs" />
     <Compile Include="Core\Card.cs" />
     <Compile Include="Core\CardAttribute.cs" />
     <Compile Include="Core\CardRace.cs" />
@@ -213,13 +214,7 @@
     <None Include="chinese\cover.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="chinese\language-codeeditor.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="chinese\language-dataeditor.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="chinese\language-mainform.txt">
+    <None Include="chinese\language.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="chinese\message.txt">
@@ -343,5 +338,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

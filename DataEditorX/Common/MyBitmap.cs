@@ -7,8 +7,9 @@ using System.IO;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using DataEditorX.Common;
 
-namespace DataEditorX
+namespace DataEditorX.Common
 {
     /// <summary>
     /// Description of ImageHelper.
@@ -44,6 +45,10 @@ namespace DataEditorX
         #endregion
 
         #region 裁剪
+        public static Bitmap Cut(Bitmap sourceBitmap, Area area)
+        {
+            return Cut(sourceBitmap, area.left, area.top, area.width, area.height);
+        }
         /// <summary>
         /// 裁剪图像
         /// </summary>
