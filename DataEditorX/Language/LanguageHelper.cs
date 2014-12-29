@@ -19,7 +19,7 @@ namespace DataEditorX.Language
     /// </summary>
     public static class LANG
     {
-        static SortedList<string, string> mWordslist = new SortedList<string, string>();
+        static Dictionary<string, string> mWordslist = new Dictionary<string, string>();
         static SortedList<LMSG, string> msglist = new SortedList<LMSG, string>();
         static string SEP_CONTROL = ".";
         static string SEP_LINE = " ";
@@ -84,7 +84,7 @@ namespace DataEditorX.Language
                 ToolStrip ms = (ToolStrip)c;
                 foreach (ToolStripItem tsi in ms.Items)
                 {
-                    SetMenuItem(formName, tsi);
+                    SetMenuItem(formName + SEP_CONTROL + ms.Name, tsi);
                 }
             }
             else
@@ -105,33 +105,32 @@ namespace DataEditorX.Language
             {
                 foreach (ToolStripItem ts in conms.Items)
                 {
-                    SetMenuItem(formName, ts);
+                    SetMenuItem(formName + SEP_CONTROL + conms.Name, ts);
                 }
             }
         }
 
         static void SetMenuItem(string pName, ToolStripItem tsi)
         {
-            string tName = pName + SEP_CONTROL + tsi.Name;
             string title;
            
             if (tsi is ToolStripMenuItem)
             {
                 ToolStripMenuItem tsmi = (ToolStripMenuItem)tsi;
-                if (GetLabel(tName, out title))
+                if (GetLabel(pName +SEP_CONTROL + tsmi.Name, out title))
                     tsmi.Text = title;
                 if (tsmi.HasDropDownItems)
                 {
                     foreach (ToolStripItem subtsi in tsmi.DropDownItems)
                     {
-                        SetMenuItem(tName, subtsi);
+                        SetMenuItem(pName, subtsi);
                     }
                 }
             }
             else if (tsi is ToolStripLabel)
             {
                 ToolStripLabel tlbl = (ToolStripLabel)tsi;
-                if (GetLabel(tName, out title))
+                if (GetLabel(pName + SEP_CONTROL + tlbl.Name, out title))
                     tlbl.Text = title;
             }
         }
@@ -179,7 +178,7 @@ namespace DataEditorX.Language
                 ToolStrip ms = (ToolStrip)c;
                 foreach (ToolStripItem tsi in ms.Items)
                 {
-                    GetMenuItem(formName, tsi);
+                    GetMenuItem(formName + SEP_CONTROL + ms.Name, tsi);
                 }
             }
             else
@@ -199,32 +198,31 @@ namespace DataEditorX.Language
             {
                 foreach (ToolStripItem ts in conms.Items)
                 {
-                    GetMenuItem(formName, ts);
+                    GetMenuItem(formName + SEP_CONTROL + conms.Text, ts);
                 }
             }
         }
 
         static void GetMenuItem(string pName, ToolStripItem tsi)
         {
-            string tName = pName + SEP_CONTROL + tsi.Name;
             if (string.IsNullOrEmpty(tsi.Name))
                 return;
             if (tsi is ToolStripMenuItem)
             {
                 ToolStripMenuItem tsmi = (ToolStripMenuItem)tsi;
-                AddLabel(tName, tsmi.Text);
+                AddLabel(pName + SEP_CONTROL + tsmi.Name, tsmi.Text);
                 if (tsmi.HasDropDownItems)
                 {
                     foreach (ToolStripItem subtsi in tsmi.DropDownItems)
                     {
-                        GetMenuItem(tName, subtsi);
+                        GetMenuItem(pName, subtsi);
                     }
                 }
             }
             else if (tsi is ToolStripLabel)
             {
                 ToolStripLabel tlbl = (ToolStripLabel)tsi;
-                AddLabel(tName, tlbl.Text);
+                AddLabel(pName + SEP_CONTROL + tlbl.Name, tlbl.Text);
             }
         }
 

@@ -52,7 +52,7 @@ namespace DataEditorX
             WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient7 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.dockPanel1 = new WeifenLuo.WinFormsUI.Docking.DockPanel();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.menuitem_file = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_open = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_new = new System.Windows.Forms.ToolStripMenuItem();
@@ -78,7 +78,7 @@ namespace DataEditorX
             this.menuitem_closeother = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_closeall = new System.Windows.Forms.ToolStripMenuItem();
             this.bgWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.menuStrip1.SuspendLayout();
+            this.mainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // dockPanel1
@@ -136,17 +136,17 @@ namespace DataEditorX
             this.dockPanel1.Skin = dockPanelSkin1;
             this.dockPanel1.TabIndex = 0;
             // 
-            // menuStrip1
+            // mainMenu
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuitem_file,
             this.menuitem_windows});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.MdiWindowListItem = this.menuitem_windows;
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(868, 25);
-            this.menuStrip1.TabIndex = 3;
-            this.menuStrip1.Text = "menuStrip1";
+            this.mainMenu.Location = new System.Drawing.Point(0, 0);
+            this.mainMenu.MdiWindowListItem = this.menuitem_windows;
+            this.mainMenu.Name = "mainMenu";
+            this.mainMenu.Size = new System.Drawing.Size(868, 25);
+            this.mainMenu.TabIndex = 3;
+            this.mainMenu.Text = "mainMenu";
             // 
             // menuitem_file
             // 
@@ -345,17 +345,17 @@ namespace DataEditorX
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(868, 597);
             this.Controls.Add(this.dockPanel1);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.mainMenu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.mainMenu;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormFormClosing);
             this.Load += new System.EventHandler(this.MainFormLoad);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.mainMenu.ResumeLayout(false);
+            this.mainMenu.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -383,7 +383,7 @@ namespace DataEditorX
 		private System.Windows.Forms.ToolStripMenuItem menuitem_dataeditor;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_windows;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_file;
-		private System.Windows.Forms.MenuStrip menuStrip1;
+		private System.Windows.Forms.MenuStrip mainMenu;
 		private WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel1;
         private System.Windows.Forms.ToolStripMenuItem menuitem_shistory;
         private System.ComponentModel.BackgroundWorker bgWorker1;

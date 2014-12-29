@@ -35,7 +35,7 @@ namespace DataEditorX
 		/// </summary>
 		private void InitializeComponent()
 		{
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.menuitem_file = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_open = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_save = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,21 +54,21 @@ namespace DataEditorX
             this.fctb = new FastColoredTextBoxNS.FastColoredTextBoxEx();
             this.documentMap1 = new FastColoredTextBoxNS.DocumentMap();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.menuStrip1.SuspendLayout();
+            this.mainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fctb)).BeginInit();
             this.SuspendLayout();
             // 
-            // menuStrip1
+            // mainMenu
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuitem_file,
             this.menuitem_setting,
             this.menuitem_help});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(695, 25);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
+            this.mainMenu.Location = new System.Drawing.Point(0, 0);
+            this.mainMenu.Name = "mainMenu";
+            this.mainMenu.Size = new System.Drawing.Size(695, 25);
+            this.mainMenu.TabIndex = 0;
+            this.mainMenu.Text = "mainMenu";
             // 
             // menuitem_file
             // 
@@ -208,7 +208,7 @@ namespace DataEditorX
         '\''};
             this.fctb.AutoIndent = false;
             this.fctb.AutoIndentChars = false;
-            this.fctb.AutoIndentCharsPatterns = "\n^\\s*[\\w\\.]+(\\s\\w+)?\\s*(?<range>=)\\s*(?<range>.+)\n";
+            this.fctb.AutoIndentCharsPatterns = "^\\s*[\\w\\.]+(\\s\\w+)?\\s*(?<range>=)\\s*(?<range>.+)";
             this.fctb.AutoIndentExistingLines = false;
             this.fctb.AutoScrollMinSize = new System.Drawing.Size(0, 22);
             this.fctb.BackBrush = null;
@@ -269,17 +269,17 @@ namespace DataEditorX
             this.Controls.Add(this.fctb);
             this.Controls.Add(this.tb_input);
             this.Controls.Add(this.documentMap1);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.mainMenu);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.mainMenu;
             this.Name = "CodeEditForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CodeEditor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CodeEditFormFormClosing);
             this.Load += new System.EventHandler(this.CodeEditFormLoad);
             this.Enter += new System.EventHandler(this.CodeEditFormEnter);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.mainMenu.ResumeLayout(false);
+            this.mainMenu.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fctb)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -302,7 +302,7 @@ namespace DataEditorX
 		private System.Windows.Forms.ToolStripMenuItem menuitem_save;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_open;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_file;
-		private System.Windows.Forms.MenuStrip menuStrip1;
+		private System.Windows.Forms.MenuStrip mainMenu;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
 		
 

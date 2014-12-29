@@ -151,7 +151,7 @@ namespace DataEditorX
         {
             if (this.MdiParent == null)
                 return;
-            menuStrip1.Visible = false;
+            mainMenu.Visible = false;
             menuitem_file.Visible = false;
             menuitem_file.Enabled = false;
             //this.SuspendLayout();
