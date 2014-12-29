@@ -1,101 +1,76 @@
-﻿CodeEditForm 脚本编辑
-CodeEditForm.fctb 
-CodeEditForm.tb_input 
-CodeEditForm.documentMap1 documentMap1
-CodeEditForm.mainMenu.menuitem_file File(&F)
-CodeEditForm.mainMenu.menuitem_open Open
-CodeEditForm.mainMenu.menuitem_save Save
-CodeEditForm.mainMenu.menuitem_saveas Save As
-CodeEditForm.mainMenu.menuitem_quit Quit
-CodeEditForm.mainMenu.menuitem_setting Tools(&S)
-CodeEditForm.mainMenu.menuitem_showmap Show Map
-CodeEditForm.mainMenu.menuitem_showinput Show InputBox
-CodeEditForm.mainMenu.menuitem_find Find
-CodeEditForm.mainMenu.menuitem_replace Replace
-CodeEditForm.mainMenu.menuitem_setcard Set Cards
-CodeEditForm.mainMenu.menuitem_help Help(&H)
-CodeEditForm.mainMenu.menuitem_about About
+﻿#
+CodeEditForm.mainMenu.menuitem_file 文件(&F)
+CodeEditForm.mainMenu.menuitem_open 打开
+CodeEditForm.mainMenu.menuitem_save 保存
+CodeEditForm.mainMenu.menuitem_saveas 另存为
+CodeEditForm.mainMenu.menuitem_quit 退出
+CodeEditForm.mainMenu.menuitem_setting 工具(&S)
+CodeEditForm.mainMenu.menuitem_showmap 显示/隐藏结构图
+CodeEditForm.mainMenu.menuitem_showinput 显示/隐藏输入框
+CodeEditForm.mainMenu.menuitem_find 查找
+CodeEditForm.mainMenu.menuitem_replace 替换
+CodeEditForm.mainMenu.menuitem_setcard 设置卡片库
+CodeEditForm.mainMenu.menuitem_help 帮助(&H)
+CodeEditForm.mainMenu.menuitem_about 关于
 #
-DataEditForm 数据编辑
-DataEditForm.tb_setcode4 0
-DataEditForm.tb_setcode3 0
-DataEditForm.tb_setcode2 0
-DataEditForm.tb_setcode1 0
-DataEditForm.btn_img &Image
-DataEditForm.lb_types Card Types
-DataEditForm.lb_tiptexts Tips Texts
-DataEditForm.lb_categorys Card Categorys
-DataEditForm.tb_edittext 
-DataEditForm.tb_pagenum 1
-DataEditForm.tb_def 0
-DataEditForm.tb_pright 0
-DataEditForm.tb_page 1
-DataEditForm.tb_cardalias 0
-DataEditForm.tb_cardcode 0
-DataEditForm.tb_atk 0
-DataEditForm.lb4 /
-DataEditForm.lb_cardcode Card Code
-DataEditForm.lb_cardalias Alias Card
-DataEditForm.tb_pleft 0
-DataEditForm.lb5 /
+DataEditForm.btn_img 导入图片
+DataEditForm.lb_types 卡片类型
+DataEditForm.lb_tiptexts 脚本提示文字
+DataEditForm.lb_categorys 效果分类
+DataEditForm.lb_cardcode 卡片密码
+DataEditForm.lb_cardalias 同名卡
 DataEditForm.lb_atkdef ATK/DEF
-DataEditForm.lb2 /
-DataEditForm.lb_pleft_right PScale
-DataEditForm.lb_scripttext 
-DataEditForm.btn_reset &Reset
-DataEditForm.btn_lua &Lua Script
-DataEditForm.btn_serach &Search
-DataEditForm.btn_del &Delete
-DataEditForm.btn_undo &Undo
-DataEditForm.btn_mod &Modify
-DataEditForm.btn_add &Add
-DataEditForm.btn_PageDown > >
-DataEditForm.btn_PageUp < <
-DataEditForm.tb_cardtext 
-DataEditForm.tb_cardname 
-DataEditForm.lv_cardlist.0 Card Code
-DataEditForm.lv_cardlist.1 Card Name
-DataEditForm.mainMenu.menuitem_file File(&F)
-DataEditForm.mainMenu.menuitem_open Open Database(&O)
-DataEditForm.mainMenu.menuitem_new New Database(&N)
-DataEditForm.mainMenu.menuitem_copyselectto Select Copy To...
-DataEditForm.mainMenu.menuitem_copyto All Now Copy To...
-DataEditForm.mainMenu.menuitem_openLastDataBase Open Last DataBase
-DataEditForm.mainMenu.menuitem_quit Quit
-DataEditForm.mainMenu.menu_tools Tools(&T)
-DataEditForm.mainMenu.menuitem_readydk Cards Form ydk file(&Y)
-DataEditForm.mainMenu.menuitem_readimages Cards From Images(&I)
-DataEditForm.mainMenu.menuitem_compdb Compression DataBase
-DataEditForm.mainMenu.menuitem_exportdata Export Data
-DataEditForm.mainMenu.menuitem_saveasmse_select Select Save As MSE
-DataEditForm.mainMenu.menuitem_saveasmse All Now Save As MSE
-DataEditForm.mainMenu.menuitem_cutimages Cut Images
-DataEditForm.mainMenu.menuitem_convertimage Import Images
-DataEditForm.mainMenu.menuitem_importmseimg Drop Image to MSE
-DataEditForm.mainMenu.menuitem_cancelTask Cancel Task
-DataEditForm.mainMenu.menuitem_help Help(&H)
-DataEditForm.mainMenu.menuitem_about About
-DataEditForm.mainMenu.menuitem_checkupdate Check Update
-DataEditForm.mainMenu.menuitem_github Source Code
+DataEditForm.lb_pleft_right 灵摆刻度
+DataEditForm.btn_reset 重置
+DataEditForm.btn_lua 脚本
+DataEditForm.btn_serach 搜索
+DataEditForm.btn_del 删除
+DataEditForm.btn_undo 还原
+DataEditForm.btn_mod 修改
+DataEditForm.btn_add 添加
+DataEditForm.btn_PageDown 下一页
+DataEditForm.btn_PageUp 上一页
+DataEditForm.lv_cardlist.0 卡片密码
+DataEditForm.lv_cardlist.1 卡片名称
+DataEditForm.mainMenu.menuitem_file 文件(&F)
+DataEditForm.mainMenu.menuitem_open 打开(&O)
+DataEditForm.mainMenu.menuitem_new 新建(&N)
+DataEditForm.mainMenu.menuitem_copyselectto 把选中复制到...
+DataEditForm.mainMenu.menuitem_copyto 把结果复制到...
+DataEditForm.mainMenu.menuitem_openLastDataBase 打开最后的数据库
+DataEditForm.mainMenu.menuitem_quit 退出
+DataEditForm.mainMenu.menu_tools 工具(&T)
+DataEditForm.mainMenu.menuitem_readydk 从卡组文件读取卡片(&Y)
+DataEditForm.mainMenu.menuitem_readimages 从卡图文件夹读取卡片(&I)
+DataEditForm.mainMenu.menuitem_compdb 压缩数据库
+DataEditForm.mainMenu.menuitem_exportdata 导出为zip
+DataEditForm.mainMenu.menuitem_saveasmse_select 把选中导为MSE存档
+DataEditForm.mainMenu.menuitem_saveasmse 把结果导为MSE存档
+DataEditForm.mainMenu.menuitem_cutimages 批量裁剪卡图
+DataEditForm.mainMenu.menuitem_convertimage 批量导入卡图
+DataEditForm.mainMenu.menuitem_importmseimg 设置为MSE图片库
+DataEditForm.mainMenu.menuitem_cancelTask 取消任务
+DataEditForm.mainMenu.menuitem_help 帮助(&H)
+DataEditForm.mainMenu.menuitem_about 关于
+DataEditForm.mainMenu.menuitem_checkupdate 检查更新
+DataEditForm.mainMenu.menuitem_github 源码
 #
-MainForm DataEditorX
-MainForm.dockPanel1 
-MainForm.mainMenu.menuitem_file File(&F)
-MainForm.mainMenu.menuitem_open Open
-MainForm.mainMenu.menuitem_new New
-MainForm.mainMenu.menuitem_save Save
-MainForm.mainMenu.menuitem_findluafunc Find LuaFunctons
-MainForm.mainMenu.menuitem_copyselect Copy Select Cards
-MainForm.mainMenu.menuitem_copyall Copy All Cards
-MainForm.mainMenu.menuitem_pastecards Paste Cards
-MainForm.mainMenu.menuitem_comp1 Compare DB 1
-MainForm.mainMenu.menuitem_comp2 Compare DB 2
-MainForm.mainMenu.menuitem_history History(&H)
-MainForm.mainMenu.menuitem_shistory Script History
-MainForm.mainMenu.menuitem_quit Quit
-MainForm.mainMenu.menuitem_windows Windows(&W)
-MainForm.mainMenu.menuitem_dataeditor DataEditor
-MainForm.mainMenu.menuitem_codeeditor CodeEditor
-MainForm.mainMenu.menuitem_close Close
-MainForm.mainMenu.menuitem_closeother Close Other
-MainForm.mainMenu.menuitem_closeall Close All
+MainForm.mainMenu.menuitem_file 文件(&F)
+MainForm.mainMenu.menuitem_open 打开
+MainForm.mainMenu.menuitem_new 新建
+MainForm.mainMenu.menuitem_save 保存
+MainForm.mainMenu.menuitem_findluafunc 从C++源码查找Lua函数
+MainForm.mainMenu.menuitem_copyselect 复制选中卡片
+MainForm.mainMenu.menuitem_copyall 复制所有卡片
+MainForm.mainMenu.menuitem_pastecards 粘贴卡片
+MainForm.mainMenu.menuitem_comp1 作为对比的数据库1
+MainForm.mainMenu.menuitem_comp2 作为对比的数据库2
+MainForm.mainMenu.menuitem_history 数据库历史
+MainForm.mainMenu.menuitem_shistory 脚本历史
+MainForm.mainMenu.menuitem_quit 退出
+MainForm.mainMenu.menuitem_windows 窗口(&W)
+MainForm.mainMenu.menuitem_dataeditor 数据编辑
+MainForm.mainMenu.menuitem_codeeditor 脚本编辑
+MainForm.mainMenu.menuitem_close 关闭当前
+MainForm.mainMenu.menuitem_closeother 关闭其他
+MainForm.mainMenu.menuitem_closeall 关闭所有

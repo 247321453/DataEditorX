@@ -16,10 +16,12 @@ namespace FastColoredTextBoxNS
 	public class FastColoredTextBoxEx : FastColoredTextBox
 	{
 		Point lastMouseCoord;
-        string mFile;
+ 
 		public FastColoredTextBoxEx() : base()
 		{
             this.SyntaxHighlighter = new MySyntaxHighlighter();
+            this.TextChangedDelayed += FctbTextChangedDelayed;
+
 		}
 		public new event EventHandler<ToolTipNeededEventArgs> ToolTipNeeded;
 		protected override void OnMouseMove(MouseEventArgs e)
@@ -59,5 +61,29 @@ namespace FastColoredTextBoxNS
 				ToolTip.Show(ea.ToolTipText, this, new Point(lastMouseCoord.X, lastMouseCoord.Y + CharHeight));
 			}
 		}
+        void FctbTextChangedDelayed(object sender, TextChangedEventArgs e)
+        {
+            //delete all markers
+            this.Range.ClearFoldingMarkers();
+
+            var currentIndent = 0;
+            var lastNonEmptyLine = 0;
+
+            for (int i = 0; i < this.LinesCount; i++)
+            {
+                var line = this[i];
+                var spacesCount = line.StartSpacesCount;
+                if (spacesCount == line.Count) //empty line
+                    continue;
+                if (currentIndent < spacesCount)
+                    //append start folding marker
+                    this[lastNonEmptyLine].FoldingStartMarker = "m" + currentIndent;
+                else if (currentIndent > spacesCount)
+                    //append end folding marker
+                    this[lastNonEmptyLine].FoldingEndMarker = "m" + spacesCount;
+                currentIndent = spacesCount;
+                lastNonEmptyLine = i;
+            }
+        }
 	}
 }

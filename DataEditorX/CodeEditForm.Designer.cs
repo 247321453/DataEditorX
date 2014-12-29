@@ -240,7 +240,6 @@ namespace DataEditorX
             this.fctb.WordWrap = true;
             this.fctb.Zoom = 100;
             this.fctb.ToolTipNeeded += new System.EventHandler<FastColoredTextBoxNS.ToolTipNeededEventArgs>(this.FctbToolTipNeeded);
-            this.fctb.TextChangedDelayed += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(this.FctbTextChangedDelayed);
             this.fctb.SelectionChangedDelayed += new System.EventHandler(this.FctbSelectionChangedDelayed);
             this.fctb.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FctbKeyDown);
             this.fctb.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FctbMouseClick);

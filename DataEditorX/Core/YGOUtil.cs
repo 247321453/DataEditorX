@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Microsoft.VisualBasic;
 using System.Configuration;
+using DataEditorX.Config;
 
 namespace DataEditorX.Core
 {

@@ -15,6 +15,8 @@ using System.IO.Compression;
 using System.Windows.Forms;
 using Microsoft.VisualBasic;
 
+using DataEditorX.Config;
+
 namespace DataEditorX.Core
 {
 	
