@@ -10,7 +10,7 @@ using System.Configuration;
 using DataEditorX.Config;
 using DataEditorX.Common;
 
-namespace DataEditorX.Core
+namespace DataEditorX.Config
 {
 
 	public class ImageSet

@@ -11,7 +11,7 @@ using DataEditorX.Language;
 using DataEditorX.Core;
 using System.Text;
 
-namespace DataEditorX.Core
+namespace DataEditorX.Config
 {
     class CodeConfig
     {

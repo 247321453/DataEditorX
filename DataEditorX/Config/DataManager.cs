@@ -11,7 +11,7 @@ using System.Text;
 using System.Globalization;
 using System.Collections.Generic;
 
-namespace DataEditorX.Core
+namespace DataEditorX.Config
 {
     public class DataManager
     {

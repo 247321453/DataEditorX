@@ -12,7 +12,7 @@ using System.IO;
 using System.Text;
 using DataEditorX.Language;
 
-namespace DataEditorX.Core
+namespace DataEditorX.Config
 {
 	public class RegStr
 	{

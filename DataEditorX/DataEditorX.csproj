@@ -90,7 +90,7 @@
     <Compile Include="Config\CodeConfig.cs" />
     <Compile Include="Core\DataBase.cs" />
     <Compile Include="Config\DataConfig.cs" />
-    <Compile Include="Core\DataManager.cs" />
+    <Compile Include="Config\DataManager.cs" />
     <Compile Include="Config\ImageSet.cs" />
     <Compile Include="Core\LuaFunction.cs" />
     <Compile Include="Core\MSE.cs" />
@@ -338,6 +338,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="chinese\card-info.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

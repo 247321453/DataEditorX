@@ -8,14 +8,16 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
-namespace DataEditorX.Core
+namespace DataEditorX.Config
 {
 	/// <summary>
 	/// Description of DataConfig.
 	/// </summary>
 	public class DataConfig
 	{
+        
 		public DataConfig()
 		{
             InitMember(System.Windows.Forms.Application.StartupPath);
@@ -24,16 +26,10 @@ namespace DataEditorX.Core
 		{
             InitMember(datapath);
 		}
-		void InitMember(string datapath)
+		public void InitMember(string datapath)
         {
             this.datapath = datapath;
-            confrule = Path.Combine(datapath, "card-rule.txt");
-            confattribute = Path.Combine(datapath, "card-attribute.txt");
-            confrace = Path.Combine(datapath, "card-race.txt");
-            conflevel = Path.Combine(datapath, "card-level.txt");
-            confsetname = Path.Combine(datapath, "card-setname.txt");
-            conftype = Path.Combine(datapath, "card-type.txt");
-            confcategory = Path.Combine(datapath, "card-category.txt");
+            conf = MyPath.Combine(datapath, MyConfig.FILE_INFO);
 
 			dicCardRules=new Dictionary<long, string>();
 			dicSetnames=new Dictionary<long, string>();
@@ -42,6 +38,17 @@ namespace DataEditorX.Core
 			dicCardAttributes=new Dictionary<long, string>();
 			dicCardRaces=new Dictionary<long, string>();
 			dicCardLevels=new Dictionary<long, string>();
+
+            string[] lines = File.ReadAllLines(conf, Encoding.UTF8);
+            foreach (string line in lines)
+            {
+                if (!line.StartsWith("#"))
+                {
+                    if (line.StartsWith(MyConfig.TAG_ATTRIBUTE))
+                    {
+                    }
+                }
+            }
 		}
 		Dictionary<long, string> CopyDic(Dictionary<long, string> dic)
 		{
@@ -63,8 +70,7 @@ namespace DataEditorX.Core
 			dicCardLevels=DataManager.Read(conflevel);
 		}
         string datapath;
-		public string confrule, confattribute, confrace, conflevel;
-		public string confsetname, conftype, confcategory;
+        public string conf;
 
 		public Dictionary<long, string> dicCardRules=null;
 		public Dictionary<long, string> dicCardAttributes=null;

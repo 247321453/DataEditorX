@@ -30,12 +30,21 @@ namespace DataEditorX.Config
         public const string FILE_TEMP = "open.tmp";
         public const string FILE_MESSAGE = "message.txt";
         public const string FILE_HISTORY = "history.txt";
+        public static string FILE_INFO = "card-info.txt";
+        public static string FILE_SETNAME = "card-setname.txt";
+
+        public static string TAG_RULE = "rule";
+        public static string TAG_RACE = "race";
+        public static string TAG_ATTRIBUTE = "attribute";
+        public static string TAG_LEVEL = "level";
+        public static string TAG_CATEGORY = "category";
+        public static string TAG_TYPE = "type";
 
         public static string readString(string key)
         {
             return ConfigurationManager.AppSettings[key];
         }
-        public static int readInteger(string key,int def)
+        public static int readInteger(string key, int def)
         {
             int i;
             if (int.TryParse(readString(key), out i))
@@ -44,7 +53,7 @@ namespace DataEditorX.Config
         }
         public static float readFloat(string key, float def)
         {
-           float i;
+            float i;
             if (float.TryParse(readString(key), out i))
                 return i;
             return def;
