@@ -18,6 +18,7 @@ namespace DataEditorX.Config
     {
         public const string TAG_START = "##";
         public const string TAG_END = "#";
+        public const string SEP_LINE = "	";
 
         #region 根据tag获取内容
         static string reReturn(string content)
@@ -84,11 +85,11 @@ namespace DataEditorX.Config
             {
                 if (line.StartsWith("#"))
                     continue;
-                if ((l = line.IndexOf(" ")) < 0)
+                if ((l = line.IndexOf(SEP_LINE)) < 0)
                     continue;
                 strkey = line.Substring(0, l).Replace("0x", "");
                 strword = line.Substring(l + 1);
-                int t = strword.IndexOf('\t');
+                int t = strword.IndexOf(SEP_LINE);
                 if (t > 0)
                     strword = strword.Substring(0, t);
                 if (line.StartsWith("0x"))

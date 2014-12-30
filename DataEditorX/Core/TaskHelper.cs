@@ -46,12 +46,10 @@ namespace DataEditorX.Core
         private bool isRun = false;
         private BackgroundWorker worker;
 
-        public TaskHelper(string datapath, BackgroundWorker worker,
-                          Dictionary<long, string> typedic,
-                          Dictionary<long, string> racedic)
+        public TaskHelper(string datapath, BackgroundWorker worker, MSEConfig mcfg)
         {
             this.worker = worker;
-            mseHelper = new MSE(datapath, typedic, racedic);
+            mseHelper = new MSE(mcfg);
             imgSet.Init();
         }
         public bool IsRuning()

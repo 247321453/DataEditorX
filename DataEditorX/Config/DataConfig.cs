@@ -24,16 +24,20 @@ namespace DataEditorX.Config
         public const string TAG_CATEGORY = "category";
         public const string TAG_TYPE = "type";
         public const string TAG_SETNAME = "setname";
+
+        public MSEConfig msecfg;
         public DataConfig()
         {
-            InitMember(MyPath.Combine(Application.StartupPath, FILE_INFO));
+            InitMember(MyPath.Combine(Application.StartupPath, FILE_INFO)
+                , Application.StartupPath);
         }
-        public DataConfig(string conf)
+        public DataConfig(string conf, string datapath)
         {
-            InitMember(conf);
+            InitMember(conf, datapath);
         }
-        public void InitMember(string conf)
+        public void InitMember(string conf, string datapath)
         {
+            msecfg = new MSEConfig(datapath);
             //conf = MyPath.Combine(datapath, MyConfig.FILE_INFO);
             if(!File.Exists(conf))
             {

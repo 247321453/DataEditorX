@@ -113,9 +113,7 @@ namespace DataEditorX
             {
                 datacfg = new DataConfig();
             }
-            tasker = new TaskHelper(datapath, bgWorker1,
-                                  datacfg.dicCardTypes,
-                                  datacfg.dicCardRaces);
+            tasker = new TaskHelper(datapath, bgWorker1, datacfg.msecfg);
             //设置空白卡片
             oldCard = new Card(0);
             SetCard(oldCard);
