@@ -53,7 +53,7 @@ namespace DataEditorX
             //文件路径
             conflang = MyPath.Combine(datapath, MyConfig.FILE_LANGUAGE);
             //游戏数据
-            datacfg = new DataConfig(MyPath.Combine(datapath, MyConfig.FILE_INFO));
+            datacfg = new DataConfig(MyPath.Combine(datapath, DataConfig.FILE_INFO));
             //初始化YGOUtil的数据
             YGOUtil.SetConfig(datacfg);
 

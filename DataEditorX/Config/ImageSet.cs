@@ -15,6 +15,11 @@ namespace DataEditorX.Config
 
 	public class ImageSet
 	{
+        public const string TAG_IMAGE_OTHER = "image_other";
+        public const string TAG_IMAGE_XYZ = "image_xyz";
+        public const string TAG_IMAGE_PENDULUM = "image_pendulum";
+        public const string TAG_IMAGE_SIZE = "image";
+        public const string TAG_IMAGE_QUILTY = "image_quilty";
 		bool isInit;
 		public ImageSet(){
 			isInit=false;
@@ -24,20 +29,20 @@ namespace DataEditorX.Config
 			if(isInit)
 				return;
 			isInit=true;
-            this.normalArea = MyConfig.readArea(MyConfig.TAG_IMAGE_OTHER);
+            this.normalArea = MyConfig.readArea(TAG_IMAGE_OTHER);
 
-            this.xyzArea = MyConfig.readArea(MyConfig.TAG_IMAGE_XYZ);
+            this.xyzArea = MyConfig.readArea(TAG_IMAGE_XYZ);
 
-            this.pendulumArea = MyConfig.readArea(MyConfig.TAG_IMAGE_PENDULUM);
+            this.pendulumArea = MyConfig.readArea(TAG_IMAGE_PENDULUM);
 
-            int[] ints = MyConfig.readIntegers(MyConfig.TAG_IMAGE_SIZE, 4);
+            int[] ints = MyConfig.readIntegers(TAG_IMAGE_SIZE, 4);
 
             this.w = ints[0];
             this.h = ints[1];
             this.W = ints[2];
             this.H = ints[3];
 
-            this.quilty = MyConfig.readInteger(MyConfig.TAG_IMAGE_QUILTY, 95);
+            this.quilty = MyConfig.readInteger(TAG_IMAGE_QUILTY, 95);
 		}
 		public int quilty;
 		public int w,h,W,H;

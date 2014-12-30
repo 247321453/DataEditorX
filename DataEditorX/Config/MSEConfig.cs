@@ -37,16 +37,16 @@ namespace DataEditorX.Config
         public const string TAG_MONSTER = "monster";
         public const string TAG_PENDULUM = "pendulum";
         public const string TAG_SPELL_TRAP = "spelltrap";
+        public const string FILE_CONFIG = "mse-config.txt";
+        public const string FILE_TEMPLATE = "mse-template.txt";
 
-		string _path;
 		public MSEConfig(string path)
 		{
 			Iscn2tw=false;
-			_path=path;
 			regx_monster="(\\s\\S*?)";
 			regx_pendulum="(\\s\\S*?)";
 
-            string file = MyPath.Combine(path, MyConfig.TAG_MSE_TEMPLATE);
+            string file = MyPath.Combine(path, FILE_TEMPLATE);
             if (File.Exists(file))
             {
                 string content = File.ReadAllText(file, Encoding.UTF8);
@@ -56,8 +56,8 @@ namespace DataEditorX.Config
                 spelltrap = DataManager.subString(content, TAG_SPELL_TRAP);
             }
 
-			
-			string tmp=Path.Combine(path, "mse-config.txt");
+
+            string tmp = MyPath.Combine(path, FILE_CONFIG);
 			replaces=new List<RegStr>();
 			
 			if(File.Exists(tmp))
@@ -80,7 +80,7 @@ namespace DataEditorX.Config
 					else if(line.StartsWith("maxcount"))
 						int.TryParse(getValue(line),out maxcount);
 					else if(line.StartsWith("imagepath"))
-						imagepath = CheckDir(getValue(line));
+                        imagepath = MyPath.CheckDir(getValue(line), MyPath.Combine(path, "Images"));
 					else if(line.StartsWith("replace")){
 						string word=getValue(line);
 						int t=word.IndexOf(" ");
@@ -102,25 +102,6 @@ namespace DataEditorX.Config
 			{
 				Iscn2tw=false;
 			}
-		}
-		string CheckDir(string dir)
-		{
-			DirectoryInfo fo;
-			try
-			{
-				fo=new DirectoryInfo(MyPath.GetFullPath(dir));
-			}
-			catch
-			{
-				//路径不合法
-				dir=MyPath.Combine(_path,"Images");
-				fo=new DirectoryInfo(dir);
-			}
-			
-			if(!fo.Exists)
-				fo.Create();
-			dir=fo.FullName;
-			return dir;
 		}
 		string getRegex(string word)
 		{

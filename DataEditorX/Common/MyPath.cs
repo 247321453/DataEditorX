@@ -68,5 +68,24 @@ namespace System.IO
 				return builder.ToString();
 			}
 		}
+        //检查目录是否合法
+        public static string CheckDir(string dir,string defalut)
+        {
+            DirectoryInfo fo;
+            try
+            {
+                fo = new DirectoryInfo(MyPath.GetFullPath(dir));
+            }
+            catch
+            {
+                //路径不合法
+                fo = new DirectoryInfo(defalut);
+            }
+
+            if (!fo.Exists)
+                fo.Create();
+            dir = fo.FullName;
+            return dir;
+        }
 	}
 }

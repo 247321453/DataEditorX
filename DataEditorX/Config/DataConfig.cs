@@ -16,9 +16,17 @@ namespace DataEditorX.Config
     /// </summary>
     public class DataConfig
     {
+        public const string FILE_INFO = "card-info.txt";
+        public const string TAG_RULE = "rule";
+        public const string TAG_RACE = "race";
+        public const string TAG_ATTRIBUTE = "attribute";
+        public const string TAG_LEVEL = "level";
+        public const string TAG_CATEGORY = "category";
+        public const string TAG_TYPE = "type";
+        public const string TAG_SETNAME = "setname";
         public DataConfig()
         {
-            InitMember(MyPath.Combine(Application.StartupPath, MyConfig.FILE_INFO));
+            InitMember(MyPath.Combine(Application.StartupPath, FILE_INFO));
         }
         public DataConfig(string conf)
         {
@@ -40,13 +48,13 @@ namespace DataEditorX.Config
             }
             //提取内容
             string text = File.ReadAllText(conf);
-            dicCardRules = DataManager.Read(text, MyConfig.TAG_RULE);
-            dicSetnames = DataManager.Read(text, MyConfig.TAG_SETNAME);
-            dicCardTypes = DataManager.Read(text, MyConfig.TAG_TYPE);
-            dicCardcategorys = DataManager.Read(text, MyConfig.TAG_CATEGORY);
-            dicCardAttributes = DataManager.Read(text, MyConfig.TAG_ATTRIBUTE);
-            dicCardRaces = DataManager.Read(text, MyConfig.TAG_RACE);
-            dicCardLevels = DataManager.Read(text, MyConfig.TAG_LEVEL);
+            dicCardRules = DataManager.Read(text, TAG_RULE);
+            dicSetnames = DataManager.Read(text, TAG_SETNAME);
+            dicCardTypes = DataManager.Read(text, TAG_TYPE);
+            dicCardcategorys = DataManager.Read(text, TAG_CATEGORY);
+            dicCardAttributes = DataManager.Read(text, TAG_ATTRIBUTE);
+            dicCardRaces = DataManager.Read(text, TAG_RACE);
+            dicCardLevels = DataManager.Read(text, TAG_LEVEL);
 
 		}
 
