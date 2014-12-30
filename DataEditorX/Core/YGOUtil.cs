@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using Microsoft.VisualBasic;
 using System.Configuration;
 using DataEditorX.Config;
+using System.Windows.Forms;
 
 namespace DataEditorX.Core
 {
@@ -15,7 +16,6 @@ namespace DataEditorX.Core
         static YGOUtil()
         {
             datacfg = new DataConfig();
-            datacfg.Init();
         }
         public static void SetConfig(DataConfig dcfg)
         {

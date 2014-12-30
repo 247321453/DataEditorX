@@ -82,7 +82,7 @@
     <Compile Include="Common\User32.cs" />
     <Compile Include="Common\ZipStorer.cs" />
     <Compile Include="Common\Area.cs" />
-    <Compile Include="Config\Config.cs" />
+    <Compile Include="Config\MyConfig.cs" />
     <Compile Include="Core\Card.cs" />
     <Compile Include="Core\CardAttribute.cs" />
     <Compile Include="Core\CardRace.cs" />
@@ -186,27 +186,6 @@
     <None Include="app.config">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <SubType>Designer</SubType>
-    </None>
-    <None Include="chinese\card-attribute.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="chinese\card-category.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="chinese\card-level.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="chinese\card-race.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="chinese\card-rule.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="chinese\card-setname.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="chinese\card-type.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="chinese\constant.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

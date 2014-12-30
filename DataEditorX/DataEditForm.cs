@@ -111,8 +111,7 @@ namespace DataEditorX
 
             if (datacfg == null)
             {
-                datacfg = new DataConfig(datapath);
-                datacfg.Init();
+                datacfg = new DataConfig();
             }
             tasker = new TaskHelper(datapath, bgWorker1,
                                   datacfg.dicCardTypes,

@@ -35,8 +35,8 @@ namespace DataEditorX
         //语言配置
         string conflang;
         string confmsg;
-        //打开历史
-        string historyFile;
+        //函数列表
+        string funtxt;
         //数据库对比
         DataEditForm compare1, compare2;
         Card[] tCards;
@@ -56,21 +56,28 @@ namespace DataEditorX
             this.datapath = MyPath.Combine(Application.StartupPath, language);
 
             //文件路径
-            historyFile = MyPath.Combine(datapath, MyConfig.FILE_HISTORY);
+            string historyFile = MyPath.Combine(datapath, MyConfig.FILE_HISTORY);
             conflang = MyPath.Combine(datapath, MyConfig.FILE_LANGUAGE);
             confmsg = MyPath.Combine(datapath, MyConfig.FILE_MESSAGE);
             //游戏数据
-            datacfg = new DataConfig(datapath);
-            datacfg.Init();
+            datacfg = new DataConfig(MyPath.Combine(datapath, MyConfig.FILE_INFO));
             //
             YGOUtil.SetConfig(datacfg);
 
             //代码提示
-            codecfg = new CodeConfig(datapath);
-            codecfg.Init();
+            funtxt = MyPath.Combine(datapath, MyConfig.FILE_FUNCTION);
+            string conlua = MyPath.Combine(datapath, MyConfig.FILE_CONSTANT);
+            string confstring = MyPath.Combine(datapath, MyConfig.FILE_STRINGS);
+            codecfg = new CodeConfig();
+            //添加函数
+            codecfg.AddFunction(funtxt);
+            //添加指示物
+            codecfg.AddStrings(confstring);
+            //添加常量
+            codecfg.AddConstant(conlua);
             codecfg.SetNames(datacfg.dicSetnames);
-            codecfg.AddStrings();
 
+            //初始化
             InitializeComponent();
             history = new History(this);
             //加载多语言
@@ -142,7 +149,7 @@ namespace DataEditorX
             LANG.SetFormLabel(cf);
 
             cf.SetCDBList(history.GetcdbHistory());
-            cf.InitTooltip(codecfg.TooltipDic, codecfg.FunList, codecfg.ConList);
+            cf.InitTooltip(codecfg);
             cf.Open(file);
             cf.Show(dockPanel1, DockState.Document);
         }
@@ -459,7 +466,7 @@ namespace DataEditorX
                 fd.Description = "Folder Name: ocgcore";
                 if (fd.ShowDialog() == DialogResult.OK)
                 {
-                    LuaFunction.Read(codecfg.funtxt);
+                    LuaFunction.Read(funtxt);
                     LuaFunction.Find(fd.SelectedPath);
                     MessageBox.Show("OK");
                 }

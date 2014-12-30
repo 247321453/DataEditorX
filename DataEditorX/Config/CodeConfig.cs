@@ -13,31 +13,25 @@ using System.Text;
 
 namespace DataEditorX.Config
 {
-    class CodeConfig
+    public class CodeConfig
     {
-        public CodeConfig(string datapath)
+        public CodeConfig()
         {
-            funtxt = MyPath.Combine(datapath, "_functions.txt");
-            conlua = MyPath.Combine(datapath, "constant.lua");
-            confstring = MyPath.Combine(datapath, "strings.conf");
             tooltipDic = new Dictionary<string, string>();
             funList = new List<AutocompleteItem>();
             conList = new List<AutocompleteItem>();
         }
         //函数提示
         Dictionary<string, string> tooltipDic;
+        //自动完成
+        List<AutocompleteItem> funList;
+        List<AutocompleteItem> conList;
+
         public Dictionary<string, string> TooltipDic
         {
             get { return tooltipDic; }
         }
-        //自动完成
-        List<AutocompleteItem> funList;
-        List<AutocompleteItem> conList;
-        bool isInit;
-        public bool IsInit
-        {
-            get { return isInit; }
-        }
+
         public AutocompleteItem[] FunList
         {
             get { return funList.ToArray(); }
@@ -46,19 +40,9 @@ namespace DataEditorX.Config
         {
             get { return conList.ToArray(); }
         }
-        public string funtxt, conlua, confstring;
 
-        public void Init()
-        {
-            isInit = true;
-            tooltipDic.Clear();
-            funList.Clear();
-            conList.Clear();
-            AddFunction(funtxt);
-            AddConstant(conlua);
-        }
-
-        #region setnames strings
+        #region 系列名/指示物
+        //系列名
         public void SetNames(Dictionary<long, string> dic)
         {
             foreach (long k in dic.Keys)
@@ -70,11 +54,12 @@ namespace DataEditorX.Config
                 }
             }
         }
-        public void AddStrings(string str)
+        //指示物
+        public void AddStrings(string file)
         {
-            if (File.Exists(str))
+            if (File.Exists(file))
             {
-                string[] lines = File.ReadAllLines(str);
+                string[] lines = File.ReadAllLines(file);
                 foreach (string line in lines)
                 {
                     if (line.StartsWith("!victory")
@@ -90,49 +75,47 @@ namespace DataEditorX.Config
             }
         }
 
-        public void AddStrings()
-        {
-            AddStrings(confstring);
-        }
         #endregion
 
         #region function
-        void AddFunction(string funtxt)
+        //函数
+        public void AddFunction(string funtxt)
         {
-            if (File.Exists(funtxt))
-            {
-                string[] lines = File.ReadAllLines(funtxt);
-                bool isFind = false;
-                string name = "";
-                string desc = "";
-                foreach (string line in lines)
-                {
-                    if (string.IsNullOrEmpty(line)
-                       || line.StartsWith("==")
-                       || line.StartsWith("#"))
-                        continue;
-                    if (line.StartsWith("●"))
-                    {
-                        //add
-                        AddFuncTooltip(name, desc);
-                        int w = line.IndexOf("(");
-                        int t = line.IndexOf(" ");
+            if (!File.Exists(funtxt))
+                return;
 
-                        if (t < w && t > 0)
-                        {
-                            name = line.Substring(t + 1, w - t - 1);
-                            isFind = true;
-                            desc = line;
-                        }
-                    }
-                    else if (isFind)
+            string[] lines = File.ReadAllLines(funtxt);
+            bool isFind = false;
+            string name = "";
+            string desc = "";
+            foreach (string line in lines)
+            {
+                if (string.IsNullOrEmpty(line)
+                   || line.StartsWith("==")
+                   || line.StartsWith("#"))
+                    continue;
+                if (line.StartsWith("●"))
+                {
+                    //add
+                    AddFuncTooltip(name, desc);
+                    int w = line.IndexOf("(");
+                    int t = line.IndexOf(" ");
+
+                    if (t < w && t > 0)
                     {
-                        desc += Environment.NewLine + line;
+                        name = line.Substring(t + 1, w - t - 1);
+                        isFind = true;
+                        desc = line;
                     }
                 }
-                AddFuncTooltip(name, desc);
+                else if (isFind)
+                {
+                    desc += Environment.NewLine + line;
+                }
             }
+            AddFuncTooltip(name, desc);
         }
+        //获取不带类名的函数名
         string GetFunName(string str)
         {
             int t = str.IndexOf(".");
@@ -140,6 +123,7 @@ namespace DataEditorX.Config
                 return str.Substring(t + 1);
             return str;
         }
+        //添加提示
         void AddFuncTooltip(string name, string desc)
         {
             if (!string.IsNullOrEmpty(name))
@@ -158,27 +142,7 @@ namespace DataEditorX.Config
         #endregion
 
         #region constant
-        void AddAutoMenuItem(List<AutocompleteItem> list, string key, string desc)
-        {
-            bool isExists = false;
-            foreach (AutocompleteItem ai in list)
-            {
-                if (ai.Text == key)
-                {
-                    isExists = true;
-                    ai.ToolTipText += Environment.NewLine
-                        + Environment.NewLine + desc;
-                }
-            }
-            if (!isExists)
-            {
-                AutocompleteItem aitem = new AutocompleteItem(key);
-                aitem.ToolTipTitle = key;
-                aitem.ToolTipText = desc;
-                list.Add(aitem);
-            }
-        }
-
+        //常量提示
         void AddConToolTip(string key, string desc)
         {
             AddAutoMenuItem(conList, key, desc);
@@ -190,9 +154,8 @@ namespace DataEditorX.Config
                 tooltipDic.Add(key, desc);
             }
         }
-
-
-        void AddConstant(string conlua)
+        //常量
+        public void AddConstant(string conlua)
         {
             //conList.Add("con");
             if (File.Exists(conlua))
@@ -221,5 +184,27 @@ namespace DataEditorX.Config
         }
         #endregion
 
+        #region 提示
+        void AddAutoMenuItem(List<AutocompleteItem> list, string key, string desc)
+        {
+            bool isExists = false;
+            foreach (AutocompleteItem ai in list)
+            {
+                if (ai.Text == key)
+                {
+                    isExists = true;
+                    ai.ToolTipText += Environment.NewLine
+                        + Environment.NewLine + desc;
+                }
+            }
+            if (!isExists)
+            {
+                AutocompleteItem aitem = new AutocompleteItem(key);
+                aitem.ToolTipTitle = key;
+                aitem.ToolTipText = desc;
+                list.Add(aitem);
+            }
+        }
+        #endregion
     }
 }

@@ -30,15 +30,20 @@ namespace DataEditorX.Config
         public const string FILE_TEMP = "open.tmp";
         public const string FILE_MESSAGE = "message.txt";
         public const string FILE_HISTORY = "history.txt";
-        public static string FILE_INFO = "card-info.txt";
-        public static string FILE_SETNAME = "card-setname.txt";
+        public const string FILE_INFO = "card-info.txt";
+        public const string FILE_FUNCTION = "_functions.txt";
+        public const string FILE_CONSTANT = "constant.lua";
+        public const string FILE_STRINGS = "strings.conf";
 
-        public static string TAG_RULE = "rule";
-        public static string TAG_RACE = "race";
-        public static string TAG_ATTRIBUTE = "attribute";
-        public static string TAG_LEVEL = "level";
-        public static string TAG_CATEGORY = "category";
-        public static string TAG_TYPE = "type";
+        public const string TAG_RULE = "rule";
+        public const string TAG_RACE = "race";
+        public const string TAG_ATTRIBUTE = "attribute";
+        public const string TAG_LEVEL = "level";
+        public const string TAG_CATEGORY = "category";
+        public const string TAG_TYPE = "type";
+        public const string TAG_SETNAME = "setname";
+
+        
 
         public static string readString(string key)
         {

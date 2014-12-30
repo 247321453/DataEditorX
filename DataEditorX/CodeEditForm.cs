@@ -197,17 +197,15 @@ namespace DataEditorX
 		#endregion
 		
 		#region tooltip
-		public void InitTooltip(Dictionary<string,string> tooltipDic
-		                        ,AutocompleteItem[] funlist
-		                        ,AutocompleteItem[] conlist)
+		public void InitTooltip(CodeConfig codeconfig)
 		{
-			this.tooltipDic=tooltipDic;
+            this.tooltipDic = codeconfig.TooltipDic;
 			List<AutocompleteItem> items=new List<AutocompleteItem>();
-			items.AddRange(funlist);
-			items.AddRange(conlist);
+            items.AddRange(codeconfig.FunList);
+            items.AddRange(codeconfig.ConList);
 			popupMenu.Items.SetAutocompleteItems(items);
-			popupMenu_con.Items.SetAutocompleteItems(conlist);
-			popupMenu_fun.Items.SetAutocompleteItems(funlist);
+            popupMenu_con.Items.SetAutocompleteItems(codeconfig.ConList);
+            popupMenu_fun.Items.SetAutocompleteItems(codeconfig.FunList);
 		}
 
 		string FindTooltip(string word)
