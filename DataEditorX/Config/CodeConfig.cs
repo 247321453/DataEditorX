@@ -1,26 +1,29 @@
 ﻿using System;
-using System.Drawing;
 using System.Collections.Generic;
 using System.IO;
-using System.Windows.Forms;
-using System.Configuration;
-using WeifenLuo.WinFormsUI.Docking;
 
 using FastColoredTextBoxNS;
-using DataEditorX.Language;
-using DataEditorX.Core;
-using System.Text;
 
 namespace DataEditorX.Config
 {
+    /// <summary>
+    /// CodeEditor的配置
+    /// </summary>
     public class CodeConfig
     {
+        #region 成员
         public CodeConfig()
+        {
+            Init();
+        }
+
+        public void Init()
         {
             tooltipDic = new Dictionary<string, string>();
             funList = new List<AutocompleteItem>();
             conList = new List<AutocompleteItem>();
         }
+
         //函数提示
         Dictionary<string, string> tooltipDic;
         //自动完成
@@ -40,6 +43,7 @@ namespace DataEditorX.Config
         {
             get { return conList.ToArray(); }
         }
+        #endregion
 
         #region 系列名/指示物
         //系列名

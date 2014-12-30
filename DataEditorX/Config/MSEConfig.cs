@@ -33,6 +33,11 @@ namespace DataEditorX.Config
 	/// </summary>
 	public class MSEConfig
 	{
+        public const string TAG_HEAD = "head";
+        public const string TAG_MONSTER = "monster";
+        public const string TAG_PENDULUM = "pendulum";
+        public const string TAG_SPELL_TRAP = "spelltrap";
+
 		string _path;
 		public MSEConfig(string path)
 		{
@@ -41,10 +46,16 @@ namespace DataEditorX.Config
 			regx_monster="(\\s\\S*?)";
 			regx_pendulum="(\\s\\S*?)";
 
-			head = read(path, "mse-head.txt");
-			monster = read(path, "mse-monster.txt");
-			pendulum = read(path, "mse-pendulum.txt");
-			spelltrap = read(path, "mse-spelltrap.txt");
+            string file = MyPath.Combine(path, MyConfig.TAG_MSE_TEMPLATE);
+            if (File.Exists(file))
+            {
+                string content = File.ReadAllText(file, Encoding.UTF8);
+                head = DataManager.subString(content, TAG_HEAD);
+                monster = DataManager.subString(content, TAG_MONSTER);
+                pendulum = DataManager.subString(content, TAG_PENDULUM);
+                spelltrap = DataManager.subString(content, TAG_SPELL_TRAP);
+            }
+
 			
 			string tmp=Path.Combine(path, "mse-config.txt");
 			replaces=new List<RegStr>();
@@ -121,11 +132,6 @@ namespace DataEditorX.Config
 			if(t>0)
 				return line.Substring(t+1).Trim();
 			return "";
-		}
-		string read(string path,string name)
-		{
-			string tmp=Path.Combine(path, name);
-			return File.Exists(tmp)?File.ReadAllText(tmp):"";
 		}
 		public int maxcount;
 		public string imagepath;

@@ -5,16 +5,14 @@
  * 时间: 7:54
  * 
  */
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Windows.Forms;
 
 namespace DataEditorX.Config
 {
     /// <summary>
-    /// Description of DataConfig.
+    /// DataEditor的数据
     /// </summary>
     public class DataConfig
     {
@@ -40,6 +38,7 @@ namespace DataEditorX.Config
 			    dicCardLevels =new Dictionary<long, string>();
                 return;
             }
+            //提取内容
             string text = File.ReadAllText(conf);
             dicCardRules = DataManager.Read(text, MyConfig.TAG_RULE);
             dicSetnames = DataManager.Read(text, MyConfig.TAG_SETNAME);

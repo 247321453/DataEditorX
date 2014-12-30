@@ -40,9 +40,9 @@ namespace DataEditorX.Controls
         }
         public void ReadHistory(string historyFile)
         {
+            this.historyFile = historyFile;
             if (!File.Exists(historyFile))
                 return;
-            this.historyFile = historyFile;
             string[] lines = File.ReadAllLines(historyFile);
             AddHistorys(lines);
         }
@@ -98,7 +98,8 @@ namespace DataEditorX.Controls
                 if (File.Exists(str))
                     texts += Environment.NewLine + str;
             }
-            File.Delete(historyFile);
+            if(File.Exists(historyFile))
+                File.Delete(historyFile);
             File.WriteAllText(historyFile, texts);
         }
         public void MenuHistory()

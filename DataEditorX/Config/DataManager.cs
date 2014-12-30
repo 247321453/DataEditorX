@@ -18,30 +18,62 @@ namespace DataEditorX.Config
     {
         public const string TAG_START = "##";
         public const string TAG_END = "#";
-        #region 读取
 
+        #region 根据tag获取内容
+        static string reReturn(string content)
+        {
+            string text = content.Replace("\r\n", "\n");
+            text = text.Replace("\r", "\n");
+            return text;
+        }
+        public static string subString(string content, string tag)
+        {
+            Regex reg = new Regex(string.Format(@"{0}{1}\n([\S\s]*?)\n{2}", TAG_START, tag, TAG_END), RegexOptions.Multiline);
+            Match mac = reg.Match(reReturn(content));
+            if (mac.Success)//把相应的内容提取出来
+            {
+                return mac.Groups[1].Value.Replace("\n",Environment.NewLine);
+            }
+            return "";
+        }
+        #endregion
+
+        #region 读取
+        /// <summary>
+        /// 从字符串中，按tag来分割内容，并读取内容
+        /// </summary>
+        /// <param name="content">字符串</param>
+        /// <param name="tag">开始的标志</param>
+        /// <returns></returns>
         public static Dictionary<long, string> Read(string content, string tag)
         {
-            Regex reg = new Regex(string.Format("{0}{1}[\\S\\s]*?{2}", TAG_START, tag, TAG_END), RegexOptions.Multiline);
-            Match mac = reg.Match(content);
-            if (mac.Success)
-            {
-                return Read(mac.Groups[0].Value);
-            }
-            return new Dictionary<long, string>();
+            return Read(subString(content,tag));
         }
-
+        /// <summary>
+        /// 从文件读取内容，按行读取
+        /// </summary>
+        /// <param name="strFile"></param>
+        /// <param name="encode"></param>
+        /// <returns></returns>
         public static Dictionary<long, string> Read(string strFile, Encoding encode)
         {
             return Read(File.ReadAllLines(strFile, encode));
         }
-
+        /// <summary>
+        /// 从字符串中读取内容，需要分行
+        /// </summary>
+        /// <param name="content"></param>
+        /// <returns></returns>
         public static Dictionary<long, string> Read(string content)
         {
-            string text = content.Replace("\r\n","\n");
-            text = text.Replace("\r", "\n");
+            string text = reReturn(content);
             return Read(text.Split('\n'));
         }
+        /// <summary>
+        /// 从行读取内容
+        /// </summary>
+        /// <param name="lines"></param>
+        /// <returns></returns>
         public static Dictionary<long, string> Read(string[] lines)
         {
             Dictionary<long, string> tempDic = new Dictionary<long, string>();

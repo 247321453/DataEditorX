@@ -6,18 +6,13 @@
  * 
  */
 using System;
-using System.Drawing;
-using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using System.Configuration;
 using WeifenLuo.WinFormsUI.Docking;
 
-using FastColoredTextBoxNS;
 using DataEditorX.Language;
 using DataEditorX.Core;
 using DataEditorX.Config;
-using System.Text;
 using DataEditorX.Controls;
 
 namespace DataEditorX
@@ -34,13 +29,13 @@ namespace DataEditorX
         string datapath;
         //语言配置
         string conflang;
-        string confmsg;
         //函数列表
         string funtxt;
         //数据库对比
         DataEditForm compare1, compare2;
+        //临时卡片
         Card[] tCards;
-        //
+        //编辑器配置
         DataConfig datacfg = null;
         CodeConfig codecfg = null;
         #endregion
@@ -52,16 +47,14 @@ namespace DataEditorX
             if (string.IsNullOrEmpty(language))
                 return;
             tCards = null;
-
+            //数据目录
             this.datapath = MyPath.Combine(Application.StartupPath, language);
 
             //文件路径
-            string historyFile = MyPath.Combine(datapath, MyConfig.FILE_HISTORY);
             conflang = MyPath.Combine(datapath, MyConfig.FILE_LANGUAGE);
-            confmsg = MyPath.Combine(datapath, MyConfig.FILE_MESSAGE);
             //游戏数据
             datacfg = new DataConfig(MyPath.Combine(datapath, MyConfig.FILE_INFO));
-            //
+            //初始化YGOUtil的数据
             YGOUtil.SetConfig(datacfg);
 
             //代码提示
@@ -69,6 +62,8 @@ namespace DataEditorX
             string conlua = MyPath.Combine(datapath, MyConfig.FILE_CONSTANT);
             string confstring = MyPath.Combine(datapath, MyConfig.FILE_STRINGS);
             codecfg = new CodeConfig();
+            //初始化
+            codecfg.Init();
             //添加函数
             codecfg.AddFunction(funtxt);
             //添加指示物
@@ -79,12 +74,11 @@ namespace DataEditorX
 
             //初始化
             InitializeComponent();
-            history = new History(this);
+            
             //加载多语言
             LANG.LoadFormLabels(conflang);
-            LANG.LoadMessage(confmsg);
             LANG.SetFormLabel(this);
-            //设置所有窗口
+            //设置所有窗口的语言
             DockContentCollection contents = dockPanel1.Contents;
             foreach (DockContent dc in contents)
             {
@@ -93,26 +87,30 @@ namespace DataEditorX
                     LANG.SetFormLabel((Form)dc);
                 }
             }
-
+            history = new History(this);
             //读取历史记录
-            history.ReadHistory(historyFile);
+            history.ReadHistory(MyPath.Combine(datapath, MyConfig.FILE_HISTORY));
             history.MenuHistory();
         }
         #endregion
 
         #region 打开历史
+        //清除cdb历史
         public void CdbMenuClear()
         {
             menuitem_history.DropDownItems.Clear();
         }
+        //清除lua历史
         public void LuaMenuClear()
         {
             menuitem_shistory.DropDownItems.Clear();
         }
+        //添加cdb历史
         public void AddCdbMenu(ToolStripItem item)
         {
             menuitem_history.DropDownItems.Add(item);
         }
+        //添加lua历史
         public void AddLuaMenu(ToolStripItem item)
         {
             menuitem_shistory.DropDownItems.Add(item);
@@ -130,8 +128,9 @@ namespace DataEditorX
                     if (File.Exists(file))
                     {
                         this.Activate();
+                        //获取需要打开的文件路径
                         Open(File.ReadAllText(file));
-                        //File.Delete(file);
+                        File.Delete(file);
                     }
                     break;
                 default:
@@ -146,10 +145,13 @@ namespace DataEditorX
         void OpenScript(string file)
         {
             CodeEditForm cf = new CodeEditForm();
+            //设置界面语言
             LANG.SetFormLabel(cf);
-
+            //设置cdb列表
             cf.SetCDBList(history.GetcdbHistory());
+            //初始化函数提示
             cf.InitTooltip(codecfg);
+            //打开文件
             cf.Open(file);
             cf.Show(dockPanel1, DockState.Document);
         }
@@ -161,7 +163,9 @@ namespace DataEditorX
                 def = new DataEditForm(datapath);
             else
                 def = new DataEditForm(datapath, file);
+            //设置语言
             LANG.SetFormLabel(def);
+            //初始化界面数据
             def.InitGameData(datacfg);
             def.Show(dockPanel1, DockState.Document);
         }
@@ -182,13 +186,14 @@ namespace DataEditorX
                 return;
             if (YGOUtil.isScript(file))
                 OpenScript(file);
-            else
+            else if (YGOUtil.isDataBase(file))
                 OpenDataBase(file);
         }
         //检查是否打开
         bool FindEditForm(string file, bool isOpen)
         {
             DockContentCollection contents = dockPanel1.Contents;
+            //遍历所有标签
             foreach (DockContent dc in contents)
             {
                 IEditForm edform = (IEditForm)dc;
@@ -202,7 +207,7 @@ namespace DataEditorX
                         return true;
                     }
                 }
-                else//检查空白
+                else//检查是否空白，如果为空，则打开文件
                 {
                     if (string.IsNullOrEmpty(edform.GetOpenFile()) && edform.CanOpen(file))
                     {
@@ -221,6 +226,7 @@ namespace DataEditorX
         {
             //检查更新
             bgWorker1.RunWorkerAsync();
+            //如果没有标签，则打开一个空数据库标签
             if (dockPanel1.Contents.Count == 0)
                 OpenDataBase(null);
         }
@@ -236,7 +242,6 @@ namespace DataEditorX
             }
             //获取窗体文字
             LANG.SaveLanguage(conflang + ".bak");
-            LANG.SaveMessage(confmsg + ".bak");
 #endif
         }
         #endregion
@@ -334,19 +339,19 @@ namespace DataEditorX
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     string file = dlg.FileName;
-                    File.Delete(file);
-
+                    if(File.Exists(file))
+                        File.Delete(file);
+                    //是否是数据库
                     if (YGOUtil.isDataBase(file))
                     {
-                        if (DataBase.Create(file))
+                        if (DataBase.Create(file))//是否创建成功
                         {
-                            if (MyMsg.Question(LMSG.IfOpenDataBase))
+                            if (MyMsg.Question(LMSG.IfOpenDataBase))//是否打开新建的数据库
                                 Open(file);
                         }
                     }
                     else
                     {
-                        File.Delete(file);
                         Open(file);
                     }
                 }
@@ -358,7 +363,7 @@ namespace DataEditorX
             IEditForm cf = dockPanel1.ActiveContent as IEditForm;
             if (cf != null)
             {
-                if (cf.Save())
+                if (cf.Save())//是否保存成功
                     MyMsg.Show(LMSG.SaveFileOK);
             }
         }
@@ -368,13 +373,13 @@ namespace DataEditorX
         //复制选中
         void Menuitem_copyselecttoClick(object sender, EventArgs e)
         {
-            DataEditForm df = GetActive();
+            DataEditForm df = GetActive();//获取当前的数据库编辑
             if (df != null)
             {
-                tCards = df.getCardList(true);
+                tCards = df.getCardList(true); //获取选中的卡片
                 if (tCards != null)
                 {
-                    SetCopyNumber(tCards.Length);
+                    SetCopyNumber(tCards.Length);//显示复制卡片的数量
                     MyMsg.Show(LMSG.CopyCards);
                 }
             }
@@ -382,17 +387,18 @@ namespace DataEditorX
         //复制当前结果
         void Menuitem_copyallClick(object sender, EventArgs e)
         {
-            DataEditForm df = GetActive();
+            DataEditForm df = GetActive();//获取当前的数据库编辑
             if (df != null)
             {
-                tCards = df.getCardList(false);
+                tCards = df.getCardList(false);//获取结果的所有卡片
                 if (tCards != null)
                 {
-                    SetCopyNumber(tCards.Length);
+                    SetCopyNumber(tCards.Length);//显示复制卡片的数量
                     MyMsg.Show(LMSG.CopyCards);
                 }
             }
         }
+        //显示复制卡片的数量
         void SetCopyNumber(int c)
         {
             string tmp = menuitem_pastecards.Text;
@@ -410,13 +416,14 @@ namespace DataEditorX
             DataEditForm df = GetActive();
             if (df == null)
                 return;
-            df.SaveCards(tCards);
+            df.SaveCards(tCards);//保存卡片
             MyMsg.Show(LMSG.PasteCards);
         }
 
         #endregion
 
         #region 数据对比
+        //设置数据库1
         void Menuitem_comp1Click(object sender, EventArgs e)
         {
             compare1 = GetActive();
@@ -426,6 +433,7 @@ namespace DataEditorX
                 CompareDB();
             }
         }
+        //设置数据库2
         void Menuitem_comp2Click(object sender, EventArgs e)
         {
             compare2 = GetActive();
@@ -447,7 +455,7 @@ namespace DataEditorX
                 return;
 
             bool checktext = MyMsg.Question(LMSG.CheckText);
-
+            //分别对比数据库
             compare1.CompareCards(cdb2, checktext);
             compare2.CompareCards(cdb1, checktext);
             MyMsg.Show(LMSG.CompareOK);
@@ -466,8 +474,8 @@ namespace DataEditorX
                 fd.Description = "Folder Name: ocgcore";
                 if (fd.ShowDialog() == DialogResult.OK)
                 {
-                    LuaFunction.Read(funtxt);
-                    LuaFunction.Find(fd.SelectedPath);
+                    LuaFunction.Read(funtxt);//先读取旧函数列表
+                    LuaFunction.Find(fd.SelectedPath);//查找新函数，并保存
                     MessageBox.Show("OK");
                 }
             }
@@ -477,6 +485,7 @@ namespace DataEditorX
         #region 自动更新
         private void bgWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
+            //检查更新
             TaskHelper.CheckVersion(false);
         }
         #endregion

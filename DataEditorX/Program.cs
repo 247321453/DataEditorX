@@ -28,6 +28,7 @@ namespace DataEditorX
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 MainForm mainForm = new MainForm();
+                //加载语言
                 mainForm.SetLanguage(MyConfig.readString(MyConfig.TAG_LANGUAGE));
 
                 mainForm.Open(file);
@@ -35,9 +36,10 @@ namespace DataEditorX
 			}
 			else
 			{
-                //发送消息给窗口
+                //把需要打开的文件写入临时文件
                 string tmpfile = Path.Combine(Application.StartupPath, MyConfig.FILE_TEMP);
                 File.WriteAllText(tmpfile, file);
+                //发送消息
                 User32.SendMessage(instance.MainWindowHandle, MyConfig.WM_OPEN, 0, 0);
                 Environment.Exit(1);
 			}

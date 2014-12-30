@@ -28,7 +28,6 @@ namespace DataEditorX.Config
 
         public const string FILE_LANGUAGE = "language.txt";
         public const string FILE_TEMP = "open.tmp";
-        public const string FILE_MESSAGE = "message.txt";
         public const string FILE_HISTORY = "history.txt";
         public const string FILE_INFO = "card-info.txt";
         public const string FILE_FUNCTION = "_functions.txt";
@@ -43,7 +42,8 @@ namespace DataEditorX.Config
         public const string TAG_TYPE = "type";
         public const string TAG_SETNAME = "setname";
 
-        
+        public const string TAG_MSE_CONFIG = "mse-config.txt";
+        public const string TAG_MSE_TEMPLATE ="mse-template.txt";
 
         public static string readString(string key)
         {

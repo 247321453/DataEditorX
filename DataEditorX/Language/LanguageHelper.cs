@@ -22,7 +22,7 @@ namespace DataEditorX.Language
         static Dictionary<string, string> mWordslist = new Dictionary<string, string>();
         static SortedList<LMSG, string> msglist = new SortedList<LMSG, string>();
         static string SEP_CONTROL = ".";
-        static string SEP_LINE = " ";
+        static string SEP_LINE = "	";
 
         #region 获取消息文字
         public static string GetMsg(LMSG lMsg)
@@ -238,25 +238,15 @@ namespace DataEditorX.Language
                 {
                     sw.WriteLine(k + SEP_LINE + mWordslist[k]);
                 }
-                sw.Close();
-                fs.Close();
-            }
-            return true;
-        }
-
-        public static bool SaveMessage(string f)
-        {
-            using (FileStream fs = new FileStream(f, FileMode.Create, FileAccess.Write))
-            {
-                StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
+                sw.WriteLine("#");
                 foreach (LMSG k in msglist.Keys)
                 {
-                    sw.WriteLine("0x" + ((uint)k).ToString("x") + "\t" + msglist[k].Replace("\n", "/n"));
+                    sw.WriteLine("0x" + ((uint)k).ToString("x") + SEP_LINE + msglist[k].Replace("\n", "/n"));
                 }
                 foreach (LMSG k in Enum.GetValues(typeof(LMSG)))
                 {
                     if (!msglist.ContainsKey(k))
-                        sw.WriteLine("0x" + ((uint)k).ToString("x") + "\t" + k.ToString());
+                        sw.WriteLine("0x" + ((uint)k).ToString("x") + SEP_LINE + k.ToString());
                 }
                 sw.Close();
                 fs.Close();
@@ -271,13 +261,34 @@ namespace DataEditorX.Language
             if (!File.Exists(f))
                 return;
             mWordslist.Clear();
+            msglist.Clear();
             using (FileStream fs = new FileStream(f, FileMode.Open, FileAccess.Read))
             {
                 StreamReader sr = new StreamReader(fs, Encoding.UTF8);
                 string line, sk, v;
+                uint utemp;
+                LMSG ltemp;
                 while ((line = sr.ReadLine()) != null)
                 {
-                    if (!line.StartsWith("#")&&line.Length>0)
+                    if (line.Length == 0)
+                        continue;
+                    if (line.StartsWith("0x"))//加载消息文字
+                    {
+                        int si = line.IndexOf(SEP_LINE);
+                        if (si > 0)
+                        {
+                            sk = line.Substring(0, si);
+                            v = line.Substring(si + 1);
+                            //if (sk.StartsWith("0x"))
+                            uint.TryParse(sk.Replace("0x", ""), NumberStyles.HexNumber, null, out utemp);
+                            //else
+                             //   uint.TryParse(sk, out utemp);
+                            ltemp = (LMSG)utemp;
+                            if (msglist.IndexOfKey(ltemp) < 0)
+                                msglist.Add(ltemp, v.Replace("/n", "\n"));
+                        }
+                    }
+                    else if (!line.StartsWith("#"))//加载界面语言
                     {
                         int si = line.IndexOf(SEP_LINE);
                         if (si > 0)
@@ -294,41 +305,6 @@ namespace DataEditorX.Language
                 fs.Close();
             }
 
-        }
-
-        public static void LoadMessage(string f)
-        {
-            if (!File.Exists(f))
-                return;
-            msglist.Clear();
-            using (FileStream fs = new FileStream(f, FileMode.Open, FileAccess.Read))
-            {
-                StreamReader sr = new StreamReader(fs, Encoding.UTF8);
-                string line, sk, v;
-                uint utemp;
-                LMSG ltemp;
-                while ((line = sr.ReadLine()) != null)
-                {
-                    if (!line.StartsWith("#"))
-                    {
-                        int si = line.IndexOf("\t");
-                        if (si > 0)
-                        {
-                            sk = line.Substring(0, si);
-                            v = line.Substring(si + 1);
-                            if (sk.StartsWith("0x"))
-                                uint.TryParse(sk.Replace("0x", ""), NumberStyles.HexNumber, null, out utemp);
-                            else
-                                uint.TryParse(sk, out utemp);
-                            ltemp = (LMSG)utemp;
-                            if (msglist.IndexOfKey(ltemp) < 0)
-                                msglist.Add(ltemp, v.Replace("/n", "\n"));
-                        }
-                    }
-                }
-                sr.Close();
-                fs.Close();
-            }
         }
         #endregion
     }
