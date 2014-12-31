@@ -1,5 +1,0 @@
-# database history
-F:\games\[jp]cards.cdb
-F:\games\ygopro\cards.cdb
-# script history
-F:\games\ygopro\script\c41777.lua

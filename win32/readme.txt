@@ -1,4 +1,4 @@
-﻿[DataEditorX]2.2.8.4[DataEditorX]
+﻿[DataEditorX]2.2.9.0[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★文件关联(File association)
@@ -63,6 +63,9 @@ Ctrl+鼠标左键 	跳转到函数定义
 Ctrl+鼠标滑轮 	缩放文字
 
 ★更新历史
+2.2.9.0
+可以切换MSE的配置
+配置整合
 2.2.8.6
 修复无种族的token，
 2.2.8.4

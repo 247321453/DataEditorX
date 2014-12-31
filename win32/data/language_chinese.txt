@@ -4,7 +4,7 @@ CodeEditForm.mainMenu.menuitem_open	打开
 CodeEditForm.mainMenu.menuitem_save	保存
 CodeEditForm.mainMenu.menuitem_saveas	另存为
 CodeEditForm.mainMenu.menuitem_quit	退出
-CodeEditForm.mainMenu.menuitem_setting	工具(&S)
+CodeEditForm.mainMenu.menuitem_setting	选项(&S)
 CodeEditForm.mainMenu.menuitem_showmap	显示/隐藏结构图
 CodeEditForm.mainMenu.menuitem_showinput	显示/隐藏输入框
 CodeEditForm.mainMenu.menuitem_find	查找
@@ -43,7 +43,8 @@ DataEditForm.mainMenu.menu_tools	工具(&T)
 DataEditForm.mainMenu.menuitem_readydk	从卡组文件读取卡片(&Y)
 DataEditForm.mainMenu.menuitem_readimages	从卡图文件夹读取卡片(&I)
 DataEditForm.mainMenu.menuitem_compdb	压缩数据库
-DataEditForm.mainMenu.menuitem_exportdata	导出为zip
+DataEditForm.mainMenu.menuitem_exportdata	导出数据库和图片脚本为zip
+DataEditForm.mainMenu.menuitem_mseconfig	设置MSE的配置文件
 DataEditForm.mainMenu.menuitem_saveasmse_select	把选中导为MSE存档
 DataEditForm.mainMenu.menuitem_saveasmse	把结果导为MSE存档
 DataEditForm.mainMenu.menuitem_cutimages	批量裁剪卡图

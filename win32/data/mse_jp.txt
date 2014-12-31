@@ -1,0 +1,84 @@
+﻿###########################
+# Magic Set Editor 2
+#
+# \t = Tab \n = Enter \s = Space
+########################### Chs 2 Cht 
+cn2tw = false
+########################### Setting
+maxcount = 0
+imagepath = ./Images
+########################### Spell/Trap
+#jp setting
+spell = %%
+trap = %%
+############################ language,style,other setting
+head = mse version: 0.3.8\ngame: yugioh\nstylesheet: standard\nset info:\n\tlanguage: JP\n\tedition: \n\tST mark is text: no\n\tpendulum image is small: yes
+############################ Text
+text =【摇摆效果】\n%ptext%\n【怪兽效果】\n%text%\n
+############################
+# chs jp
+pendulum-text = Pendulum Text :\n([\S\s]*?)\n\n
+# cht pendulum-text = ([\S\s]*?)\n【
+# en  pendulum-text = Text:\n([\S\s]*?)\n[\S\s]*?Text:
+# chs jp cht
+monster-text = Monster Text :\n([\S\s]*)
+# en  monster-text = Text:[\s\S]*?Text:\n([\S\s]*)
+########################### Replace
+replace = ([·]) ・
+#replace = ([鮟|鱇|・|·]) <i>$1</i>
+#replace = \s <sym-auto>^</sym-auto>
+#replace = ([A-Z]) <i>$1</i>
+###########################
+##race
+race 0x1 戦士族
+race 0x2 魔法使い族
+race 0x4 天使族
+race 0x8 悪魔族
+race 0x10 アンデット族
+race 0x20 機械族
+race 0x40 水族
+race 0x80 炎族
+race 0x100 岩石族
+race 0x200 鳥獣族
+race 0x400 植物族
+race 0x800 昆虫族
+race 0x1000 雷族
+race 0x2000 ドラゴン族
+race 0x4000 獣族
+race 0x8000 獣戦士族
+race 0x10000 恐竜族
+race 0x20000 魚族
+race 0x40000 海竜族
+race 0x80000 爬虫類族
+race 0x100000 サイキック族
+race 0x200000 幻神獣族
+race 0x400000 創造神族
+race 0x800000 幻竜族
+###########################
+##type
+type 0x1 モンスター
+type 0x2 魔法
+type 0x4 罠
+type 0x8 N/A
+type 0x10 通常
+type 0x20 効果
+type 0x40 融合    
+type 0x80 儀式  
+type 0x100 N/A
+type 0x200 スピリット 
+type 0x400 ユニオン
+type 0x800 デュアル
+type 0x1000 チューナー
+type 0x2000 シンクロ
+type 0x4000 衍生物
+type 0x8000 N/A
+type 0x10000 速攻    
+type 0x20000 永続    
+type 0x40000 装備
+type 0x80000 場所
+type 0x100000 反撃
+type 0x200000 リバース
+type 0x400000 トゥーン
+type 0x800000 エクシーズ
+type 0x1000000 ペンデュラム
+##########################
