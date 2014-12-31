@@ -1,8 +1,0 @@
-﻿mse version: 0.3.8
-game: yugioh
-stylesheet: standard
-set info:
-	language: EN
-	edition: MSE Editrion
-	ST mark is text: yes
-	pendulum image is small: yes

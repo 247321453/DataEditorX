@@ -21,6 +21,8 @@ namespace DataEditorX.Core
         {
             datacfg = dcfg;
         }
+
+        #region 判断文件类型
         public static bool isScript(string file)
         {
             if (file != null && file.EndsWith(".lua", StringComparison.OrdinalIgnoreCase))
@@ -33,9 +35,9 @@ namespace DataEditorX.Core
                 return true;
             return false;
         }
+        #endregion
 
-
-
+        #region 获取属性，种族
         public static string GetAttributeString(int attr)
         {
             return DataManager.GetValue(datacfg.dicCardAttributes, attr);
@@ -46,7 +48,9 @@ namespace DataEditorX.Core
         {
             return DataManager.GetValue(datacfg.dicCardRaces, race);
         }
+        #endregion
 
+        #region 获取卡片类型
         public static string GetCardType(Card c)
         {
             string str = "???";
@@ -128,12 +132,23 @@ namespace DataEditorX.Core
                 str = "???";
             return str;
         }
-        public static string GetSetNameString(long type)
+        #endregion
+
+        #region 系列名
+        public static string GetSetNameString(long setcode)
         {
-            return "";
+            long sc1 = setcode & 0xffff;
+            long sc2 = (setcode >> 0x10) & 0xffff;
+            long sc3 = (setcode >> 0x20) & 0xffff;
+            long sc4 = (setcode >> 0x30) & 0xffff;
+            string setname = DataManager.GetValue(datacfg.dicSetnames, sc1)
+                    + " " + DataManager.GetValue(datacfg.dicSetnames, sc2)
+                    + " " + DataManager.GetValue(datacfg.dicSetnames, sc3)
+                    + " " + DataManager.GetValue(datacfg.dicSetnames, sc4);
+
+            return setname;
         }
-
-
+        #endregion
 
         #region 根据文件读取数据库
         /// <summary>

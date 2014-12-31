@@ -28,8 +28,8 @@ namespace DataEditorX
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 MainForm mainForm = new MainForm();
-                //加载语言
-                mainForm.SetLanguage(MyConfig.readString(MyConfig.TAG_LANGUAGE));
+                //数据目录
+                mainForm.SetDataPath(MyPath.Combine(Application.StartupPath, MyConfig.TAG_DATA));
 
                 mainForm.Open(file);
                 Application.Run(mainForm);

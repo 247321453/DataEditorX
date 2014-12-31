@@ -46,6 +46,8 @@ namespace DataEditorX
 
         Image m_cover;
         DataConfig datacfg;
+        MSEConfig msecfg;
+
         string datapath, confcover;
 
         public DataEditForm(string datapath, string cdbfile)
@@ -62,7 +64,7 @@ namespace DataEditorX
         }
         public DataEditForm()
         {
-            string dir = MyConfig.readString(MyConfig.TAG_LANGUAGE);
+            string dir = MyConfig.readString(MyConfig.TAG_DATA);
             if (string.IsNullOrEmpty(dir))
             {
                 Application.Exit();
@@ -81,6 +83,8 @@ namespace DataEditorX
         }
 
         #endregion
+
+        #region 接口
         public void SetActived()
         {
             this.Activate();
@@ -101,6 +105,8 @@ namespace DataEditorX
         {
             return true;
         }
+        #endregion
+
         #region 窗体
         //窗体第一次加载
         void DataEditFormLoad(object sender, EventArgs e)
@@ -113,13 +119,16 @@ namespace DataEditorX
             {
                 datacfg = new DataConfig();
             }
-            tasker = new TaskHelper(datapath, bgWorker1, datacfg.msecfg);
+            msecfg = new MSEConfig(datapath);
+            tasker = new TaskHelper(datapath, bgWorker1, msecfg);
             //设置空白卡片
             oldCard = new Card(0);
             SetCard(oldCard);
 
             if (nowCdbFile != null && File.Exists(nowCdbFile))
                 Open(nowCdbFile);
+            //获取MSE配菜单
+            AddMenuItemFormMSE();
             //   CheckUpdate(false);//检查更新
         }
         //窗体关闭
@@ -1582,5 +1591,44 @@ namespace DataEditorX
         }
         #endregion
 
+        #region MSE配置菜单
+        void AddMenuItemFormMSE()
+        {
+            if(!Directory.Exists(datapath))
+                return;
+            if (datacfg == null)
+                return;
+            menuitem_mseconfig.DropDownItems.Clear();
+            string[] files = Directory.GetFiles(datapath);
+            foreach (string file in files)
+            {
+                string name = Path.GetFileName(file);
+                if (!name.StartsWith("mse"))
+                    continue;
+                ToolStripMenuItem tsmi = new ToolStripMenuItem(name);
+                if (msecfg.configName.Equals(name, StringComparison.OrdinalIgnoreCase))
+                    tsmi.Checked = true;
+                tsmi.Click += SetMseConfig_Click;
+                tsmi.ToolTipText = file;
+                menuitem_mseconfig.DropDownItems.Add(tsmi);
+            }
+        }
+        void SetMseConfig_Click(object sender, EventArgs e)
+        {
+            if (isRun())//正在执行任务
+                return;
+            if (sender is ToolStripMenuItem)
+            {
+                ToolStripMenuItem tsmi = (ToolStripMenuItem)sender;
+                if (datacfg == null)
+                    return;
+                msecfg.SetConfig(tsmi.ToolTipText, datapath);
+                //刷新菜单
+                AddMenuItemFormMSE();
+                //保存配置
+                MyConfig.Save(MyConfig.TAG_MSE, tsmi.Text);
+            }
+        }
+        #endregion
     }
 }

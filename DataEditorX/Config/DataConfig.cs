@@ -16,7 +16,6 @@ namespace DataEditorX.Config
     /// </summary>
     public class DataConfig
     {
-        public const string FILE_INFO = "card-info.txt";
         public const string TAG_RULE = "rule";
         public const string TAG_RACE = "race";
         public const string TAG_ATTRIBUTE = "attribute";
@@ -25,19 +24,16 @@ namespace DataEditorX.Config
         public const string TAG_TYPE = "type";
         public const string TAG_SETNAME = "setname";
 
-        public MSEConfig msecfg;
         public DataConfig()
         {
-            InitMember(MyPath.Combine(Application.StartupPath, FILE_INFO)
-                , Application.StartupPath);
+            InitMember(MyPath.Combine(Application.StartupPath, MyConfig.TAG_CARDINFO+".txt"));
         }
-        public DataConfig(string conf, string datapath)
+        public DataConfig(string conf)
         {
-            InitMember(conf, datapath);
+            InitMember(conf);
         }
-        public void InitMember(string conf, string datapath)
+        public void InitMember(string conf)
         {
-            msecfg = new MSEConfig(datapath);
             //conf = MyPath.Combine(datapath, MyConfig.FILE_INFO);
             if(!File.Exists(conf))
             {

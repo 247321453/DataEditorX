@@ -257,10 +257,6 @@ namespace DataEditorX
             this.documentMap1.Text = "documentMap1";
             this.documentMap1.Visible = false;
             // 
-            // backgroundWorker1
-            // 
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
-            // 
             // CodeEditForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -301,7 +297,7 @@ namespace DataEditorX
 		private System.Windows.Forms.ToolStripMenuItem menuitem_save;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_open;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_file;
-		private System.Windows.Forms.MenuStrip mainMenu;
+        private System.Windows.Forms.MenuStrip mainMenu;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
 		
 

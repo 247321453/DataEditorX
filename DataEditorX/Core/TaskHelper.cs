@@ -52,6 +52,10 @@ namespace DataEditorX.Core
             mseHelper = new MseMaker(mcfg);
             imgSet.Init();
         }
+        public MseMaker MseHelper
+        {
+            get { return mseHelper; }
+        }
         public bool IsRuning()
         {
             return isRun;

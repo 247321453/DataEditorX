@@ -19,29 +19,37 @@ using DataEditorX.Config;
 
 namespace DataEditorX.Core
 {
-	
-	
-	/// <summary>
-	/// Description of MSE.
-	/// </summary>
-	public class MseMaker
-	{
-		MSEConfig cfg;
-		
-		public int MaxNum
-		{
-			get{return cfg.maxcount;}
-		}
-		
-		public string ImagePath
-		{
-			get {return cfg.imagepath;}
-		}
-		
-		public MseMaker(MSEConfig mcfg)
-		{
+
+
+    /// <summary>
+    /// Description of MSE.
+    /// </summary>
+    public class MseMaker
+    {
+        MSEConfig cfg;
+
+        public int MaxNum
+        {
+            get { return cfg.maxcount; }
+        }
+
+        public string ImagePath
+        {
+            get { return cfg.imagepath; }
+        }
+
+        public MseMaker(MSEConfig mcfg)
+        {
+            SetConfig(mcfg);
+        }
+        public void SetConfig(MSEConfig mcfg)
+        {
             cfg = mcfg;
-		}
+        }
+        public MSEConfig GetConfig()
+        {
+            return cfg;
+        }
         //特殊字
         public string reItalic(string str)
         {
@@ -303,37 +311,37 @@ namespace DataEditorX.Core
             }
             return types;
         }
-        public string[] WriteSet(string file,Card[] cards)
-		{
-			List<string> list=new List<string>();
-			string pic=cfg.imagepath;
-			using(FileStream fs=new FileStream(file,
-			         FileMode.Create, FileAccess.Write))
-			{
-				StreamWriter sw=new StreamWriter(fs, Encoding.UTF8);
-				sw.WriteLine(cfg.head);
-				foreach(Card c in cards)
-				{
+        public string[] WriteSet(string file, Card[] cards)
+        {
+            List<string> list = new List<string>();
+            string pic = cfg.imagepath;
+            using (FileStream fs = new FileStream(file,
+                     FileMode.Create, FileAccess.Write))
+            {
+                StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
+                sw.WriteLine(cfg.head);
+                foreach (Card c in cards)
+                {
                     string jpg = GetCardImagePath(pic, c);
                     if (!string.IsNullOrEmpty(jpg))
                     {
                         list.Add(jpg);
                         jpg = Path.GetFileName(jpg);
                     }
-					if(c.IsType(CardType.TYPE_SPELL)||c.IsType(CardType.TYPE_TRAP))
-						sw.WriteLine(getSpellTrap(c, jpg, c.IsType(CardType.TYPE_SPELL)));
-					else
-						sw.WriteLine(getMonster(c, jpg, c.IsType(CardType.TYPE_PENDULUM)));
-				}
-				sw.Close();
-			}
+                    if (c.IsType(CardType.TYPE_SPELL) || c.IsType(CardType.TYPE_TRAP))
+                        sw.WriteLine(getSpellTrap(c, jpg, c.IsType(CardType.TYPE_SPELL)));
+                    else
+                        sw.WriteLine(getMonster(c, jpg, c.IsType(CardType.TYPE_PENDULUM)));
+                }
+                sw.Close();
+            }
 
-			return list.ToArray();
-		}
-		//pendulum怪兽
-		string getMonster(Card c,string img,bool isPendulum)
-		{
-			StringBuilder sb=new StringBuilder();
+            return list.ToArray();
+        }
+        //pendulum怪兽
+        string getMonster(Card c, string img, bool isPendulum)
+        {
+            StringBuilder sb = new StringBuilder();
             string[] types = GetTypes(c);
             string race = GetRace(c.race);
             sb.AppendLine("card:");
@@ -342,41 +350,47 @@ namespace DataEditorX.Core
             sb.AppendLine("	attribute: " + GetAttribute(c.attribute));
             sb.AppendLine("	level: " + GetStar(c.level));
             sb.AppendLine("	image: " + img);
-            sb.AppendLine("	type 1: %" + cn2tw(race));
+            sb.AppendLine("	type 1: " + cn2tw(race));
             sb.AppendLine("	type 2: " + cn2tw(types[1]));
             sb.AppendLine("	type 3: " + cn2tw(types[2]));
             sb.AppendLine("	type 4: " + cn2tw(types[3]));
-			if(isPendulum){
+            if (isPendulum)
+            {
                 string text = GetDesc(c.desc, cfg.regx_monster);
-				if(string.IsNullOrEmpty(text))
-					text=c.desc;
-                sb.AppendLine("	rule text: " + ReDesc(text));
+                if (string.IsNullOrEmpty(text))
+                    text = c.desc;
+                sb.AppendLine("	rule text: ");
+                sb.AppendLine("		" + ReDesc(text));
                 sb.AppendLine("	pendulum scale 1: " + ((c.level >> 0x18) & 0xff).ToString());
                 sb.AppendLine("	pendulum scale 2:" + ((c.level >> 0x10) & 0xff).ToString());
-                sb.AppendLine("	pendulum text: " + ReDesc(
-					GetDesc(c.desc, cfg.regx_pendulum)));
-			}
-			else
-                sb.AppendLine("	rule text: " + ReDesc(c.desc));
-            sb.AppendLine("	attack: "+((c.atk < 0) ? "?" : c.atk.ToString()));
-            sb.AppendLine("	defense: "+((c.def < 0) ? "?" : c.def.ToString()));
+                sb.AppendLine("	pendulum text: ");
+                sb.AppendLine("		" + ReDesc(GetDesc(c.desc, cfg.regx_pendulum)));
+            }
+            else
+            {
+                sb.AppendLine("	rule text: ");
+                sb.AppendLine("		" + ReDesc(c.desc));
+            }
+            sb.AppendLine("	attack: " + ((c.atk < 0) ? "?" : c.atk.ToString()));
+            sb.AppendLine("	defense: " + ((c.def < 0) ? "?" : c.def.ToString()));
 
-            sb.AppendLine("	gamecode: "+c.idString);
-			return sb.ToString();
-		}
+            sb.AppendLine("	gamecode: " + c.idString);
+            return sb.ToString();
+        }
         //魔法陷阱
-		string getSpellTrap(Card c,string img,bool isSpell)
-		{
-			StringBuilder sb=new StringBuilder();
+        string getSpellTrap(Card c, string img, bool isSpell)
+        {
+            StringBuilder sb = new StringBuilder();
             sb.AppendLine("card:");
             sb.AppendLine("	card type: " + (isSpell ? "spell card" : "trap card"));
             sb.AppendLine("	name: " + reItalic(c.name));
             sb.AppendLine("	attribute: " + (isSpell ? "spell" : "trap"));
             sb.AppendLine("	level: " + GetST(c, isSpell));
             sb.AppendLine("	image: " + img);
-            sb.AppendLine("	rule text: " + ReDesc(c.desc));
+            sb.AppendLine("	rule text: ");
+            sb.AppendLine("		" + ReDesc(c.desc));
             sb.AppendLine("	gamecode: " + c.idString);
-			return sb.ToString();
-		}
-	}
+            return sb.ToString();
+        }
+    }
 }

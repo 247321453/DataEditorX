@@ -3,7 +3,7 @@
 #
 # \t = Tab \n = Enter \s = Space
 ########################### Chs 2 Cht 
-cn2tw = true
+cn2tw = false
 ########################### Setting
 maxcount = 0
 imagepath = ./Images
@@ -14,8 +14,10 @@ imagepath = ./Images
 spell = [魔法卡%%]
 trap = [陷阱卡%%]
 ############################ language,style,other setting
-head = mse version: 0.3.8\ngame: yugioh\nstylesheet: standard\nset info:\n\tlanguage: TW\n\tedition: \n\tST mark is text: no\n\tpendulum image is small: yes\n
+head = mse version: 0.3.8\ngame: yugioh\nstylesheet: standard\nset info:\n\tlanguage: CN\n\tedition: \n\tST mark is text: no\n\tpendulum image is small: yes
 ############################ Text
+text =【摇摆效果】\n%ptext%\n【怪兽效果】\n%text%\n
+############################
 # chs jp
 pendulum-text = 】[\s\S]*?\n([\S\s]*?)\n【
 # cht pendulum-text = ([\S\s]*?)\n【

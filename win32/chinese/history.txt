@@ -1,21 +1,3 @@
 # database history
-F:\games\ygopro\cards.cdb
-F:\games\[jp]cards.cdb
-F:\games\ygopro\p.zip.cdb
+D:\用户目录\我的文档\a.cdb
 # script history
-F:\games\ygopro\script\c131182.lua
-F:\games\ygopro\script\c168917.lua
-F:\games\ygopro\script\c114932.lua
-F:\games\ygopro\script\c269012.lua
-F:\games\ygopro\script\c296499.lua
-F:\games\ygopro\script\c218704.lua
-F:\games\ygopro\script\c126218.lua
-F:\games\ygopro\script\c102380.lua
-F:\games\ygopro\script\c135598.lua
-F:\games\ygopro\script\c176392.lua
-F:\games\ygopro\script\c27551.lua
-F:\games\ygopro\script\c255998.lua
-F:\games\ygopro\script\c47198668.lua
-F:\games\ygopro\script\c4239451.lua
-F:\games\ygopro\script\c93368494.lua
-F:\games\ygopro\script\c50485594.lua

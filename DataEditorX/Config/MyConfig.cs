@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Text;
+﻿using System.Xml;
+using System.IO;
 using DataEditorX.Common;
 
 namespace DataEditorX.Config
@@ -11,6 +9,8 @@ namespace DataEditorX.Config
         public const int WM_OPEN = 0x0401;
         public const int MAX_HISTORY = 0x10;
         public const string TAG_DATA = "data";
+        public const string TAG_MSE = "mse";
+        public const string TAG_CARDINFO = "cardinfo";
         public const string TAG_LANGUAGE = "language";
 
         public const string FILE_LANGUAGE = "language.txt";
@@ -25,7 +25,7 @@ namespace DataEditorX.Config
 
         public static string readString(string key)
         {
-            return ConfigurationManager.AppSettings[key];
+            return GetAppConfig(key);
         }
         public static int readInteger(string key, int def)
         {
@@ -75,6 +75,49 @@ namespace DataEditorX.Config
                 return true;
             else
                 return false;
+        }
+
+        public static void Save(string appKey, string appValue)
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(System.Windows.Forms.Application.ExecutablePath + ".config");
+
+            var xNode = xDoc.SelectSingleNode("//appSettings");
+
+            var xElem = (XmlElement)xNode.SelectSingleNode("//add[@key='" + appKey + "']");
+            if (xElem != null) //存在，则更新
+                xElem.SetAttribute("value", appValue);
+            else//不存在，则插入
+            {
+                var xNewElem = xDoc.CreateElement("add");
+                xNewElem.SetAttribute("key", appKey);
+                xNewElem.SetAttribute("value", appValue);
+                xNode.AppendChild(xNewElem);
+            }
+            xDoc.Save(System.Windows.Forms.Application.ExecutablePath + ".config");
+        }
+        public static string GetAppConfig(string appKey)
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(System.Windows.Forms.Application.ExecutablePath + ".config");
+
+            var xNode = xDoc.SelectSingleNode("//appSettings");
+
+            var xElem = (XmlElement)xNode.SelectSingleNode("//add[@key='" + appKey + "']");
+
+            if (xElem != null)
+            {
+                return xElem.Attributes["value"].Value;
+            }
+            return string.Empty;
+        }
+        public static string GetLanguageFile(string path)
+        {
+            return MyPath.Combine(path, MyConfig.TAG_LANGUAGE + "_" + GetAppConfig(TAG_LANGUAGE) + ".txt");
+        }
+        public static string GetCardInfoFile(string path)
+        {
+            return MyPath.Combine(path, MyConfig.TAG_CARDINFO + "_" + GetAppConfig(TAG_LANGUAGE)+".txt");
         }
     }
 

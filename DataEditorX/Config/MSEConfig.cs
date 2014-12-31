@@ -32,31 +32,33 @@ namespace DataEditorX.Config
 
         public const string TAG_IMAGE = "imagepath";
         public const string TAG_REPALCE = "replace";
+        public const string TAG_TEXT = "text";
 
         public const string TAG_REP = "%%";
         public const string SEP_LINE = " ";
-        public const string FILE_CONFIG = "mse-config.txt";
+        //默认的配置
+        public const string FILE_CONFIG = "mse_chs.txt";
         public const string PATH_IMAGE = "Images";
+        public string configName = FILE_CONFIG;
         
         public MSEConfig(string path)
         {
             init(path);
         }
-        public void init(string path)
+        public void SetConfig(string config, string path)
         {
-            Iscn2tw = false;
+            if (!File.Exists(config))
+                return;
             regx_monster = "(\\s\\S*?)";
             regx_pendulum = "(\\s\\S*?)";
+            //设置文件名
+            configName = Path.GetFileName(config);
 
-            string tmp = MyPath.Combine(path, FILE_CONFIG);
             replaces = new Dictionary<string, string>();
 
             typeDic = new Dictionary<long, string>();
             raceDic = new Dictionary<long, string>();
-            //读取配置
-            if (!File.Exists(tmp))
-                return;
-            string[] lines = File.ReadAllLines(tmp, Encoding.UTF8);
+            string[] lines = File.ReadAllLines(config, Encoding.UTF8);
             foreach (string line in lines)
             {
                 if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
@@ -67,6 +69,8 @@ namespace DataEditorX.Config
                     str_spell = ConfHelper.getValue(line);
                 else if (line.StartsWith(TAG_HEAD))
                     head = ConfHelper.getMultLineValue(line);
+                else if (line.StartsWith(TAG_TEXT))
+                    temp_text = ConfHelper.getMultLineValue(line);
                 else if (line.StartsWith(TAG_TRAP))
                     str_trap = ConfHelper.getValue(line);
                 else if (line.StartsWith(TAG_REG_PENDULUM))
@@ -99,6 +103,21 @@ namespace DataEditorX.Config
                 }
             }
         }
+        public void init(string path)
+        {
+            Iscn2tw = false;
+ 
+            //读取配置
+            string tmp = MyPath.Combine(path, MyConfig.readString(MyConfig.TAG_MSE));
+            
+            if (!File.Exists(tmp))
+            {
+                tmp = MyPath.Combine(path, FILE_CONFIG);
+                if(!File.Exists(tmp))
+                    return;//如果默认的也不存在
+            }
+            SetConfig(tmp, path);
+        }
 
         //每个存档最大数
         public int maxcount;
@@ -108,6 +127,8 @@ namespace DataEditorX.Config
         public string str_spell;
         //陷阱标志
         public string str_trap;
+        //效果格式
+        public string temp_text;
         //简体转繁体？
         public bool Iscn2tw;
         //特数字替换

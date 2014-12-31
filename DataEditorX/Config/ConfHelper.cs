@@ -35,7 +35,7 @@ namespace DataEditorX.Config
         }
         public static string getRegex(string word)
         {
-            return word.Replace("\\n", "\n").Replace("\\t", "\t").Replace("\\s", " ");
+            return word.Replace("\\n", Environment.NewLine).Replace("\\t", "\t").Replace("\\s", " ");
         }
         public static bool getBooleanValue(string line)
         {

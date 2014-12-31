@@ -41,20 +41,19 @@ namespace DataEditorX
         #endregion
 
         #region 设置界面，消息语言
-        public void SetLanguage(string language)
+        public void SetDataPath(string datapath)
         {
             //判断是否合法
-            if (string.IsNullOrEmpty(language))
+            if (string.IsNullOrEmpty(datapath))
                 return;
             tCards = null;
             //数据目录
-            this.datapath = MyPath.Combine(Application.StartupPath, language);
+            this.datapath = datapath;
 
             //文件路径
-            conflang = MyPath.Combine(datapath, MyConfig.FILE_LANGUAGE);
-            //游戏数据
-            datacfg = new DataConfig(MyPath.Combine(datapath, DataConfig.FILE_INFO)
-                , datapath);
+            conflang = MyConfig.GetLanguageFile(datapath);
+            //游戏数据,MSE数据
+            datacfg = new DataConfig(MyConfig.GetCardInfoFile(datapath));
             //初始化YGOUtil的数据
             YGOUtil.SetConfig(datacfg);
 

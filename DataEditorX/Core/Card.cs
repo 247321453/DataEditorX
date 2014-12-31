@@ -82,43 +82,8 @@ namespace DataEditorX.Core
 			else
 				return false;
 		}
-		/// <summary>
-		/// 字符串化
-		/// </summary>
-		public override string ToString()
-		{
-            string str = "";
-			if(IsType(CardType.TYPE_MONSTER))
-			    str = string.Format("{0}[{1}]\n[{2}] {3}/{4}\n{5} {6}/{7}\n {8}", 
-				                     name, idString,YGOUtil.GetTypeString(type),
-                                     YGOUtil.GetRace(race),
-                                     YGOUtil.GetAttributeString(attribute),
-				                     levelString(),atk,def,redesc());
-			else
-                str = string.Format("{0}[{1}]\n[{2}]\n{3}",
-                                 name, idString, YGOUtil.GetTypeString(type), redesc());
-            return str;
-        }
-		string levelString()
-		{
-			string star="[";
-			long i=0,j=level&0xff;
-            for (i = 0; i < j; i++)
-            {
-                if ( i>=0 && (i % 4) == 0)
-                    star += " ";
-                star += "★";
-            }
-			return star+"]";
-		}
-		string redesc()
-		{
-            string str = desc.Replace(Environment.NewLine, "\n");
-            str = Regex.Replace(str, "([。|？|?])", "$1\n");
-            str = str.Replace("\n\n", "\n");
-            return str;
-		}
-		public bool EqualsData(Card other)
+		
+        public bool EqualsData(Card other)
 		{
 			bool equalBool = true;
 			if (this.id != other.id)
@@ -197,12 +162,7 @@ namespace DataEditorX.Core
 				return true;
 			return false;
 		}
-		
-		public string idString
-		{
-			get{return id.ToString("00000000");}
-		}
-		
+
 		public bool IsSetCode(long sc)
 		{
             long settype = sc & 0xfff;
@@ -225,6 +185,47 @@ namespace DataEditorX.Core
 		}
 		#endregion
 
-	}
+        #region 卡片文字信息
+        public string idString
+        {
+            get { return id.ToString("00000000"); }
+        }
+        /// <summary>
+        /// 字符串化
+        /// </summary>
+        public override string ToString()
+        {
+            string str = "";
+            if (IsType(CardType.TYPE_MONSTER)){
+                str = name + "[" + idString + "]\n["
+                    + YGOUtil.GetTypeString(type) + "] "
+                    + YGOUtil.GetRace(race) + "/" + YGOUtil.GetAttributeString(attribute)
+                    + "\n" + levelString() + " " + atk + "/" + def + "\n" + redesc();
+            }else
+                str = name +"[" +idString +"]\n["+YGOUtil.GetTypeString(type)+"]\n"+redesc();
+            return str;
+        }
+
+        string levelString()
+        {
+            string star = "[";
+            long i = 0, j = level & 0xff;
+            for (i = 0; i < j; i++)
+            {
+                if (i >= 0 && (i % 4) == 0)
+                    star += " ";
+                star += "★";
+            }
+            return star + "]";
+        }
+        string redesc()
+        {
+            string str = desc.Replace(Environment.NewLine, "\n");
+            str = Regex.Replace(str, "([。|？|?])", "$1\n");
+            str = str.Replace("\n\n", "\n");
+            return str;
+        }
+        #endregion
+    }
 	
 }

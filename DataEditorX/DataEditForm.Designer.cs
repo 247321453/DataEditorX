@@ -52,6 +52,7 @@ namespace DataEditorX
             this.menuitem_compdb = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_exportdata = new System.Windows.Forms.ToolStripMenuItem();
             this.tsep5 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuitem_mseconfig = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_saveasmse_select = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_saveasmse = new System.Windows.Forms.ToolStripMenuItem();
             this.tsep3 = new System.Windows.Forms.ToolStripSeparator();
@@ -207,6 +208,7 @@ namespace DataEditorX
             this.menuitem_compdb,
             this.menuitem_exportdata,
             this.tsep5,
+            this.menuitem_mseconfig,
             this.menuitem_saveasmse_select,
             this.menuitem_saveasmse,
             this.tsep3,
@@ -251,6 +253,12 @@ namespace DataEditorX
             // 
             this.tsep5.Name = "tsep5";
             this.tsep5.Size = new System.Drawing.Size(209, 6);
+            // 
+            // menuitem_mseconfig
+            // 
+            this.menuitem_mseconfig.Name = "menuitem_mseconfig";
+            this.menuitem_mseconfig.Size = new System.Drawing.Size(212, 22);
+            this.menuitem_mseconfig.Text = "MSE config";
             // 
             // menuitem_saveasmse_select
             // 
@@ -1052,5 +1060,6 @@ namespace DataEditorX
         private System.Windows.Forms.ToolStripMenuItem menuitem_readydk;
         private System.Windows.Forms.ToolStripMenuItem menuitem_copyto;
         private System.Windows.Forms.MenuStrip mainMenu;
+        private System.Windows.Forms.ToolStripMenuItem menuitem_mseconfig;
     }
 }
