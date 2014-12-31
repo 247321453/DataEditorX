@@ -1,7 +1,7 @@
 ﻿###########################
 # Magic Set Editor 2
 #
-# \t = Tab \n = Enter \s = Space
+# \t = Tab \n = Enter [:space:] = Space
 ########################### Chs 2 Cht 
 cn2tw = false
 ########################### Setting
@@ -12,7 +12,7 @@ imagepath = ./Images
 spell = %%
 trap = %%
 ############################ language,style,other setting
-head = mse version: 0.3.8\ngame: yugioh\nstylesheet: standard\nset info:\n\tlanguage: JP\n\tedition: \n\tST mark is text: no\n\tpendulum image is small: yes
+head = mse version: 0.3.8\r\ngame: yugioh\r\nstylesheet: standard\r\nset info:\r\n\tlanguage: JP\r\n\tedition: \r\n\tST mark is text: yes\r\n\tpendulum image is small: yes
 ############################ Text
 text =【摇摆效果】\n%ptext%\n【怪兽效果】\n%text%\n
 ############################

@@ -706,9 +706,6 @@ namespace DataEditorX
             {
                 srcCard = c;
                 string sql = DataBase.GetSelectSQL(c);
-#if DEBUG
-				MyMsg.Show(sql);
-#endif
                 SetCards(DataBase.Read(nowCdbFile, true, sql), isfresh);
             }
         }

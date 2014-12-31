@@ -1,4 +1,4 @@
-﻿[DataEditorX]2.2.9.0[DataEditorX]
+﻿[DataEditorX]2.2.9.1[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★文件关联(File association)
@@ -14,13 +14,11 @@ Email:247321453@qq.com
 错误提示文字：（弹出出错框，请按Ctrl+C，然后找地方粘贴）
 详细描述：（卡片信息，杀毒软件，本程序目录等等）
 
-Title：(DataEditorX+Version)
-Content：Error Message
-
 ★支持多语言化(Language setting)
 DataEditorX.exe.config
 <add key="language" value="chinese" />简体
 <add key="language" value="english" />英文
+其他语言请自己添加
 
 ★DataEditor：
 攻击力为？，可以输入？，?，-2任意一个都可以。
@@ -51,11 +49,30 @@ DataEditorX.exe.config
 https://github.com/247321453/MagicSetEditor2
 
 ★MSE存档生成设置
-mse-head 		MSE的风格设置文件
-mse-monster		普通怪兽模版
-mse-pendulum	P怪兽模版
-mse-spelltrap	魔陷模版
-mse-config		设置pendulum文本和普通文本的正则正则表达式，用来分离文本,支持设置每个存档的最大卡片数量
+在每个语言的mse_xxx.txt修改\r\n会替换为换行，\t会替换为tab
+简体转繁体，
+cn2tw = false
+每个存档最大数，0则是无限
+maxcount = 0
+从下面的文件夹找图片添加到存档，名字为密码/卡名.png/jpg
+imagepath = ./Images
+魔法陷阱标志，%%替换为符号，如果只是%% ，需要设置下面的ST mark is text: yes
+spell = [魔法卡%%]
+trap = [陷阱卡%%]
+游戏yugioh，风格standard，语言CN，Edition：MSE，P怪的中间图不包含P文本区域
+head = mse version: 0.3.8\r\ngame: yugioh\r\nstylesheet: standard\r\nset info:\r\n\tlanguage: CN\r\n\tedition: MSE\r\n\tST mark is text: no\r\n\tpendulum image is small: yes
+读取存档，卡片描述
+text =【摇摆效果】\n%ptext%\n【怪兽效果】\n%text%\n
+获取P文本
+pendulum-text = 】[\s\S]*?\n([\S\s]*?)\n【
+获取怪兽文本
+monster-text = [果|介|述|報]】\n([\S\s]*)
+替换特数字
+replace = ([鮟|鱇|・|·]) <i>$1</i>
+把空格替换为^，（占1/3字宽）
+#replace = \s <sym-auto>^</sym-auto>
+把A-Z替换为另外一种字体
+#replace = ([A-Z]) <i>$1</i>
 
 ★lua编辑器
 在下面的文本框输入关键字，按Enter
@@ -63,6 +80,8 @@ Ctrl+鼠标左键 	跳转到函数定义
 Ctrl+鼠标滑轮 	缩放文字
 
 ★更新历史
+2.2.9.1
+添加MSE设置说明
 2.2.9.0
 可以切换MSE的配置
 配置整合

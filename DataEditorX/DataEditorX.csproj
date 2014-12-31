@@ -96,7 +96,6 @@
     <Compile Include="Core\LuaFunction.cs" />
     <Compile Include="Core\MseMaker.cs" />
     <Compile Include="Config\MSEConfig.cs" />
-    <Compile Include="Core\MseReader.cs" />
     <Compile Include="Core\TaskHelper.cs" />
     <Compile Include="Core\YGOUtil.cs" />
     <Compile Include="DataEditForm.cs">

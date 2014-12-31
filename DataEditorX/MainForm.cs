@@ -17,9 +17,6 @@ using DataEditorX.Controls;
 
 namespace DataEditorX
 {
-    /// <summary>
-    /// Description of MainForm.
-    /// </summary>
     public partial class MainForm : Form, IMainForm
     {
         #region member

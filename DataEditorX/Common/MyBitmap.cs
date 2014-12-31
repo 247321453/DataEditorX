@@ -122,9 +122,7 @@ namespace DataEditorX.Common
             }
             return false;
         }
-        #endregion
-
-        
+        #endregion      
     }
 
 }

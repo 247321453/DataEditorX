@@ -1,7 +1,7 @@
 ﻿###########################
 # Magic Set Editor 2
 #
-# \t = Tab \n = Enter \s = Space
+# \t = Tab \n = Enter [:space:] = Space
 ########################### Chs 2 Cht 
 cn2tw = false
 ########################### Setting
@@ -11,7 +11,7 @@ imagepath = ./Images
 spell = [Sepll Card%%]
 trap = [Trap Card%%]
 ############################ language,style,other setting
-head = mse version: 0.3.8\ngame: yugioh\nstylesheet: standard\nset info:\n\tlanguage: EN\n\tedition: \n\tST mark is text: no\n\tpendulum image is small: yes
+head = mse version: 0.3.8\r\ngame: yugioh\r\nstylesheet: standard\r\nset info:\r\n\tlanguage: EN\r\n\tedition: \r\n\tST mark is text: no\r\n\tpendulum image is small: yes
 ############################ Text
 text = Pendulum Text :\n%ptext%\nMonster Text :\n%text%\n
 ############################

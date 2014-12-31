@@ -96,29 +96,28 @@ namespace DataEditorX.Core
         #region 检查更新
         public static void CheckVersion(bool showNew)
         {
-            string newver = CheckUpdate.Check(MyConfig.readString(MyConfig.TAG_UPDATE_URL));
-            int iver, iver2;
-            int.TryParse(Application.ProductVersion.Replace(".", ""), out iver);
-            int.TryParse(newver.Replace(".", ""), out iver2);
-            if (iver2 > iver)
+            string newver = CheckUpdate.GetNewVersion(MyConfig.readString(MyConfig.TAG_UPDATE_URL));
+            if (newver == CheckUpdate.DEFALUT)
+            {   //检查失败
+                if (!showNew)
+                    return;
+                MyMsg.Error(LMSG.CheckUpdateFail);
+                return;
+            }
+
+            if (CheckUpdate.CheckVersion(newver, Application.ProductVersion))
             {//有最新版本
                 if (!MyMsg.Question(LMSG.HaveNewVersion))
                     return;
             }
-            else if (iver2 > 0)
+            else
             {//现在就是最新版本
                 if (!showNew)
                     return;
                 if (!MyMsg.Question(LMSG.NowIsNewVersion))
                     return;
             }
-            else
-            {//检查失败
-                if (!showNew)
-                    return;
-                MyMsg.Error(LMSG.CheckUpdateFail);
-                return;
-            }
+            //下载文件
             if (CheckUpdate.DownLoad(
                 MyPath.Combine(Application.StartupPath, newver + ".zip")))
                 MyMsg.Show(LMSG.DownloadSucceed);

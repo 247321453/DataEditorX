@@ -25,11 +25,13 @@ namespace DataEditorX
         public static string URL = "";
         static string HEAD = "[DataEditorX]", HEAD2 = "[URL]";
         public static bool isOK = false;
+        public const string DEFALUT = "0.0.0.0";
+        public const int VER_LENGTH = 4;
 
         #region 检查版本
-        public static string Check(string VERURL)
+        public static string GetNewVersion(string VERURL)
         {
-            string urlver = "0.0.0.0";
+            string urlver = DEFALUT;
             string html = GetHtmlContentByUrl(VERURL);
             if (!string.IsNullOrEmpty(html))
             {
@@ -38,16 +40,44 @@ namespace DataEditorX
                 w = (t > 0) ? html.IndexOf(HEAD, t + HEAD.Length) : 0;
                 if (w > 0)
                 {
+                    //获取版本
                     urlver = html.Substring(t + HEAD.Length, w - t - HEAD.Length);
                 }
                 t = html.IndexOf(HEAD2);
                 w = (t > 0) ? html.IndexOf(HEAD2, t + HEAD2.Length) : 0;
                 if (w > 0)
                 {
+                    //获取下载地址
                     URL = html.Substring(t + HEAD2.Length, w - t - HEAD2.Length);
                 }
             }
             return urlver;
+        }
+        //检查版本号，格式0.0.0.0
+        public static bool CheckVersion(string ver, string oldver)
+        {
+            bool hasNew = false;
+            string[] vers = ver.Split('.');
+            string[] oldvers = oldver.Split('.');
+            if (vers.Length == oldvers.Length && vers.Length == VER_LENGTH)
+            {
+                int j, k;
+                for (int i = 0; i < VER_LENGTH; i++)
+                {
+                    int.TryParse(vers[i], out j);
+                    int.TryParse(oldvers[i], out k);
+                    if (j > k)
+                    {
+                        hasNew = true;
+                        break;
+                    }
+                }
+            }
+            
+#if DEBUG
+            MessageBox.Show("new:" + ver + ",oldver:" + oldver + ",hasnew:" + hasNew.ToString());
+#endif
+            return hasNew;
         }
         #endregion
 

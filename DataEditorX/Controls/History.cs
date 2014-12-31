@@ -38,6 +38,7 @@ namespace DataEditorX.Controls
             cdbhistory = new List<string>();
             luahistory = new List<string>();
         }
+        //读取历史记录
         public void ReadHistory(string historyFile)
         {
             this.historyFile = historyFile;
@@ -46,6 +47,7 @@ namespace DataEditorX.Controls
             string[] lines = File.ReadAllLines(historyFile);
             AddHistorys(lines);
         }
+        //添加历史记录
         void AddHistorys(string[] lines)
         {
             luahistory.Clear();
@@ -84,6 +86,7 @@ namespace DataEditorX.Controls
             SaveHistory();
             MenuHistory();
         }
+        //保存历史
         void SaveHistory()
         {
             string texts = "# database history";
@@ -102,6 +105,7 @@ namespace DataEditorX.Controls
                 File.Delete(historyFile);
             File.WriteAllText(historyFile, texts);
         }
+        //添加历史记录菜单
         public void MenuHistory()
         {
             //cdb历史
@@ -129,6 +133,7 @@ namespace DataEditorX.Controls
             tsmiclear2.Click += MenuHistoryClear2_Click;
             mainForm.AddLuaMenu(tsmiclear2);
         }
+        
         void MenuHistoryClear2_Click(object sender, EventArgs e)
         {
             luahistory.Clear();
