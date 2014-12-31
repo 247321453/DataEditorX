@@ -29,7 +29,7 @@ namespace DataEditorX.Config
                 return word.Substring(i + SEP_LINE.Length);
             return "";
         }
-        public static string getRegexValue(string line)
+        public static string getMultLineValue(string line)
         {
             return getRegex(getValue(line));
         }

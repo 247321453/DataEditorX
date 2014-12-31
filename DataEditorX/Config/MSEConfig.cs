@@ -21,13 +21,23 @@ namespace DataEditorX.Config
     public class MSEConfig
     {
         public const string TAG_HEAD = "head";
-        public const string TAG_MONSTER = "monster";
-        public const string TAG_PENDULUM = "pendulum";
-        public const string TAG_SPELL_TRAP = "spelltrap";
-        public const string FILE_CONFIG = "mse-config.txt";
-        public const string FILE_TEMPLATE = "mse-template.txt";
-        public const string SEP_LINE = " ";
+        public const string TAG_CN2TW = "cn2tw";
+        public const string TAG_SPELL = "spell";
+        public const string TAG_TRAP = "trap";
+        public const string TAG_REG_PENDULUM = "pendulum-text";
+        public const string TAG_REG_MONSTER = "monster-text";
+        public const string TAG_MAXCOUNT = "maxcount";
+        public const string TAG_RACE = "race";
+        public const string TAG_TYPE = "type";
 
+        public const string TAG_IMAGE = "imagepath";
+        public const string TAG_REPALCE = "replace";
+
+        public const string TAG_REP = "%%";
+        public const string SEP_LINE = " ";
+        public const string FILE_CONFIG = "mse-config.txt";
+        public const string PATH_IMAGE = "Images";
+        
         public MSEConfig(string path)
         {
             init(path);
@@ -37,17 +47,6 @@ namespace DataEditorX.Config
             Iscn2tw = false;
             regx_monster = "(\\s\\S*?)";
             regx_pendulum = "(\\s\\S*?)";
-
-            string file = MyPath.Combine(path, FILE_TEMPLATE);
-            if (File.Exists(file))
-            {
-                string content = File.ReadAllText(file, Encoding.UTF8);
-                head = DataManager.subString(content, TAG_HEAD);
-                monster = DataManager.subString(content, TAG_MONSTER);
-                pendulum = DataManager.subString(content, TAG_PENDULUM);
-                spelltrap = DataManager.subString(content, TAG_SPELL_TRAP);
-            }
-
 
             string tmp = MyPath.Combine(path, FILE_CONFIG);
             replaces = new Dictionary<string, string>();
@@ -62,24 +61,26 @@ namespace DataEditorX.Config
             {
                 if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
                     continue;
-                if (line.StartsWith("cn2tw"))
+                if (line.StartsWith(TAG_CN2TW))
                     Iscn2tw = ConfHelper.getBooleanValue(line);
-                else if (line.StartsWith("spell"))
+                else if (line.StartsWith(TAG_SPELL))
                     str_spell = ConfHelper.getValue(line);
-                else if (line.StartsWith("trap"))
+                else if (line.StartsWith(TAG_HEAD))
+                    head = ConfHelper.getMultLineValue(line);
+                else if (line.StartsWith(TAG_TRAP))
                     str_trap = ConfHelper.getValue(line);
-                else if (line.StartsWith("pendulum-text"))
-                    regx_pendulum = ConfHelper.getRegexValue(line);
-                else if (line.StartsWith("monster-text"))
-                    regx_monster = ConfHelper.getRegexValue(line);
-                else if (line.StartsWith("maxcount"))
+                else if (line.StartsWith(TAG_REG_PENDULUM))
+                    regx_pendulum = ConfHelper.getMultLineValue(line);
+                else if (line.StartsWith(TAG_REG_MONSTER))
+                    regx_monster = ConfHelper.getMultLineValue(line);
+                else if (line.StartsWith(TAG_MAXCOUNT))
                     maxcount = ConfHelper.getIntegerValue(line, 0);
-                else if (line.StartsWith("imagepath"))
+                else if (line.StartsWith(TAG_IMAGE))
                 {
                     //如果路径不合法，则为后面的路径
-                    imagepath = MyPath.CheckDir(ConfHelper.getValue(line), MyPath.Combine(path, "Images"));
+                    imagepath = MyPath.CheckDir(ConfHelper.getValue(line), MyPath.Combine(path, PATH_IMAGE));
                 }
-                else if (line.StartsWith("replace"))
+                else if (line.StartsWith(TAG_REPALCE))
                 {//特数字替换
                     string word = ConfHelper.getValue(line);
                     string p = ConfHelper.getRegex(ConfHelper.getValue1(word));
@@ -88,28 +89,21 @@ namespace DataEditorX.Config
                         replaces.Add(p, r);
 
                 }
-                else if (line.StartsWith("race"))
+                else if (line.StartsWith(TAG_RACE))
                 {//种族
                     ConfHelper.DicAdd(raceDic, line);
                 }
-                else if (line.StartsWith("type"))
+                else if (line.StartsWith(TAG_TYPE))
                 {//类型
                     ConfHelper.DicAdd(typeDic, line);
                 }
             }
-            //判断魔法标志是否为纯符号
-            if (str_spell == "%%" && str_trap == "%%")
-                st_is_symbol = true;
-            else
-                st_is_symbol = false;
         }
 
         //每个存档最大数
         public int maxcount;
         //图片路径
         public string imagepath;
-        //标志是符号
-        public bool st_is_symbol;
         //魔法标志
         public string str_spell;
         //陷阱标志
@@ -121,11 +115,8 @@ namespace DataEditorX.Config
         //效果文正则提取
         public string regx_pendulum;
         public string regx_monster;
-        //模版
+        //存档头部
         public string head;
-        public string monster;
-        public string pendulum;
-        public string spelltrap;
         public Dictionary<long, string> typeDic;
         public Dictionary<long, string> raceDic;
     }

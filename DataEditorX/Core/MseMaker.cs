@@ -89,15 +89,15 @@ namespace DataEditorX.Core
                 level = "#";
             else if (c.IsType(CardType.TYPE_COUNTER))
                 level = "!";
-            else if (cfg.st_is_symbol)
-                level = "^";
+            else if (cfg.str_spell == MSEConfig.TAG_REP && cfg.str_trap == MSEConfig.TAG_REP)
+                level = "^";//带文字的图片
             else
                 level = "";
 
             if (isSpell)
-                level = cfg.str_spell.Replace("%%", level);
+                level = cfg.str_spell.Replace(MSEConfig.TAG_REP, level);
             else
-                level = cfg.str_trap.Replace("%%", level);
+                level = cfg.str_trap.Replace(MSEConfig.TAG_REP, level);
             return level;
         }
         public static string GetCardImagePath(string picpath, Card c)
@@ -334,51 +334,48 @@ namespace DataEditorX.Core
 		string getMonster(Card c,string img,bool isPendulum)
 		{
 			StringBuilder sb=new StringBuilder();
-			if(isPendulum)
-				sb.Append(cfg.pendulum);
-			else
-				sb.Append(cfg.monster);
-
             string[] types = GetTypes(c);
             string race = GetRace(c.race);
-			sb.Replace("%type%", types[0]);
-            sb.Replace("%name%", reItalic(c.name));
-            sb.Replace("%attribute%", GetAttribute(c.attribute));
-            sb.Replace("%level%", GetStar(c.level));
-			sb.Replace("%image%", img);
-			sb.Replace("%race%", cn2tw(race));
-			sb.Replace("%type1%",cn2tw(types[1]));
-			sb.Replace("%type2%",cn2tw(types[2]));
-			sb.Replace("%type3%",cn2tw(types[3]));
+            sb.AppendLine("card:");
+            sb.AppendLine("	card type: " + types[0]);
+            sb.AppendLine("	name: " + reItalic(c.name));
+            sb.AppendLine("	attribute: " + GetAttribute(c.attribute));
+            sb.AppendLine("	level: " + GetStar(c.level));
+            sb.AppendLine("	image: " + img);
+            sb.AppendLine("	type 1: %" + cn2tw(race));
+            sb.AppendLine("	type 2: " + cn2tw(types[1]));
+            sb.AppendLine("	type 3: " + cn2tw(types[2]));
+            sb.AppendLine("	type 4: " + cn2tw(types[3]));
 			if(isPendulum){
                 string text = GetDesc(c.desc, cfg.regx_monster);
 				if(string.IsNullOrEmpty(text))
 					text=c.desc;
-				sb.Replace("%desc%", ReDesc(text));
-				sb.Replace("%pl%", ((c.level >> 0x18) & 0xff).ToString());
-				sb.Replace("%pr%", ((c.level >> 0x10) & 0xff).ToString());
-                sb.Replace("%pdesc%", ReDesc(
+                sb.AppendLine("	rule text: " + ReDesc(text));
+                sb.AppendLine("	pendulum scale 1: " + ((c.level >> 0x18) & 0xff).ToString());
+                sb.AppendLine("	pendulum scale 2:" + ((c.level >> 0x10) & 0xff).ToString());
+                sb.AppendLine("	pendulum text: " + ReDesc(
 					GetDesc(c.desc, cfg.regx_pendulum)));
 			}
 			else
-				sb.Replace("%desc%", ReDesc(c.desc));
-			sb.Replace("%atk%", (c.atk<0)?"?":c.atk.ToString());
-			sb.Replace("%def%", (c.def<0)?"?":c.def.ToString());
-			
-			sb.Replace("%code%", c.idString);
+                sb.AppendLine("	rule text: " + ReDesc(c.desc));
+            sb.AppendLine("	attack: "+((c.atk < 0) ? "?" : c.atk.ToString()));
+            sb.AppendLine("	defense: "+((c.def < 0) ? "?" : c.def.ToString()));
+
+            sb.AppendLine("	gamecode: "+c.idString);
 			return sb.ToString();
 		}
         //魔法陷阱
 		string getSpellTrap(Card c,string img,bool isSpell)
 		{
-			StringBuilder sb=new StringBuilder(cfg.spelltrap);
-			sb.Replace("%type%", isSpell?"spell card":"trap card");
-			sb.Replace("%name%", reItalic(c.name));
-			sb.Replace("%attribute%", isSpell?"spell":"trap");
-			sb.Replace("%level%", GetST(c, isSpell));
-			sb.Replace("%image%", img);
-			sb.Replace("%desc%", ReDesc(c.desc));
-			sb.Replace("%code%", c.idString);
+			StringBuilder sb=new StringBuilder();
+            sb.AppendLine("card:");
+            sb.AppendLine("	card type: " + (isSpell ? "spell card" : "trap card"));
+            sb.AppendLine("	name: " + reItalic(c.name));
+            sb.AppendLine("	attribute: " + (isSpell ? "spell" : "trap"));
+            sb.AppendLine("	level: " + GetST(c, isSpell));
+            sb.AppendLine("	image: " + img);
+            sb.AppendLine("	rule text: " + ReDesc(c.desc));
+            sb.AppendLine("	gamecode: " + c.idString);
 			return sb.ToString();
 		}
 	}

@@ -11,6 +11,8 @@ imagepath = ./Images
 # trap = %%
 spell = [魔法卡%%]
 trap = [陷阱卡%%]
+############################ language,style,other setting
+head = mse version: 0.3.8\ngame: yugioh\nstylesheet: standard\nset info:\n\tlanguage: TW\n\tedition: \n\tST mark is text: no\n\tpendulum image is small: yes\n
 ############################ Text
 # chs jp
 pendulum-text = 】[\s\S]*?\n([\S\s]*?)\n【
@@ -23,24 +25,6 @@ monster-text = [果|介|述|報]】\n([\S\s]*)
 replace = ([鮟|鱇|・|·]) <i>$1</i>
 #replace = \s <sym-auto>^</sym-auto>
 #replace = ([A-Z]) <i>$1</i>
-########################### Read MSE set
-#
-type = card type
-name = name
-attribute = attribute
-level = level
-image = image
-type1 = type 1
-type2 = type 2
-type3 = type 3
-type4 = type 4
-rule = rule text
-atk = attack
-def = defense
-pscale1 = pendulum scale 1
-pscale2 = pendulum scale 2
-prule = pendulum text
-code = gamecode
 ###########################
 ##race
 race 0x1 战士族
