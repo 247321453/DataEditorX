@@ -23,6 +23,25 @@ monster-text = [果|介|述|報]】\n([\S\s]*)
 replace = ([鮟|鱇|・|·]) <i>$1</i>
 #replace = \s <sym-auto>^</sym-auto>
 #replace = ([A-Z]) <i>$1</i>
+########################### Read MSE set
+#
+type = card type
+name = name
+attribute = attribute
+level = level
+image = image
+type1 = type 1
+type2 = type 2
+type3 = type 3
+type4 = type 4
+rule = rule text
+atk = attack
+def = defense
+pscale1 = pendulum scale 1
+pscale2 = pendulum scale 2
+prule = pendulum text
+code = gamecode
+###########################
 ##race
 race 0x1 战士族
 race 0x2 魔法师族
@@ -48,6 +67,7 @@ race 0x100000 念动力族
 race 0x200000 幻神兽族
 race 0x400000 创造神族
 race 0x800000 幻龙族
+###########################
 ##type
 type 0x1 怪兽
 type 0x2 魔法
@@ -74,3 +94,4 @@ type 0x200000 反转
 type 0x400000 卡通
 type 0x800000 超量
 type 0x1000000 灵摆
+##########################

@@ -41,7 +41,7 @@ namespace DataEditorX.Core
         private Card[] cardlist;
         private string[] mArgs;
         private ImageSet imgSet = new ImageSet();
-        private MSE mseHelper;
+        private MseMaker mseHelper;
         private bool isCancel = false;
         private bool isRun = false;
         private BackgroundWorker worker;
@@ -49,7 +49,7 @@ namespace DataEditorX.Core
         public TaskHelper(string datapath, BackgroundWorker worker, MSEConfig mcfg)
         {
             this.worker = worker;
-            mseHelper = new MSE(mcfg);
+            mseHelper = new MseMaker(mcfg);
             imgSet.Init();
         }
         public bool IsRuning()

@@ -24,7 +24,7 @@ namespace DataEditorX.Core
 	/// <summary>
 	/// Description of MSE.
 	/// </summary>
-	public class MSE
+	public class MseMaker
 	{
 		MSEConfig cfg;
 		
@@ -38,7 +38,7 @@ namespace DataEditorX.Core
 			get {return cfg.imagepath;}
 		}
 		
-		public MSE(MSEConfig mcfg)
+		public MseMaker(MSEConfig mcfg)
 		{
             cfg = mcfg;
 		}
@@ -46,9 +46,9 @@ namespace DataEditorX.Core
         public string reItalic(string str)
         {
             str = cn2tw(str);
-            foreach (RegStr rs in cfg.replaces)
+            foreach (string rs in cfg.replaces.Keys)
             {
-                str = Regex.Replace(str, rs.pstr, rs.rstr);
+                str = Regex.Replace(str, rs, cfg.replaces[rs]);
             }
             return str;
         }
