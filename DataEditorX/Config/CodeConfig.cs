@@ -27,19 +27,28 @@ namespace DataEditorX.Config
 
         //函数提示
         Dictionary<string, string> tooltipDic;
-        //自动完成
+        //函数列表
         List<AutocompleteItem> funList;
+        //常量列表
         List<AutocompleteItem> conList;
 
+        /// <summary>
+        /// 输入提示
+        /// </summary>
         public Dictionary<string, string> TooltipDic
         {
             get { return tooltipDic; }
         }
-
+        /// <summary>
+        /// 函数列表
+        /// </summary>
         public AutocompleteItem[] FunList
         {
             get { return funList.ToArray(); }
         }
+        /// <summary>
+        /// 常量列表
+        /// </summary>
         public AutocompleteItem[] ConList
         {
             get { return conList.ToArray(); }
@@ -47,8 +56,11 @@ namespace DataEditorX.Config
         #endregion
 
         #region 系列名/指示物
-        //系列名
-        public void SetNames(Dictionary<long, string> dic)
+        /// <summary>
+        /// 设置系列名
+        /// </summary>
+        /// <param name="dic"></param>
+        public void SetNames(SortedList<long, string> dic)
         {
             foreach (long k in dic.Keys)
             {
@@ -59,7 +71,10 @@ namespace DataEditorX.Config
                 }
             }
         }
-        //指示物
+        /// <summary>
+        /// 读取指示物
+        /// </summary>
+        /// <param name="file"></param>
         public void AddStrings(string file)
         {
             if (File.Exists(file))
@@ -67,6 +82,7 @@ namespace DataEditorX.Config
                 string[] lines = File.ReadAllLines(file);
                 foreach (string line in lines)
                 {
+                    //特殊胜利和指示物
                     if (line.StartsWith("!victory")
                        || line.StartsWith("!counter"))
                     {
@@ -83,7 +99,10 @@ namespace DataEditorX.Config
         #endregion
 
         #region function
-        //函数
+        /// <summary>
+        /// 添加函数
+        /// </summary>
+        /// <param name="funtxt"></param>
         public void AddFunction(string funtxt)
         {
             if (!File.Exists(funtxt))
@@ -108,6 +127,7 @@ namespace DataEditorX.Config
 
                     if (t < w && t > 0)
                     {
+                        //找到函数
                         name = line.Substring(t + 1, w - t - 1);
                         isFind = true;
                         desc = line;
@@ -173,6 +193,7 @@ namespace DataEditorX.Config
                     string k = line, desc = line;
                     int t = line.IndexOf("=");
                     int t2 = line.IndexOf("--");
+                    //常量 = 0x1 ---注释
                     k = (t > 0) ? line.Substring(0, t).TrimEnd(new char[] { ' ', '\t' })
                         : line;
                     desc = (t > 0) ? line.Substring(t + 1).Replace("--", "\n")

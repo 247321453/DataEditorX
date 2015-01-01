@@ -52,8 +52,10 @@ namespace DataEditorX
             this.menu_tools = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_readydk = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_readimages = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsep6 = new System.Windows.Forms.ToolStripSeparator();
             this.menuitem_compdb = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_exportdata = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuitem_findluafunc = new System.Windows.Forms.ToolStripMenuItem();
             this.tsep5 = new System.Windows.Forms.ToolStripSeparator();
             this.menuitem_readmse = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_saveasmse_select = new System.Windows.Forms.ToolStripMenuItem();
@@ -223,14 +225,17 @@ namespace DataEditorX
             this.menuitem_importmseimg.Name = "menuitem_importmseimg";
             this.menuitem_importmseimg.Size = new System.Drawing.Size(193, 22);
             this.menuitem_importmseimg.Text = "Drop Image to MSE";
+            this.menuitem_importmseimg.Click += new System.EventHandler(this.menuitem_importmseimg_Click);
             // 
             // menu_tools
             // 
             this.menu_tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuitem_readydk,
             this.menuitem_readimages,
+            this.tsep6,
             this.menuitem_compdb,
             this.menuitem_exportdata,
+            this.menuitem_findluafunc,
             this.tsep5,
             this.menuitem_readmse,
             this.menuitem_saveasmse_select,
@@ -258,6 +263,11 @@ namespace DataEditorX
             this.menuitem_readimages.Text = "Cards From Images(&I)";
             this.menuitem_readimages.Click += new System.EventHandler(this.Menuitem_readimagesClick);
             // 
+            // tsep6
+            // 
+            this.tsep6.Name = "tsep6";
+            this.tsep6.Size = new System.Drawing.Size(209, 6);
+            // 
             // menuitem_compdb
             // 
             this.menuitem_compdb.Name = "menuitem_compdb";
@@ -271,6 +281,13 @@ namespace DataEditorX
             this.menuitem_exportdata.Size = new System.Drawing.Size(212, 22);
             this.menuitem_exportdata.Text = "Export Data";
             this.menuitem_exportdata.Click += new System.EventHandler(this.Menuitem_exportdataClick);
+            // 
+            // menuitem_findluafunc
+            // 
+            this.menuitem_findluafunc.Name = "menuitem_findluafunc";
+            this.menuitem_findluafunc.Size = new System.Drawing.Size(212, 22);
+            this.menuitem_findluafunc.Text = "Find Lua Function";
+            this.menuitem_findluafunc.Click += new System.EventHandler(this.menuitem_findluafunc_Click);
             // 
             // tsep5
             // 
@@ -364,11 +381,11 @@ namespace DataEditorX
             // 
             this.cb_cardattribute.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.cb_cardattribute.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cb_cardattribute.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cb_cardattribute.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cb_cardattribute.FormattingEnabled = true;
-            this.cb_cardattribute.Location = new System.Drawing.Point(401, 81);
+            this.cb_cardattribute.Location = new System.Drawing.Point(401, 78);
             this.cb_cardattribute.Name = "cb_cardattribute";
-            this.cb_cardattribute.Size = new System.Drawing.Size(70, 25);
+            this.cb_cardattribute.Size = new System.Drawing.Size(140, 20);
             this.cb_cardattribute.TabIndex = 2;
             // 
             // tb_cardname
@@ -385,33 +402,34 @@ namespace DataEditorX
             // 
             this.cb_cardrule.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.cb_cardrule.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cb_cardrule.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cb_cardrule.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cb_cardrule.FormattingEnabled = true;
             this.cb_cardrule.Location = new System.Drawing.Point(401, 52);
             this.cb_cardrule.Name = "cb_cardrule";
-            this.cb_cardrule.Size = new System.Drawing.Size(143, 25);
+            this.cb_cardrule.Size = new System.Drawing.Size(140, 20);
             this.cb_cardrule.TabIndex = 2;
             // 
             // cb_cardlevel
             // 
             this.cb_cardlevel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.cb_cardlevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cb_cardlevel.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cb_cardlevel.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cb_cardlevel.FormattingEnabled = true;
-            this.cb_cardlevel.Location = new System.Drawing.Point(474, 81);
+            this.cb_cardlevel.Location = new System.Drawing.Point(401, 105);
             this.cb_cardlevel.Name = "cb_cardlevel";
-            this.cb_cardlevel.Size = new System.Drawing.Size(70, 25);
+            this.cb_cardlevel.Size = new System.Drawing.Size(140, 20);
             this.cb_cardlevel.TabIndex = 2;
             // 
             // cb_cardrace
             // 
             this.cb_cardrace.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.cb_cardrace.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cb_cardrace.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cb_cardrace.DropDownWidth = 107;
+            this.cb_cardrace.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cb_cardrace.FormattingEnabled = true;
-            this.cb_cardrace.Location = new System.Drawing.Point(401, 110);
+            this.cb_cardrace.Location = new System.Drawing.Point(401, 130);
             this.cb_cardrace.Name = "cb_cardrace";
-            this.cb_cardrace.Size = new System.Drawing.Size(143, 25);
+            this.cb_cardrace.Size = new System.Drawing.Size(140, 20);
             this.cb_cardrace.TabIndex = 2;
             // 
             // cb_setname2
@@ -420,15 +438,15 @@ namespace DataEditorX
             this.cb_setname2.DropDownHeight = 320;
             this.cb_setname2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_setname2.DropDownWidth = 140;
-            this.cb_setname2.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cb_setname2.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cb_setname2.FormattingEnabled = true;
             this.cb_setname2.IntegralHeight = false;
-            this.cb_setname2.ItemHeight = 17;
-            this.cb_setname2.Location = new System.Drawing.Point(402, 169);
+            this.cb_setname2.ItemHeight = 12;
+            this.cb_setname2.Location = new System.Drawing.Point(402, 182);
             this.cb_setname2.Name = "cb_setname2";
-            this.cb_setname2.Size = new System.Drawing.Size(106, 25);
+            this.cb_setname2.Size = new System.Drawing.Size(106, 20);
             this.cb_setname2.TabIndex = 2;
-            this.cb_setname2.SelectedIndexChanged += new System.EventHandler(this.Cb_setname2SelectedIndexChanged);
+            this.cb_setname2.SelectedIndexChanged += new System.EventHandler(this.cb_setname2_SelectedIndexChanged);
             // 
             // cb_setname1
             // 
@@ -436,15 +454,15 @@ namespace DataEditorX
             this.cb_setname1.DropDownHeight = 320;
             this.cb_setname1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_setname1.DropDownWidth = 140;
-            this.cb_setname1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cb_setname1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cb_setname1.FormattingEnabled = true;
             this.cb_setname1.IntegralHeight = false;
-            this.cb_setname1.ItemHeight = 17;
-            this.cb_setname1.Location = new System.Drawing.Point(402, 140);
+            this.cb_setname1.ItemHeight = 12;
+            this.cb_setname1.Location = new System.Drawing.Point(402, 156);
             this.cb_setname1.Name = "cb_setname1";
-            this.cb_setname1.Size = new System.Drawing.Size(106, 25);
+            this.cb_setname1.Size = new System.Drawing.Size(106, 20);
             this.cb_setname1.TabIndex = 2;
-            this.cb_setname1.SelectedIndexChanged += new System.EventHandler(this.Cb_setname1SelectedIndexChanged);
+            this.cb_setname1.SelectedIndexChanged += new System.EventHandler(this.cb_setname1_SelectedIndexChanged);
             // 
             // cb_setname4
             // 
@@ -452,15 +470,15 @@ namespace DataEditorX
             this.cb_setname4.DropDownHeight = 320;
             this.cb_setname4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_setname4.DropDownWidth = 140;
-            this.cb_setname4.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cb_setname4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cb_setname4.FormattingEnabled = true;
             this.cb_setname4.IntegralHeight = false;
-            this.cb_setname4.ItemHeight = 17;
-            this.cb_setname4.Location = new System.Drawing.Point(402, 227);
+            this.cb_setname4.ItemHeight = 12;
+            this.cb_setname4.Location = new System.Drawing.Point(402, 234);
             this.cb_setname4.Name = "cb_setname4";
-            this.cb_setname4.Size = new System.Drawing.Size(106, 25);
+            this.cb_setname4.Size = new System.Drawing.Size(106, 20);
             this.cb_setname4.TabIndex = 2;
-            this.cb_setname4.SelectedIndexChanged += new System.EventHandler(this.Cb_setname4SelectedIndexChanged);
+            this.cb_setname4.SelectedIndexChanged += new System.EventHandler(this.cb_setname4_SelectedIndexChanged);
             // 
             // cb_setname3
             // 
@@ -468,15 +486,15 @@ namespace DataEditorX
             this.cb_setname3.DropDownHeight = 320;
             this.cb_setname3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_setname3.DropDownWidth = 140;
-            this.cb_setname3.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cb_setname3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cb_setname3.FormattingEnabled = true;
             this.cb_setname3.IntegralHeight = false;
-            this.cb_setname3.ItemHeight = 17;
-            this.cb_setname3.Location = new System.Drawing.Point(402, 198);
+            this.cb_setname3.ItemHeight = 12;
+            this.cb_setname3.Location = new System.Drawing.Point(402, 208);
             this.cb_setname3.Name = "cb_setname3";
-            this.cb_setname3.Size = new System.Drawing.Size(106, 25);
+            this.cb_setname3.Size = new System.Drawing.Size(106, 20);
             this.cb_setname3.TabIndex = 2;
-            this.cb_setname3.SelectedIndexChanged += new System.EventHandler(this.Cb_setname3SelectedIndexChanged);
+            this.cb_setname3.SelectedIndexChanged += new System.EventHandler(this.cb_setname3_SelectedIndexChanged);
             // 
             // tb_cardtext
             // 
@@ -828,50 +846,50 @@ namespace DataEditorX
             // tb_setcode1
             // 
             this.tb_setcode1.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.tb_setcode1.Location = new System.Drawing.Point(512, 142);
+            this.tb_setcode1.Location = new System.Drawing.Point(512, 156);
             this.tb_setcode1.MaxLength = 4;
             this.tb_setcode1.Name = "tb_setcode1";
             this.tb_setcode1.Size = new System.Drawing.Size(30, 21);
             this.tb_setcode1.TabIndex = 18;
             this.tb_setcode1.Text = "0";
             this.tb_setcode1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.tb_setcode1.TextChanged += new System.EventHandler(this.Tb_setcode1TextChanged);
+            this.tb_setcode1.TextChanged += new System.EventHandler(this.tb_setcode1_TextChanged);
             // 
             // tb_setcode2
             // 
             this.tb_setcode2.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.tb_setcode2.Location = new System.Drawing.Point(512, 170);
+            this.tb_setcode2.Location = new System.Drawing.Point(512, 182);
             this.tb_setcode2.MaxLength = 4;
             this.tb_setcode2.Name = "tb_setcode2";
             this.tb_setcode2.Size = new System.Drawing.Size(30, 21);
             this.tb_setcode2.TabIndex = 18;
             this.tb_setcode2.Text = "0";
             this.tb_setcode2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.tb_setcode2.TextChanged += new System.EventHandler(this.Tb_setcode2TextChanged);
+            this.tb_setcode2.TextChanged += new System.EventHandler(this.tb_setcode2_TextChanged);
             // 
             // tb_setcode3
             // 
             this.tb_setcode3.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.tb_setcode3.Location = new System.Drawing.Point(512, 200);
+            this.tb_setcode3.Location = new System.Drawing.Point(512, 208);
             this.tb_setcode3.MaxLength = 4;
             this.tb_setcode3.Name = "tb_setcode3";
             this.tb_setcode3.Size = new System.Drawing.Size(30, 21);
             this.tb_setcode3.TabIndex = 18;
             this.tb_setcode3.Text = "0";
             this.tb_setcode3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.tb_setcode3.TextChanged += new System.EventHandler(this.Tb_setcode3TextChanged);
+            this.tb_setcode3.TextChanged += new System.EventHandler(this.tb_setcode3_TextChanged);
             // 
             // tb_setcode4
             // 
             this.tb_setcode4.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.tb_setcode4.Location = new System.Drawing.Point(512, 229);
+            this.tb_setcode4.Location = new System.Drawing.Point(512, 234);
             this.tb_setcode4.MaxLength = 4;
             this.tb_setcode4.Name = "tb_setcode4";
             this.tb_setcode4.Size = new System.Drawing.Size(30, 21);
             this.tb_setcode4.TabIndex = 18;
             this.tb_setcode4.Text = "0";
             this.tb_setcode4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.tb_setcode4.TextChanged += new System.EventHandler(this.Tb_setcode4TextChanged);
+            this.tb_setcode4.TextChanged += new System.EventHandler(this.tb_setcode4_TextChanged);
             // 
             // lb_cardcode
             // 
@@ -1106,5 +1124,7 @@ namespace DataEditorX
         private System.Windows.Forms.ToolStripMenuItem menu_setting;
         private System.Windows.Forms.ToolStripMenuItem menuitem_mseconfig;
         private System.Windows.Forms.ToolStripMenuItem menuitem_importmseimg;
+        private System.Windows.Forms.ToolStripMenuItem menuitem_findluafunc;
+        private System.Windows.Forms.ToolStripSeparator tsep6;
     }
 }

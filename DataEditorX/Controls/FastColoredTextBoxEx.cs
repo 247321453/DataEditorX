@@ -29,7 +29,7 @@ namespace FastColoredTextBoxNS
 			base.OnMouseMove(e);
 			lastMouseCoord = e.Location;
 		}
-		
+		//函数提示
 		protected override void OnToolTip()
 		{
 			if (ToolTip == null)
@@ -61,6 +61,7 @@ namespace FastColoredTextBoxNS
 				ToolTip.Show(ea.ToolTipText, this, new Point(lastMouseCoord.X, lastMouseCoord.Y + CharHeight));
 			}
 		}
+        //高亮当前词
         void FctbTextChangedDelayed(object sender, TextChangedEventArgs e)
         {
             //delete all markers

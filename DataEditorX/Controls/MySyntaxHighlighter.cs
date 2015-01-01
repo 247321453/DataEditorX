@@ -16,7 +16,7 @@ using System.Xml;
 namespace FastColoredTextBoxNS
 {
 	/// <summary>
-	/// Description of FastColoredTextBoxEx.
+	/// ygocore的lua高亮，夜间
 	/// </summary>
 	public class MySyntaxHighlighter : SyntaxHighlighter
 	{

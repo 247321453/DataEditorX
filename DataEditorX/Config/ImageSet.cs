@@ -12,19 +12,17 @@ using DataEditorX.Common;
 
 namespace DataEditorX.Config
 {
-
+    /// <summary>
+    /// 裁剪图片是、配置
+    /// </summary>
 	public class ImageSet
 	{
-
-		bool isInit;
 		public ImageSet(){
-			isInit=false;
+            Init();
 		}
-		public void Init()
+        //初始化
+		void Init()
 		{
-			if(isInit)
-				return;
-			isInit=true;
             this.normalArea = MyConfig.readArea(MyConfig.TAG_IMAGE_OTHER);
 
             this.xyzArea = MyConfig.readArea(MyConfig.TAG_IMAGE_XYZ);
@@ -40,10 +38,37 @@ namespace DataEditorX.Config
 
             this.quilty = MyConfig.readInteger(MyConfig.TAG_IMAGE_QUILTY, 95);
 		}
+        /// <summary>
+        /// jpeg质量
+        /// </summary>
 		public int quilty;
-		public int w,h,W,H;
+        /// <summary>
+        /// 小图的宽
+        /// </summary>
+        public int w;
+        /// <summary>
+        /// 小图的高
+        /// </summary>
+        public int h;
+        /// <summary>
+        /// 大图的宽
+        /// </summary>
+        public int W;
+        /// <summary>
+        /// 大图的高
+        /// </summary>
+        public int H;
+        /// <summary>
+        /// 怪兽的中间图
+        /// </summary>
         public Area normalArea;
+        /// <summary>
+        /// xyz怪兽的中间图
+        /// </summary>
         public Area xyzArea;
+        /// <summary>
+        /// p怪的中间图
+        /// </summary>
         public Area pendulumArea;
 	}
 }

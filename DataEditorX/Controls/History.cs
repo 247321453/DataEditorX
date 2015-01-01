@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using DataEditorX.Core;
 using DataEditorX.Config;
@@ -9,16 +8,8 @@ using DataEditorX.Language;
 
 namespace DataEditorX.Controls
 {
-    interface IMainForm
-    {
-        void CdbMenuClear();
-        void LuaMenuClear();
-        void AddCdbMenu(ToolStripItem item);
-        void AddLuaMenu(ToolStripItem item);
-        void Open(string file);
-    }
 
-    class History
+    public class History
     {
         IMainForm mainForm;
         string historyFile;

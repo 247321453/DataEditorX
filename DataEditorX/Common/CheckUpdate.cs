@@ -5,30 +5,40 @@
  * 时间: 9:58
  * 
  */
-using System;
 using System.IO;
 using System.Net;
 using System.Text;
-using System.Windows.Forms;
 
-namespace DataEditorX
+namespace DataEditorX.Common
 {
     /// <summary>
-    /// Description of CheckUpdate.
+    /// 检查更新
     /// </summary>
     public static class CheckUpdate
     {
         static CheckUpdate()
         {
+            //连接数
             ServicePointManager.DefaultConnectionLimit = 255;
         }
+        /// <summary>
+        /// 下载URL
+        /// </summary>
         public static string URL = "";
-        static string HEAD = "[DataEditorX]", HEAD2 = "[URL]";
-        public static bool isOK = false;
+        /// <summary>
+        /// 从HEAD获取版本号
+        /// </summary>
+        const string HEAD = "[DataEditorX]";
+        const string HEAD2 = "[URL]";
         public const string DEFALUT = "0.0.0.0";
-        public const int VER_LENGTH = 4;
+        const int VER_LENGTH = 4;
 
         #region 检查版本
+        /// <summary>
+        /// 获取新版本
+        /// </summary>
+        /// <param name="VERURL">链接</param>
+        /// <returns>版本号</returns>
         public static string GetNewVersion(string VERURL)
         {
             string urlver = DEFALUT;
@@ -53,7 +63,12 @@ namespace DataEditorX
             }
             return urlver;
         }
-        //检查版本号，格式0.0.0.0
+        /// <summary>
+        /// 检查版本号，格式0.0.0.0
+        /// </summary>
+        /// <param name="ver">0.0.0.0</param>
+        /// <param name="oldver">0.0.0.0</param>
+        /// <returns>是否有新版本</returns>
         public static bool CheckVersion(string ver, string oldver)
         {
             bool hasNew = false;
@@ -61,12 +76,12 @@ namespace DataEditorX
             string[] oldvers = oldver.Split('.');
             if (vers.Length == oldvers.Length && vers.Length == VER_LENGTH)
             {
-                int j, k;
+                int j, k;//从左到右比较数字
                 for (int i = 0; i < VER_LENGTH; i++)
                 {
                     int.TryParse(vers[i], out j);
                     int.TryParse(oldvers[i], out k);
-                    if (j > k)
+                    if (j > k)//新的版本号大于旧的
                     {
                         hasNew = true;
                         break;
@@ -82,6 +97,11 @@ namespace DataEditorX
         #endregion
 
         #region 获取网址内容
+        /// <summary>
+        /// 获取网址内容
+        /// </summary>
+        /// <param name="url">网址</param>
+        /// <returns>内容</returns>
         public static string GetHtmlContentByUrl(string url)
         {
             string htmlContent = string.Empty;
@@ -116,6 +136,11 @@ namespace DataEditorX
         #endregion
 
         #region 下载文件
+        /// <summary>
+        /// 下载文件
+        /// </summary>
+        /// <param name="filename">保存文件路径</param>
+        /// <returns>是否下载成功</returns>
         public static bool DownLoad(string filename)
         {
             try
@@ -142,10 +167,9 @@ namespace DataEditorX
             }
             catch (System.Exception)
             {
-                isOK = false;
+                return false;
             }
-            isOK = true;
-            return isOK;
+            return true;
         }
         #endregion
     }

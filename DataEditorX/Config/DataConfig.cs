@@ -24,18 +24,22 @@ namespace DataEditorX.Config
         {
             InitMember(conf);
         }
+        /// <summary>
+        /// 初始化成员
+        /// </summary>
+        /// <param name="conf"></param>
         public void InitMember(string conf)
         {
             //conf = MyPath.Combine(datapath, MyConfig.FILE_INFO);
             if(!File.Exists(conf))
             {
-                dicCardRules = new Dictionary<long, string>();
-			    dicSetnames =new Dictionary<long, string>();
-			    dicCardTypes =new Dictionary<long, string>();
-			    dicCardcategorys =new Dictionary<long, string>();
-			    dicCardAttributes =new Dictionary<long, string>();
-			    dicCardRaces =new Dictionary<long, string>();
-			    dicCardLevels =new Dictionary<long, string>();
+                dicCardRules = new SortedList<long, string>();
+                dicSetnames = new SortedList<long, string>();
+                dicCardTypes = new SortedList<long, string>();
+                dicCardcategorys = new SortedList<long, string>();
+                dicCardAttributes = new SortedList<long, string>();
+                dicCardRaces = new SortedList<long, string>();
+                dicCardLevels = new SortedList<long, string>();
                 return;
             }
             //提取内容
@@ -49,13 +53,33 @@ namespace DataEditorX.Config
             dicCardLevels = DataManager.Read(text, MyConfig.TAG_LEVEL);
 
 		}
-
-        public Dictionary<long, string> dicCardRules = null;
-        public Dictionary<long, string> dicCardAttributes = null;
-        public Dictionary<long, string> dicCardRaces = null;
-        public Dictionary<long, string> dicCardLevels = null;
-        public Dictionary<long, string> dicSetnames = null;
-        public Dictionary<long, string> dicCardTypes = null;
-        public Dictionary<long, string> dicCardcategorys = null;
+        /// <summary>
+        /// 规则
+        /// </summary>
+        public SortedList<long, string> dicCardRules = null;
+        /// <summary>
+        /// 属性
+        /// </summary>
+        public SortedList<long, string> dicCardAttributes = null;
+        /// <summary>
+        /// 种族
+        /// </summary>
+        public SortedList<long, string> dicCardRaces = null;
+        /// <summary>
+        /// 等级
+        /// </summary>
+        public SortedList<long, string> dicCardLevels = null;
+        /// <summary>
+        /// 系列名
+        /// </summary>
+        public SortedList<long, string> dicSetnames = null;
+        /// <summary>
+        /// 卡片类型
+        /// </summary>
+        public SortedList<long, string> dicCardTypes = null;
+        /// <summary>
+        /// 效果类型
+        /// </summary>
+        public SortedList<long, string> dicCardcategorys = null;
     }
 }

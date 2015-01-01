@@ -16,8 +16,17 @@ namespace DataEditorX.Config
 {
     public class DataManager
     {
+        /// <summary>
+        /// 内容开头
+        /// </summary>
         public const string TAG_START = "##";
+        /// <summary>
+        /// 内容结尾
+        /// </summary>
         public const string TAG_END = "#";
+        /// <summary>
+        /// 行分隔符
+        /// </summary>
         public const char SEP_LINE = '\t';
 
         #region 根据tag获取内容
@@ -46,7 +55,7 @@ namespace DataEditorX.Config
         /// <param name="content">字符串</param>
         /// <param name="tag">开始的标志</param>
         /// <returns></returns>
-        public static Dictionary<long, string> Read(string content, string tag)
+        public static SortedList<long, string> Read(string content, string tag)
         {
             return Read(subString(content,tag));
         }
@@ -56,7 +65,7 @@ namespace DataEditorX.Config
         /// <param name="strFile"></param>
         /// <param name="encode"></param>
         /// <returns></returns>
-        public static Dictionary<long, string> Read(string strFile, Encoding encode)
+        public static SortedList<long, string> Read(string strFile, Encoding encode)
         {
             return Read(File.ReadAllLines(strFile, encode));
         }
@@ -65,7 +74,7 @@ namespace DataEditorX.Config
         /// </summary>
         /// <param name="content"></param>
         /// <returns></returns>
-        public static Dictionary<long, string> Read(string content)
+        public static SortedList<long, string> Read(string content)
         {
             string text = reReturn(content);
             return Read(text.Split('\n'));
@@ -75,9 +84,9 @@ namespace DataEditorX.Config
         /// </summary>
         /// <param name="lines"></param>
         /// <returns></returns>
-        public static Dictionary<long, string> Read(string[] lines)
+        public static SortedList<long, string> Read(string[] lines)
         {
-            Dictionary<long, string> tempDic = new Dictionary<long, string>();
+            SortedList<long, string> tempDic = new SortedList<long, string>();
             long lkey;
             foreach (string line in lines)
             {
@@ -100,47 +109,35 @@ namespace DataEditorX.Config
         #endregion
         
         #region 查找
+        public static List<long> GetKeys(SortedList<long, string> dic)
+        {
+            List<long> list = new List<long>();
+            foreach (long l in dic.Keys)
+            {
+                list.Add(l);
+            }
+            return list;
+        }
+        public static string[] GetValues(SortedList<long, string> dic)
+        {
+            string[] strs = new string[dic.Count];
+            int j = strs.Length;
+            if (j == 0)
+                return strs;
+            for (int i = 0; i < j; i++)
+            {
+                strs[i] = dic.Values[i];
+            }
+            return strs;
+        }
         /// <summary>
-        /// 
+        /// 获取值
         /// </summary>
         /// <param name="dic"></param>
-        /// <param name="strValue"></param>
-        /// <param name="defaultKey"></param>
+        /// <param name="key"></param>
         /// <returns></returns>
-        public static long GetKey(
-            Dictionary<long, string> dic, 
-            string strValue, 
-            long defaultKey
-        ){
-            long lkey=defaultKey;
-            if(!dic.ContainsValue(strValue))
-                return lkey;
-            foreach(long key in dic.Keys)
-            {
-                if(dic[key]==strValue)
-                {
-                    lkey=key;
-                    break;
-                }
-            }
-            return lkey;
-        }
-        #endregion
-
-        #region value
-        public static string[] GetValues(Dictionary<long, string> dic)
+        public static string GetValue(SortedList<long, string> dic, long key)
         {
-            int length=dic.Count;
-            string[] words=new string[1];
-            words[0]="N/A";
-            if(length > 0)
-            {
-                words=new string[length];
-                dic.Values.CopyTo(words,0);
-            }
-            return words;
-        }
-        public static string GetValue(Dictionary<long, string> dic,long key){
         	if(dic.ContainsKey(key))
         		return dic[key].Trim();
         	return key.ToString("x");

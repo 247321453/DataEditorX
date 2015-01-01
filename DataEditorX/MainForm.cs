@@ -26,8 +26,6 @@ namespace DataEditorX
         string datapath;
         //语言配置
         string conflang;
-        //函数列表
-        string funtxt;
         //数据库对比
         DataEditForm compare1, compare2;
         //临时卡片
@@ -55,7 +53,7 @@ namespace DataEditorX
             YGOUtil.SetConfig(datacfg);
 
             //代码提示
-            funtxt = MyPath.Combine(datapath, MyConfig.FILE_FUNCTION);
+            string funtxt = MyPath.Combine(datapath, MyConfig.FILE_FUNCTION);
             string conlua = MyPath.Combine(datapath, MyConfig.FILE_CONSTANT);
             string confstring = MyPath.Combine(datapath, MyConfig.FILE_STRINGS);
             codecfg = new CodeConfig();
@@ -125,9 +123,10 @@ namespace DataEditorX
                     if (File.Exists(file))
                     {
                         this.Activate();
+                        String openfile = File.ReadAllText(file);
                         //获取需要打开的文件路径
-                        Open(File.ReadAllText(file));
-                        File.Delete(file);
+                        Open(openfile);
+                        //File.Delete(file);
                     }
                     break;
                 default:
@@ -163,7 +162,7 @@ namespace DataEditorX
             //设置语言
             LANG.SetFormLabel(def);
             //初始化界面数据
-            def.InitGameData(datacfg);
+            def.InitControl(datacfg);
             def.Show(dockPanel1, DockState.Document);
         }
         //打开文件
@@ -463,21 +462,6 @@ namespace DataEditorX
 
         #endregion
 
-        #region 获取函数列表
-        void Menuitem_findluafuncClick(object sender, EventArgs e)
-        {
-            using (FolderBrowserDialog fd = new FolderBrowserDialog())
-            {
-                fd.Description = "Folder Name: ocgcore";
-                if (fd.ShowDialog() == DialogResult.OK)
-                {
-                    LuaFunction.Read(funtxt);//先读取旧函数列表
-                    LuaFunction.Find(fd.SelectedPath);//查找新函数，并保存
-                    MessageBox.Show("OK");
-                }
-            }
-        }
-        #endregion
 
         #region 自动更新
         private void bgWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)

@@ -2,17 +2,15 @@
  * date :2014-02-07
  * desc :图像处理，裁剪，缩放，保存
  */
-using System;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using DataEditorX.Common;
 
 namespace DataEditorX.Common
 {
     /// <summary>
-    /// Description of ImageHelper.
+    /// 图片裁剪，缩放，保存高质量jpg
     /// </summary>
     public static class MyBitmap
     {
@@ -30,9 +28,13 @@ namespace DataEditorX.Common
             {
                 Bitmap b = new Bitmap(newWidth, newHeight);
                 Graphics graphics = Graphics.FromImage(b);
+                //合成：高质量，低速度
                 graphics.CompositingQuality = CompositingQuality.HighQuality;
+                //去除锯齿
                 graphics.SmoothingMode = SmoothingMode.HighQuality;
+                //偏移：高质量，低速度
                 graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                //插补算法
                 graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 Rectangle newRect = new Rectangle(0, 0, newWidth, newHeight);
                 Rectangle srcRect = new Rectangle(0, 0, sourceBitmap.Width, sourceBitmap.Height);
@@ -45,6 +47,12 @@ namespace DataEditorX.Common
         #endregion
 
         #region 裁剪
+        /// <summary>
+        /// 裁剪图片
+        /// </summary>
+        /// <param name="sourceBitmap">图片源</param>
+        /// <param name="area">区域</param>
+        /// <returns></returns>
         public static Bitmap Cut(Bitmap sourceBitmap, Area area)
         {
             return Cut(sourceBitmap, area.left, area.top, area.width, area.height);
@@ -64,16 +72,26 @@ namespace DataEditorX.Common
             {
                 int w = sourceBitmap.Width;
                 int h = sourceBitmap.Height;
+                //裁剪的区域宽度调整
                 if ( ( StartX + cutWidth ) > w )
                 {
                     cutWidth = w - StartX;
                 }
+                //裁剪的区域高度调整
                 if ( ( StartY + cutHeight ) > h )
                 {
                     cutHeight = h - StartY;
                 }
                 Bitmap bitmap = new Bitmap(cutWidth, cutHeight);
                 Graphics graphics = Graphics.FromImage(bitmap);
+                //合成：高质量，低速度
+                graphics.CompositingQuality = CompositingQuality.HighQuality;
+                //去除锯齿
+                graphics.SmoothingMode = SmoothingMode.HighQuality;
+                //偏移：高质量，低速度
+                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                //插补算法
+                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 Rectangle cutRect = new Rectangle(0, 0, cutWidth, cutHeight);
                 Rectangle srcRect = new Rectangle(StartX, StartY, cutWidth, cutHeight);
                 graphics.DrawImage(sourceBitmap, cutRect, srcRect, GraphicsUnit.Pixel);
@@ -97,9 +115,9 @@ namespace DataEditorX.Common
             if ( bitmap != null )
             {
             	string path=Path.GetDirectoryName(filename);
-            	if(!Directory.Exists(path))
+            	if(!Directory.Exists(path))//创建文件夹
             		Directory.CreateDirectory(path);
-            	if(File.Exists(filename))
+            	if(File.Exists(filename))//删除旧文件
             		File.Delete(filename);
                 ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
                 ImageCodecInfo ici = null;

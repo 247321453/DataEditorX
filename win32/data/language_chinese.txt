@@ -43,6 +43,7 @@ DataEditForm.mainMenu.menu_setting	设置(&S)
 DataEditForm.mainMenu.menuitem_importmseimg	设置为MSE图片库
 DataEditForm.mainMenu.menuitem_mseconfig	设置MSE的配置文件
 DataEditForm.mainMenu.menu_tools	工具(&T)
+DataEditForm.mainMenu.menuitem_findluafunc	从C++源码查找Lua函数
 DataEditForm.mainMenu.menuitem_readydk	从卡组文件读取卡片(&Y)
 DataEditForm.mainMenu.menuitem_readimages	从卡图文件夹读取卡片(&I)
 DataEditForm.mainMenu.menuitem_compdb	压缩数据库
@@ -62,7 +63,6 @@ MainForm.mainMenu.menuitem_file	文件(&F)
 MainForm.mainMenu.menuitem_open	打开
 MainForm.mainMenu.menuitem_new	新建
 MainForm.mainMenu.menuitem_save	保存
-MainForm.mainMenu.menuitem_findluafunc	从C++源码查找Lua函数
 MainForm.mainMenu.menuitem_copyselect	复制选中卡片
 MainForm.mainMenu.menuitem_copyall	复制所有卡片
 MainForm.mainMenu.menuitem_pastecards	粘贴卡片

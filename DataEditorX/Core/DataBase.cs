@@ -14,7 +14,7 @@ using System.Text;
 namespace DataEditorX.Core
 {
 	/// <summary>
-	/// Description of SQLite.
+	/// SQLite 操作
 	/// </summary>
 	public static class DataBase
 	{
@@ -107,7 +107,7 @@ namespace DataEditorX.Core
 						}
 						catch
 						{
-							trans.Rollback();
+							trans.Rollback();//出错，回滚
 							result = -1;
 						}
 						finally

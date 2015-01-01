@@ -9,17 +9,38 @@ using System;
 
 namespace DataEditorX.Core
 {
-	/// <summary>
-	/// Description of CardAttribute.
-	/// </summary>
-	public enum CardAttribute : int
-	{
-		ATTRIBUTE_EARTH		=0x01		,//--地
-		ATTRIBUTE_WATER		=0x02		,//--水
-		ATTRIBUTE_FIRE		=0x04		,//--炎
-		ATTRIBUTE_WIND		=0x08		,//--风
-		ATTRIBUTE_LIGHT		=0x10		,//--光
-		ATTRIBUTE_DARK		=0x20		,//--暗
-		ATTRIBUTE_DEVINE	=0x40		,//--神
-	}
+    /// <summary>
+    /// 卡片属性
+    /// </summary>
+    public enum CardAttribute : int
+    {
+        /// <summary>
+        /// 地
+        /// </summary>
+        ATTRIBUTE_EARTH = 0x01,
+        /// <summary>
+        /// 水
+        /// </summary>
+        ATTRIBUTE_WATER = 0x02,
+        /// <summary>
+        /// 炎
+        /// </summary>
+        ATTRIBUTE_FIRE = 0x04,
+        /// <summary>
+        /// 风
+        /// </summary>
+        ATTRIBUTE_WIND = 0x08,
+        /// <summary>
+        /// 光
+        /// </summary>
+        ATTRIBUTE_LIGHT = 0x10,
+        /// <summary>
+        /// 暗
+        /// </summary>
+        ATTRIBUTE_DARK = 0x20,
+        /// <summary>
+        /// 神
+        /// </summary>
+        ATTRIBUTE_DEVINE = 0x40,
+    }
 }

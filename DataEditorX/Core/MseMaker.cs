@@ -15,22 +15,25 @@ using DataEditorX.Config;
 
 namespace DataEditorX.Core
 {
-
-
     /// <summary>
-    /// Description of MSE.
+    /// MSE制作
     /// </summary>
     public class MseMaker
     {
+        #region 常量
         public const string TAG_CARD = "card";
         public const string TAG_CARDTYPE = "card type";
         public const string TAG_NAME = "name";
         public const string TAG_ATTRIBUTE = "attribute";
         public const string TAG_LEVEL = "level";
         public const string TAG_IMAGE = "image";
+        /// <summary>种族</summary>
         public const string TAG_TYPE1 = "type 1";
+        /// <summary>效果1</summary>
         public const string TAG_TYPE2 = "type 2";
+        /// <summary>效果2/summary>
         public const string TAG_TYPE3 = "type 3";
+        /// <summary>效果3</summary>
         public const string TAG_TYPE4 = "type 4";
         public const string TAG_TEXT = "rule text";
         public const string TAG_ATK = "attack";
@@ -40,14 +43,41 @@ namespace DataEditorX.Core
         public const string TAG_PSCALE2 = "pendulum scale 2";
         public const string TAG_PEND_TEXT = "pendulum text";
         public const string TAG_CODE = "gamecode";
+
+        /// <summary>无</summary>
         public const string KEY_ATTRIBUTE_NONE = "none";
+        /// <summary>暗</summary>
         public const string KEY_ATTRIBUTE_DARK = "dark";
+        /// <summary>神</summary>
         public const string KEY_ATTRIBUTE_DIVINE = "divine";
+        /// <summary>地</summary>
         public const string KEY_ATTRIBUTE_EARTH = "earth";
+        /// <summary>火</summary>
         public const string KEY_ATTRIBUTE_FIRE = "fire";
+        /// <summary>光</summary>
         public const string KEY_ATTRIBUTE_LIGHT = "light";
+        /// <summary>水</summary>
         public const string KEY_ATTRIBUTE_WATER = "water";
+        /// <summary>风</summary>
         public const string KEY_ATTRIBUTE_WIND = "wind";
+        /// <summary>通常</summary>
+        public const string CARD_NORMAL = "normal monster";
+        /// <summary>效果</summary>
+        public const string CARD_EFFECT = "effect monster";
+        /// <summary>超量</summary>
+        public const string CARD_XYZ = "xyz monster";
+        /// <summary>仪式</summary>
+        public const string CARD_RITUAL = "ritual monster";
+        /// <summary>融合</summary>
+        public const string CARD_FUSION = "fusion monster";
+        /// <summary>衍生物</summary>
+        public const string CARD_TOKEN = "token monster";
+        /// <summary>衍生物无种族</summary>
+        public const string CARD_TOKEN2 = "token card";
+        /// <summary>同调</summary>
+        public const string CARD_SYNCHRO = "synchro monster";
+        #endregion
+
         #region 成员，初始化
         MSEConfig cfg;
         public int MaxNum
@@ -130,6 +160,7 @@ namespace DataEditorX.Core
         //获取图片路径
         public static string GetCardImagePath(string picpath, Card c)
         {
+            //密码，带0密码，卡名
             string jpg = MyPath.Combine(picpath, c.id + ".jpg");
             string jpg2 = MyPath.Combine(picpath, c.idString + ".jpg");
             string jpg3 = MyPath.Combine(picpath, c.name + ".jpg");
@@ -254,42 +285,45 @@ namespace DataEditorX.Core
         //获取卡片类型
         public string[] GetTypes(Card c)
         {
-            string[] types = new string[] { "normal monster", "", "", "" };
+            //卡片类型，效果1，效果2，效果3
+            string[] types = new string[] { CARD_NORMAL, "", "", "" };
             if (c.IsType(CardType.TYPE_MONSTER))
             {//卡片类型和第1效果
                 if (c.IsType(CardType.TYPE_XYZ))
                 {
-                    types[0] = "xyz monster";
+                    types[0] = CARD_XYZ;
                     types[1] = GetType(CardType.TYPE_XYZ);
                 }
                 else if (c.IsType(CardType.TYPE_TOKEN))
                 {
-                    types[0] = (c.race == 0) ? "token card" : "token monster";
+                    types[0] = (c.race == 0) ? CARD_TOKEN2
+                        : CARD_TOKEN;
                     types[1] = GetType(CardType.TYPE_TOKEN);
                 }
                 else if (c.IsType(CardType.TYPE_RITUAL))
                 {
-                    types[0] = "ritual monster";
+                    types[0] = CARD_RITUAL;
                     types[1] = GetType(CardType.TYPE_RITUAL);
                 }
                 else if (c.IsType(CardType.TYPE_FUSION))
                 {
-                    types[0] = "fusion monster";
+                    types[0] = CARD_FUSION;
                     types[1] = GetType(CardType.TYPE_FUSION);
                 }
                 else if (c.IsType(CardType.TYPE_SYNCHRO))
                 {
-                    types[0] = "synchro monster";
+                    types[0] = CARD_SYNCHRO;
                     types[1] = GetType(CardType.TYPE_SYNCHRO);
                 }
                 else if (c.IsType(CardType.TYPE_EFFECT))
                 {
-                    types[0] = "effect monster";
+                    types[0] = CARD_EFFECT;
                 }
                 else
-                    types[0] = "normal monster";
+                    types[0] = CARD_NORMAL;
                 //同调
-                if (types[0] == "synchro monster" || types[0] == "token monster")
+                if (types[0] == CARD_SYNCHRO
+                    || types[0] == CARD_TOKEN)
                 {
                     if (c.IsType(CardType.TYPE_TUNER)
                        && c.IsType(CardType.TYPE_EFFECT))
@@ -306,14 +340,14 @@ namespace DataEditorX.Core
                         types[2] = GetType(CardType.TYPE_EFFECT);
                     }
                 }
-                else if (types[0] == "normal monster")
+                else if (types[0] == CARD_NORMAL)
                 {
                     if (c.IsType(CardType.TYPE_PENDULUM))//灵摆
                         types[1] = GetType(CardType.TYPE_PENDULUM);
                     else if (c.IsType(CardType.TYPE_TUNER))//调整
                         types[1] = GetType(CardType.TYPE_TUNER);
                 }
-                else if (types[0] != "effect monster")
+                else if (types[0] != CARD_EFFECT)
                 {//效果
                     if (c.IsType(CardType.TYPE_EFFECT))
                         types[2] = GetType(CardType.TYPE_EFFECT);
@@ -343,7 +377,7 @@ namespace DataEditorX.Core
                 }
 
             }
-            if (c.race == 0)
+            if (c.race == 0)//如果没有种族
             {
                 types[1] = "";
                 types[2] = "";
@@ -397,7 +431,7 @@ namespace DataEditorX.Core
             sb.AppendLine(GetLine(TAG_TYPE2, cn2tw(types[1])));
             sb.AppendLine(GetLine(TAG_TYPE3, cn2tw(types[2])));
             sb.AppendLine(GetLine(TAG_TYPE4, cn2tw(types[3])));
-            if (isPendulum)
+            if (isPendulum)//P怪兽
             {
                 string text = GetDesc(c.desc, cfg.regx_monster);
                 if (string.IsNullOrEmpty(text))
@@ -411,7 +445,7 @@ namespace DataEditorX.Core
                 sb.AppendLine("	" + TAG_PEND_TEXT + ":");
                 sb.AppendLine("		"+GetDesc(c.desc, cfg.regx_pendulum));
             }
-            else
+            else//一般怪兽
             {
                 sb.AppendLine("	" + TAG_TEXT + ":");
                 sb.AppendLine("		" + ReText(c.desc));

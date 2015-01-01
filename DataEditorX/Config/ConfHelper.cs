@@ -7,7 +7,15 @@ namespace DataEditorX.Config
 {
     public class ConfHelper
     {
+        /// <summary>
+        /// 内容分隔符
+        /// </summary>
         public const string SEP_LINE = " ";
+        /// <summary>
+        /// 从行获取值
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
         public static string getValue(string line)
         {
             int t = line.IndexOf('=');
@@ -15,6 +23,11 @@ namespace DataEditorX.Config
                 return line.Substring(t + 1).Trim();
             return "";
         }
+        /// <summary>
+        /// 从词中获取第一个值
+        /// </summary>
+        /// <param name="word"></param>
+        /// <returns></returns>
         public static string getValue1(string word)
         {
             int i = word.IndexOf(SEP_LINE);
@@ -22,6 +35,11 @@ namespace DataEditorX.Config
                 return word.Substring(0, i);
             return "";
         }
+        /// <summary>
+        /// 从词中获取第二个值
+        /// </summary>
+        /// <param name="word"></param>
+        /// <returns></returns>
         public static string getValue2(string word)
         {
             int i = word.IndexOf(SEP_LINE);
@@ -29,10 +47,20 @@ namespace DataEditorX.Config
                 return word.Substring(i + SEP_LINE.Length);
             return "";
         }
+        /// <summary>
+        /// 获取多行值，替换\n \t
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
         public static string getMultLineValue(string line)
         {
             return getRegex(getValue(line));
         }
+        /// <summary>
+        /// 替换特殊符
+        /// </summary>
+        /// <param name="word"></param>
+        /// <returns></returns>
         public static string getRegex(string word)
         {
             StringBuilder sb = new StringBuilder(word);
@@ -42,6 +70,11 @@ namespace DataEditorX.Config
             sb.Replace("[:space:]", " ");
             return sb.ToString();
         }
+        /// <summary>
+        /// 获取boolean值
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
         public static bool getBooleanValue(string line)
         {
             if (getValue(line).ToLower() == "true")
@@ -49,7 +82,12 @@ namespace DataEditorX.Config
             else
                 return false;
         }
-
+        /// <summary>
+        /// 获取int值
+        /// </summary>
+        /// <param name="line"></param>
+        /// <param name="defalut">失败的值</param>
+        /// <returns></returns>
         public static int getIntegerValue(string line, int defalut)
         {
             int i;
@@ -61,6 +99,12 @@ namespace DataEditorX.Config
             catch{}
             return defalut;
         }
+        /// <summary>
+        /// 从行获取内容添加到字典
+        /// race 0x1 xxx
+        /// </summary>
+        /// <param name="dic"></param>
+        /// <param name="line"></param>
         public static void DicAdd(Dictionary<long, string> dic, string line)
         {
             int i = line.IndexOf("0x");

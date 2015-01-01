@@ -21,6 +21,7 @@ namespace System.IO.Compression
             /// <summary>Deflate compression method</summary>
             Deflate = 8 }
 
+        #region ZipFileEntry
         /// <summary>
         /// Represents an entry in Zip file directory
         /// </summary>
@@ -56,6 +57,7 @@ namespace System.IO.Compression
                 return this.FilenameInZip;
             }
         }
+        #endregion
 
         #region Public fields
         /// <summary>True if UTF8 encoding for filename and comments, false if default (CP 437)</summary>

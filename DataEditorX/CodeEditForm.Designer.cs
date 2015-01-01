@@ -257,6 +257,10 @@ namespace DataEditorX
             this.documentMap1.Text = "documentMap1";
             this.documentMap1.Visible = false;
             // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            // 
             // CodeEditForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;

@@ -78,6 +78,7 @@
     <Compile Include="Common\MyPath.cs" />
     <Compile Include="Controls\History.cs" />
     <Compile Include="Controls\IEditForm.cs" />
+    <Compile Include="Controls\IMainForm.cs" />
     <Compile Include="Controls\MySyntaxHighlighter.cs" />
     <Compile Include="Common\MyBitmap.cs" />
     <Compile Include="Common\User32.cs" />

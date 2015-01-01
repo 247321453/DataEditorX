@@ -12,6 +12,7 @@ spell = [Sepll Card%%]
 trap = [Trap Card%%]
 ############################ language,style,other setting
 head = mse version: 0.3.8\r\ngame: yugioh\r\nstylesheet: standard\r\nset info:\r\n\tlanguage: EN\r\n\tedition: \r\n\tST mark is text: no\r\n\tpendulum image is small: yes
+end = version control:\n\ttype: none\napprentice code: 
 ############################ Text
 text = Pendulum Text :\n%ptext%\nMonster Text :\n%text%\n
 ############################

@@ -20,7 +20,9 @@ namespace DataEditorX.Config
     /// </summary>
     public class MSEConfig
     {
+        public const string TAG = "mse";
         public const string TAG_HEAD = "head";
+        public const string TAG_END = "end";
         public const string TAG_CN2TW = "cn2tw";
         public const string TAG_SPELL = "spell";
         public const string TAG_TRAP = "trap";
@@ -52,7 +54,7 @@ namespace DataEditorX.Config
             regx_monster = "(\\s\\S*?)";
             regx_pendulum = "(\\s\\S*?)";
             //设置文件名
-            configName = getLanguage(config);
+            configName = MyPath.getFullFileName(MSEConfig.TAG, config);
 
             replaces = new Dictionary<string, string>();
 
@@ -69,6 +71,8 @@ namespace DataEditorX.Config
                     str_spell = ConfHelper.getValue(line);
                 else if (line.StartsWith(TAG_HEAD))
                     head = ConfHelper.getMultLineValue(line);
+                else if (line.StartsWith(TAG_END))
+                    end = ConfHelper.getMultLineValue(line);
                 else if (line.StartsWith(TAG_TEXT))
                     temp_text = ConfHelper.getMultLineValue(line);
                 else if (line.StartsWith(TAG_TRAP))
@@ -108,28 +112,17 @@ namespace DataEditorX.Config
             Iscn2tw = false;
  
             //读取配置
-            string tmp = MyPath.Combine(path, getFileName(MyConfig.readString(MyConfig.TAG_MSE)));
+            string tmp = MyPath.Combine(path, MyPath.getFileName(MSEConfig.TAG, MyConfig.readString(MyConfig.TAG_MSE)));
             
             if (!File.Exists(tmp))
             {
-                tmp = MyPath.Combine(path, getFileName(FILE_CONFIG_NAME));
+                tmp = MyPath.Combine(path, MyPath.getFileName(MSEConfig.TAG, FILE_CONFIG_NAME));
                 if(!File.Exists(tmp))
                     return;//如果默认的也不存在
             }
             SetConfig(tmp, path);
         }
-        public static string getFileName(string lang)
-        {
-            return "mse_" + lang + ".txt";
-        }
-        public static string getLanguage(string file)
-        {
-            string name = Path.GetFileNameWithoutExtension(file);
-            if (!name.StartsWith("mse_"))
-                return "";
-            else
-                return name.Replace("mse_", "");
-        }
+
 
         //每个存档最大数
         public int maxcount;
@@ -150,6 +143,8 @@ namespace DataEditorX.Config
         public string regx_monster;
         //存档头部
         public string head;
+        //存档结尾
+        public string end;
         public Dictionary<long, string> typeDic;
         public Dictionary<long, string> raceDic;
     }

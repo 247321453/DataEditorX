@@ -17,7 +17,6 @@ using DataEditorX.Language;
 using System.Text.RegularExpressions;
 using DataEditorX.Core;
 using DataEditorX.Config;
-using System.Configuration;
 using DataEditorX.Controls;
 
 namespace DataEditorX

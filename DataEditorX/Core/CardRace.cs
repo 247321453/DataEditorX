@@ -9,34 +9,58 @@ using System;
 
 namespace DataEditorX.Core
 {
-	/// <summary>
-	/// Description of CardEffect.
-	/// </summary>
-	public enum CardRace : long
-	{
-		RACE_WARRIOR		=0x1		,//--战士
-		RACE_SPELLCASTER	=0x2		,//--魔法师
-		RACE_FAIRY			=0x4		,//--天使
-		RACE_FIEND			=0x8		,//--恶魔
-		RACE_ZOMBIE			=0x10		,//--不死
-		RACE_MACHINE		=0x20		,//--机械
-		RACE_AQUA			=0x40		,//--水
-		RACE_PYRO			=0x80		,//--炎
-		RACE_ROCK			=0x100		,//--岩石
-		RACE_WINDBEAST		=0x200		,//--鸟兽
-		RACE_PLANT			=0x400		,//--植物
-		RACE_INSECT			=0x800		,//--昆虫
-		RACE_THUNDER		=0x1000		,//--雷
-		RACE_DRAGON			=0x2000		,//--龙
-		RACE_BEAST			=0x4000		,//--兽
-		RACE_BEASTWARRIOR	=0x8000		,//--兽战士
-		RACE_DINOSAUR		=0x10000	,//--恐龙
-		RACE_FISH			=0x20000	,//--鱼
-		RACE_SEASERPENT		=0x40000	,//--海龙
-		RACE_REPTILE		=0x80000	,//--爬虫
-		RACE_PSYCHO			=0x100000	,//--念动力
-		RACE_DEVINE			=0x200000	,//--幻神兽
-		RACE_CREATORGOD		=0x400000	,//--创造神
-		RACE_WYRM			=0x800000	,//--幻龙
-	}
+    /// <summary>
+    /// 卡片种族
+    /// </summary>
+    public enum CardRace : long
+    {
+        ///<summary>战士</summary>
+        RACE_WARRIOR = 0x1,
+        ///<summary>魔法师</summary>
+        RACE_SPELLCASTER = 0x2,
+        ///<summary>天使</summary>
+        RACE_FAIRY = 0x4,
+        ///<summary>恶魔</summary>
+        RACE_FIEND = 0x8,
+        ///<summary>不死</summary>
+        RACE_ZOMBIE = 0x10,
+        ///<summary>机械</summary>
+        RACE_MACHINE = 0x20,
+        ///<summary>水</summary>
+        RACE_AQUA = 0x40,
+        ///<summary>炎</summary>
+        RACE_PYRO = 0x80,
+        ///<summary>岩石</summary>
+        RACE_ROCK = 0x100,
+        ///<summary>鸟兽</summary>
+        RACE_WINDBEAST = 0x200,
+        ///<summary>植物</summary>
+        RACE_PLANT = 0x400,
+        ///<summary>昆虫</summary>
+        RACE_INSECT = 0x800,
+        ///<summary>雷</summary>
+        RACE_THUNDER = 0x1000,
+        ///<summary>龙</summary>
+        RACE_DRAGON = 0x2000,
+        ///<summary>兽</summary>
+        RACE_BEAST = 0x4000,
+        ///<summary>兽战士</summary>
+        RACE_BEASTWARRIOR = 0x8000,
+        ///<summary>恐龙</summary>
+        RACE_DINOSAUR = 0x10000,
+        ///<summary>鱼</summary>
+        RACE_FISH = 0x20000,
+        ///<summary>海龙</summary>
+        RACE_SEASERPENT = 0x40000,
+        ///<summary>爬虫</summary>
+        RACE_REPTILE = 0x80000,
+        ///<summary>念动力</summary>
+        RACE_PSYCHO = 0x100000,
+        ///<summary>幻神兽</summary>
+        RACE_DEVINE = 0x200000,
+        ///<summary>创造神</summary>
+        RACE_CREATORGOD = 0x400000,
+        ///<summary>幻龙</summary>
+        RACE_WYRM = 0x800000,
+    }
 }

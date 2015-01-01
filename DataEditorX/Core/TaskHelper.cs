@@ -23,34 +23,67 @@ namespace DataEditorX.Core
 {
     public enum MyTask
     {
+        ///<summary>空</summary>
         NONE,
+        ///<summary>检查更新</summary>
         CheckUpdate,
+        ///<summary>导出数据</summary>
         ExportData,
+        ///<summary>保存为MSE存档</summary>
         SaveAsMSE,
+        ///<summary>裁剪图片</summary>
         CutImages,
+        ///<summary>转换图片</summary>
         ConvertImages,
     }
     /// <summary>
-    /// Description of TaskHelper.
+    /// 任务
     /// </summary>
     public class TaskHelper
     {
         #region Member
+        /// <summary>
+        /// 当前任务
+        /// </summary>
         private MyTask nowTask = MyTask.NONE;
+        /// <summary>
+        /// 上一次任务
+        /// </summary>
         private MyTask lastTask = MyTask.NONE;
+        /// <summary>
+        /// 当前卡片列表
+        /// </summary>
         private Card[] cardlist;
+        /// <summary>
+        /// 任务参数
+        /// </summary>
         private string[] mArgs;
-        private ImageSet imgSet = new ImageSet();
+        /// <summary>
+        /// 图片设置
+        /// </summary>
+        private ImageSet imgSet;
+        /// <summary>
+        /// MSE转换
+        /// </summary>
         private MseMaker mseHelper;
+        /// <summary>
+        /// 是否取消
+        /// </summary>
         private bool isCancel = false;
+        /// <summary>
+        /// 是否在运行
+        /// </summary>
         private bool isRun = false;
+        /// <summary>
+        /// 后台工作线程
+        /// </summary>
         private BackgroundWorker worker;
 
         public TaskHelper(string datapath, BackgroundWorker worker, MSEConfig mcfg)
         {
             this.worker = worker;
             mseHelper = new MseMaker(mcfg);
-            imgSet.Init();
+            imgSet = new ImageSet();
         }
         public MseMaker MseHelper
         {
@@ -75,12 +108,14 @@ namespace DataEditorX.Core
         #endregion
 
         #region Other
+        //设置任务
         public void SetTask(MyTask myTask, Card[] cards, params string[] args)
         {
             nowTask = myTask;
             cardlist = cards;
             mArgs = args;
         }
+        //转换图片
         public void ToImg(string img, string saveimg1, string saveimg2)
         {
             if (!File.Exists(img))
@@ -147,15 +182,15 @@ namespace DataEditorX.Core
                 {
                     Bitmap bp = new Bitmap(jpg);
                     Bitmap bmp = null;
-                    if (c.IsType(CardType.TYPE_XYZ))
+                    if (c.IsType(CardType.TYPE_XYZ))//超量
                     {
                         bmp = MyBitmap.Cut(bp, imgSet.xyzArea);
                     }
-                    else if (c.IsType(CardType.TYPE_PENDULUM))
+                    else if (c.IsType(CardType.TYPE_PENDULUM))//P怪兽
                     {
                         bmp = MyBitmap.Cut(bp, imgSet.pendulumArea);
                     }
-                    else
+                    else//一般
                     {
                         bmp = MyBitmap.Cut(bp, imgSet.normalArea);
                     }
@@ -189,14 +224,15 @@ namespace DataEditorX.Core
                 {
                     if (File.Exists(f))
                     {
-                        //存在大图
                         Bitmap bmp = new Bitmap(f);
+                        //大图，如果替换，或者不存在
                         if (isreplace || !File.Exists(jpg_b))
                         {
 
                             MyBitmap.SaveAsJPEG(MyBitmap.Zoom(bmp, imgSet.W, imgSet.H),
                                                 jpg_b, imgSet.quilty);
                         }
+                        //小图，如果替换，或者不存在
                         if (isreplace || !File.Exists(jpg_s))
                         {
                             MyBitmap.SaveAsJPEG(MyBitmap.Zoom(bmp, imgSet.w, imgSet.h),
@@ -216,16 +252,19 @@ namespace DataEditorX.Core
         }
         public void SaveMSEs(string file, Card[] cards, bool isUpdate)
         {
-            if (mseHelper.MaxNum == 0)
+            if(cards == null)
+                return;
+            int c = cards.Length;
+            //不分开，或者卡片数小于单个存档的最大值
+            if (mseHelper.MaxNum == 0 || c < mseHelper.MaxNum)
                 SaveMSE(1, file, cards, isUpdate);
             else
             {
-                int c = cards.Length;
                 int nums = c / mseHelper.MaxNum;
-                if (nums * mseHelper.MaxNum < c)
+                if (nums * mseHelper.MaxNum < c)//计算需要分多少个存档
                     nums++;
                 List<Card> clist = new List<Card>();
-                for (int i = 0; i < nums; i++)
+                for (int i = 0; i < nums; i++)//分别生成存档
                 {
                     clist.Clear();
                     for (int j = 0; j < mseHelper.MaxNum; j++)
@@ -251,7 +290,7 @@ namespace DataEditorX.Core
             int count = images.Length;
             using (ZipStorer zips = ZipStorer.Create(file, ""))
             {
-                zips.EncodeUTF8 = true;
+                zips.EncodeUTF8 = true;//zip里面的文件名为utf8
                 zips.AddFile(setFile, "set", "");
                 foreach (string img in images)
                 {
@@ -276,8 +315,11 @@ namespace DataEditorX.Core
             int count = cards.Length;
             string path = Path.GetDirectoryName(zipname);
             string name = Path.GetFileNameWithoutExtension(zipname);
+            //数据库
             string cdbfile = zipname + ".cdb";
+            //说明
             string readme = MyPath.Combine(path, name + ".txt");
+            //新卡ydk
             string deckydk = MyPath.Combine(path, "deck/" + name + ".ydk");
             string pics = MyPath.Combine(path, "pics");
             string thumb = MyPath.Combine(pics, "thumbnail");

@@ -34,18 +34,27 @@ namespace DataEditorX
         /// <summary>搜索条件</summary>
         Card srcCard = new Card(0);
         string[] strs = null;
-        List<string> tmpCodes;
+        /// <summary>
+        /// 对比的id集合
+        /// </summary>
+        List<string>tmpCodes;
         string title;
         string nowCdbFile = "";
         int MaxRow = 20;
         int page = 1, pageNum = 1;
+        /// <summary>
+        /// 卡片总数
+        /// </summary>
         int cardcount;
+        /// <summary>
+        /// 撤销的sql
+        /// </summary>
         string undoString;
         List<Card> cardlist = new List<Card>();
+        //setcode正在输入
         bool[] setcodeIsedit = new bool[5];
 
         Image m_cover;
-        DataConfig datacfg;
         MSEConfig msecfg;
 
         string datapath, confcover;
@@ -75,7 +84,6 @@ namespace DataEditorX
         }
         void Initialize()
         {
-            datacfg = null;
             tmpCodes = new List<string>();
             InitializeComponent();
             title = this.Text;
@@ -115,10 +123,6 @@ namespace DataEditorX
             HideMenu();//是否需要隐藏菜单
             SetTitle();
 
-            if (datacfg == null)
-            {
-                datacfg = new DataConfig();
-            }
             msecfg = new MSEConfig(datapath);
             tasker = new TaskHelper(datapath, bgWorker1, msecfg);
             //设置空白卡片
@@ -248,19 +252,14 @@ namespace DataEditorX
                 fs.Close();
             }
         }
-        //初始化游戏数据
-        public void InitGameData(DataConfig dataconfig)
-        {
-            //初始化
-            this.datacfg = dataconfig;
-            InitControl();
-        }
         #endregion
 
         #region 界面控件
         //初始化控件
-        void InitControl()
+        public void InitControl(DataConfig datacfg)
         {
+            if (datacfg == null)
+                return;
             InitComboBox(cb_cardrace, datacfg.dicCardRaces);
             InitComboBox(cb_cardattribute, datacfg.dicCardAttributes);
             InitComboBox(cb_cardrule, datacfg.dicCardRules);
@@ -270,15 +269,16 @@ namespace DataEditorX
             //card categorys
             InitCheckPanel(pl_category, datacfg.dicCardcategorys);
             //setname
+            List<long> setcodes = DataManager.GetKeys(datacfg.dicSetnames);
             string[] setnames = DataManager.GetValues(datacfg.dicSetnames);
-            cb_setname1.Items.AddRange(setnames);
-            cb_setname2.Items.AddRange(setnames);
-            cb_setname3.Items.AddRange(setnames);
-            cb_setname4.Items.AddRange(setnames);
+            InitComboBox(cb_setname1, setcodes, setnames);
+            InitComboBox(cb_setname2, setcodes, setnames);
+            InitComboBox(cb_setname3, setcodes, setnames);
+            InitComboBox(cb_setname4, setcodes, setnames);
             //
         }
         //初始化FlowLayoutPanel
-        void InitCheckPanel(FlowLayoutPanel fpanel, Dictionary<long, string> dic)
+        void InitCheckPanel(FlowLayoutPanel fpanel, SortedList<long, string> dic)
         {
             fpanel.SuspendLayout();
             fpanel.Controls.Clear();
@@ -302,10 +302,16 @@ namespace DataEditorX
 
         }
         //初始化ComboBox
-        void InitComboBox(ComboBox cb, Dictionary<long, string> tempdic)
+        void InitComboBox(ComboBox cb, SortedList<long, string> tempdic)
+        {
+            InitComboBox(cb, DataManager.GetKeys(tempdic),
+                DataManager.GetValues(tempdic));
+        }
+        void InitComboBox(ComboBox cb, List<long> keys, string[] values)
         {
             cb.Items.Clear();
-            cb.Items.AddRange(DataManager.GetValues(tempdic));
+            cb.Tag = keys;
+            cb.Items.AddRange(values);
             cb.SelectedIndex = 0;
         }
         //计算list最大行数
@@ -356,67 +362,33 @@ namespace DataEditorX
             return strType;
         }
         //设置combobox
-        int SetSelect(Dictionary<long, string> dic, ComboBox cb, long k)
+        void SetSelect(ComboBox cb, long k)
         {
-            int index = 0;
-            if (k == 0)
+            if (cb.Tag == null)
             {
                 cb.SelectedIndex = 0;
-                return index;
+                return;
             }
-            foreach (long key in dic.Keys)
-            {
-                if (k == key)
-                    break;
-                index++;
-            }
-            if (index == cb.Items.Count)
-            {
-                string word = k.ToString("x");
-                if (!dic.ContainsKey(k))
-                    dic.Add(k, word);
-                if (cb.Name == cb_setname1.Name
-                   || cb.Name == cb_setname2.Name
-                   || cb.Name == cb_setname3.Name
-                   || cb.Name == cb_setname4.Name)
-                {
-                    cb_setname1.Items.Add(word);
-                    cb_setname2.Items.Add(word);
-                    cb_setname3.Items.Add(word);
-                    cb_setname4.Items.Add(word);
-                }
-                else
-                    cb.Items.Add(word);
-            }
-            cb.SelectedIndex = index;
-            return index;
-        }
-        //得到所选值16进制
-        string GetSelectHex(Dictionary<long, string> dic, ComboBox cb)
-        {
-            long temp;
-            long.TryParse(GetSelect(dic, cb), out temp);
-            return temp.ToString("x");
+            List<long> keys = (List<long>)cb.Tag;
+            int index = keys.IndexOf(k);
+            if (index>=0 && index < cb.Items.Count)
+                cb.SelectedIndex = index;
+            else
+                cb.SelectedIndex = 0;
         }
         //得到所选值
-        string GetSelect(Dictionary<long, string> dic, ComboBox cb)
+        long GetSelect(ComboBox cb)
         {
-            long fkey = 0;
-            bool isfind = false;
-            foreach (long key in dic.Keys)
+            if (cb.Tag == null)
             {
-                if (cb.Text == dic[key])
-                {
-                    fkey = key;
-                    isfind = true;
-                    break;
-                }
+                return 0;
             }
-            if (!isfind)
-            {
-                long.TryParse(cb.Text, NumberStyles.HexNumber, null, out fkey);
-            }
-            return fkey.ToString();
+            List<long> keys = (List<long>)cb.Tag;
+            int index = cb.SelectedIndex;
+            if (index >= keys.Count)
+                return 0;
+            else
+                return keys[index];
         }
         //得到checkbox的总值
         long GetCheck(FlowLayoutPanel fpl)
@@ -492,10 +464,10 @@ namespace DataEditorX
             lb_scripttext.Items.AddRange(c.str);
             tb_edittext.Text = "";
             //data
-            SetSelect(datacfg.dicCardRules, cb_cardrule, (long)c.ot);
-            SetSelect(datacfg.dicCardAttributes, cb_cardattribute, (long)c.attribute);
-            SetSelect(datacfg.dicCardLevels, cb_cardlevel, (long)(c.level & 0xff));
-            SetSelect(datacfg.dicCardRaces, cb_cardrace, c.race);
+            SetSelect(cb_cardrule, c.ot);
+            SetSelect(cb_cardattribute, c.attribute);
+            SetSelect(cb_cardlevel, (c.level & 0xff));
+            SetSelect(cb_cardrace, c.race);
             //setcode
             long sc1 = c.setcode & 0xffff;
             long sc2 = (c.setcode >> 0x10) & 0xffff;
@@ -505,10 +477,10 @@ namespace DataEditorX
             tb_setcode2.Text = sc2.ToString("x");
             tb_setcode3.Text = sc3.ToString("x");
             tb_setcode4.Text = sc4.ToString("x");
-            SetSelect(datacfg.dicSetnames, cb_setname1, sc1);
-            SetSelect(datacfg.dicSetnames, cb_setname2, sc2);
-            SetSelect(datacfg.dicSetnames, cb_setname3, sc3);
-            SetSelect(datacfg.dicSetnames, cb_setname4, sc4);
+            SetSelect(cb_setname1, sc1);
+            SetSelect(cb_setname2, sc2);
+            SetSelect(cb_setname3, sc3);
+            SetSelect(cb_setname4, sc4);
             //type,category
             SetCheck(pl_cardtype, c.type);
             SetCheck(pl_category, c.category);
@@ -532,10 +504,12 @@ namespace DataEditorX
             c.desc = tb_cardtext.Text;
 
             Array.Copy(strs, c.str, c.str.Length);
-            int.TryParse(GetSelect(datacfg.dicCardRules, cb_cardrule), out c.ot);
-            int.TryParse(GetSelect(datacfg.dicCardAttributes, cb_cardattribute), out c.attribute);
-            long.TryParse(GetSelect(datacfg.dicCardLevels, cb_cardlevel), out c.level);
-            long.TryParse(GetSelect(datacfg.dicCardRaces, cb_cardrace), out c.race);
+
+            c.ot = (int)GetSelect(cb_cardrule);
+            c.attribute = (int)GetSelect(cb_cardattribute);
+            c.level = (int)GetSelect(cb_cardlevel);
+            c.race = (int)GetSelect(cb_cardrace);
+
             //setcode
             int.TryParse(tb_setcode1.Text, NumberStyles.HexNumber, null, out temp);
             c.setcode = temp;
@@ -631,8 +605,6 @@ namespace DataEditorX
         //检查是否打开数据库
         public bool Check()
         {
-            if (datacfg == null)
-                return false;
             if (File.Exists(nowCdbFile))
                 return true;
             else
@@ -1212,88 +1184,6 @@ namespace DataEditorX
         }
         #endregion
 
-        #region setcode
-        void Cb_setname2SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (setcodeIsedit[2])
-                return;
-            setcodeIsedit[2] = true;
-            tb_setcode2.Text = GetSelectHex(datacfg.dicSetnames, cb_setname2);
-            setcodeIsedit[2] = false;
-        }
-
-        void Cb_setname1SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (setcodeIsedit[1])
-                return;
-            setcodeIsedit[1] = true;
-            tb_setcode1.Text = GetSelectHex(datacfg.dicSetnames, cb_setname1);
-            setcodeIsedit[1] = false;
-        }
-
-        void Cb_setname3SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (setcodeIsedit[3])
-                return;
-            setcodeIsedit[3] = true;
-            tb_setcode3.Text = GetSelectHex(datacfg.dicSetnames, cb_setname3);
-            setcodeIsedit[3] = false;
-        }
-
-        void Cb_setname4SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (setcodeIsedit[4])
-                return;
-            setcodeIsedit[4] = true;
-            tb_setcode4.Text = GetSelectHex(datacfg.dicSetnames, cb_setname4);
-            setcodeIsedit[4] = false;
-        }
-
-        void Tb_setcode4TextChanged(object sender, EventArgs e)
-        {
-            if (setcodeIsedit[4])
-                return;
-            setcodeIsedit[4] = true;
-            long temp;
-            long.TryParse(tb_setcode4.Text, NumberStyles.HexNumber, null, out temp);
-            SetSelect(datacfg.dicSetnames, cb_setname4, temp);
-            setcodeIsedit[4] = false;
-        }
-
-        void Tb_setcode3TextChanged(object sender, EventArgs e)
-        {
-            if (setcodeIsedit[3])
-                return;
-            setcodeIsedit[3] = true;
-            long temp;
-            long.TryParse(tb_setcode3.Text, NumberStyles.HexNumber, null, out temp);
-            SetSelect(datacfg.dicSetnames, cb_setname3, temp);
-            setcodeIsedit[3] = false;
-        }
-
-        void Tb_setcode2TextChanged(object sender, EventArgs e)
-        {
-            if (setcodeIsedit[2])
-                return;
-            setcodeIsedit[2] = true;
-            long temp;
-            long.TryParse(tb_setcode2.Text, NumberStyles.HexNumber, null, out temp);
-            SetSelect(datacfg.dicSetnames, cb_setname2, temp);
-            setcodeIsedit[2] = false;
-        }
-
-        void Tb_setcode1TextChanged(object sender, EventArgs e)
-        {
-            if (setcodeIsedit[1])
-                return;
-            setcodeIsedit[1] = true;
-            long temp;
-            long.TryParse(tb_setcode1.Text, NumberStyles.HexNumber, null, out temp);
-            SetSelect(datacfg.dicSetnames, cb_setname1, temp);
-            setcodeIsedit[1] = false;
-        }
-        #endregion
-
         #region 复制卡片
         public Card[] getCardList(bool onlyselect)
         {
@@ -1434,7 +1324,7 @@ namespace DataEditorX
             else
                 e.Effect = DragDropEffects.None;
         }
-        void Menuitem_importmseimgClick(object sender, EventArgs e)
+        private void menuitem_importmseimg_Click(object sender, EventArgs e)
         {
             string tid = tb_cardcode.Text;
             menuitem_importmseimg.Checked = !menuitem_importmseimg.Checked;
@@ -1600,13 +1490,11 @@ namespace DataEditorX
         {
             if(!Directory.Exists(datapath))
                 return;
-            if (datacfg == null)
-                return;
             menuitem_mseconfig.DropDownItems.Clear();
             string[] files = Directory.GetFiles(datapath);
             foreach (string file in files)
             {
-                string name = MSEConfig.getLanguage(file);
+                string name = MyPath.getFullFileName(MSEConfig.TAG, file);
                 if (string.IsNullOrEmpty(name))
                     continue;
                 ToolStripMenuItem tsmi = new ToolStripMenuItem(name);
@@ -1624,8 +1512,6 @@ namespace DataEditorX
             if (sender is ToolStripMenuItem)
             {
                 ToolStripMenuItem tsmi = (ToolStripMenuItem)sender;
-                if (datacfg == null)
-                    return;
                 msecfg.SetConfig(tsmi.ToolTipText, datapath);
                 //刷新菜单
                 AddMenuItemFormMSE();
@@ -1635,5 +1521,92 @@ namespace DataEditorX
         }
         #endregion
 
+        #region 查找lua函数
+        private void menuitem_findluafunc_Click(object sender, EventArgs e)
+        {
+            string funtxt = MyPath.Combine(datapath, MyConfig.FILE_FUNCTION);
+            using (FolderBrowserDialog fd = new FolderBrowserDialog())
+            {
+                fd.Description = "Folder Name: ocgcore";
+                if (fd.ShowDialog() == DialogResult.OK)
+                {
+                    LuaFunction.Read(funtxt);//先读取旧函数列表
+                    LuaFunction.Find(fd.SelectedPath);//查找新函数，并保存
+                    MessageBox.Show("OK");
+                }
+            }
+        }
+
+        #endregion
+
+        #region 系列名textbox
+        void setCode_InputText(int index, ComboBox cb, TextBox tb)
+        {
+            if(index>=0 && index < setcodeIsedit.Length)
+            {
+                if (setcodeIsedit[index])//如果正在编辑
+                    return;
+                setcodeIsedit[index] = true;
+                int temp;
+                int.TryParse(tb.Text, NumberStyles.HexNumber, null, out temp);
+                //tb.Text = temp.ToString("x");
+                SetSelect(cb, temp);
+                setcodeIsedit[index] = false;
+            }
+        }
+        private void tb_setcode1_TextChanged(object sender, EventArgs e)
+        {
+            setCode_InputText(1, cb_setname1, tb_setcode1);
+        }
+
+        private void tb_setcode2_TextChanged(object sender, EventArgs e)
+        {
+            setCode_InputText(2, cb_setname2, tb_setcode2);
+        }
+
+        private void tb_setcode3_TextChanged(object sender, EventArgs e)
+        {
+            setCode_InputText(3, cb_setname3, tb_setcode3);
+        }
+
+        private void tb_setcode4_TextChanged(object sender, EventArgs e)
+        {
+            setCode_InputText(4, cb_setname4, tb_setcode4);
+        }
+#endregion
+
+        #region 系列名comobox
+        void setCode_Selected(int index, ComboBox cb, TextBox tb)
+        {
+            if (index >= 0 && index < setcodeIsedit.Length)
+            {
+                if (setcodeIsedit[index])//如果正在编辑
+                    return;
+                setcodeIsedit[index] = true;
+                long tmp = GetSelect(cb);
+                tb.Text = tmp.ToString("x");
+                setcodeIsedit[index] = false;
+            }
+        }
+        private void cb_setname1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            setCode_Selected(1, cb_setname1, tb_setcode1);
+        }
+
+        private void cb_setname2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            setCode_Selected(2, cb_setname2, tb_setcode2);
+        }
+
+        private void cb_setname3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            setCode_Selected(3, cb_setname3, tb_setcode3);
+        }
+
+        private void cb_setname4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            setCode_Selected(4, cb_setname4, tb_setcode4);
+        }
+        #endregion
     }
 }

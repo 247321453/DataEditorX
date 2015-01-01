@@ -19,10 +19,7 @@ namespace DataEditorX
 	/// </summary>
 	public class LuaFunction
 	{
-		#region log
-		static string oldfun;
-		static string logtxt;
-		static string funclisttxt;
+		#region 日志log
 		static void ResetLog(string file)
 		{
 			File.Delete(logtxt);
@@ -33,13 +30,16 @@ namespace DataEditorX
 		}
 		#endregion
 		
-		#region old functions
+		#region old functions 
+        static string oldfun;
+        static string logtxt;
+        static string funclisttxt;
 		static SortedList<string,string> funclist=new SortedList<string,string>();
-		public static SortedList<string,string> Read(string funtxt)
+        //读取旧函数
+        public static void Read(string funtxt)
 		{
 			funclist.Clear();
 			oldfun=funtxt;
-			SortedList<string,string> list=new SortedList<string,string>();
 			if(File.Exists(funtxt))
 			{
 				string[] lines=File.ReadAllLines(funtxt);
@@ -54,21 +54,11 @@ namespace DataEditorX
 						continue;
 					if(line.StartsWith("●"))
 					{
-						//add
-						if(!string.IsNullOrEmpty(name))
-						{
-							if(list.ContainsKey(name)){
-								list[name] +=Environment.NewLine+desc;
-								funclist[name] +=Environment.NewLine+desc;
-							}
-							else{
-								list.Add(name, desc);
-								funclist.Add(name, desc);
-							}
-						}
+						//添加之前的函数
+                        AddOldFun(name, desc);
 						int w=line.IndexOf("(");
 						int t=line.IndexOf(" ");
-						
+						//获取当前名字
 						if(t<w && t>0){
 							name=line.Substring(t+1,w-t-1);
 							isFind=true;
@@ -79,40 +69,32 @@ namespace DataEditorX
 						desc+=Environment.NewLine+line;
 					}
 				}
-				if(!string.IsNullOrEmpty(name))
-				{
-					if(list.ContainsKey(name)){
-						list[name] +=Environment.NewLine+desc;
-						funclist[name] +=Environment.NewLine+desc;
-					}
-					else{
-						list.Add(name, desc);
-						funclist.Add(name, desc);
-					}
-				}
+                AddOldFun(name, desc);
 			}
-			return list;
+			//return list;
 		}
+        static void AddOldFun(string name, string desc)
+        {
+            if (!string.IsNullOrEmpty(name))
+            {
+                if (funclist.ContainsKey(name))//存在，则添加注释
+                {
+                    funclist[name] += Environment.NewLine + desc;
+                }
+                else
+                {//不存在，则添加函数
+                    funclist.Add(name, desc);
+                }
+            }
+        }
 		#endregion
 		
-		static void Save()
-		{
-			if(string.IsNullOrEmpty(oldfun))
-				return;
-			using(FileStream fs=new FileStream(oldfun+"_sort.txt",
-			                                   FileMode.Create,
-			                                   FileAccess.Write))
-			{
-				StreamWriter sw=new StreamWriter(fs,Encoding.UTF8);
-				foreach(string k in funclist.Keys)
-				{
-					sw.WriteLine("●"+funclist[k]);
-				}
-				sw.Close();
-			}
-
-		}
 		#region find libs
+        /// <summary>
+        /// 查找lua函数
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
 		public static bool Find(string path)
 		{
 			string name="interpreter.cpp";
@@ -122,7 +104,7 @@ namespace DataEditorX
 			ResetLog(logtxt);
 			funclisttxt =Path.Combine(path, "_functions.txt");
 			File.Delete(funclisttxt);
-			if(!File.Exists(file)){
+			if(!File.Exists(file)){//判断用户选择的目录
 				Log("error: no find file "+file);
 				if(File.Exists(file2)){
 					file=file2;
@@ -138,11 +120,12 @@ namespace DataEditorX
 			                       ,RegexOptions.Multiline);
 			MatchCollection libsMatch=libRex.Matches(texts);
 			Log("log:count "+libsMatch.Count.ToString());
-			foreach ( Match m in libsMatch )
+			foreach ( Match m in libsMatch )//获取lib函数库
 			{
 				if(m.Groups.Count>2){
 					string word=m.Groups[1].Value;
 					Log("log:find "+word);
+                    //分别去获取函数库的函数
 					GetFunctions(word, m.Groups[2].Value,
 					             Path.Combine(path,"lib"+word+".cpp"));
 				}
@@ -150,6 +133,24 @@ namespace DataEditorX
 			Save();
 			return true;
 		}
+        //保存
+        static void Save()
+        {
+            if (string.IsNullOrEmpty(oldfun))
+                return;
+            using (FileStream fs = new FileStream(oldfun + "_sort.txt",
+                                               FileMode.Create,
+                                               FileAccess.Write))
+            {
+                StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
+                foreach (string k in funclist.Keys)
+                {
+                    sw.WriteLine("●" + funclist[k]);
+                }
+                sw.Close();
+            }
+
+        }
 		#endregion
 		
 		#region find function name
@@ -157,6 +158,7 @@ namespace DataEditorX
 		{
 			return str.Substring(0, 1).ToUpper()+str.Substring(1);
 		}
+        //获取函数库的lua函数名,和对应的c++函数
 		static Dictionary<string,string> GetFunctionNames(string texts,string name)
 		{
 			Dictionary<string,string> dic=new Dictionary<string, string>();
@@ -178,6 +180,7 @@ namespace DataEditorX
 		#endregion
 		
 		#region find code
+        //查找c++代码
 		static string FindCode(string texts,string name)
 		{
 			Regex reg=new Regex(@"int32\s+?"+name
@@ -197,6 +200,7 @@ namespace DataEditorX
 		#endregion
 		
 		#region find return
+        //查找返回类型
 		static string FindReturn(string texts,string name)
 		{
 			string restr="";
@@ -228,6 +232,7 @@ namespace DataEditorX
 		#endregion
 		
 		#region find args
+        //查找参数
 		static string getUserType(string str)
 		{
 			if(str.IndexOf("card")>=0)
@@ -301,6 +306,7 @@ namespace DataEditorX
 		#endregion
 		
 		#region find old
+        //查找旧函数的描述
 		static string FindOldDesc(string name)
 		{
 			if(funclist.ContainsKey(name))
@@ -310,6 +316,7 @@ namespace DataEditorX
 		#endregion
 		
 		#region Save Functions
+        //保存函数
 		public static void GetFunctions(string name,string texts,string file)
 		{
 			if(!File.Exists(file)){

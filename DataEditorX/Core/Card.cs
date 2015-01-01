@@ -82,7 +82,11 @@ namespace DataEditorX.Core
 			else
 				return false;
 		}
-		
+		/// <summary>
+		/// 比较卡片，除脚本提示文本
+		/// </summary>
+		/// <param name="other"></param>
+		/// <returns></returns>
         public bool EqualsData(Card other)
 		{
 			bool equalBool = true;
@@ -157,12 +161,21 @@ namespace DataEditorX.Core
 		{
 			return left.Equals(right);
 		}
+        /// <summary>
+        /// 是否是某类型
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
 		public bool IsType(CardType type){
 			if((this.type & (long)type) == (long)type)
 				return true;
 			return false;
 		}
-
+        /// <summary>
+        /// 是否是某系列
+        /// </summary>
+        /// <param name="sc"></param>
+        /// <returns></returns>
 		public bool IsSetCode(long sc)
 		{
             long settype = sc & 0xfff;
@@ -186,6 +199,9 @@ namespace DataEditorX.Core
 		#endregion
 
         #region 卡片文字信息
+        /// <summary>
+        /// 密码字符串
+        /// </summary>
         public string idString
         {
             get { return id.ToString("00000000"); }
@@ -204,6 +220,12 @@ namespace DataEditorX.Core
             }else
                 str = name +"[" +idString +"]\n["+YGOUtil.GetTypeString(type)+"]\n"+redesc();
             return str;
+        }
+        public string ToShortString(){
+            return this.name+" ["+idString+"]";
+        }
+        public string ToLongString(){
+            return ToString();
         }
 
         string levelString()
