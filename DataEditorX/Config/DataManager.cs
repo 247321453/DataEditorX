@@ -55,7 +55,7 @@ namespace DataEditorX.Config
         /// <param name="content">字符串</param>
         /// <param name="tag">开始的标志</param>
         /// <returns></returns>
-        public static SortedList<long, string> Read(string content, string tag)
+        public static Dictionary<long, string> Read(string content, string tag)
         {
             return Read(subString(content,tag));
         }
@@ -65,7 +65,7 @@ namespace DataEditorX.Config
         /// <param name="strFile"></param>
         /// <param name="encode"></param>
         /// <returns></returns>
-        public static SortedList<long, string> Read(string strFile, Encoding encode)
+        public static Dictionary<long, string> Read(string strFile, Encoding encode)
         {
             return Read(File.ReadAllLines(strFile, encode));
         }
@@ -74,7 +74,7 @@ namespace DataEditorX.Config
         /// </summary>
         /// <param name="content"></param>
         /// <returns></returns>
-        public static SortedList<long, string> Read(string content)
+        public static Dictionary<long, string> Read(string content)
         {
             string text = reReturn(content);
             return Read(text.Split('\n'));
@@ -84,9 +84,9 @@ namespace DataEditorX.Config
         /// </summary>
         /// <param name="lines"></param>
         /// <returns></returns>
-        public static SortedList<long, string> Read(string[] lines)
+        public static Dictionary<long, string> Read(string[] lines)
         {
-            SortedList<long, string> tempDic = new SortedList<long, string>();
+            Dictionary<long, string> tempDic = new Dictionary<long, string>();
             long lkey;
             foreach (string line in lines)
             {
@@ -109,7 +109,7 @@ namespace DataEditorX.Config
         #endregion
         
         #region 查找
-        public static List<long> GetKeys(SortedList<long, string> dic)
+        public static List<long> GetKeys(Dictionary<long, string> dic)
         {
             List<long> list = new List<long>();
             foreach (long l in dic.Keys)
@@ -118,17 +118,14 @@ namespace DataEditorX.Config
             }
             return list;
         }
-        public static string[] GetValues(SortedList<long, string> dic)
+        public static string[] GetValues(Dictionary<long, string> dic)
         {
-            string[] strs = new string[dic.Count];
-            int j = strs.Length;
-            if (j == 0)
-                return strs;
-            for (int i = 0; i < j; i++)
+            List<string> list = new List<string>();
+            foreach (long l in dic.Keys)
             {
-                strs[i] = dic.Values[i];
+                list.Add(dic[l]);
             }
-            return strs;
+            return list.ToArray();
         }
         /// <summary>
         /// 获取值
@@ -136,7 +133,7 @@ namespace DataEditorX.Config
         /// <param name="dic"></param>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static string GetValue(SortedList<long, string> dic, long key)
+        public static string GetValue(Dictionary<long, string> dic, long key)
         {
         	if(dic.ContainsKey(key))
         		return dic[key].Trim();

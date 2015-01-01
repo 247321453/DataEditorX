@@ -37,13 +37,14 @@ namespace DataEditorX
 			else
 			{
                 //把需要打开的文件写入临时文件
-                string tmpfile = Path.Combine(Application.StartupPath, MyConfig.FILE_TEMP);
-                File.WriteAllText(tmpfile, file);
+                //string tmpfile = Path.Combine(Application.StartupPath, MyConfig.FILE_TEMP);
+                //File.WriteAllText(tmpfile, file);
                 //发送消息
-                User32.SendMessage(instance.MainWindowHandle, MyConfig.WM_OPEN, 0, 0);
+                //User32.SendMessage(instance.MainWindowHandle, MyConfig.WM_OPEN, 0, 0);
+                MyConfig.Open(instance.MainWindowHandle, file);
                 Environment.Exit(1);
 			}
-		}
+		} 
 		static Process RunningInstance()
 		{
 			Process current = Process.GetCurrentProcess();

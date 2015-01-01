@@ -60,7 +60,7 @@ namespace DataEditorX.Config
         /// 设置系列名
         /// </summary>
         /// <param name="dic"></param>
-        public void SetNames(SortedList<long, string> dic)
+        public void SetNames(Dictionary<long, string> dic)
         {
             foreach (long k in dic.Keys)
             {

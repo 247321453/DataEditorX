@@ -1,6 +1,8 @@
-﻿using System.Xml;
+﻿using System;
+using System.Xml;
 using System.IO;
 using DataEditorX.Common;
+using System.Windows.Forms;
 
 namespace DataEditorX.Config
 {
@@ -22,6 +24,10 @@ namespace DataEditorX.Config
         /// 数据目录
         /// </summary>
         public const string TAG_DATA = "data";
+        /// <summary>
+        /// 将要打开
+        /// </summary>
+        //public const string TAG_OPEN = "open";
         /// <summary>
         /// MSE
         /// </summary>
@@ -132,7 +138,8 @@ namespace DataEditorX.Config
         /// </summary>
         public const string TAG_SETNAME = "setname";
         #endregion
-
+        
+        #region 读取内容
         /// <summary>
         /// 读取字符串值
         /// </summary>
@@ -219,6 +226,9 @@ namespace DataEditorX.Config
             else
                 return false;
         }
+        #endregion 
+        
+        #region XML操作config
         /// <summary>
         /// 保存值
         /// </summary>
@@ -263,6 +273,8 @@ namespace DataEditorX.Config
             }
             return string.Empty;
         }
+        #endregion
+        
         /// <summary>
         /// 语言配置文件名
         /// </summary>
@@ -280,6 +292,19 @@ namespace DataEditorX.Config
         public static string GetCardInfoFile(string path)
         {
             return MyPath.Combine(path,  MyPath.getFileName(MyConfig.TAG_CARDINFO, GetAppConfig(TAG_LANGUAGE)));
+        }
+        /// <summary>
+        /// 发送消息打开文件
+        /// </summary>
+        /// <param name="file"></param>
+        public static void Open(IntPtr win, string file)
+        {
+            //把需要打开的文件写入临时文件
+            string tmpfile = Path.Combine(Application.StartupPath, MyConfig.FILE_TEMP);
+            File.WriteAllText(tmpfile, file);
+            //发送消息
+            User32.SendMessage(win, MyConfig.WM_OPEN, 0, 0);
+            Environment.Exit(1);
         }
     }
 

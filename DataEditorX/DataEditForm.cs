@@ -25,7 +25,7 @@ namespace DataEditorX
 {
     public partial class DataEditForm : DockContent, IEditForm
     {
-        #region 成员变量
+        #region 成员变量/构造
         TaskHelper tasker = null;
         string taskname;
         string GAMEPATH = "", PICPATH = "", PICPATH2 = "", LUAPTH = "";
@@ -38,6 +38,7 @@ namespace DataEditorX
         /// 对比的id集合
         /// </summary>
         List<string>tmpCodes;
+        //初始标题
         string title;
         string nowCdbFile = "";
         int MaxRow = 20;
@@ -72,7 +73,7 @@ namespace DataEditorX
             Initialize();
         }
         public DataEditForm()
-        {
+        {//默认启动
             string dir = MyConfig.readString(MyConfig.TAG_DATA);
             if (string.IsNullOrEmpty(dir))
             {
@@ -119,10 +120,10 @@ namespace DataEditorX
         //窗体第一次加载
         void DataEditFormLoad(object sender, EventArgs e)
         {
-            InitListRows();
+            InitListRows();//调整卡片列表的函数
             HideMenu();//是否需要隐藏菜单
-            SetTitle();
-
+            SetTitle();//设置标题
+            //加载
             msecfg = new MSEConfig(datapath);
             tasker = new TaskHelper(datapath, bgWorker1, msecfg);
             //设置空白卡片
@@ -138,6 +139,7 @@ namespace DataEditorX
         //窗体关闭
         void DataEditFormFormClosing(object sender, FormClosingEventArgs e)
         {
+            //当前有任务执行，是否结束
             if (tasker != null && tasker.IsRuning())
             {
                 if (!CancelTask())
@@ -196,7 +198,7 @@ namespace DataEditorX
                 str = nowCdbFile + "-" + str;
                 str2 = Path.GetFileName(nowCdbFile);
             }
-            if (this.MdiParent != null)
+            if (this.MdiParent != null) //父容器不为空
             {
                 this.Text = str2;
                 if (tasker != null && tasker.IsRuning())
@@ -238,20 +240,6 @@ namespace DataEditorX
             else
                 m_cover = null;
         }
-        //保存dic
-        void SaveDic(string file, Dictionary<long, string> dic)
-        {
-            using (FileStream fs = new FileStream(file, FileMode.OpenOrCreate, FileAccess.Write))
-            {
-                StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
-                foreach (long k in dic.Keys)
-                {
-                    sw.WriteLine("0x" + k.ToString("x") + " " + dic[k]);
-                }
-                sw.Close();
-                fs.Close();
-            }
-        }
         #endregion
 
         #region 界面控件
@@ -260,15 +248,16 @@ namespace DataEditorX
         {
             if (datacfg == null)
                 return;
+            //选择框
             InitComboBox(cb_cardrace, datacfg.dicCardRaces);
             InitComboBox(cb_cardattribute, datacfg.dicCardAttributes);
             InitComboBox(cb_cardrule, datacfg.dicCardRules);
             InitComboBox(cb_cardlevel, datacfg.dicCardLevels);
-            //card types
+            //卡片类型
             InitCheckPanel(pl_cardtype, datacfg.dicCardTypes);
-            //card categorys
+            //效果类型
             InitCheckPanel(pl_category, datacfg.dicCardcategorys);
-            //setname
+            //系列名
             List<long> setcodes = DataManager.GetKeys(datacfg.dicSetnames);
             string[] setnames = DataManager.GetValues(datacfg.dicSetnames);
             InitComboBox(cb_setname1, setcodes, setnames);
@@ -278,7 +267,7 @@ namespace DataEditorX
             //
         }
         //初始化FlowLayoutPanel
-        void InitCheckPanel(FlowLayoutPanel fpanel, SortedList<long, string> dic)
+        void InitCheckPanel(FlowLayoutPanel fpanel, Dictionary<long, string> dic)
         {
             fpanel.SuspendLayout();
             fpanel.Controls.Clear();
@@ -286,7 +275,7 @@ namespace DataEditorX
             {
                 CheckBox _cbox = new CheckBox();
                 _cbox.Name = fpanel.Name + key.ToString("x");
-                _cbox.Tag = key;
+                _cbox.Tag = key;//绑定值
                 _cbox.Text = dic[key];
                 _cbox.AutoSize = true;
                 _cbox.Margin = fpanel.Margin;
@@ -302,11 +291,12 @@ namespace DataEditorX
 
         }
         //初始化ComboBox
-        void InitComboBox(ComboBox cb, SortedList<long, string> tempdic)
+        void InitComboBox(ComboBox cb, Dictionary<long, string> tempdic)
         {
             InitComboBox(cb, DataManager.GetKeys(tempdic),
                 DataManager.GetValues(tempdic));
         }
+        //初始化ComboBox
         void InitComboBox(ComboBox cb, List<long> keys, string[] values)
         {
             cb.Items.Clear();
@@ -473,10 +463,10 @@ namespace DataEditorX
             long sc2 = (c.setcode >> 0x10) & 0xffff;
             long sc3 = (c.setcode >> 0x20) & 0xffff;
             long sc4 = (c.setcode >> 0x30) & 0xffff;
-            tb_setcode1.Text = sc1.ToString("x");
-            tb_setcode2.Text = sc2.ToString("x");
-            tb_setcode3.Text = sc3.ToString("x");
-            tb_setcode4.Text = sc4.ToString("x");
+            //tb_setcode1.Text = sc1.ToString("x");
+            //tb_setcode2.Text = sc2.ToString("x");
+            //tb_setcode3.Text = sc3.ToString("x");
+            //tb_setcode4.Text = sc4.ToString("x");
             SetSelect(cb_setname1, sc1);
             SetSelect(cb_setname2, sc2);
             SetSelect(cb_setname3, sc3);
@@ -484,9 +474,10 @@ namespace DataEditorX
             //type,category
             SetCheck(pl_cardtype, c.type);
             SetCheck(pl_category, c.category);
-            //text
+            //Pendulum
             tb_pleft.Text = ((c.level >> 0x18) & 0xff).ToString();
             tb_pright.Text = ((c.level >> 0x10) & 0xff).ToString();
+            //atk，def
             tb_atk.Text = (c.atk < 0) ? "?" : c.atk.ToString();
             tb_def.Text = (c.def < 0) ? "?" : c.def.ToString();
             tb_cardcode.Text = c.id.ToString();
@@ -632,7 +623,7 @@ namespace DataEditorX
 
             return true;
         }
-        //设置卡片组
+        //设置卡片列表的结果
         public void SetCards(Card[] cards, bool isfresh)
         {
             if (cards != null)
@@ -641,7 +632,7 @@ namespace DataEditorX
                 foreach (Card c in cards)
                 {
                     if (srcCard.setcode == 0)
-                        cardlist.Add(c);
+                        cardlist.Add(c);//setcode搜索在这里进行
                     else if (c.IsSetCode(srcCard.setcode & 0xffff))
                         cardlist.Add(c);
                 }
@@ -653,7 +644,7 @@ namespace DataEditorX
                     pageNum = 1;
                 tb_pagenum.Text = pageNum.ToString();
 
-                if (isfresh)
+                if (isfresh)//是否跳到之前页数
                     AddListView(page);
                 else
                     AddListView(1);
@@ -675,6 +666,7 @@ namespace DataEditorX
         {
             if (!Check())
                 return;
+            //如果临时卡片不为空，则更新，这个在搜索的时候清空
             if (tmpCodes.Count > 0)
             {
                 Card[] mcards = DataBase.Read(nowCdbFile,
@@ -703,12 +695,12 @@ namespace DataEditorX
             if (!Check())
                 return false;
             Card c = GetCard();
-            if (c.id <= 0)
+            if (c.id <= 0)//卡片密码不能小于等于0
             {
                 MyMsg.Error(LMSG.CodeCanNotIsZero);
                 return false;
             }
-            foreach (Card ckey in cardlist)
+            foreach (Card ckey in cardlist)//卡片id存在
             {
                 if (c.id == ckey.id)
                 {
@@ -733,7 +725,7 @@ namespace DataEditorX
                 return false;
             Card c = GetCard();
 
-            if (c.Equals(oldCard))
+            if (c.Equals(oldCard))//没有修改
             {
                 MyMsg.Show(LMSG.ItIsNotChanged);
                 return false;
@@ -744,9 +736,9 @@ namespace DataEditorX
                 return false;
             }
             string sql;
-            if (c.id != oldCard.id)
+            if (c.id != oldCard.id)//修改了id
             {
-                if (MyMsg.Question(LMSG.IfDeleteCard))
+                if (MyMsg.Question(LMSG.IfDeleteCard))//是否删除旧卡片
                 {
                     if (DataBase.Command(nowCdbFile, DataBase.GetDeleteSQL(oldCard)) < 2)
                     {
@@ -813,12 +805,10 @@ namespace DataEditorX
             string lua = MyPath.Combine(LUAPTH, "c" + tb_cardcode.Text + ".lua");
             if (!File.Exists(lua))
             {
-                if (!Directory.Exists(LUAPTH))
+                if (!Directory.Exists(LUAPTH))//创建脚本目录
                     Directory.CreateDirectory(LUAPTH);
-                if (MyMsg.Question(LMSG.IfCreateScript))
+                if (MyMsg.Question(LMSG.IfCreateScript))//是否创建脚本
                 {
-                    if (!Directory.Exists(LUAPTH))
-                        Directory.CreateDirectory(LUAPTH);
                     using (FileStream fs = new FileStream(
                         lua,
                         FileMode.OpenOrCreate,
@@ -831,9 +821,9 @@ namespace DataEditorX
                     }
                 }
             }
-            if (File.Exists(lua))
+            if (File.Exists(lua))//如果存在，则打开文件
             {
-                System.Diagnostics.Process.Start(lua);
+                 System.Diagnostics.Process.Start(lua);
             }
             return false;
         }
@@ -854,7 +844,7 @@ namespace DataEditorX
         //搜索卡片
         void Btn_serachClick(object sender, EventArgs e)
         {
-            tmpCodes.Clear();
+            tmpCodes.Clear();//清空临时的结果
             Search(GetCard(), false);
         }
         //重置卡片
@@ -914,7 +904,7 @@ namespace DataEditorX
                 long.TryParse(tb_cardcode.Text, out c.id);
                 if (c.id > 0)
                 {
-                    tmpCodes.Clear();
+                    tmpCodes.Clear();//清空临时的结果
                     Search(c, false);
                 }
             }
@@ -928,7 +918,7 @@ namespace DataEditorX
                 c.name = tb_cardname.Text;
                 if (c.name.Length > 0)
                 {
-                    tmpCodes.Clear();
+                    tmpCodes.Clear();//清空临时的结果
                     Search(c, false);
                 }
             }
@@ -1035,6 +1025,7 @@ namespace DataEditorX
         #endregion
 
         #region 文件菜单
+        //打开文件
         void Menuitem_openClick(object sender, EventArgs e)
         {
             using (OpenFileDialog dlg = new OpenFileDialog())
@@ -1047,6 +1038,7 @@ namespace DataEditorX
                 }
             }
         }
+       //新建文件
         void Menuitem_newClick(object sender, EventArgs e)
         {
             using (SaveFileDialog dlg = new SaveFileDialog())
@@ -1063,7 +1055,7 @@ namespace DataEditorX
                 }
             }
         }
-
+        //读取ydk
         void Menuitem_readydkClick(object sender, EventArgs e)
         {
             if (!Check())
@@ -1082,7 +1074,7 @@ namespace DataEditorX
                 }
             }
         }
-
+        //从图片文件夹读取
         void Menuitem_readimagesClick(object sender, EventArgs e)
         {
             if (!Check())
@@ -1108,6 +1100,7 @@ namespace DataEditorX
         #endregion
 
         #region 线程
+        //是否在执行
         bool isRun()
         {
             if (tasker != null && tasker.IsRuning())
@@ -1117,7 +1110,7 @@ namespace DataEditorX
             }
             return false;
         }
-
+        //执行任务
         void Run(string name)
         {
             if (isRun())
@@ -1185,6 +1178,7 @@ namespace DataEditorX
         #endregion
 
         #region 复制卡片
+        //得到卡片列表，是否是选中的
         public Card[] getCardList(bool onlyselect)
         {
             if (!Check())
@@ -1192,9 +1186,6 @@ namespace DataEditorX
             List<Card> cards = new List<Card>();
             if (onlyselect)
             {
-#if DEBUG
-				MessageBox.Show("select");
-#endif
                 foreach (ListViewItem lvitem in lv_cardlist.SelectedItems)
                 {
                     int index = lvitem.Index + (page - 1) * MaxRow;
@@ -1220,6 +1211,7 @@ namespace DataEditorX
         {
             CopyTo(true);
         }
+        //保存卡片
         public void SaveCards(Card[] cards)
         {
             if (!Check())
@@ -1258,6 +1250,7 @@ namespace DataEditorX
         #endregion
 
         #region MSE存档
+        //裁剪图片
         void Menuitem_cutimagesClick(object sender, EventArgs e)
         {
             if (!Check())
@@ -1310,9 +1303,6 @@ namespace DataEditorX
         void Pl_imageDragDrop(object sender, DragEventArgs e)
         {
             string[] files = e.Data.GetData(DataFormats.FileDrop) as string[];
-#if DEBUG
-			MessageBox.Show(files[0]);
-#endif
             if (File.Exists(files[0]))
                 ImportImage(files[0], tb_cardcode.Text);
         }
@@ -1455,6 +1445,7 @@ namespace DataEditorX
             }
             return false;
         }
+        //读取将要对比的数据
         Card[] getCompCards()
         {
             if (tmpCodes.Count == 0)
@@ -1473,7 +1464,7 @@ namespace DataEditorX
             Card[] cards = DataBase.Read(cdbfile, true, "");
             foreach (Card card in mcards)
             {
-                if (!CheckCard(cards, card, checktext))
+                if (!CheckCard(cards, card, checktext))//添加到id集合
                     tmpCodes.Add(card.id.ToString());
             }
             if (tmpCodes.Count == 0)
@@ -1486,22 +1477,25 @@ namespace DataEditorX
         #endregion
 
         #region MSE配置菜单
+        //把文件添加到菜单
         void AddMenuItemFormMSE()
         {
             if(!Directory.Exists(datapath))
                 return;
-            menuitem_mseconfig.DropDownItems.Clear();
+            menuitem_mseconfig.DropDownItems.Clear();//清空
             string[] files = Directory.GetFiles(datapath);
             foreach (string file in files)
             {
                 string name = MyPath.getFullFileName(MSEConfig.TAG, file);
+                //是否是MSE配置文件
                 if (string.IsNullOrEmpty(name))
                     continue;
+                //菜单文字是语言
                 ToolStripMenuItem tsmi = new ToolStripMenuItem(name);
-                tsmi.ToolTipText = file;
+                tsmi.ToolTipText = file;//提示文字为真实路径
                 tsmi.Click += SetMseConfig_Click;
                 if (msecfg.configName.Equals(name, StringComparison.OrdinalIgnoreCase))
-                    tsmi.Checked = true;
+                    tsmi.Checked = true;//如果是当前，则打勾
                 menuitem_mseconfig.DropDownItems.Add(tsmi);
             }
         }
@@ -1512,6 +1506,7 @@ namespace DataEditorX
             if (sender is ToolStripMenuItem)
             {
                 ToolStripMenuItem tsmi = (ToolStripMenuItem)sender;
+                //读取新的配置
                 msecfg.SetConfig(tsmi.ToolTipText, datapath);
                 //刷新菜单
                 AddMenuItemFormMSE();
@@ -1540,6 +1535,7 @@ namespace DataEditorX
         #endregion
 
         #region 系列名textbox
+        //系列名输入时
         void setCode_InputText(int index, ComboBox cb, TextBox tb)
         {
             if(index>=0 && index < setcodeIsedit.Length)
@@ -1550,6 +1546,8 @@ namespace DataEditorX
                 int temp;
                 int.TryParse(tb.Text, NumberStyles.HexNumber, null, out temp);
                 //tb.Text = temp.ToString("x");
+                if (temp == 0 && (tb.Text != "0" || tb.Text.Length == 0))
+                    temp = -1;
                 SetSelect(cb, temp);
                 setcodeIsedit[index] = false;
             }
@@ -1573,9 +1571,10 @@ namespace DataEditorX
         {
             setCode_InputText(4, cb_setname4, tb_setcode4);
         }
-#endregion
+        #endregion
 
         #region 系列名comobox
+        //系列选择框 选择时
         void setCode_Selected(int index, ComboBox cb, TextBox tb)
         {
             if (index >= 0 && index < setcodeIsedit.Length)

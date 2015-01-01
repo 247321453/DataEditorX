@@ -1,4 +1,4 @@
-﻿[DataEditorX]2.2.9.4[DataEditorX]
+﻿[DataEditorX]2.2.9.5[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★文件关联(File association)
@@ -80,6 +80,8 @@ Ctrl+鼠标左键 	跳转到函数定义
 Ctrl+鼠标滑轮 	缩放文字
 
 ★更新历史
+2.2.9.5
+优化选择框
 2.2.9.4
 DataEditor
 修改游戏数据的查找方式()Dic = >sortlist，加快卡片显示速度

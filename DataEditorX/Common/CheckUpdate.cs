@@ -88,10 +88,6 @@ namespace DataEditorX.Common
                     }
                 }
             }
-            
-#if DEBUG
-            MessageBox.Show("new:" + ver + ",oldver:" + oldver + ",hasnew:" + hasNew.ToString());
-#endif
             return hasNew;
         }
         #endregion

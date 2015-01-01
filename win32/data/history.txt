@@ -1,10 +1,12 @@
 # database history
 F:\games\ygopro\cards.cdb
-F:\games\ygopro\p.zip.cdb
 # script history
-F:\games\ygopro\script\c259314.lua
-F:\games\ygopro\script\c359563.lua
+F:\games\ygopro\script\c168917.lua
 F:\games\ygopro\script\c218704.lua
+F:\games\ygopro\script\c126218.lua
+F:\games\ygopro\script\c259314.lua
+F:\games\ygopro\script\c62121.lua
+F:\games\ygopro\script\c359563.lua
 F:\games\ygopro\script\c42338879.lua
 F:\games\ygopro\script\c42391240.lua
 F:\games\ygopro\script\c191749.lua

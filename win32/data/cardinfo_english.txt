@@ -115,6 +115,7 @@
 0x800000	Xyz       
 0x1000000	Pendulum 
 ##setname
+-1	Custom
 0x0	SetName
 0x1	Ａ·Ｏ·Ｊ
 0x2	ジェネクス
