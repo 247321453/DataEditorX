@@ -285,7 +285,8 @@ namespace DataEditorX
             foreach (long key in dic.Keys)
             {
                 CheckBox _cbox = new CheckBox();
-                _cbox.Name = fpanel.Name + key.ToString();
+                _cbox.Name = fpanel.Name + key.ToString("x");
+                _cbox.Tag = key;
                 _cbox.Text = dic[key];
                 _cbox.AutoSize = true;
                 _cbox.Margin = fpanel.Margin;
@@ -338,7 +339,10 @@ namespace DataEditorX
                 if (c is CheckBox)
                 {
                     CheckBox cbox = (CheckBox)c;
-                    long.TryParse(cbox.Name.Substring(fpl.Name.Length), out temp);
+                    if (cbox.Tag == null)
+                        temp = 0;
+                    else
+                        temp = (long)cbox.Tag;
 
                     if ((temp & number) == temp && temp != 0)
                     {
@@ -424,7 +428,10 @@ namespace DataEditorX
                 if (c is CheckBox)
                 {
                     CheckBox cbox = (CheckBox)c;
-                    long.TryParse(cbox.Name.Substring(fpl.Name.Length), out temp);
+                    if (cbox.Tag == null)
+                        temp = 0;
+                    else
+                        temp = (long)cbox.Tag;
                     if (cbox.Checked)
                         number += temp;
                 }
@@ -1599,14 +1606,14 @@ namespace DataEditorX
             string[] files = Directory.GetFiles(datapath);
             foreach (string file in files)
             {
-                string name = Path.GetFileName(file);
-                if (!name.StartsWith("mse"))
+                string name = MSEConfig.getLanguage(file);
+                if (string.IsNullOrEmpty(name))
                     continue;
                 ToolStripMenuItem tsmi = new ToolStripMenuItem(name);
+                tsmi.ToolTipText = file;
+                tsmi.Click += SetMseConfig_Click;
                 if (msecfg.configName.Equals(name, StringComparison.OrdinalIgnoreCase))
                     tsmi.Checked = true;
-                tsmi.Click += SetMseConfig_Click;
-                tsmi.ToolTipText = file;
                 menuitem_mseconfig.DropDownItems.Add(tsmi);
             }
         }
@@ -1627,5 +1634,6 @@ namespace DataEditorX
             }
         }
         #endregion
+
     }
 }

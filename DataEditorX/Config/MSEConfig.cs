@@ -37,9 +37,9 @@ namespace DataEditorX.Config
         public const string TAG_REP = "%%";
         public const string SEP_LINE = " ";
         //默认的配置
-        public const string FILE_CONFIG = "mse_chs.txt";
+        public const string FILE_CONFIG_NAME = "Chinese-Simplified";
         public const string PATH_IMAGE = "Images";
-        public string configName = FILE_CONFIG;
+        public string configName = FILE_CONFIG_NAME;
         
         public MSEConfig(string path)
         {
@@ -52,7 +52,7 @@ namespace DataEditorX.Config
             regx_monster = "(\\s\\S*?)";
             regx_pendulum = "(\\s\\S*?)";
             //设置文件名
-            configName = Path.GetFileName(config);
+            configName = getLanguage(config);
 
             replaces = new Dictionary<string, string>();
 
@@ -74,9 +74,9 @@ namespace DataEditorX.Config
                 else if (line.StartsWith(TAG_TRAP))
                     str_trap = ConfHelper.getValue(line);
                 else if (line.StartsWith(TAG_REG_PENDULUM))
-                    regx_pendulum = ConfHelper.getMultLineValue(line);
+                    regx_pendulum = ConfHelper.getValue(line);
                 else if (line.StartsWith(TAG_REG_MONSTER))
-                    regx_monster = ConfHelper.getMultLineValue(line);
+                    regx_monster = ConfHelper.getValue(line);
                 else if (line.StartsWith(TAG_MAXCOUNT))
                     maxcount = ConfHelper.getIntegerValue(line, 0);
                 else if (line.StartsWith(TAG_IMAGE))
@@ -108,15 +108,27 @@ namespace DataEditorX.Config
             Iscn2tw = false;
  
             //读取配置
-            string tmp = MyPath.Combine(path, MyConfig.readString(MyConfig.TAG_MSE));
+            string tmp = MyPath.Combine(path, getFileName(MyConfig.readString(MyConfig.TAG_MSE)));
             
             if (!File.Exists(tmp))
             {
-                tmp = MyPath.Combine(path, FILE_CONFIG);
+                tmp = MyPath.Combine(path, getFileName(FILE_CONFIG_NAME));
                 if(!File.Exists(tmp))
                     return;//如果默认的也不存在
             }
             SetConfig(tmp, path);
+        }
+        public static string getFileName(string lang)
+        {
+            return "mse_" + lang + ".txt";
+        }
+        public static string getLanguage(string file)
+        {
+            string name = Path.GetFileNameWithoutExtension(file);
+            if (!name.StartsWith("mse_"))
+                return "";
+            else
+                return name.Replace("mse_", "");
         }
 
         //每个存档最大数

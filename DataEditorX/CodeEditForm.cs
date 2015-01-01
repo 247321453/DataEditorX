@@ -78,16 +78,16 @@ namespace DataEditorX
             popupMenu_find.Items.Width = 300;
             title = this.Text;
 
-            string fontname = MyConfig.readString(CodeConfig.TAG_FONT_NAME);
-            float fontsize = MyConfig.readFloat(CodeConfig.TAG_FONT_SIZE, 14);
+            string fontname = MyConfig.readString(MyConfig.TAG_FONT_NAME);
+            float fontsize = MyConfig.readFloat(MyConfig.TAG_FONT_SIZE, 14);
             fctb.Font = new Font(fontname, fontsize);
-            if (MyConfig.readBoolean(CodeConfig.TAG_IME))
+            if (MyConfig.readBoolean(MyConfig.TAG_IME))
                 fctb.ImeMode = ImeMode.On;
-            if (MyConfig.readBoolean(CodeConfig.TAG_WORDWRAP))
+            if (MyConfig.readBoolean(MyConfig.TAG_WORDWRAP))
                 fctb.WordWrap = true;
             else
                 fctb.WordWrap = false;
-            if (MyConfig.readBoolean(CodeConfig.TAG_TAB2SPACES))
+            if (MyConfig.readBoolean(MyConfig.TAG_TAB2SPACES))
                 tabisspaces = true;
             else
                 tabisspaces = false;

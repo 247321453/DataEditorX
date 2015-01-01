@@ -117,7 +117,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="data\mse_cht.txt">
+    <Content Include="data\mse_Chinese-Traditional.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="data\constant.lua">
@@ -129,13 +129,13 @@
     <Content Include="data\language_english.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="data\mse_en.txt">
+    <Content Include="data\mse_English.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="data\cardinfo_english.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="data\mse_jp.txt">
+    <Content Include="data\mse_Japan.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -198,7 +198,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="data\mse_chs.txt">
+    <Content Include="data\mse_Chinese-Simplified.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

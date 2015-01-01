@@ -31,7 +31,7 @@ replace = ([·]) ・
 ###########################
 ##race
 race 0x1 戦士族
-race 0x2 魔法使い族
+race 0x2 魔法師族
 race 0x4 天使族
 race 0x8 悪魔族
 race 0x10 アンデット族

@@ -1,4 +1,4 @@
-﻿[DataEditorX]2.2.9.1[DataEditorX]
+﻿[DataEditorX]2.2.9.2[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★文件关联(File association)
@@ -80,6 +80,10 @@ Ctrl+鼠标左键 	跳转到函数定义
 Ctrl+鼠标滑轮 	缩放文字
 
 ★更新历史
+2.2.9.2
+读取MSE存档暂未实现
+修改DataEditor界面
+如果这次显示有问题，请务必反馈
 2.2.9.1
 添加MSE设置说明
 2.2.9.0

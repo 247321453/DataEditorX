@@ -11,12 +11,6 @@ namespace DataEditorX.Config
     /// </summary>
     public class CodeConfig
     {
-        public const string TAG_FONT_NAME = "fontname";
-        public const string TAG_FONT_SIZE = "fontsize";
-        public const string TAG_IME = "IME";
-        public const string TAG_WORDWRAP = "wordwrap";
-        public const string TAG_TAB2SPACES = "tabisspace";
-
 
         #region 成员
         public CodeConfig()

@@ -21,8 +21,8 @@ namespace DataEditorX.Language
     {
         static Dictionary<string, string> mWordslist = new Dictionary<string, string>();
         static SortedList<LMSG, string> msglist = new SortedList<LMSG, string>();
-        static string SEP_CONTROL = ".";
-        static string SEP_LINE = "	";
+        const char SEP_CONTROL = '.';
+        const char SEP_LINE = '\t';
 
         #region 获取消息文字
         public static string GetMsg(LMSG lMsg)
@@ -61,7 +61,7 @@ namespace DataEditorX.Language
             title = null;
             return false;
         }
-        
+
         static void SetControlLabel(Control c, string pName, string formName)
         {
             if (!string.IsNullOrEmpty(pName))
@@ -113,11 +113,11 @@ namespace DataEditorX.Language
         static void SetMenuItem(string pName, ToolStripItem tsi)
         {
             string title;
-           
+
             if (tsi is ToolStripMenuItem)
             {
                 ToolStripMenuItem tsmi = (ToolStripMenuItem)tsi;
-                if (GetLabel(pName +SEP_CONTROL + tsmi.Name, out title))
+                if (GetLabel(pName + SEP_CONTROL + tsmi.Name, out title))
                     tsmi.Text = title;
                 if (tsmi.HasDropDownItems)
                 {
@@ -143,7 +143,7 @@ namespace DataEditorX.Language
             if (fm == null)
                 return;
             // fm.SuspendLayout();
-          //fm.ResumeLayout(true);
+            //fm.ResumeLayout(true);
             GetControlLabel(fm, "", fm.Name);
             //fm.ResumeLayout(false);
             //fm.PerformLayout();
@@ -155,7 +155,7 @@ namespace DataEditorX.Language
                 mWordslist.Add(key, title);
         }
 
-        static void GetControlLabel(Control c, string pName, 
+        static void GetControlLabel(Control c, string pName,
             string formName)
         {
             if (!string.IsNullOrEmpty(pName))
@@ -169,7 +169,7 @@ namespace DataEditorX.Language
                 int i, count = lv.Columns.Count;
                 for (i = 0; i < count; i++)
                 {
-                    AddLabel(pName + SEP_CONTROL + i.ToString(), 
+                    AddLabel(pName + SEP_CONTROL + i.ToString(),
                         lv.Columns[i].Text);
                 }
             }
@@ -241,7 +241,8 @@ namespace DataEditorX.Language
                 sw.WriteLine("#");
                 foreach (LMSG k in msglist.Keys)
                 {
-                    sw.WriteLine("0x" + ((uint)k).ToString("x") + SEP_LINE + msglist[k].Replace("\n", "/n"));
+                    //记得替换换行符
+                    sw.WriteLine("0x" + ((uint)k).ToString("x") + SEP_LINE + msglist[k].Replace("\n", "\\n"));
                 }
                 foreach (LMSG k in Enum.GetValues(typeof(LMSG)))
                 {
@@ -265,40 +266,27 @@ namespace DataEditorX.Language
             using (FileStream fs = new FileStream(f, FileMode.Open, FileAccess.Read))
             {
                 StreamReader sr = new StreamReader(fs, Encoding.UTF8);
-                string line, sk, v;
+                string line;
                 uint utemp;
                 LMSG ltemp;
                 while ((line = sr.ReadLine()) != null)
                 {
                     if (line.Length == 0)
                         continue;
+                    string[] words = line.Split(SEP_LINE);
+                    if (words.Length < 2)
+                        continue;
                     if (line.StartsWith("0x"))//加载消息文字
                     {
-                        int si = line.IndexOf(SEP_LINE);
-                        if (si > 0)
-                        {
-                            sk = line.Substring(0, si);
-                            v = line.Substring(si + 1);
-                            //if (sk.StartsWith("0x"))
-                            uint.TryParse(sk.Replace("0x", ""), NumberStyles.HexNumber, null, out utemp);
-                            //else
-                             //   uint.TryParse(sk, out utemp);
-                            ltemp = (LMSG)utemp;
-                            if (msglist.IndexOfKey(ltemp) < 0)
-                                msglist.Add(ltemp, v.Replace("/n", "\n"));
-                        }
+                        uint.TryParse(words[0].Replace("0x", ""), NumberStyles.HexNumber, null, out utemp);
+                        ltemp = (LMSG)utemp;
+                        if (msglist.IndexOfKey(ltemp) < 0)//记得替换换行符
+                            msglist.Add(ltemp, words[1].Replace("\\n", "\n"));
                     }
                     else if (!line.StartsWith("#"))//加载界面语言
                     {
-                        int si = line.IndexOf(SEP_LINE);
-                        if (si > 0)
-                        {
-                            sk = line.Substring(0, si);
-                            v = line.Substring(si + 1);
-
-                            if (!mWordslist.ContainsKey(sk))
-                                mWordslist.Add(sk, v);
-                        }
+                        if (!mWordslist.ContainsKey(words[0]))
+                            mWordslist.Add(words[0], words[1]);
                     }
                 }
                 sr.Close();

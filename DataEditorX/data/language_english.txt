@@ -39,12 +39,14 @@ DataEditForm.mainMenu.menuitem_copyselectto	Copy Selected...
 DataEditForm.mainMenu.menuitem_copyto	Copy All Search...
 DataEditForm.mainMenu.menuitem_openLastDataBase	Open Last DataBase
 DataEditForm.mainMenu.menuitem_quit	Quit
+DataEditForm.mainMenu.menu_setting	Setting(&S)
 DataEditForm.mainMenu.menu_tools	Tool(&T)
 DataEditForm.mainMenu.menuitem_readydk	Read From ydk File(&Y)
 DataEditForm.mainMenu.menuitem_readimages	Read From Images Path(&I)
 DataEditForm.mainMenu.menuitem_compdb	Compress DataBase
 DataEditForm.mainMenu.menuitem_exportdata	Export Data As zip
 DataEditForm.mainMenu.menuitem_mseconfig	Set MSE Config
+DataEditForm.mainMenu.menuitem_readmse	Read MSE-set
 DataEditForm.mainMenu.menuitem_saveasmse_select	Save Selected As MSE-set
 DataEditForm.mainMenu.menuitem_saveasmse	Save All As MSE-set
 DataEditForm.mainMenu.menuitem_cutimages	Cut Images
@@ -91,9 +93,9 @@ MainForm.mainMenu.menuitem_closeall	Close All
 0xc	If create script file？
 0xd	If open database?
 0xe	If replace exitis cards?
-0xf	It's new version./nWhether you need to download again?
-0x10	Check update fail，/nPlease Check Network.
-0x11	Find a new version,/nIf Download it?
+0xf	It's new version.\nWhether you need to download again?
+0x10	Check update fail，\nPlease Check Network.
+0x11	Find a new version,\nIf Download it?
 0x12	File is't exitis!
 0x13	No select database!
 0x14	select database file

@@ -1,6 +1,6 @@
 ﻿###########################
 # Magic Set Editor 2
-#
+# English
 # \t = Tab \n = Enter [:space:] = Space
 ########################### Chs 2 Cht 
 cn2tw = false

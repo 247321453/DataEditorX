@@ -18,7 +18,7 @@ namespace DataEditorX.Config
     {
         public const string TAG_START = "##";
         public const string TAG_END = "#";
-        public const string SEP_LINE = "	";
+        public const char SEP_LINE = '\t';
 
         #region 根据tag获取内容
         static string reReturn(string content)
@@ -78,26 +78,21 @@ namespace DataEditorX.Config
         public static Dictionary<long, string> Read(string[] lines)
         {
             Dictionary<long, string> tempDic = new Dictionary<long, string>();
-            string strkey, strword;
-            int l;
             long lkey;
             foreach (string line in lines)
             {
                 if (line.StartsWith("#"))
                     continue;
-                if ((l = line.IndexOf(SEP_LINE)) < 0)
+                string[] words = line.Split(SEP_LINE);
+                if (words.Length < 2)
                     continue;
-                strkey = line.Substring(0, l).Replace("0x", "");
-                strword = line.Substring(l + 1);
-                int t = strword.IndexOf(SEP_LINE);
-                if (t > 0)
-                    strword = strword.Substring(0, t);
-                if (line.StartsWith("0x"))
-                    long.TryParse(strkey, NumberStyles.HexNumber, null, out lkey);
+                if (words[0].StartsWith("0x"))
+                    long.TryParse(words[0].Replace("0x", ""), NumberStyles.HexNumber, null, out lkey);
                 else
-                    long.TryParse(strkey, out lkey);
-                if (!tempDic.ContainsKey(lkey) && strword != "N/A")
-                    tempDic.Add(lkey, strword);
+                    long.TryParse(words[0], out lkey);
+                // N/A 的数据不显示
+                if (!tempDic.ContainsKey(lkey) && words[1] != "N/A")
+                    tempDic.Add(lkey, words[1]);
             }
             return tempDic;
         }

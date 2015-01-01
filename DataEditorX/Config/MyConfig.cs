@@ -13,7 +13,6 @@ namespace DataEditorX.Config
         public const string TAG_CARDINFO = "cardinfo";
         public const string TAG_LANGUAGE = "language";
 
-        public const string FILE_LANGUAGE = "language.txt";
         public const string FILE_TEMP = "open.tmp";
         public const string FILE_HISTORY = "history.txt";
         
@@ -22,6 +21,26 @@ namespace DataEditorX.Config
         public const string FILE_STRINGS = "strings.conf";
         public const string TAG_SOURCE_URL = "sourceURL";
         public const string TAG_UPDATE_URL = "updateURL";
+
+        public const string TAG_IMAGE_OTHER = "image_other";
+        public const string TAG_IMAGE_XYZ = "image_xyz";
+        public const string TAG_IMAGE_PENDULUM = "image_pendulum";
+        public const string TAG_IMAGE_SIZE = "image";
+        public const string TAG_IMAGE_QUILTY = "image_quilty";
+
+        public const string TAG_FONT_NAME = "fontname";
+        public const string TAG_FONT_SIZE = "fontsize";
+        public const string TAG_IME = "IME";
+        public const string TAG_WORDWRAP = "wordwrap";
+        public const string TAG_TAB2SPACES = "tabisspace";
+
+        public const string TAG_RULE = "rule";
+        public const string TAG_RACE = "race";
+        public const string TAG_ATTRIBUTE = "attribute";
+        public const string TAG_LEVEL = "level";
+        public const string TAG_CATEGORY = "category";
+        public const string TAG_TYPE = "type";
+        public const string TAG_SETNAME = "setname";
 
         public static string readString(string key)
         {
@@ -82,14 +101,14 @@ namespace DataEditorX.Config
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load(System.Windows.Forms.Application.ExecutablePath + ".config");
 
-            var xNode = xDoc.SelectSingleNode("//appSettings");
+            XmlNode xNode = xDoc.SelectSingleNode("//appSettings");
 
-            var xElem = (XmlElement)xNode.SelectSingleNode("//add[@key='" + appKey + "']");
+            XmlElement xElem = (XmlElement)xNode.SelectSingleNode("//add[@key='" + appKey + "']");
             if (xElem != null) //存在，则更新
                 xElem.SetAttribute("value", appValue);
             else//不存在，则插入
             {
-                var xNewElem = xDoc.CreateElement("add");
+                XmlElement xNewElem = xDoc.CreateElement("add");
                 xNewElem.SetAttribute("key", appKey);
                 xNewElem.SetAttribute("value", appValue);
                 xNode.AppendChild(xNewElem);
@@ -101,9 +120,9 @@ namespace DataEditorX.Config
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load(System.Windows.Forms.Application.ExecutablePath + ".config");
 
-            var xNode = xDoc.SelectSingleNode("//appSettings");
+            XmlNode xNode = xDoc.SelectSingleNode("//appSettings");
 
-            var xElem = (XmlElement)xNode.SelectSingleNode("//add[@key='" + appKey + "']");
+            XmlElement xElem = (XmlElement)xNode.SelectSingleNode("//add[@key='" + appKey + "']");
 
             if (xElem != null)
             {
