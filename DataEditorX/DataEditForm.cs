@@ -466,14 +466,14 @@ namespace DataEditorX
             long sc2 = (c.setcode >> 0x10) & 0xffff;
             long sc3 = (c.setcode >> 0x20) & 0xffff;
             long sc4 = (c.setcode >> 0x30) & 0xffff;
-            //tb_setcode1.Text = sc1.ToString("x");
-            //tb_setcode2.Text = sc2.ToString("x");
-            //tb_setcode3.Text = sc3.ToString("x");
-            //tb_setcode4.Text = sc4.ToString("x");
-            SetSelect(cb_setname1, sc1);
-            SetSelect(cb_setname2, sc2);
-            SetSelect(cb_setname3, sc3);
-            SetSelect(cb_setname4, sc4);
+            tb_setcode1.Text = sc1.ToString("x");
+            tb_setcode2.Text = sc2.ToString("x");
+            tb_setcode3.Text = sc3.ToString("x");
+            tb_setcode4.Text = sc4.ToString("x");
+            //SetSelect(cb_setname1, sc1);
+            //SetSelect(cb_setname2, sc2);
+            //SetSelect(cb_setname3, sc3);
+            //SetSelect(cb_setname4, sc4);
             //type,category
             SetCheck(pl_cardtype, c.type);
             SetCheck(pl_category, c.category);
