@@ -88,6 +88,8 @@ namespace DataEditorX.Language
         NewFile = 0x44,
         SaveFileOK = 0x45,
         IfSaveScript =0x46,
+        ReadMSE = 0x47,
+        ReadMSEisOK= 0x48,
         COUNT,
     }
 }

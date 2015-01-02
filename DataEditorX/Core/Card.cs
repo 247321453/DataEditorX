@@ -10,6 +10,7 @@ namespace DataEditorX.Core
 {
 	public struct Card : IEquatable<Card>
 	{
+        public const int STR_MAX = 0x10;
 		#region 构造
 		/// <summary>
 		/// 卡片
@@ -18,24 +19,32 @@ namespace DataEditorX.Core
 		/// <param name="cardName">名字</param>
 		public Card(long cardCode)
 		{
-			int i;
-			this.id = cardCode;
-			this.name="";
-			this.ot = 0;
-			this.alias = 0;
-			this.setcode = 0;
-			this.type = 0;
-			this.atk = 0;
-			this.def = 0;
-			this.level = 0;
-			this.race = 0;
-			this.attribute = 0;
-			this.category = 0;
-			this.desc = "";
-			this.str = new string[0x10];
-			for(i=0;i<0x10;i++)
-				str[i]="";
+            
+            this.id = cardCode;
+            this.name = "";
+            this.ot = 0;
+            this.alias = 0;
+            this.setcode = 0;
+            this.type = 0;
+            this.atk = 0;
+            this.def = 0;
+            this.level = 0;
+            this.race = 0;
+            this.attribute = 0;
+            this.category = 0;
+            this.desc = "";
+            int i;
+            this.str = new string[STR_MAX];
+            for (i = 0; i < STR_MAX; i++)
+                str[i] = "";
 		}
+        public void InitStrs()
+        {
+            int i;
+            this.str = new string[STR_MAX];
+            for (i = 0; i < STR_MAX; i++)
+                str[i] = "";
+        }
 		#endregion
 
 		#region 成员

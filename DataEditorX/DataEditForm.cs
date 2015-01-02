@@ -20,6 +20,7 @@ using WeifenLuo.WinFormsUI.Docking;
 using DataEditorX.Controls;
 
 using DataEditorX.Config;
+using DataEditorX.Core.Mse;
 
 namespace DataEditorX
 {
@@ -445,6 +446,8 @@ namespace DataEditorX
         void SetCard(Card c)
         {
             oldCard = c;
+            if (c.str == null)
+                c.InitStrs();
             tb_cardname.Text = c.name;
             tb_cardtext.Text = c.desc;
 
@@ -1137,7 +1140,7 @@ namespace DataEditorX
         //任务完成
         void BgWorker1RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
-            //
+            //还原标题
             int t = title.LastIndexOf(" (");
             if (t > 0)
             {
@@ -1145,12 +1148,15 @@ namespace DataEditorX
                 SetTitle();
             }
             if (e.Error != null)
-            {
-
+            {//出错
+                if (tasker != null)
+                    tasker.Cancel();
+                if (bgWorker1.IsBusy)
+                    bgWorker1.CancelAsync();
                 MyMsg.Show(LANG.GetMsg(LMSG.TaskError) + "\n" + e.Error);
             }
             else if (tasker.IsCancel() || e.Cancelled)
-            {
+            {//取消任务
                 MyMsg.Show(LMSG.CancelTask);
             }
             else
@@ -1171,6 +1177,11 @@ namespace DataEditorX
                         break;
                     case MyTask.ConvertImages:
                         MyMsg.Show(LMSG.ConvertImageOK);
+                        break;
+                    case MyTask.ReadMSE:
+                        //保存读取的卡片
+                        SaveCards(tasker.CardList);
+                        MyMsg.Show(LMSG.ReadMSEisOK);
                         break;
                 }
             }
@@ -1204,28 +1215,32 @@ namespace DataEditorX
         }
         void Menuitem_copytoClick(object sender, EventArgs e)
         {
-            CopyTo(false);
+            if (!Check())
+                return;
+            CopyTo(getCardList(false));
         }
 
         void Menuitem_copyselecttoClick(object sender, EventArgs e)
         {
-            CopyTo(true);
+            if (!Check())
+                return;
+            CopyTo(getCardList(true));
         }
-        //保存卡片
+        //保存卡片到当前数据库
         public void SaveCards(Card[] cards)
         {
             if (!Check())
+                return;
+            if (cards == null || cards.Length == 0)
                 return;
             bool replace = MyMsg.Question(LMSG.IfReplaceExistingCard);
             DataBase.CopyDB(nowCdbFile, !replace, cards);
             Search(srcCard, true);
         }
-        void CopyTo(bool onlyselect)
+        //卡片另存为
+        void CopyTo(Card[] cards)
         {
-            if (!Check())
-                return;
-            Card[] cards = getCardList(onlyselect);
-            if (cards == null)
+            if (cards == null || cards.Length == 0)
                 return;
             //select file
             bool replace = false;
@@ -1331,9 +1346,9 @@ namespace DataEditorX
             }
             if (menuitem_importmseimg.Checked)
             {
-                if (!Directory.Exists(tasker.MSEImage))
-                    Directory.CreateDirectory(tasker.MSEImage);
-                f = MyPath.Combine(tasker.MSEImage, tid + ".jpg");
+                if (!Directory.Exists(tasker.MSEImagePath))
+                    Directory.CreateDirectory(tasker.MSEImagePath);
+                f = MyPath.Combine(tasker.MSEImagePath, tid + ".jpg");
                 File.Copy(file, f, true);
             }
             else
@@ -1357,8 +1372,8 @@ namespace DataEditorX
                 pl_image.BackgroundImage.Dispose();
             Bitmap temp;
             string pic = MyPath.Combine(PICPATH, id + ".jpg");
-            string pic2 = MyPath.Combine(tasker.MSEImage, id + ".jpg");
-            string pic3 = MyPath.Combine(tasker.MSEImage, new Card(id).idString + ".jpg");
+            string pic2 = MyPath.Combine(tasker.MSEImagePath, id + ".jpg");
+            string pic3 = MyPath.Combine(tasker.MSEImagePath, new Card(id).idString + ".jpg");
             if (menuitem_importmseimg.Checked && File.Exists(pic2))
             {
                 temp = new Bitmap(pic2);
@@ -1376,13 +1391,6 @@ namespace DataEditorX
             }
             else
                 pl_image.BackgroundImage = m_cover;
-        }
-        void Menuitem_compdbClick(object sender, EventArgs e)
-        {
-            if (!Check())
-                return;
-            DataBase.Compression(nowCdbFile);
-            MyMsg.Show(LMSG.CompDBOK);
         }
         void Menuitem_convertimageClick(object sender, EventArgs e)
         {
@@ -1607,5 +1615,37 @@ namespace DataEditorX
             setCode_Selected(4, cb_setname4, tb_setcode4);
         }
         #endregion
+
+        #region 读取MSE存档
+        private void menuitem_readmse_Click(object sender, EventArgs e)
+        {
+            if (!Check())
+                return;
+            if (isRun())
+                return;
+            //select open mse-set
+            using (OpenFileDialog dlg = new OpenFileDialog())
+            {
+                dlg.Title = LANG.GetMsg(LMSG.selectMseset);
+                dlg.Filter = LANG.GetMsg(LMSG.MseType);
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    bool isUpdate = false;//是否替换存在的图片
+                    isUpdate = MyMsg.Question(LMSG.IfReplaceExistingImage);
+                    tasker.SetTask(MyTask.ReadMSE, null,
+                                   dlg.FileName, isUpdate.ToString());
+                    Run(LANG.GetMsg(LMSG.ReadMSE));
+                }
+            }
+        }
+        #endregion
+
+        private void menuitem_compdb_Click(object sender, EventArgs e)
+        {
+            if (!Check())
+                return;
+            DataBase.Compression(nowCdbFile);
+            MyMsg.Show(LMSG.CompDBOK);
+        }
     }
 }

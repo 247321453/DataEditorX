@@ -149,3 +149,5 @@ MainForm.mainMenu.menuitem_closeall	Close All
 0x44	New File
 0x45	Save OK
 0x46	If Save Script?
+0x47	Read MSE-set
+0x48	Read MSE-set is OK.

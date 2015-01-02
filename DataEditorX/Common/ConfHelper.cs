@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Globalization;
 
-namespace DataEditorX.Config
+namespace DataEditorX.Common
 {
     public class ConfHelper
     {
@@ -105,7 +105,7 @@ namespace DataEditorX.Config
         /// </summary>
         /// <param name="dic"></param>
         /// <param name="line"></param>
-        public static void DicAdd(Dictionary<long, string> dic, string line)
+        public static void DicAdd(SortedList<long, string> dic, string line)
         {
             int i = line.IndexOf("0x");
             int j = (i > 0) ? line.IndexOf(SEP_LINE, i + 1) : -1;

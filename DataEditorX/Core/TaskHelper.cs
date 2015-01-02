@@ -18,6 +18,7 @@ using System.ComponentModel;
 using DataEditorX.Language;
 using DataEditorX.Common;
 using DataEditorX.Config;
+using DataEditorX.Core.Mse;
 
 namespace DataEditorX.Core
 {
@@ -35,6 +36,8 @@ namespace DataEditorX.Core
         CutImages,
         ///<summary>转换图片</summary>
         ConvertImages,
+        ///<summary>读取MSE存档</summary>
+        ReadMSE,
     }
     /// <summary>
     /// 任务
@@ -54,6 +57,13 @@ namespace DataEditorX.Core
         /// 当前卡片列表
         /// </summary>
         private Card[] cardlist;
+        /// <summary>
+        /// 当前卡片列表
+        /// </summary>
+        public Card[] CardList
+        {
+            get { return cardlist; }
+        }
         /// <summary>
         /// 任务参数
         /// </summary>
@@ -99,6 +109,7 @@ namespace DataEditorX.Core
         }
         public void Cancel()
         {
+            isRun = false;
             isCancel = true;
         }
         public MyTask getLastTask()
@@ -246,7 +257,7 @@ namespace DataEditorX.Core
         #endregion
 
         #region MSE存档
-        public string MSEImage
+        public string MSEImagePath
         {
             get { return mseHelper.ImagePath; }
         }
@@ -302,6 +313,25 @@ namespace DataEditorX.Core
                 }
             }
             File.Delete(setFile);
+        }
+        public Card[] ReadMSE(string mseset, bool repalceOld)
+        {
+            //解压所有文件
+            using (ZipStorer zips = ZipStorer.Open(mseset,FileAccess.Read))
+            {
+                zips.EncodeUTF8 = true;
+                List<ZipStorer.ZipFileEntry> files = zips.ReadCentralDir();
+                int count = files.Count;
+                int i = 0;
+                foreach (ZipStorer.ZipFileEntry file in files)
+                {
+                    worker.ReportProgress(i / count, string.Format("{0}/{1}", i, count));
+                    string savefilename = MyPath.Combine(mseHelper.ImagePath, file.FilenameInZip);
+                    zips.ExtractFile(file, savefilename);
+                }
+            }
+            string setfile = MyPath.Combine(mseHelper.ImagePath, "set");
+            return mseHelper.ReadCards(setfile, repalceOld);
         }
         #endregion
 
@@ -406,6 +436,18 @@ namespace DataEditorX.Core
                         SaveMSEs(mArgs[0], cardlist, replace);
                     }
                     break;
+                case MyTask.ReadMSE:
+                    if (mArgs != null && mArgs.Length >= 2)
+                    {
+                        replace = false;
+                        if (mArgs.Length >= 2)
+                        {
+                            if (mArgs[1] == Boolean.TrueString)
+                                replace = true;
+                        }
+                        cardlist = ReadMSE(mArgs[0], replace);
+                    }
+                    break;
                 case MyTask.ConvertImages:
                     if (mArgs != null && mArgs.Length >= 2)
                     {
@@ -422,7 +464,8 @@ namespace DataEditorX.Core
             isRun = false;
             lastTask = nowTask;
             nowTask = MyTask.NONE;
-            cardlist = null;
+            if(lastTask != MyTask.ReadMSE)
+                cardlist = null;
             mArgs = null;
         }
         #endregion

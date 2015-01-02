@@ -53,7 +53,6 @@ namespace DataEditorX
             this.menuitem_readydk = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_readimages = new System.Windows.Forms.ToolStripMenuItem();
             this.tsep6 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuitem_compdb = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_exportdata = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_findluafunc = new System.Windows.Forms.ToolStripMenuItem();
             this.tsep5 = new System.Windows.Forms.ToolStripSeparator();
@@ -120,6 +119,7 @@ namespace DataEditorX
             this.lv_cardlist = new System.Windows.Forms.DListView();
             this.ch_cardcode = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_cardname = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.menuitem_compdb = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -141,6 +141,7 @@ namespace DataEditorX
             this.menuitem_file.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuitem_open,
             this.menuitem_new,
+            this.menuitem_compdb,
             this.toolStripSeparator3,
             this.menuitem_copyselectto,
             this.menuitem_copyto,
@@ -233,7 +234,6 @@ namespace DataEditorX
             this.menuitem_readydk,
             this.menuitem_readimages,
             this.tsep6,
-            this.menuitem_compdb,
             this.menuitem_exportdata,
             this.menuitem_findluafunc,
             this.tsep5,
@@ -252,96 +252,90 @@ namespace DataEditorX
             // menuitem_readydk
             // 
             this.menuitem_readydk.Name = "menuitem_readydk";
-            this.menuitem_readydk.Size = new System.Drawing.Size(212, 22);
+            this.menuitem_readydk.Size = new System.Drawing.Size(205, 22);
             this.menuitem_readydk.Text = "Cards Form ydk file(&Y)";
             this.menuitem_readydk.Click += new System.EventHandler(this.Menuitem_readydkClick);
             // 
             // menuitem_readimages
             // 
             this.menuitem_readimages.Name = "menuitem_readimages";
-            this.menuitem_readimages.Size = new System.Drawing.Size(212, 22);
+            this.menuitem_readimages.Size = new System.Drawing.Size(205, 22);
             this.menuitem_readimages.Text = "Cards From Images(&I)";
             this.menuitem_readimages.Click += new System.EventHandler(this.Menuitem_readimagesClick);
             // 
             // tsep6
             // 
             this.tsep6.Name = "tsep6";
-            this.tsep6.Size = new System.Drawing.Size(209, 6);
-            // 
-            // menuitem_compdb
-            // 
-            this.menuitem_compdb.Name = "menuitem_compdb";
-            this.menuitem_compdb.Size = new System.Drawing.Size(212, 22);
-            this.menuitem_compdb.Text = "Compression DataBase";
-            this.menuitem_compdb.Click += new System.EventHandler(this.Menuitem_compdbClick);
+            this.tsep6.Size = new System.Drawing.Size(202, 6);
             // 
             // menuitem_exportdata
             // 
             this.menuitem_exportdata.Name = "menuitem_exportdata";
-            this.menuitem_exportdata.Size = new System.Drawing.Size(212, 22);
+            this.menuitem_exportdata.Size = new System.Drawing.Size(205, 22);
             this.menuitem_exportdata.Text = "Export Data";
             this.menuitem_exportdata.Click += new System.EventHandler(this.Menuitem_exportdataClick);
             // 
             // menuitem_findluafunc
             // 
             this.menuitem_findluafunc.Name = "menuitem_findluafunc";
-            this.menuitem_findluafunc.Size = new System.Drawing.Size(212, 22);
+            this.menuitem_findluafunc.Size = new System.Drawing.Size(205, 22);
             this.menuitem_findluafunc.Text = "Find Lua Function";
             this.menuitem_findluafunc.Click += new System.EventHandler(this.menuitem_findluafunc_Click);
             // 
             // tsep5
             // 
             this.tsep5.Name = "tsep5";
-            this.tsep5.Size = new System.Drawing.Size(209, 6);
+            this.tsep5.Size = new System.Drawing.Size(202, 6);
             // 
             // menuitem_readmse
             // 
             this.menuitem_readmse.Name = "menuitem_readmse";
-            this.menuitem_readmse.Size = new System.Drawing.Size(212, 22);
+            this.menuitem_readmse.Size = new System.Drawing.Size(205, 22);
             this.menuitem_readmse.Text = "Read from MSE";
+            this.menuitem_readmse.Click += new System.EventHandler(this.menuitem_readmse_Click);
             // 
             // menuitem_saveasmse_select
             // 
             this.menuitem_saveasmse_select.Name = "menuitem_saveasmse_select";
-            this.menuitem_saveasmse_select.Size = new System.Drawing.Size(212, 22);
+            this.menuitem_saveasmse_select.Size = new System.Drawing.Size(205, 22);
             this.menuitem_saveasmse_select.Text = "Select Save As MSE";
             this.menuitem_saveasmse_select.Click += new System.EventHandler(this.Menuitem_saveasmse_selectClick);
             // 
             // menuitem_saveasmse
             // 
             this.menuitem_saveasmse.Name = "menuitem_saveasmse";
-            this.menuitem_saveasmse.Size = new System.Drawing.Size(212, 22);
+            this.menuitem_saveasmse.Size = new System.Drawing.Size(205, 22);
             this.menuitem_saveasmse.Text = "All Now Save As MSE";
             this.menuitem_saveasmse.Click += new System.EventHandler(this.Menuitem_saveasmseClick);
             // 
             // tsep3
             // 
             this.tsep3.Name = "tsep3";
-            this.tsep3.Size = new System.Drawing.Size(209, 6);
+            this.tsep3.Size = new System.Drawing.Size(202, 6);
             // 
             // menuitem_cutimages
             // 
             this.menuitem_cutimages.Name = "menuitem_cutimages";
-            this.menuitem_cutimages.Size = new System.Drawing.Size(212, 22);
+            this.menuitem_cutimages.Size = new System.Drawing.Size(205, 22);
             this.menuitem_cutimages.Text = "Cut Images";
             this.menuitem_cutimages.Click += new System.EventHandler(this.Menuitem_cutimagesClick);
             // 
             // menuitem_convertimage
             // 
             this.menuitem_convertimage.Name = "menuitem_convertimage";
-            this.menuitem_convertimage.Size = new System.Drawing.Size(212, 22);
+            this.menuitem_convertimage.Size = new System.Drawing.Size(205, 22);
             this.menuitem_convertimage.Text = "Import Images";
             this.menuitem_convertimage.Click += new System.EventHandler(this.Menuitem_convertimageClick);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(209, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(202, 6);
             // 
             // menuitem_cancelTask
             // 
             this.menuitem_cancelTask.Name = "menuitem_cancelTask";
-            this.menuitem_cancelTask.Size = new System.Drawing.Size(212, 22);
+            this.menuitem_cancelTask.Size = new System.Drawing.Size(205, 22);
             this.menuitem_cancelTask.Text = "Cancel Task";
             this.menuitem_cancelTask.Click += new System.EventHandler(this.Menuitem_cancelTaskClick);
             // 
@@ -972,6 +966,13 @@ namespace DataEditorX
             this.ch_cardname.Text = "Card Name";
             this.ch_cardname.Width = 140;
             // 
+            // menuitem_compdb
+            // 
+            this.menuitem_compdb.Name = "menuitem_compdb";
+            this.menuitem_compdb.Size = new System.Drawing.Size(232, 22);
+            this.menuitem_compdb.Text = "Compression DataBase";
+            this.menuitem_compdb.Click += new System.EventHandler(this.menuitem_compdb_Click);
+            // 
             // DataEditForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1057,7 +1058,6 @@ namespace DataEditorX
         private System.Windows.Forms.TextBox tb_setcode2;
         private System.Windows.Forms.TextBox tb_setcode1;
         private System.Windows.Forms.ToolStripSeparator tsep5;
-        private System.Windows.Forms.ToolStripMenuItem menuitem_compdb;
         private System.Windows.Forms.ToolStripMenuItem menuitem_convertimage;
         private System.Windows.Forms.ToolStripMenuItem menuitem_cutimages;
         private System.Windows.Forms.ToolStripMenuItem menuitem_saveasmse;
@@ -1126,5 +1126,6 @@ namespace DataEditorX
         private System.Windows.Forms.ToolStripMenuItem menuitem_importmseimg;
         private System.Windows.Forms.ToolStripMenuItem menuitem_findluafunc;
         private System.Windows.Forms.ToolStripSeparator tsep6;
+        private System.Windows.Forms.ToolStripMenuItem menuitem_compdb;
     }
 }

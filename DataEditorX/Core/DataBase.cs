@@ -297,6 +297,8 @@ namespace DataEditorX.Core
 		{
 			StringBuilder sb=new StringBuilder();
 			sb.Append("SELECT datas.*,texts.* FROM datas,texts WHERE datas.id=texts.id ");
+            if (c == null)
+                return sb.ToString();
 			if(!string.IsNullOrEmpty(c.name)){
 				if(c.name.IndexOf("%%")>=0)
 					c.name=c.name.Replace("%%","%");
@@ -350,6 +352,10 @@ namespace DataEditorX.Core
 		/// <returns>SQL语句</returns>
 		public static string GetInsertSQL(Card c, bool ignore)
 		{
+            if (c == null)
+                return "";
+            if (c.str == null)
+                c.InitStrs();
 			StringBuilder st = new StringBuilder();
 			if(ignore)
 				st.Append("INSERT or ignore into datas values(");
@@ -393,6 +399,10 @@ namespace DataEditorX.Core
 		public static string GetUpdateSQL(Card c)
 		{
 			StringBuilder st = new StringBuilder();
+            if (c == null)
+                return "";
+            if (c.str == null)
+                c.InitStrs();
 			st.Append("update datas set ot="); st.Append(c.ot.ToString());
 			st.Append(",alias="); st.Append(c.alias.ToString());
 			st.Append(",setcode="); st.Append(c.setcode.ToString());

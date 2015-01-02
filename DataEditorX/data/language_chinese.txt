@@ -120,7 +120,7 @@ MainForm.mainMenu.menuitem_closeall	关闭所有
 0x27	正在检查更新
 0x28	正在复制卡片
 0x29	卡片复制完成
-0x2a	保存MSE存档
+0x2a	MSE存档
 0x2b	MSE存档文件(*.mse-set)|*.mse-set|所有文件(*.*)|*.*
 0x2c	正在导出MSE存档
 0x2d	导出MSE存档完成
@@ -149,3 +149,5 @@ MainForm.mainMenu.menuitem_closeall	关闭所有
 0x44	新建文件
 0x45	保存完成
 0x46	是否保存脚本？
+0x47	读取MSE存档
+0x48	读取MSE存档完成！

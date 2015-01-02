@@ -17,7 +17,7 @@ trap = [陷阱卡%%]
 head = mse version: 0.3.8\r\ngame: yugioh\r\nstylesheet: standard\r\nset info:\r\n\tlanguage: CN\r\n\tedition: \r\n\tST mark is text: no\r\n\tpendulum image is small: yes
 end = version control:\n\ttype: none\napprentice code: 
 ############################ Text
-text =【摇摆效果】\n%ptext%\n【怪兽效果】\n%text%\n
+text =【摇摆文本】\n%ptext%\n【怪兽效果】\n%text%\n
 ############################
 # chs jp
 pendulum-text = 】[\s\S]*?\n([\S\s]*?)\n【

@@ -305,7 +305,7 @@ namespace DataEditorX
             using (OpenFileDialog dlg = new OpenFileDialog())
             {
                 dlg.Title = LANG.GetMsg(LMSG.OpenFile);
-                if (GetActive() != null)//判断当前窗口是不是DataEditor
+                if (GetActive() != null || dockPanel1.Contents.Count == 0)//判断当前窗口是不是DataEditor
                     dlg.Filter = LANG.GetMsg(LMSG.CdbType);
                 else
                     dlg.Filter = LANG.GetMsg(LMSG.ScriptFilter);
@@ -461,7 +461,6 @@ namespace DataEditorX
         }
 
         #endregion
-
 
         #region 自动更新
         private void bgWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)

@@ -14,6 +14,7 @@ namespace DataEditorX.Core
     /// </summary>
     public enum CardRace : long
     {
+        RACE_NONE = 0,
         ///<summary>战士</summary>
         RACE_WARRIOR = 0x1,
         ///<summary>魔法师</summary>

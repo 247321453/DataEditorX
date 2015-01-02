@@ -1,4 +1,4 @@
-﻿[DataEditorX]2.2.9.5[DataEditorX]
+﻿[DataEditorX]2.2.9.6[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★文件关联(File association)
@@ -80,6 +80,16 @@ Ctrl+鼠标左键 	跳转到函数定义
 Ctrl+鼠标滑轮 	缩放文字
 
 ★更新历史
+2.2.9.6
+读取MSE存档
+可能出现的bug：通常魔法类型识别出错，P怪兽文本提取出错，或者无法识别该卡
+存档结构：(要求：每张卡的内容，开头是card，最后一行是gamecode,在MSE的card_fields修改gamecode为最后的元素)
+card:
+...
+	gamecode: 123456
+card:
+....
+	gamecode: 123456
 2.2.9.5
 优化选择框
 2.2.9.4

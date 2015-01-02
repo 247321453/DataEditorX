@@ -12,19 +12,27 @@ using System.IO;
 using System.Text;
 using DataEditorX.Language;
 using System.Globalization;
+using DataEditorX.Common;
+using DataEditorX.Config;
 
-namespace DataEditorX.Config
+namespace DataEditorX.Core.Mse
 {
     /// <summary>
     /// Description of MSEConfig.
     /// </summary>
     public class MSEConfig
     {
+        #region  常量
         public const string TAG = "mse";
+        /// <summary>存档头部</summary>
         public const string TAG_HEAD = "head";
+        /// <summary>存档尾部</summary>
         public const string TAG_END = "end";
+        /// <summary>简体转繁体</summary>
         public const string TAG_CN2TW = "cn2tw";
+        /// <summary>魔法标志格式</summary>
         public const string TAG_SPELL = "spell";
+        /// <summary>陷阱标志格式</summary>
         public const string TAG_TRAP = "trap";
         public const string TAG_REG_PENDULUM = "pendulum-text";
         public const string TAG_REG_MONSTER = "monster-text";
@@ -42,7 +50,7 @@ namespace DataEditorX.Config
         public const string FILE_CONFIG_NAME = "Chinese-Simplified";
         public const string PATH_IMAGE = "Images";
         public string configName = FILE_CONFIG_NAME;
-        
+        #endregion
         public MSEConfig(string path)
         {
             init(path);
@@ -56,10 +64,10 @@ namespace DataEditorX.Config
             //设置文件名
             configName = MyPath.getFullFileName(MSEConfig.TAG, config);
 
-            replaces = new Dictionary<string, string>();
+            replaces = new SortedList<string, string>();
 
-            typeDic = new Dictionary<long, string>();
-            raceDic = new Dictionary<long, string>();
+            typeDic = new SortedList<long, string>();
+            raceDic = new SortedList<long, string>();
             string[] lines = File.ReadAllLines(config, Encoding.UTF8);
             foreach (string line in lines)
             {
@@ -137,7 +145,7 @@ namespace DataEditorX.Config
         //简体转繁体？
         public bool Iscn2tw;
         //特数字替换
-        public Dictionary<string, string> replaces;
+        public SortedList<string, string> replaces;
         //效果文正则提取
         public string regx_pendulum;
         public string regx_monster;
@@ -145,7 +153,7 @@ namespace DataEditorX.Config
         public string head;
         //存档结尾
         public string end;
-        public Dictionary<long, string> typeDic;
-        public Dictionary<long, string> raceDic;
+        public SortedList<long, string> typeDic;
+        public SortedList<long, string> raceDic;
     }
 }
