@@ -3,6 +3,8 @@ using System.Xml;
 using System.IO;
 using DataEditorX.Common;
 using System.Windows.Forms;
+using System.Diagnostics;
+using System.Reflection;
 
 namespace DataEditorX.Config
 {
@@ -68,6 +70,18 @@ namespace DataEditorX.Config
         /// 升级链接
         /// </summary>
         public const string TAG_UPDATE_URL = "updateURL";
+        /// <summary>
+        /// 删除卡片的时候，删除图片脚本
+        /// </summary>
+        public const string TAG_DELETE_WITH = "opera_with_cards_file";
+        /// <summary>
+        /// 异步加载数据
+        /// </summary>
+        public const string TAG_ASYNC = "async";
+        /// <summary>
+        /// 用本程序打开文件
+        /// </summary>
+        public const string TAG_OPEN_IN_THIS = "open_file_in_this";
         /// <summary>
         /// 一般的裁剪
         /// </summary>
@@ -297,14 +311,52 @@ namespace DataEditorX.Config
         /// 发送消息打开文件
         /// </summary>
         /// <param name="file"></param>
-        public static void Open(IntPtr win, string file)
+        public static bool OpenOnExistForm(string file)
+        {
+            Process instance = RunningInstance();
+            if (instance == null)
+            {
+                return false;
+            }
+            else
+            {
+                //把需要打开的文件写入临时文件
+                string tmpfile = Path.Combine(Application.StartupPath, MyConfig.FILE_TEMP);
+                File.WriteAllText(tmpfile, file);
+                //发送消息
+                User32.SendMessage(instance.MainWindowHandle, MyConfig.WM_OPEN, 0, 0);
+                return true;
+            }
+        }
+        public static void OpenFileInThis(string file)
         {
             //把需要打开的文件写入临时文件
             string tmpfile = Path.Combine(Application.StartupPath, MyConfig.FILE_TEMP);
             File.WriteAllText(tmpfile, file);
             //发送消息
-            User32.SendMessage(win, MyConfig.WM_OPEN, 0, 0);
-            Environment.Exit(1);
+            User32.SendMessage(Process.GetCurrentProcess().MainWindowHandle, MyConfig.WM_OPEN, 0, 0);
+        }
+        static Process RunningInstance()
+        {
+            Process current = Process.GetCurrentProcess();
+            Process[] processes = Process.GetProcessesByName(current.ProcessName);
+            //遍历与当前进程名称相同的进程列表
+            foreach (Process process in processes)
+            {
+                //如果实例已经存在则忽略当前进程
+                if (process.Id != current.Id)
+                {
+                    //保证要打开的进程同已经存在的进程来自同一文件路径
+                    if (Assembly.GetExecutingAssembly().Location.
+                        Replace('/', Path.DirectorySeparatorChar)
+                        == current.MainModule.FileName)
+                    {
+                        //返回已经存在的进程
+                        return process;
+                    }
+                }
+            }
+            return null;
         }
     }
 

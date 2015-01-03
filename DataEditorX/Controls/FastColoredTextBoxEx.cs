@@ -29,7 +29,7 @@ namespace FastColoredTextBoxNS
 			base.OnMouseMove(e);
 			lastMouseCoord = e.Location;
 		}
-		//函数提示
+		//函数悬停提示
 		protected override void OnToolTip()
 		{
 			if (ToolTip == null)

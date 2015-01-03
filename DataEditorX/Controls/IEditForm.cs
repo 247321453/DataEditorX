@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DataEditorX.Controls
 {
-    interface IEditForm
+    public interface IEditForm
     {
         //获取打开的文件路径
         string GetOpenFile();

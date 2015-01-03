@@ -34,16 +34,11 @@ namespace DataEditorX
         #region init 函数提示菜单
         //自动完成
         AutocompleteMenu popupMenu;
-        //函数
-        AutocompleteMenu popupMenu_fun;
-        //常量
-        AutocompleteMenu popupMenu_con;
-        //搜索
-        AutocompleteMenu popupMenu_find;
         string nowFile;
         string title;
         string oldtext;
-        Dictionary<string, string> tooltipDic;
+        SortedList<string, string> tooltipDic;
+        AutocompleteItem[] items;
         bool tabisspaces = false;
         string nowcdb;
         public CodeEditForm()
@@ -53,37 +48,11 @@ namespace DataEditorX
         void InitForm()
         {
             cardlist = new SortedDictionary<long, string>();
-            tooltipDic = new Dictionary<string, string>();
+            tooltipDic = new SortedList<string, string>();
             InitializeComponent();
-            Font ft = new Font(fctb.Font.Name, fctb.Font.Size / 1.2f, FontStyle.Regular);
-            popupMenu = new FastColoredTextBoxNS.AutocompleteMenu(fctb);
-            popupMenu.MinFragmentLength = 2;
-            popupMenu.Items.Font = ft;
-            popupMenu.Items.MaximumSize = new System.Drawing.Size(200, 400);
-            popupMenu.Items.Width = 300;
-
-            popupMenu_fun = new FastColoredTextBoxNS.AutocompleteMenu(fctb);
-            popupMenu_fun.MinFragmentLength = 2;
-            popupMenu_fun.Items.Font = ft;
-            popupMenu_fun.Items.MaximumSize = new System.Drawing.Size(200, 400);
-            popupMenu_fun.Items.Width = 300;
-
-            popupMenu_con = new FastColoredTextBoxNS.AutocompleteMenu(fctb);
-            popupMenu_con.MinFragmentLength = 2;
-            popupMenu_con.Items.Font = ft;
-            popupMenu_con.Items.MaximumSize = new System.Drawing.Size(200, 400);
-            popupMenu_con.Items.Width = 300;
-
-            popupMenu_find = new FastColoredTextBoxNS.AutocompleteMenu(fctb);
-            popupMenu_find.MinFragmentLength = 2;
-            popupMenu_find.Items.Font = ft;
-            popupMenu_find.Items.MaximumSize = new System.Drawing.Size(200, 400);
-            popupMenu_find.Items.Width = 300;
-            title = this.Text;
-
             //设置字体，大小
             string fontname = MyConfig.readString(MyConfig.TAG_FONT_NAME);
-            float fontsize = MyConfig.readFloat(MyConfig.TAG_FONT_SIZE, 14);
+            float fontsize = MyConfig.readFloat(MyConfig.TAG_FONT_SIZE, fctb.Font.Size);
             fctb.Font = new Font(fontname, fontsize);
             if (MyConfig.readBoolean(MyConfig.TAG_IME))
                 fctb.ImeMode = ImeMode.On;
@@ -95,13 +64,26 @@ namespace DataEditorX
                 tabisspaces = true;
             else
                 tabisspaces = false;
+
+            Font ft = new Font(fctb.Font.Name, fctb.Font.Size / 1.2f, FontStyle.Regular);
+            popupMenu = new FastColoredTextBoxNS.AutocompleteMenu(fctb);
+            popupMenu.MinFragmentLength = 2;
+            popupMenu.Items.Font = ft;
+            popupMenu.Items.MaximumSize = new System.Drawing.Size(200, 400);
+            popupMenu.Items.Width = 300;
+            popupMenu.BackColor = fctb.BackColor;
+            popupMenu.ForeColor = fctb.ForeColor;
+            popupMenu.Closed += new ToolStripDropDownClosedEventHandler(popupMenu_Closed);
+
+            popupMenu.SelectedColor = Color.LightGray;
+
+            title = this.Text;
         }
 
-        public void LoadXml(string xmlfile)
+        void popupMenu_Closed(object sender, ToolStripDropDownClosedEventArgs e)
         {
-            fctb.DescriptionFile = xmlfile;
+            popupMenu.Items.SetAutocompleteItems(items);
         }
-
         #endregion
 
         #region IEditForm接口
@@ -194,16 +176,19 @@ namespace DataEditorX
         #endregion
 
         #region 自动完成
+        public void LoadXml(string xmlfile)
+        {
+            fctb.DescriptionFile = xmlfile;
+        }
         public void InitTooltip(CodeConfig codeconfig)
         {
             this.tooltipDic = codeconfig.TooltipDic;
-            List<AutocompleteItem> items = new List<AutocompleteItem>();
-            items.AddRange(codeconfig.FunList);
-            items.AddRange(codeconfig.ConList);
+            items = codeconfig.Items;
             popupMenu.Items.SetAutocompleteItems(items);
-            popupMenu_con.Items.SetAutocompleteItems(codeconfig.ConList);
-            popupMenu_fun.Items.SetAutocompleteItems(codeconfig.FunList);
         }
+        #endregion
+       
+        #region 悬停的函数说明
         //查找函数说明
         string FindTooltip(string word)
         {
@@ -219,6 +204,7 @@ namespace DataEditorX
             }
             return desc;
         }
+
         //悬停的函数说明
         void FctbToolTipNeeded(object sender, ToolTipNeededEventArgs e)
         {
@@ -250,67 +236,6 @@ namespace DataEditorX
         }
         #endregion
 
-        #region 按键监听
-        void FctbKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyData == (Keys.K | Keys.Control))
-            {
-                //forced show (MinFragmentLength will be ignored)
-                popupMenu_fun.Show(true);//显示函数列表
-                e.Handled = true;
-            }
-            else if (e.KeyData == (Keys.T | Keys.Control))
-            {
-                //forced show (MinFragmentLength will be ignored)
-                popupMenu_con.Show(true);//显示常量列表
-                e.Handled = true;
-            }
-            //else if(e.KeyData == Keys(Keys.Control | Keys
-        }
-        #endregion
-
-        #region input
-        //显示/隐藏输入框
-        void Menuitem_showinputClick(object sender, EventArgs e)
-        {
-            if (menuitem_showinput.Checked)
-            {
-                menuitem_showinput.Checked = false;
-                tb_input.Visible = false;
-            }
-            else
-            {
-                menuitem_showinput.Checked = true;
-                tb_input.Visible = true;
-            }
-        }
-        #endregion
-
-        #region menu
-        //如果是作为mdi，则隐藏菜单
-        void HideMenu()
-        {
-            if (this.MdiParent == null)
-                return;
-            mainMenu.Visible = false;
-            menuitem_file.Visible = false;
-            menuitem_file.Enabled = false;
-        }
-
-        void CodeEditFormLoad(object sender, EventArgs e)
-        {
-            HideMenu();
-            fctb.OnTextChangedDelayed(fctb.Range);
-        }
-        void Menuitem_findClick(object sender, EventArgs e)
-        {
-            fctb.ShowFindDialog();
-        }
-
-        void Menuitem_replaceClick(object sender, EventArgs e)
-        {
-            fctb.ShowReplaceDialog();
-        }
         #region 保存文件
         bool savefile(bool saveas)
         {
@@ -349,6 +274,47 @@ namespace DataEditorX
             SaveAs();
         }
         #endregion
+
+        #region 菜单
+        //显示/隐藏输入框
+        void Menuitem_showinputClick(object sender, EventArgs e)
+        {
+            if (menuitem_showinput.Checked)
+            {
+                menuitem_showinput.Checked = false;
+                tb_input.Visible = false;
+            }
+            else
+            {
+                menuitem_showinput.Checked = true;
+                tb_input.Visible = true;
+            }
+        }
+        //如果是作为mdi，则隐藏菜单
+        void HideMenu()
+        {
+            if (this.MdiParent == null)
+                return;
+            mainMenu.Visible = false;
+            menuitem_file.Visible = false;
+            menuitem_file.Enabled = false;
+        }
+
+        void CodeEditFormLoad(object sender, EventArgs e)
+        {
+            HideMenu();
+            fctb.OnTextChangedDelayed(fctb.Range);
+        }
+        void Menuitem_findClick(object sender, EventArgs e)
+        {
+            fctb.ShowFindDialog();
+        }
+
+        void Menuitem_replaceClick(object sender, EventArgs e)
+        {
+            fctb.ShowReplaceDialog();
+        }
+
         void QuitToolStripMenuItemClick(object sender, EventArgs e)
         {
             this.Close();
@@ -384,26 +350,20 @@ namespace DataEditorX
         {
             if (e.KeyCode == Keys.Enter)
             {
-                //
                 string key = tb_input.Text;
-                List<AutocompleteItem> tlist = new List<AutocompleteItem>();
-                foreach (string k in tooltipDic.Keys)
+                List<AutocompleteItem> list =new List<AutocompleteItem>();
+                foreach (AutocompleteItem item in items)
                 {
-                    if (tooltipDic[k].IndexOf(key) >= 0)
-                    {
-                        AutocompleteItem ai = new AutocompleteItem(k);
-                        ai.ToolTipTitle = k;
-                        ai.ToolTipText = tooltipDic[k];
-                        tlist.Add(ai);
-                    }
+                    if (item.ToolTipText.Contains(key))
+                        list.Add(item);
                 }
-                popupMenu_find.Items.SetAutocompleteItems(tlist.ToArray());
-                popupMenu_find.Show(true);
+                popupMenu.Items.SetAutocompleteItems(list.ToArray());
+                popupMenu.Show(true);
             }
         }
         #endregion
 
-        #region 关闭提示保存
+        #region 提示保存
         void CodeEditFormFormClosing(object sender, FormClosingEventArgs e)
         {
             if (!string.IsNullOrEmpty(oldtext))
@@ -505,7 +465,6 @@ namespace DataEditorX
             }
         }
         #endregion
-
 
     }
 }

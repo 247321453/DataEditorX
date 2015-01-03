@@ -5,6 +5,7 @@
  */
 using System;
 using System.Text.RegularExpressions;
+using DataEditorX.Core.Info;
 
 namespace DataEditorX.Core
 {

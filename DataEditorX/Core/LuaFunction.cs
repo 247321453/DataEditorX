@@ -8,14 +8,13 @@
 using System;
 using System.IO;
 using System.Text;
-using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace DataEditorX
 {
 	/// <summary>
-	/// Description of LuaFunction.
+	/// Lua 函数查找
 	/// </summary>
 	public class LuaFunction
 	{

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DataEditorX.Core
+﻿
+namespace DataEditorX.Core.Info
 {
     public enum CardRule :int
     {

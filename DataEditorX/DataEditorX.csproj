@@ -69,6 +69,7 @@
     </Compile>
     <Compile Include="Common\CheckUpdate.cs" />
     <Compile Include="Common\ConfHelper.cs" />
+    <Compile Include="Config\YgoPath.cs" />
     <Compile Include="Controls\DoubleContorl.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -77,6 +78,7 @@
     </Compile>
     <Compile Include="Common\MyPath.cs" />
     <Compile Include="Controls\History.cs" />
+    <Compile Include="Core\IDataForm.cs" />
     <Compile Include="Controls\IEditForm.cs" />
     <Compile Include="Controls\IMainForm.cs" />
     <Compile Include="Controls\MySyntaxHighlighter.cs" />
@@ -86,10 +88,11 @@
     <Compile Include="Common\Area.cs" />
     <Compile Include="Config\MyConfig.cs" />
     <Compile Include="Core\Card.cs" />
-    <Compile Include="Core\CardAttribute.cs" />
-    <Compile Include="Core\CardRace.cs" />
-    <Compile Include="Core\CardRule.cs" />
-    <Compile Include="Core\CardType.cs" />
+    <Compile Include="Core\Info\CardAttribute.cs" />
+    <Compile Include="Core\CardEdit.cs" />
+    <Compile Include="Core\Info\CardRace.cs" />
+    <Compile Include="Core\Info\CardRule.cs" />
+    <Compile Include="Core\Info\CardType.cs" />
     <Compile Include="Config\CodeConfig.cs" />
     <Compile Include="Core\DataBase.cs" />
     <Compile Include="Config\DataConfig.cs" />
@@ -99,6 +102,7 @@
     <Compile Include="Core\Mse\MSECons.cs" />
     <Compile Include="Core\Mse\MseMaker.cs" />
     <Compile Include="Core\Mse\MSEConfig.cs" />
+    <Compile Include="Core\MyTask.cs" />
     <Compile Include="Core\TaskHelper.cs" />
     <Compile Include="Core\YGOUtil.cs" />
     <Compile Include="DataEditForm.cs">
@@ -120,6 +124,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="changed.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="data\mse_Chinese-Traditional.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -163,9 +170,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="readme.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="readme_en.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

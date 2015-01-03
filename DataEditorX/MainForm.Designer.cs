@@ -81,6 +81,7 @@ namespace DataEditorX
             // 
             // dockPanel1
             // 
+            this.dockPanel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.dockPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dockPanel1.Location = new System.Drawing.Point(0, 25);
             this.dockPanel1.Margin = new System.Windows.Forms.Padding(0);
@@ -328,6 +329,7 @@ namespace DataEditorX
             // bgWorker1
             // 
             this.bgWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgWorker1_DoWork);
+            this.bgWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgWorker1_RunWorkerCompleted);
             // 
             // MainForm
             // 

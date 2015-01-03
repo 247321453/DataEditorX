@@ -7,6 +7,7 @@
  */
 using System;
 using System.IO;
+using System.Drawing;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -14,6 +15,7 @@ using DataEditorX.Language;
 using DataEditorX.Core;
 using DataEditorX.Config;
 using DataEditorX.Controls;
+using System.Threading;
 
 namespace DataEditorX
 {
@@ -33,9 +35,20 @@ namespace DataEditorX
         //编辑器配置
         DataConfig datacfg = null;
         CodeConfig codecfg = null;
+        //将要打开的文件
+        string openfile;
         #endregion
 
         #region 设置界面，消息语言
+        public MainForm()
+        {
+            //检查更新
+            Thread th = new Thread(CheckUpdate);
+            th.IsBackground = true;//如果exe结束，则线程终止
+            th.Start();
+            //初始化控件
+            InitializeComponent();
+        }
         public void SetDataPath(string datapath)
         {
             //判断是否合法
@@ -44,7 +57,27 @@ namespace DataEditorX
             tCards = null;
             //数据目录
             this.datapath = datapath;
-
+            if (MyConfig.readBoolean(MyConfig.TAG_ASYNC))
+            {
+                //后台加载数据
+                bgWorker1.RunWorkerAsync();
+            }
+            else
+            {
+                Init();
+                InitForm();
+            }
+        }
+        void CheckUpdate()
+        {
+            TaskHelper.CheckVersion(false);
+        }
+        public void setOpenFile(string file)
+        {
+            this.openfile = file;
+        }
+        void Init()
+        {
             //文件路径
             conflang = MyConfig.GetLanguageFile(datapath);
             //游戏数据,MSE数据
@@ -57,8 +90,6 @@ namespace DataEditorX
             string conlua = MyPath.Combine(datapath, MyConfig.FILE_CONSTANT);
             string confstring = MyPath.Combine(datapath, MyConfig.FILE_STRINGS);
             codecfg = new CodeConfig();
-            //初始化
-            codecfg.Init();
             //添加函数
             codecfg.AddFunction(funtxt);
             //添加指示物
@@ -66,26 +97,35 @@ namespace DataEditorX
             //添加常量
             codecfg.AddConstant(conlua);
             codecfg.SetNames(datacfg.dicSetnames);
-
-            //初始化
-            InitializeComponent();
-            
-            //加载多语言
-            LANG.LoadFormLabels(conflang);
-            LANG.SetFormLabel(this);
-            //设置所有窗口的语言
-            DockContentCollection contents = dockPanel1.Contents;
-            foreach (DockContent dc in contents)
-            {
-                if (dc is Form)
-                {
-                    LANG.SetFormLabel((Form)dc);
-                }
-            }
+            //生成菜单
+            codecfg.InitAutoMenus();
             history = new History(this);
             //读取历史记录
             history.ReadHistory(MyPath.Combine(datapath, MyConfig.FILE_HISTORY));
+            //加载多语言
+            LANG.LoadFormLabels(conflang);
+        }
+        void InitForm()
+        {
+           LANG.SetFormLabel(this);
+           
+           //设置所有窗口的语言
+           DockContentCollection contents = dockPanel1.Contents;
+           foreach (DockContent dc in contents)
+           {
+               if (dc is Form)
+               {
+                   LANG.SetFormLabel((Form)dc);
+               }
+           }
+            //添加历史菜单
             history.MenuHistory();
+
+            //如果没有将要打开的文件，则打开一个空数据库标签
+            if (string.IsNullOrEmpty(openfile))
+                OpenDataBase(null);
+            else
+                Open(openfile);
         }
         #endregion
 
@@ -221,10 +261,7 @@ namespace DataEditorX
         void MainFormLoad(object sender, System.EventArgs e)
         {
             //检查更新
-            bgWorker1.RunWorkerAsync();
-            //如果没有标签，则打开一个空数据库标签
-            if (dockPanel1.Contents.Count == 0)
-                OpenDataBase(null);
+            //bgWorker1.RunWorkerAsync();
         }
 
         void MainFormFormClosing(object sender, FormClosingEventArgs e)
@@ -243,10 +280,11 @@ namespace DataEditorX
         #endregion
 
         #region 窗口管理
+        //关闭当前
         void CloseToolStripMenuItemClick(object sender, EventArgs e)
         {
-            //关闭当前
-            dockPanel1.ActiveContent.DockHandler.Close();
+            if (dockPanel1.ActiveContent.DockHandler != null)
+                dockPanel1.ActiveContent.DockHandler.Close();
         }
         //打开脚本编辑
         void Menuitem_codeeditorClick(object sender, EventArgs e)
@@ -372,7 +410,7 @@ namespace DataEditorX
             DataEditForm df = GetActive();//获取当前的数据库编辑
             if (df != null)
             {
-                tCards = df.getCardList(true); //获取选中的卡片
+                tCards = df.GetCardList(true); //获取选中的卡片
                 if (tCards != null)
                 {
                     SetCopyNumber(tCards.Length);//显示复制卡片的数量
@@ -386,7 +424,7 @@ namespace DataEditorX
             DataEditForm df = GetActive();//获取当前的数据库编辑
             if (df != null)
             {
-                tCards = df.getCardList(false);//获取结果的所有卡片
+                tCards = df.GetCardList(false);//获取结果的所有卡片
                 if (tCards != null)
                 {
                     SetCopyNumber(tCards.Length);//显示复制卡片的数量
@@ -462,12 +500,17 @@ namespace DataEditorX
 
         #endregion
 
-        #region 自动更新
+        #region 后台加载数据
         private void bgWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            //检查更新
-            TaskHelper.CheckVersion(false);
+            Init();
         }
         #endregion
+
+        private void bgWorker1_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            //更新UI
+            InitForm();
+        }
     }
 }

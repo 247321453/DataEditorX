@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.VisualBasic;
 
+using DataEditorX.Core.Info;
 using DataEditorX.Config;
 using DataEditorX.Language;
 

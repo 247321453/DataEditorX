@@ -7,7 +7,7 @@
  */
 using System;
 
-namespace DataEditorX.Core
+namespace DataEditorX.Core.Info
 {
     /// <summary>
     /// 卡片种族

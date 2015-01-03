@@ -35,6 +35,8 @@ namespace DataEditorX
 		/// </summary>
 		private void InitializeComponent()
 		{
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CodeEditForm));
             this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.menuitem_file = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_open = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,9 +53,10 @@ namespace DataEditorX
             this.menuitem_help = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_about = new System.Windows.Forms.ToolStripMenuItem();
             this.tb_input = new System.Windows.Forms.TextBox();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.fctb = new FastColoredTextBoxNS.FastColoredTextBoxEx();
             this.documentMap1 = new FastColoredTextBoxNS.DocumentMap();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.mainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fctb)).BeginInit();
             this.SuspendLayout();
@@ -66,7 +69,7 @@ namespace DataEditorX
             this.menuitem_help});
             this.mainMenu.Location = new System.Drawing.Point(0, 0);
             this.mainMenu.Name = "mainMenu";
-            this.mainMenu.Size = new System.Drawing.Size(695, 25);
+            this.mainMenu.Size = new System.Drawing.Size(705, 25);
             this.mainMenu.TabIndex = 0;
             this.mainMenu.Text = "mainMenu";
             // 
@@ -132,8 +135,8 @@ namespace DataEditorX
             // menuitem_showmap
             // 
             this.menuitem_showmap.Name = "menuitem_showmap";
-            this.menuitem_showmap.Size = new System.Drawing.Size(168, 22);
-            this.menuitem_showmap.Text = "Show Map";
+            this.menuitem_showmap.Size = new System.Drawing.Size(195, 22);
+            this.menuitem_showmap.Text = "Show/Hide Map";
             this.menuitem_showmap.Click += new System.EventHandler(this.ShowMapToolStripMenuItemClick);
             // 
             // menuitem_showinput
@@ -141,15 +144,15 @@ namespace DataEditorX
             this.menuitem_showinput.Checked = true;
             this.menuitem_showinput.CheckState = System.Windows.Forms.CheckState.Checked;
             this.menuitem_showinput.Name = "menuitem_showinput";
-            this.menuitem_showinput.Size = new System.Drawing.Size(168, 22);
-            this.menuitem_showinput.Text = "Show InputBox";
+            this.menuitem_showinput.Size = new System.Drawing.Size(195, 22);
+            this.menuitem_showinput.Text = "Show/Hide InputBox";
             this.menuitem_showinput.Click += new System.EventHandler(this.Menuitem_showinputClick);
             // 
             // menuitem_find
             // 
             this.menuitem_find.Name = "menuitem_find";
             this.menuitem_find.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.menuitem_find.Size = new System.Drawing.Size(168, 22);
+            this.menuitem_find.Size = new System.Drawing.Size(195, 22);
             this.menuitem_find.Text = "Find";
             this.menuitem_find.Click += new System.EventHandler(this.Menuitem_findClick);
             // 
@@ -157,14 +160,14 @@ namespace DataEditorX
             // 
             this.menuitem_replace.Name = "menuitem_replace";
             this.menuitem_replace.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
-            this.menuitem_replace.Size = new System.Drawing.Size(168, 22);
+            this.menuitem_replace.Size = new System.Drawing.Size(195, 22);
             this.menuitem_replace.Text = "Replace";
             this.menuitem_replace.Click += new System.EventHandler(this.Menuitem_replaceClick);
             // 
             // menuitem_setcard
             // 
             this.menuitem_setcard.Name = "menuitem_setcard";
-            this.menuitem_setcard.Size = new System.Drawing.Size(168, 22);
+            this.menuitem_setcard.Size = new System.Drawing.Size(195, 22);
             this.menuitem_setcard.Text = "Set Cards";
             // 
             // menuitem_help
@@ -189,12 +192,17 @@ namespace DataEditorX
             this.tb_input.Location = new System.Drawing.Point(0, 394);
             this.tb_input.Margin = new System.Windows.Forms.Padding(0);
             this.tb_input.Name = "tb_input";
-            this.tb_input.Size = new System.Drawing.Size(504, 21);
+            this.tb_input.Size = new System.Drawing.Size(514, 21);
             this.tb_input.TabIndex = 1;
             this.tb_input.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Tb_inputKeyDown);
             // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            // 
             // fctb
             // 
+            this.fctb.AutoCompleteBrackets = true;
             this.fctb.AutoCompleteBracketsList = new char[] {
         '(',
         ')',
@@ -222,6 +230,7 @@ namespace DataEditorX
             this.fctb.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fctb.Font = new System.Drawing.Font("Consolas", 14.25F);
             this.fctb.ForeColor = System.Drawing.Color.GhostWhite;
+            this.fctb.Hotkeys = resources.GetString("fctb.Hotkeys");
             this.fctb.IndentBackColor = System.Drawing.SystemColors.WindowFrame;
             this.fctb.IsReplaceMode = false;
             this.fctb.Language = FastColoredTextBoxNS.Language.Lua;
@@ -235,13 +244,12 @@ namespace DataEditorX
             this.fctb.RightBracket = ')';
             this.fctb.RightBracket2 = '}';
             this.fctb.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
-            this.fctb.Size = new System.Drawing.Size(504, 369);
+            this.fctb.Size = new System.Drawing.Size(514, 369);
             this.fctb.TabIndex = 0;
             this.fctb.WordWrap = true;
             this.fctb.Zoom = 100;
             this.fctb.ToolTipNeeded += new System.EventHandler<FastColoredTextBoxNS.ToolTipNeededEventArgs>(this.FctbToolTipNeeded);
             this.fctb.SelectionChangedDelayed += new System.EventHandler(this.FctbSelectionChangedDelayed);
-            this.fctb.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FctbKeyDown);
             this.fctb.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FctbMouseClick);
             // 
             // documentMap1
@@ -249,7 +257,7 @@ namespace DataEditorX
             this.documentMap1.BackColor = System.Drawing.Color.DimGray;
             this.documentMap1.Dock = System.Windows.Forms.DockStyle.Right;
             this.documentMap1.ForeColor = System.Drawing.Color.Maroon;
-            this.documentMap1.Location = new System.Drawing.Point(504, 25);
+            this.documentMap1.Location = new System.Drawing.Point(514, 25);
             this.documentMap1.Name = "documentMap1";
             this.documentMap1.Size = new System.Drawing.Size(191, 390);
             this.documentMap1.TabIndex = 5;
@@ -257,14 +265,10 @@ namespace DataEditorX
             this.documentMap1.Text = "documentMap1";
             this.documentMap1.Visible = false;
             // 
-            // backgroundWorker1
-            // 
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
-            // 
             // CodeEditForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(695, 415);
+            this.ClientSize = new System.Drawing.Size(705, 415);
             this.Controls.Add(this.fctb);
             this.Controls.Add(this.tb_input);
             this.Controls.Add(this.documentMap1);
@@ -303,6 +307,7 @@ namespace DataEditorX
 		private System.Windows.Forms.ToolStripMenuItem menuitem_file;
         private System.Windows.Forms.MenuStrip mainMenu;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.ToolTip toolTip1;
 		
 
 	}

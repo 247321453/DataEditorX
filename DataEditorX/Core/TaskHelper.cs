@@ -19,26 +19,10 @@ using DataEditorX.Language;
 using DataEditorX.Common;
 using DataEditorX.Config;
 using DataEditorX.Core.Mse;
+using DataEditorX.Core.Info;
 
 namespace DataEditorX.Core
 {
-    public enum MyTask
-    {
-        ///<summary>空</summary>
-        NONE,
-        ///<summary>检查更新</summary>
-        CheckUpdate,
-        ///<summary>导出数据</summary>
-        ExportData,
-        ///<summary>保存为MSE存档</summary>
-        SaveAsMSE,
-        ///<summary>裁剪图片</summary>
-        CutImages,
-        ///<summary>转换图片</summary>
-        ConvertImages,
-        ///<summary>读取MSE存档</summary>
-        ReadMSE,
-    }
     /// <summary>
     /// 任务
     /// </summary>
@@ -336,24 +320,21 @@ namespace DataEditorX.Core
         #endregion
 
         #region 导出数据
-        public void ExportData(string zipname)
+        public void ExportData(string path, string zipname)
         {
             int i = 0;
             Card[] cards = cardlist;
             if (cards == null || cards.Length == 0)
                 return;
             int count = cards.Length;
-            string path = Path.GetDirectoryName(zipname);
+            YgoPath ygopath = new YgoPath(path);
             string name = Path.GetFileNameWithoutExtension(zipname);
             //数据库
             string cdbfile = zipname + ".cdb";
             //说明
             string readme = MyPath.Combine(path, name + ".txt");
             //新卡ydk
-            string deckydk = MyPath.Combine(path, "deck/" + name + ".ydk");
-            string pics = MyPath.Combine(path, "pics");
-            string thumb = MyPath.Combine(pics, "thumbnail");
-            string script = MyPath.Combine(path, "script");
+            string deckydk = ygopath.GetYdk(name);
 
             File.Delete(cdbfile);
             DataBase.Create(cdbfile);
@@ -372,17 +353,14 @@ namespace DataEditorX.Core
                 {
                     i++;
                     worker.ReportProgress(i / count, string.Format("{0}/{1}", i, count));
-                    //zips.AddFile(
-                    string jpg1 = MyPath.Combine(pics, c.id.ToString() + ".jpg");
-                    string jpg2 = MyPath.Combine(thumb, c.id.ToString() + ".jpg");
-                    string lua = MyPath.Combine(script, "c" + c.id.ToString() + ".lua");
-
-                    if (File.Exists(jpg1))
-                        zips.AddFile(jpg1, "pics/" + c.id.ToString() + ".jpg", "");
-                    if (File.Exists(jpg2))
-                        zips.AddFile(jpg2, "pics/thumbnail/" + c.id.ToString() + ".jpg", "");
-                    if (File.Exists(lua))
-                        zips.AddFile(lua, "script/c" + c.id.ToString() + ".lua", "");
+                    string[] files = ygopath.GetCardfiles(c.id);
+                    foreach (string file in files)
+                    {
+                        if (File.Exists(file))
+                        {
+                            zips.AddFile(file, file.Replace(path,""),"");
+                        }
+                    }
                 }
             }
             File.Delete(cdbfile);
@@ -399,9 +377,9 @@ namespace DataEditorX.Core
             switch (nowTask)
             {
                 case MyTask.ExportData:
-                    if (mArgs != null && mArgs.Length >= 1)
+                    if (mArgs != null && mArgs.Length >= 2)
                     {
-                        ExportData(mArgs[0]);
+                        ExportData(mArgs[0], mArgs[1]);
                     }
                     break;
                 case MyTask.CheckUpdate:

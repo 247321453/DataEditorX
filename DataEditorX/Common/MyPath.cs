@@ -125,5 +125,17 @@ namespace System.IO
             else
                 return name.Replace(tag + "_", "");
         }
+
+        public static void CreateDir(string dir)
+        {
+            if (!Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
+        }
+        public static void CreateDirByFile(string file)
+        {
+            string dir = Path.GetDirectoryName(file);
+            if (!Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
+        }
     }
 }

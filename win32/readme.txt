@@ -1,36 +1,111 @@
-﻿[DataEditorX]2.2.9.7[DataEditorX]
+﻿[DataEditorX]2.2.9.9[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
+★运行环境(Environment)
+本程序基于.Net framework 2.0(3.5)开发
+必备DLL：
+System.Data.SQLite.dll				数据库操作
+FastColoredTextBox.dll				脚本编辑
+WeifenLuo.WinFormsUI.Docking.dll	多标签
+
+winXP(需安装.Net2.0)
+win7(自带.Net2.0)
+win8(需要安装.Net3.5包含2.0)
+
+
 ★文件关联(File association)
-.lua notepad++/sublime text/DataEditorX
-.cdb DataEditorX
+.cdb (必选)DataEditorX
+.lua (可选)Notepad++/Sublime text/DataEditorX
+方法：
+右键文件，打开方式，浏览文件，选择，点击确定。
+注意：
+默认，lua是用本程序打开，如果需要修改，在★设置 open_file_in_this设为false
 
 ★bug反馈(Feedback)
 Email:247321453@qq.com
-提交版本前，请检查更新。
-
-标题：(DataEditorX+版本号)
+标题：DataEditorX X.X.X.X
 内容：
 错误提示文字：（弹出出错框，请按Ctrl+C，然后找地方粘贴）
-详细描述：（卡片信息，杀毒软件，本程序目录等等）
+详细描述：（卡片信息，杀毒软件，本程序目录，当时的详细操作等等）
 
-★支持多语言化(Language setting)
+★设置
+DataEditorX.exe.config ★语言设置，★图片设置，★CodeEditor设置
+data/language_xxx.txt 界面和消息提示文字
+data/cardinfo_xxx.txt 种族，类型，系列名
+
+★其他设置
+async					后台加载数据（显示快）为true，直接加载数据为false
+opera_with_cards_file	修改，删除卡片的同时，也会删除，修改，复制卡图和脚本。
+open_file_in_this		用自带的脚本编辑器打开lua
+
+★语言设置
 DataEditorX.exe.config
 <add key="language" value="chinese" />简体
 <add key="language" value="english" />英文
-其他语言请自己添加
+其他语言请自己添加，需要2个文件，xxx为语言
+data/language_xxx.txt
+data/cardinfo_xxx.txt
+
+★图片设置
+在裁剪和导入图片时候使用。
+	image_quilty	保存的图片质量 1-100
+	image			游戏图片大小，小图宽，高，大图宽，高，共4个值
+	image_other		一般卡图裁剪
+	image_xyz		xyz卡图裁剪
+	image_pendulum	Pendulum卡图裁剪
+★CodeEditor设置
+	IME			使用输入法
+    wordwrap	自动换行
+    tabisspace	tab转换为space
+	fontname    字体名
+	fontsize	字体大小
 
 ★DataEditor：
 攻击力为？，可以输入？，?，-2任意一个都可以。
 文件夹pics和script和cdb所在文件夹一致。
 
-卡片复制：
+★修改卡片密码
+删除，则是直接修改密码
+不删除，就是复制一张新卡片
+
+★从ydk和图片文件夹读取卡片列表
+支持：密码，带0密码，卡名的png，jpg图片
+
+★MSE存档
+读取
+存档结构：(要求：每张卡的内容，开头是card，最后一行是gamecode,在MSE的card_fields修改gamecode为最后的元素)
+card:
+...
+	gamecode: 123456
+card:
+....
+	gamecode: 123456
+
+★MSE图片
+支持：密码，带0密码，卡名的png，jpg图片
+在“设置为MSE图片库”（“Set MSE'Image ”）的打勾时候，导入卡图都是放到MSE的图片文件夹
+
+★导出数据
+例如：mydiy.cdb
+新卡：deck/mydiy.ydk
+说明：mydiy.txt
+脚本script
+图片pics
+生成mydiy.zip，可以放在音效版的expansions，直接使用，也可以用来发布。
+
+★数据库对比
+
+★Lua函数查找
+从C++源码获取Lua函数
+返回类型，参数类型，C++实现代码。
+
+★卡片复制：
 替换复制：如果存在卡片，就用最新的替换
 不替换复制：如果存在卡片，就跳过
 
-卡片搜索
+★卡片搜索
 1.仅支持第一个系列名搜索,暂不支持P的刻度搜索
-2.支持卡片名称，描述，规则，属性，等级，种族，卡片类型，效果类型，密码
+2.支持卡片名称，效果描述，规则，属性，等级，种族，卡片类型，效果类型，密码
 3.ATK,DEF搜索：
 	如果是0，则输入-1或者.搜索
 	如果是?，则输入-2或者?或者？搜索
@@ -38,10 +113,20 @@ DataEditorX.exe.config
 	AOJ%%		以“AOJ”开头
 	流%%天		以“流”开头，“天”结尾
 	%%战士		以“战士”结尾
+
 5.密码范围搜索示例：
 --密码或同名卡为10000000，的卡片        卡片密码： 10000000 同名卡: 0
 --同名卡为10000000的卡片               卡片密码：  0       同名卡: 10000000 
 --大于密码10000000，小于20000000的卡片  同名卡：  10000000   卡片密码: 20000000
+
+★CodeEditor：
+在下面的文本框输入关键字，按Enter
+Ctrl+F			查找
+Ctrl+H			替换
+Ctrl+鼠标左键 	跳转到函数定义
+Ctrl+K			函数列表
+Ctrl+T			常量列表
+Ctrl+鼠标滑轮 	缩放文字
 
 ★Magic Set Editor 2
 下载/更新："Magic Set Editor 2/download.bat"
@@ -73,251 +158,3 @@ replace = ([鮟|鱇|・|·]) <i>$1</i>
 #replace = \s <sym-auto>^</sym-auto>
 把A-Z替换为另外一种字体
 #replace = ([A-Z]) <i>$1</i>
-
-★lua编辑器
-在下面的文本框输入关键字，按Enter
-Ctrl+鼠标左键 	跳转到函数定义
-Ctrl+鼠标滑轮 	缩放文字
-
-★更新历史
-2.2.9.7
-紧急修复-setname额外的显示出错
-2.2.9.6
-读取MSE存档
-可能出现的bug：通常魔法类型识别出错，P怪兽文本提取出错，或者无法识别该卡
-存档结构：(要求：每张卡的内容，开头是card，最后一行是gamecode,在MSE的card_fields修改gamecode为最后的元素)
-card:
-...
-	gamecode: 123456
-card:
-....
-	gamecode: 123456
-2.2.9.5
-优化选择框
-2.2.9.4
-DataEditor
-修改游戏数据的查找方式()Dic = >sortlist，加快卡片显示速度
-2.2.9.3
-修复CodeEditor
-2.2.9.2
-读取MSE存档暂未实现
-修改DataEditor界面
-如果这次显示有问题，请务必反馈
-2.2.9.1
-添加MSE设置说明
-2.2.9.0
-可以切换MSE的配置
-配置整合
-2.2.8.6
-修复无种族的token，
-2.2.8.4
-japan
-历史记录修正
-2.2.8.3
-japan
-2.2.8.2
-MSE的图片库相对路径
-2.2.8.1
-卡片描述完善，加快打开lua的速度。
-2.2.8.0
-修正setcode搜索
-在打开的时候，自动检查更新
-2.2.7.5
-lua编辑器,编辑完，返回当前页数
-2.2.7.4
-lua编辑器，修复按ydk，图像读取，编辑卡片后列表结果bug
-2.2.7.3
-lua编辑器，4个空格转换为tab键
-2.2.7.2
-打开脚本，重复的时候，显示标签
-2.2.7.1
-历史记录分离，脚本编辑器的卡片信息描述
-2.2.7.0
-修复导入图片
-整理代码
-图片搜索支持png，bmp
-2.2.6.4
-修复lua编辑器的自动完成
-2.2.6.3
-导出数据：改为导出当前列表
-2.2.6.2
-导出MSE存档，支持png,jpg格式，支持密码，带0密码，卡名命名方式
-2.2.6.1
-修复english的race的兽战士
-导出MSE存档,添加反转/filp
-2.2.6.0
-文件历史记录的顺序，从上到下。
-导出MSE存档，支持设置每个存档的最大卡片数量
-2.2.5.0
-lua编辑器支持，读取和提示指示物代码。
-添加残局示例single.lua
-2.2.4.1
-修复部分条件搜索
-2.2.4.0
-lua编辑器,Ctrl+鼠标左键 	跳转到函数定义
-2.2.3.4
-english pengulum text
-2.2.3.3
-修复lua编辑器的控件遮挡问题
-2.2.3.2
-lua编辑器，
-设置卡片库，鼠标悬停在密码时，提示卡片信息
-在config可以设置lua编辑器的字体和大小
-2.2.3.1
-lua编辑器的函数提示带所属名
-2.2.3.0
-支持卡片名做为MSE存档的图片名，但是必须哈数据库的一致
-2.2.2.2
-增加从源码获取Lua的函数，并且自动排序函数
-更新cpp的函数库，未包括utility.lua
-fix english mse-config
-2.2.2.1
-添加关闭标签快捷键 Ctrl+W
-修复lua编辑器打开大文件，无响应
-lua内容变动，在关闭提示保存
-2.2.2.0
-lua编辑器增加根据功能说明搜索函数名
-在下面的文本框输入关键字，按Enter
-2.2.1.2
-lua编辑器的风格
-2.2.1.1
-修复文件关联打开文件，无法记录打开历史
-修复新建lua，没有覆盖旧文件
-2.2.1.0
-lua编辑器的文件菜单整合
-2.2.0.0
-增加lua编辑器，支持关联lua文件
-等待：
-lua编辑器的文件菜单整合
-常用函数模板
-根据函数提示搜索
-2.1.4.0
-改善：
-浏览和导入MSE图片库的图片
-按图像读取，可以支持读取卡片名的图片
-2.1.3.1
-修复:
-支持浏览和导入MSE图片库的图片
-2.1.3.0
-导出MSE存档，支持8位密码前面带0（00012345）
-支持浏览和导入MSE图片库的图片
-对比，仅密码或者卡片信息
-复制当前列表卡片
-导出zip：
-【名字】.cdb
-【名字】.txt
-desck/【名字】.ydk
-pics/*.jpg
-pics/thumbnail/*.jpg
-2.1.2.0
-修改网络连接数
-2.1.1.1
-修改MSE下载器
-2.1.1.0
-增加数据库对比
-待测试 数据库对比后的操作：按ydk读取，按图像读取，搜索按钮，卡名搜索。
-2.1.0.1
-添加导出zip
-2.1.0.0
-添加历史记录，最多32条
-2.0.0.3
-更新mse-config.txt
-2.0.0.2
-复制卡片，粘贴卡片
-2.0.0.1
-分离文件菜单，下个版本，改进复制卡片功能
-2.0.0.0
-多标签界面
-1.6.8.0
-不再支持自动更新，请大家每天手动更新，下个版本添加多cdb编辑
-把文件菜单的项分开
-改进卡名搜索
-添加atk，def搜索
-1.6.7.0
-任务进度提示
-取消任务
-1.6.6.0
-mse-config.txt添加注释
-1.6.5.0
-改进自定义魔法陷阱
-1.6.4.0
-修复setcode输入错误
-搜索为空的错误
-1.6.3.0
-为无种族的token添加token card类型
-1.6.2.2
-修复没有种族的token
-1.6.2.1
-修复导出MSE存档
-1.6.2.0
-MSE存档导出，修正english的魔法陷阱标志
-增加单系列搜索
-1.6.1.0
-把config的MSE设置改为chinese(english)/mse-config.txt
-1.6.0.0
-增加简体转繁体功能
-mse-italic.txt支持正则替换
-1.5.5.2
-增加MSE的mse-italic.txt
-1.5.5.1
-修复第2次导入图片，出bug
-1.5.5.0
-完成导出MSE存档，简体测试OK
-注：config设置P描述和正常描述的分离的正则表达式
-mse-head.txt的language设置语言：CN,TW,JP,EN,KO
-1.5.4.0
-setcode编辑框
-1.5.3.0
-增加压缩数据库
-1.5.2.1
-导入卡图的路径改为cdb的目录的pics
-1.5.2.0
-修复复制卡片的替换
-增加批量导入卡图
-1.5.1.1
-改MSE更新器的默认路径
-1.5.1.0
-完善系列框,等待导出MSE存档
-1.5.0.0
-修复卡名搜索，读取ydk，读取图片
-添加导出MSE存档，裁剪图片
-可以记住最后打开数据库
-1.4.1.0
-添加撤销上一次操作。
-1.4.0.0
-增加多语言文件的可修改性。
-1.3.4.2
-新建数据库，改为提示是否打开。
-打开空白数据库，将会清空当前列表和内容。
-1.3.4.1
-ATK/DEF输入？，自动转-2
-1.3.4.0
-支持 新建文本文档.txt 直接改名 新建文本文档.cdb
-1.3.3.0
-修复打开方式
-1.3.2.2
-整理代码
-1.3.2.1
-完善language.txt
-1.3.2.0
-修复
-1.3.1.0
-添加下载文件
-1.3.0.1
-分文件夹
-1.3.0.0
-txt文件，顺序可以打乱，关键是数值不能重复
-支持多语言化
-1.2.1.2
-按密码搜索一样会显示同名卡
-更改密码搜索
-按密码搜索：密码框>0 同名框=0
-按同名搜索：密码框=0 同名框>0
-按密码范围搜索：密码框>0 同名框>0
-1.2.1.1
-自动把游戏目录设为cdb的目录
-1.2.1.0
-更改检查更新网址为我的百度空间
-1.2.0.0
-添加检查新版本
-修复setname

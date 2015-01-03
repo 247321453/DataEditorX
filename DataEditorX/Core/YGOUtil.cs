@@ -8,6 +8,8 @@ using System.Configuration;
 using DataEditorX.Config;
 using System.Windows.Forms;
 
+using DataEditorX.Core.Info;
+
 namespace DataEditorX.Core
 {
     static class YGOUtil
@@ -120,11 +122,11 @@ namespace DataEditorX.Core
 
         public static string GetTypeString(long type)
         {
-            string str="";
+            string str = "";
             foreach (long k in datacfg.dicCardTypes.Keys)
             {
                 if ((type & k) == k)
-                    str += GetType((CardType)k)+"|";
+                    str += GetType((CardType)k) + "|";
             }
             if (str.Length > 0)
                 str = str.Substring(0, str.Length - 1);
@@ -190,14 +192,53 @@ namespace DataEditorX.Core
         {
             List<string> list = new List<string>();
             string[] files = Directory.GetFiles(path, "*.*");
-                int n = files.Length;
-                for (int i = 0; i < n; i++)
-                {
-                    string ex = Path.GetExtension(files[i]).ToLower();
-                    if (ex == ".jpg" || ex == ".png" || ex == ".bmp")
-                        list.Add(Path.GetFileNameWithoutExtension(files[i]));
-                }
+            int n = files.Length;
+            for (int i = 0; i < n; i++)
+            {
+                string ex = Path.GetExtension(files[i]).ToLower();
+                if (ex == ".jpg" || ex == ".png" || ex == ".bmp")
+                    list.Add(Path.GetFileNameWithoutExtension(files[i]));
+            }
             return list.ToArray();
+        }
+        #endregion
+
+        #region 删除资源
+        //删除资源
+        public static void CardDelete(long id, YgoPath ygopath, bool bak)
+        {
+            string[] files = ygopath.GetCardfiles(id);
+            for (int i = 0; i < files.Length; i++)
+            {
+                if (File.Exists(files[i]))
+                {
+                    if (bak)
+                        File.Move(files[i], files[i] + ".bak");
+                    else
+                        File.Delete(files[i]);//删除文件
+                }
+
+            }
+        }
+        #endregion
+
+        #region 资源改名
+        //资源改名
+        public static void CardRename(long newid, long oldid, YgoPath ygopath, bool delold)
+        {
+            string[] newfiles = ygopath.GetCardfiles(newid);
+            string[] oldfiles = ygopath.GetCardfiles(oldid);
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (File.Exists(oldfiles[i]))
+                {
+                    if (delold)
+                        File.Move(oldfiles[i], newfiles[i]);
+                    else
+                        File.Copy(oldfiles[i], newfiles[i], false);
+                }
+            }
         }
         #endregion
     }

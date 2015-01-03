@@ -15,43 +15,29 @@ namespace DataEditorX.Config
         #region 成员
         public CodeConfig()
         {
-            Init();
-        }
-
-        public void Init()
-        {
-            tooltipDic = new Dictionary<string, string>();
-            funList = new List<AutocompleteItem>();
-            conList = new List<AutocompleteItem>();
+            tooltipDic = new SortedList<string, string>();
+            longTooltipDic = new SortedList<string, string>();
+            items = new List<AutocompleteItem>();
         }
 
         //函数提示
-        Dictionary<string, string> tooltipDic;
-        //函数列表
-        List<AutocompleteItem> funList;
-        //常量列表
-        List<AutocompleteItem> conList;
-
+        SortedList<string, string> tooltipDic;
+        SortedList<string, string> longTooltipDic;
+        List<AutocompleteItem> items;
         /// <summary>
         /// 输入提示
         /// </summary>
-        public Dictionary<string, string> TooltipDic
+        public SortedList<string, string> TooltipDic
         {
             get { return tooltipDic; }
         }
-        /// <summary>
-        /// 函数列表
-        /// </summary>
-        public AutocompleteItem[] FunList
+        public SortedList<string, string> LongTooltipDic
         {
-            get { return funList.ToArray(); }
+            get { return longTooltipDic; }
         }
-        /// <summary>
-        /// 常量列表
-        /// </summary>
-        public AutocompleteItem[] ConList
+        public AutocompleteItem[] Items
         {
-            get { return conList.ToArray(); }
+            get { return items.ToArray(); }
         }
         #endregion
 
@@ -67,7 +53,7 @@ namespace DataEditorX.Config
                 string key = "0x" + k.ToString("x");
                 if (!tooltipDic.ContainsKey(key))
                 {
-                    AddConToolTip(key, dic[k]);
+                    AddToolIipDic(key, dic[k]);
                 }
             }
         }
@@ -89,7 +75,7 @@ namespace DataEditorX.Config
                         string[] ws = line.Split(' ');
                         if (ws.Length > 2)
                         {
-                            AddConToolTip(ws[1], ws[2]);
+                            AddToolIipDic(ws[1], ws[2]);
                         }
                     }
                 }
@@ -99,15 +85,10 @@ namespace DataEditorX.Config
         #endregion
 
         #region function
-        /// <summary>
-        /// 添加函数
-        /// </summary>
-        /// <param name="funtxt"></param>
         public void AddFunction(string funtxt)
         {
             if (!File.Exists(funtxt))
                 return;
-
             string[] lines = File.ReadAllLines(funtxt);
             bool isFind = false;
             string name = "";
@@ -121,7 +102,7 @@ namespace DataEditorX.Config
                 if (line.StartsWith("●"))
                 {
                     //add
-                    AddFuncTooltip(name, desc);
+                    AddToolIipDic(name, desc);
                     int w = line.IndexOf("(");
                     int t = line.IndexOf(" ");
 
@@ -138,98 +119,91 @@ namespace DataEditorX.Config
                     desc += Environment.NewLine + line;
                 }
             }
-            AddFuncTooltip(name, desc);
-        }
-        //获取不带类名的函数名
-        string GetFunName(string str)
-        {
-            int t = str.IndexOf(".");
-            if (t > 0)
-                return str.Substring(t + 1);
-            return str;
-        }
-        //添加提示
-        void AddFuncTooltip(string name, string desc)
-        {
-            if (!string.IsNullOrEmpty(name))
-            {
-                string fname = GetFunName(name);
-                AddAutoMenuItem(funList, fname, desc);
-                if (!tooltipDic.ContainsKey(fname))
-                {
-                    tooltipDic.Add(fname, desc);
-                }
-                else
-                    tooltipDic[fname] += Environment.NewLine
-                        + Environment.NewLine + desc;
-            }
+            AddToolIipDic(name, desc);
         }
         #endregion
 
-        #region constant
-        //常量提示
-        void AddConToolTip(string key, string desc)
-        {
-            AddAutoMenuItem(conList, key, desc);
-            if (tooltipDic.ContainsKey(key))
-                tooltipDic[key] += Environment.NewLine
-                    + Environment.NewLine + desc;
-            else
-            {
-                tooltipDic.Add(key, desc);
-            }
-        }
-        //常量
+        #region 常量
         public void AddConstant(string conlua)
         {
             //conList.Add("con");
-            if (File.Exists(conlua))
+            if (!File.Exists(conlua))
+                return;
+            string[] lines = File.ReadAllLines(conlua);
+            foreach (string line in lines)
             {
-                string[] lines = File.ReadAllLines(conlua);
-                foreach (string line in lines)
-                {
-                    if (line.StartsWith("--"))
-                        continue;
-                    string k = line, desc = line;
-                    int t = line.IndexOf("=");
-                    int t2 = line.IndexOf("--");
-                    //常量 = 0x1 ---注释
-                    k = (t > 0) ? line.Substring(0, t).TrimEnd(new char[] { ' ', '\t' })
-                        : line;
-                    desc = (t > 0) ? line.Substring(t + 1).Replace("--", "\n")
-                        : line;
-                    if (!tooltipDic.ContainsKey(k))
-                    {
-                        AddConToolTip(k, desc);
-                    }
-                    else
-                        tooltipDic[k] += Environment.NewLine
-                            + Environment.NewLine + desc;
-                }
+                if (line.StartsWith("--"))
+                    continue;
+                string k = line, desc = line;
+                int t = line.IndexOf("=");
+                int t2 = line.IndexOf("--");
+                //常量 = 0x1 ---注释
+                k = (t > 0) ? line.Substring(0, t).TrimEnd(new char[] { ' ', '\t' })
+                    : line;
+                desc = (t > 0) ? line.Substring(t + 1).Replace("--", "\n")
+                    : line;
+                AddToolIipDic(k, desc);
             }
         }
         #endregion
 
-        #region 提示
-        void AddAutoMenuItem(List<AutocompleteItem> list, string key, string desc)
+        #region 处理
+        public void InitAutoMenus()
         {
-            bool isExists = false;
-            foreach (AutocompleteItem ai in list)
+            items.Clear();
+            foreach (string k in tooltipDic.Keys)
             {
-                if (ai.Text == key)
-                {
-                    isExists = true;
-                    ai.ToolTipText += Environment.NewLine
-                        + Environment.NewLine + desc;
-                }
+                AutocompleteItem item = new AutocompleteItem(k);
+                item.ToolTipTitle = k;
+                item.ToolTipText = tooltipDic[k];
+                items.Add(item);
             }
-            if (!isExists)
+            foreach (string k in longTooltipDic.Keys)
             {
-                AutocompleteItem aitem = new AutocompleteItem(key);
-                aitem.ToolTipTitle = key;
-                aitem.ToolTipText = desc;
-                list.Add(aitem);
+                if (tooltipDic.ContainsKey(k))
+                    continue;
+                AutocompleteItem item = new AutocompleteItem(k);
+                item.ToolTipTitle = k;
+                item.ToolTipText = longTooltipDic[k];
+                items.Add(item);
             }
+        }
+        string GetShortName(string name)
+        {
+            int t = name.IndexOf(".");
+            if (t > 0)
+                return name.Substring(t + 1);
+            else
+                return name;
+        }
+        void AddToolIipDic(string key, string val)
+        {
+            string skey = GetShortName(key);
+            if (tooltipDic.ContainsKey(skey))//存在
+            {
+                string nval = tooltipDic[skey];
+                if (!nval.EndsWith(Environment.NewLine))
+                    nval += Environment.NewLine;
+                nval += Environment.NewLine +val;
+                tooltipDic[skey] = nval;
+            }
+            else
+                tooltipDic.Add(skey, val);
+            //
+            AddLongToolIipDic(key, val);
+        }
+        void AddLongToolIipDic(string key, string val)
+        {
+            if (longTooltipDic.ContainsKey(key))//存在
+            {
+                string nval = longTooltipDic[key];
+                if (!nval.EndsWith(Environment.NewLine))
+                    nval += Environment.NewLine;
+                nval += Environment.NewLine + val;
+                longTooltipDic[key] = nval;
+            }
+            else
+                longTooltipDic.Add(key, val);
         }
         #endregion
     }
