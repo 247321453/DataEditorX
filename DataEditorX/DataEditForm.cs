@@ -278,16 +278,11 @@ namespace DataEditorX
                 _cbox.Text = dic[key];
                 _cbox.AutoSize = true;
                 _cbox.Margin = fpanel.Margin;
-                _cbox.Click += PanelOnCheckClick;
+                //_cbox.Click += PanelOnCheckClick;
                 fpanel.Controls.Add(_cbox);
             }
             fpanel.ResumeLayout(false);
             fpanel.PerformLayout();
-        }
-        //FlowLayoutPanel点击CheckBox
-        void PanelOnCheckClick(object sender, EventArgs e)
-        {
-
         }
         //初始化ComboBox
         void InitComboBox(ComboBox cb, Dictionary<long, string> tempdic)
@@ -325,10 +320,10 @@ namespace DataEditorX
                 MaxRow = 20;
         }
         //设置checkbox
-        string SetCheck(FlowLayoutPanel fpl, long number)
+        void SetCheck(FlowLayoutPanel fpl, long number)
         {
             long temp;
-            string strType = "";
+            //string strType = "";
             foreach (Control c in fpl.Controls)
             {
                 if (c is CheckBox)
@@ -342,13 +337,13 @@ namespace DataEditorX
                     if ((temp & number) == temp && temp != 0)
                     {
                         cbox.Checked = true;
-                        strType += "/" + c.Text;
+                        //strType += "/" + c.Text;
                     }
                     else
                         cbox.Checked = false;
                 }
             }
-            return strType;
+            //return strType;
         }
         //设置combobox
         void SetSelect(ComboBox cb, long k)
@@ -453,15 +448,14 @@ namespace DataEditorX
         public void SetCard(Card c)
         {
             oldCard = c;
-            if (c.str == null)
-                c.InitStrs();
+
             tb_cardname.Text = c.name;
             tb_cardtext.Text = c.desc;
 
-            strs = new string[c.str.Length];
-            Array.Copy(c.str, strs, c.str.Length);
+            strs = new string[c.Str.Length];
+            Array.Copy(c.Str, strs, Card.STR_MAX);
             lb_scripttext.Items.Clear();
-            lb_scripttext.Items.AddRange(c.str);
+            lb_scripttext.Items.AddRange(c.Str);
             tb_edittext.Text = "";
             //data
             SetSelect(cb_cardrule, c.ot);
@@ -469,18 +463,11 @@ namespace DataEditorX
             SetSelect(cb_cardlevel, (c.level & 0xff));
             SetSelect(cb_cardrace, c.race);
             //setcode
-            long sc1 = c.setcode & 0xffff;
-            long sc2 = (c.setcode >> 0x10) & 0xffff;
-            long sc3 = (c.setcode >> 0x20) & 0xffff;
-            long sc4 = (c.setcode >> 0x30) & 0xffff;
-            tb_setcode1.Text = sc1.ToString("x");
-            tb_setcode2.Text = sc2.ToString("x");
-            tb_setcode3.Text = sc3.ToString("x");
-            tb_setcode4.Text = sc4.ToString("x");
-            //SetSelect(cb_setname1, sc1);
-            //SetSelect(cb_setname2, sc2);
-            //SetSelect(cb_setname3, sc3);
-            //SetSelect(cb_setname4, sc4);
+            long[] setcodes = c.GetSetCode();
+            tb_setcode1.Text = setcodes[0].ToString("x");
+            tb_setcode2.Text = setcodes[1].ToString("x");
+            tb_setcode3.Text = setcodes[2].ToString("x");
+            tb_setcode4.Text = setcodes[3].ToString("x");
             //type,category
             SetCheck(pl_cardtype, c.type);
             SetCheck(pl_category, c.category);
@@ -504,23 +491,18 @@ namespace DataEditorX
             c.name = tb_cardname.Text;
             c.desc = tb_cardtext.Text;
 
-            Array.Copy(strs, c.str, c.str.Length);
+            Array.Copy(strs, c.Str, Card.STR_MAX);
 
             c.ot = (int)GetSelect(cb_cardrule);
             c.attribute = (int)GetSelect(cb_cardattribute);
             c.level = (int)GetSelect(cb_cardlevel);
             c.race = (int)GetSelect(cb_cardrace);
-
-            //setcode
-            int.TryParse(tb_setcode1.Text, NumberStyles.HexNumber, null, out temp);
-            c.setcode = temp;
-            int.TryParse(tb_setcode2.Text, NumberStyles.HexNumber, null, out temp);
-            c.setcode += ((long)temp << 0x10);
-            int.TryParse(tb_setcode3.Text, NumberStyles.HexNumber, null, out temp);
-            c.setcode += ((long)temp << 0x20);
-            int.TryParse(tb_setcode4.Text, NumberStyles.HexNumber, null, out temp);
-            c.setcode += ((long)temp << 0x30);
-            //c.setcode = getSetcodeByText();
+            //系列
+            c.SetSetCode(
+                tb_setcode1.Text, 
+                tb_setcode2.Text, 
+                tb_setcode3.Text, 
+                tb_setcode4.Text);
 
             c.type = GetCheck(pl_cardtype);
             c.category = GetCheck(pl_category);

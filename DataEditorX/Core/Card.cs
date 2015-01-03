@@ -4,6 +4,7 @@
  * ModiftyDate :2014-02-12
  */
 using System;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using DataEditorX.Core.Info;
 
@@ -12,6 +13,8 @@ namespace DataEditorX.Core
 	public struct Card : IEquatable<Card>
 	{
         public const int STR_MAX = 0x10;
+        public const int SETCODE_MAX = 4;
+
 		#region 构造
 		/// <summary>
 		/// 卡片
@@ -20,7 +23,6 @@ namespace DataEditorX.Core
 		/// <param name="cardName">名字</param>
 		public Card(long cardCode)
 		{
-            
             this.id = cardCode;
             this.name = "";
             this.ot = 0;
@@ -34,18 +36,10 @@ namespace DataEditorX.Core
             this.attribute = 0;
             this.category = 0;
             this.desc = "";
-            int i;
             this.str = new string[STR_MAX];
-            for (i = 0; i < STR_MAX; i++)
-                str[i] = "";
+            for (int i = 0; i < STR_MAX; i++)
+                this.str[i] = "";
 		}
-        public void InitStrs()
-        {
-            int i;
-            this.str = new string[STR_MAX];
-            for (i = 0; i < STR_MAX; i++)
-                str[i] = "";
-        }
 		#endregion
 
 		#region 成员
@@ -75,9 +69,59 @@ namespace DataEditorX.Core
 		public string name;
 		/// <summary>描述文本</summary>
 		public string desc;
-		/// <summary>脚本文件组</summary>
-		public string[] str;
-		#endregion
+        string[] str;
+		/// <summary>脚本文件文字</summary>
+        public string[] Str
+        {
+            get {
+                if (this.str == null)
+                    {
+                        this.str = new string[STR_MAX];
+                        for (int i = 0; i < STR_MAX; i++)
+                            this.str[i] = "";
+                    }
+                return this.str;
+                }
+            set { this.str = value; }
+        }
+        public long[] GetSetCode()
+        {
+            long[] setcodes = new long[SETCODE_MAX];
+            for (int i = 0,k=0; i < SETCODE_MAX; k +=0x10,i++)
+            {
+                setcodes[i] = (this.setcode >> k) & 0xffff;
+            }
+            return setcodes;
+        }
+        public void SetSetCode(params long[] setcodes)
+        {
+            int i = 0;
+            this.setcode = 0;
+            if (setcodes != null)
+            {
+                foreach (long sc in setcodes)
+                {
+                    this.setcode += (sc << i);
+                    i += 0x10;
+                }
+            }
+        }
+        public void SetSetCode(params string[] setcodes)
+        {
+            int i = 0;
+            this.setcode = 0;
+            long temp;
+            if (setcodes != null)
+            {
+                foreach (string sc in setcodes)
+                {
+                    long.TryParse(sc, NumberStyles.HexNumber, null, out temp);
+                    this.setcode += (temp << i);
+                    i += 0x10;
+                }
+            }
+        }
+        #endregion
 
 		#region 比较、哈希值、操作符
 		/// <summary>

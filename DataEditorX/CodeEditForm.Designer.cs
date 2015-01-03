@@ -231,7 +231,7 @@ namespace DataEditorX
             this.fctb.Font = new System.Drawing.Font("Consolas", 14.25F);
             this.fctb.ForeColor = System.Drawing.Color.GhostWhite;
             this.fctb.Hotkeys = resources.GetString("fctb.Hotkeys");
-            this.fctb.IndentBackColor = System.Drawing.SystemColors.WindowFrame;
+            this.fctb.IndentBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.fctb.IsReplaceMode = false;
             this.fctb.Language = FastColoredTextBoxNS.Language.Lua;
             this.fctb.LeftBracket = '(';

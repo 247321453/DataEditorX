@@ -146,7 +146,7 @@ namespace DataEditorX.Core
 			for ( int i = 0; i < 0x10; i++ )
 			{
 				temp = reader.GetString(reader.GetOrdinal("str"+(i+1).ToString()));
-				c.str[i]= ( temp == null ) ? "":temp;
+				c.Str[i]= ( temp == null ) ? "":temp;
 			}
 			return c;
 		}
@@ -354,8 +354,7 @@ namespace DataEditorX.Core
 		{
             if (c == null)
                 return "";
-            if (c.str == null)
-                c.InitStrs();
+
 			StringBuilder st = new StringBuilder();
 			if(ignore)
 				st.Append("INSERT or ignore into datas values(");
@@ -381,7 +380,7 @@ namespace DataEditorX.Core
 			st.Append(c.desc.Replace("'", "''"));
 			for ( int i = 0; i < 0x10; i++ )
 			{
-				st.Append("','"); st.Append(c.str[i].Replace("'", "''"));
+				st.Append("','"); st.Append(c.Str[i].Replace("'", "''"));
 			}
 			st.Append("');");
 			string sql = st.ToString();
@@ -401,8 +400,7 @@ namespace DataEditorX.Core
 			StringBuilder st = new StringBuilder();
             if (c == null)
                 return "";
-            if (c.str == null)
-                c.InitStrs();
+
 			st.Append("update datas set ot="); st.Append(c.ot.ToString());
 			st.Append(",alias="); st.Append(c.alias.ToString());
 			st.Append(",setcode="); st.Append(c.setcode.ToString());
@@ -419,7 +417,7 @@ namespace DataEditorX.Core
 			for ( int i = 0; i < 0x10; i++ )
 			{
 				st.Append("str"); st.Append(( i + 1 ).ToString()); st.Append("='");
-				st.Append(c.str[i].Replace("'", "''"));
+				st.Append(c.Str[i].Replace("'", "''"));
 				if ( i < 15 )
 				{
 					st.Append("',");

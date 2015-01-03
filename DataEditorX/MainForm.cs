@@ -505,12 +505,13 @@ namespace DataEditorX
         {
             Init();
         }
-        #endregion
+        
 
         private void bgWorker1_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
             //更新UI
             InitForm();
         }
+        #endregion
     }
 }
