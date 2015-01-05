@@ -17,18 +17,19 @@ namespace DataEditorX.Language
     /// <summary>
     /// Description of Language.
     /// </summary>
-    public static class LANG
+    public class LanguageHelper
     {
-        static Dictionary<string, string> mWordslist = new Dictionary<string, string>();
-        static SortedList<LMSG, string> msglist = new SortedList<LMSG, string>();
+        static Dictionary<string, string> gWordsList = new Dictionary<string, string>();
+        static SortedList<LMSG, string> gMsgList = new SortedList<LMSG, string>();
         const char SEP_CONTROL = '.';
         const char SEP_LINE = '\t';
+        Dictionary<string, string> mWordslist = new Dictionary<string, string>();
 
         #region 获取消息文字
         public static string GetMsg(LMSG lMsg)
         {
-            if (msglist.IndexOfKey(lMsg) >= 0)
-                return msglist[lMsg];
+            if (gMsgList.IndexOfKey(lMsg) >= 0)
+                return gMsgList[lMsg];
             else
                 return lMsg.ToString().Replace("_", " ");
         }
@@ -53,7 +54,7 @@ namespace DataEditorX.Language
         static bool GetLabel(string key, out string title)
         {
             string v;
-            if (mWordslist.TryGetValue(key, out v))
+            if (gWordsList.TryGetValue(key, out v))
             {
                 title = v;
                 return true;
@@ -138,7 +139,7 @@ namespace DataEditorX.Language
         #endregion
 
         #region 获取控件信息
-        public static void GetFormLabel(Form fm)
+        public void GetFormLabel(Form fm)
         {
             if (fm == null)
                 return;
@@ -149,13 +150,13 @@ namespace DataEditorX.Language
             //fm.PerformLayout();
         }
 
-        static void AddLabel(string key, string title)
+        void AddLabel(string key, string title)
         {
             if (!mWordslist.ContainsKey(key))
                 mWordslist.Add(key, title);
         }
 
-        static void GetControlLabel(Control c, string pName,
+        void GetControlLabel(Control c, string pName,
             string formName)
         {
             if (!string.IsNullOrEmpty(pName))
@@ -203,7 +204,7 @@ namespace DataEditorX.Language
             }
         }
 
-        static void GetMenuItem(string pName, ToolStripItem tsi)
+        void GetMenuItem(string pName, ToolStripItem tsi)
         {
             if (string.IsNullOrEmpty(tsi.Name))
                 return;
@@ -229,7 +230,7 @@ namespace DataEditorX.Language
         #endregion
 
         #region 保存语言文件
-        public static bool SaveLanguage(string conf)
+        public bool SaveLanguage(string conf)
         {
             using (FileStream fs = new FileStream(conf, FileMode.Create, FileAccess.Write))
             {
@@ -239,14 +240,14 @@ namespace DataEditorX.Language
                     sw.WriteLine(k + SEP_LINE + mWordslist[k]);
                 }
                 sw.WriteLine("#");
-                foreach (LMSG k in msglist.Keys)
+                foreach (LMSG k in gMsgList.Keys)
                 {
                     //记得替换换行符
-                    sw.WriteLine("0x" + ((uint)k).ToString("x") + SEP_LINE + msglist[k].Replace("\n", "\\n"));
+                    sw.WriteLine("0x" + ((uint)k).ToString("x") + SEP_LINE + gMsgList[k].Replace("\n", "\\n"));
                 }
                 foreach (LMSG k in Enum.GetValues(typeof(LMSG)))
                 {
-                    if (!msglist.ContainsKey(k))
+                    if (!gMsgList.ContainsKey(k))
                         sw.WriteLine("0x" + ((uint)k).ToString("x") + SEP_LINE + k.ToString());
                 }
                 sw.Close();
@@ -261,8 +262,8 @@ namespace DataEditorX.Language
         {
             if (!File.Exists(f))
                 return;
-            mWordslist.Clear();
-            msglist.Clear();
+            gWordsList.Clear();
+            gMsgList.Clear();
             using (FileStream fs = new FileStream(f, FileMode.Open, FileAccess.Read))
             {
                 StreamReader sr = new StreamReader(fs, Encoding.UTF8);
@@ -280,13 +281,13 @@ namespace DataEditorX.Language
                     {
                         uint.TryParse(words[0].Replace("0x", ""), NumberStyles.HexNumber, null, out utemp);
                         ltemp = (LMSG)utemp;
-                        if (msglist.IndexOfKey(ltemp) < 0)//记得替换换行符
-                            msglist.Add(ltemp, words[1].Replace("\\n", "\n"));
+                        if (gMsgList.IndexOfKey(ltemp) < 0)//记得替换换行符
+                            gMsgList.Add(ltemp, words[1].Replace("\\n", "\n"));
                     }
                     else if (!line.StartsWith("#"))//加载界面语言
                     {
-                        if (!mWordslist.ContainsKey(words[0]))
-                            mWordslist.Add(words[0], words[1]);
+                        if (!gWordsList.ContainsKey(words[0]))
+                            gWordsList.Add(words[0], words[1]);
                     }
                 }
                 sr.Close();

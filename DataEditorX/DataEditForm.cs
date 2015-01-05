@@ -824,9 +824,9 @@ namespace DataEditorX
         void Menuitem_aboutClick(object sender, EventArgs e)
         {
             MyMsg.Show(
-                LANG.GetMsg(LMSG.About) + "\t" + Application.ProductName + "\n"
-                + LANG.GetMsg(LMSG.Version) + "\t" + Application.ProductVersion + "\n"
-                + LANG.GetMsg(LMSG.Author) + "\t柯永裕\n"
+                LanguageHelper.GetMsg(LMSG.About) + "\t" + Application.ProductName + "\n"
+                + LanguageHelper.GetMsg(LMSG.Version) + "\t" + Application.ProductVersion + "\n"
+                + LanguageHelper.GetMsg(LMSG.Author) + "\t柯永裕\n"
                 + "Email:\t247321453@qq.com");
         }
 
@@ -839,7 +839,7 @@ namespace DataEditorX
             if (!isRun())
             {
                 tasker.SetTask(MyTask.CheckUpdate, null, showNew.ToString());
-                Run(LANG.GetMsg(LMSG.checkUpdate));
+                Run(LanguageHelper.GetMsg(LMSG.checkUpdate));
             }
         }
         bool CancelTask()
@@ -874,8 +874,8 @@ namespace DataEditorX
         {
             using (OpenFileDialog dlg = new OpenFileDialog())
             {
-                dlg.Title = LANG.GetMsg(LMSG.SelectDataBasePath);
-                dlg.Filter = LANG.GetMsg(LMSG.CdbType);
+                dlg.Title = LanguageHelper.GetMsg(LMSG.SelectDataBasePath);
+                dlg.Filter = LanguageHelper.GetMsg(LMSG.CdbType);
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     Open(dlg.FileName);
@@ -887,8 +887,8 @@ namespace DataEditorX
         {
             using (SaveFileDialog dlg = new SaveFileDialog())
             {
-                dlg.Title = LANG.GetMsg(LMSG.SelectDataBasePath);
-                dlg.Filter = LANG.GetMsg(LMSG.CdbType);
+                dlg.Title = LanguageHelper.GetMsg(LMSG.SelectDataBasePath);
+                dlg.Filter = LanguageHelper.GetMsg(LMSG.CdbType);
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     if (DataBase.Create(dlg.FileName))
@@ -906,8 +906,8 @@ namespace DataEditorX
                 return;
             using (OpenFileDialog dlg = new OpenFileDialog())
             {
-                dlg.Title = LANG.GetMsg(LMSG.SelectYdkPath);
-                dlg.Filter = LANG.GetMsg(LMSG.ydkType);
+                dlg.Title = LanguageHelper.GetMsg(LMSG.SelectYdkPath);
+                dlg.Filter = LanguageHelper.GetMsg(LMSG.ydkType);
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     tmpCodes.Clear();
@@ -925,7 +925,7 @@ namespace DataEditorX
                 return;
             using (FolderBrowserDialog fdlg = new FolderBrowserDialog())
             {
-                fdlg.Description = LANG.GetMsg(LMSG.SelectImagePath);
+                fdlg.Description = LanguageHelper.GetMsg(LMSG.SelectImagePath);
                 if (fdlg.ShowDialog() == DialogResult.OK)
                 {
                     tmpCodes.Clear();
@@ -994,7 +994,7 @@ namespace DataEditorX
                     tasker.Cancel();
                 if (bgWorker1.IsBusy)
                     bgWorker1.CancelAsync();
-                MyMsg.Show(LANG.GetMsg(LMSG.TaskError) + "\n" + e.Error);
+                MyMsg.Show(LanguageHelper.GetMsg(LMSG.TaskError) + "\n" + e.Error);
             }
             else if (tasker.IsCancel() || e.Cancelled)
             {//取消任务
@@ -1091,8 +1091,8 @@ namespace DataEditorX
             string filename = null;
             using (OpenFileDialog dlg = new OpenFileDialog())
             {
-                dlg.Title = LANG.GetMsg(LMSG.SelectDataBasePath);
-                dlg.Filter = LANG.GetMsg(LMSG.CdbType);
+                dlg.Title = LanguageHelper.GetMsg(LMSG.SelectDataBasePath);
+                dlg.Filter = LanguageHelper.GetMsg(LMSG.CdbType);
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     filename = dlg.FileName;
@@ -1119,7 +1119,7 @@ namespace DataEditorX
             bool isreplace = MyMsg.Question(LMSG.IfReplaceExistingImage);
             tasker.SetTask(MyTask.CutImages, cardlist.ToArray(),
                            ygopath.picpath, isreplace.ToString());
-            Run(LANG.GetMsg(LMSG.CutImage));
+            Run(LanguageHelper.GetMsg(LMSG.CutImage));
         }
         void Menuitem_saveasmse_selectClick(object sender, EventArgs e)
         {
@@ -1144,8 +1144,8 @@ namespace DataEditorX
             //select save mse-set
             using (SaveFileDialog dlg = new SaveFileDialog())
             {
-                dlg.Title = LANG.GetMsg(LMSG.selectMseset);
-                dlg.Filter = LANG.GetMsg(LMSG.MseType);
+                dlg.Title = LanguageHelper.GetMsg(LMSG.selectMseset);
+                dlg.Filter = LanguageHelper.GetMsg(LMSG.MseType);
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     bool isUpdate = false;
@@ -1154,7 +1154,7 @@ namespace DataEditorX
 #endif
                     tasker.SetTask(MyTask.SaveAsMSE, cards,
                                    dlg.FileName, isUpdate.ToString());
-                    Run(LANG.GetMsg(LMSG.SaveMse));
+                    Run(LanguageHelper.GetMsg(LMSG.SaveMse));
                 }
             }
         }
@@ -1168,8 +1168,8 @@ namespace DataEditorX
                 return;
             using (OpenFileDialog dlg = new OpenFileDialog())
             {
-                dlg.Title = LANG.GetMsg(LMSG.SelectImage) + "-" + tb_cardname.Text;
-                dlg.Filter = LANG.GetMsg(LMSG.ImageType);
+                dlg.Title = LanguageHelper.GetMsg(LMSG.SelectImage) + "-" + tb_cardname.Text;
+                dlg.Filter = LanguageHelper.GetMsg(LMSG.ImageType);
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     //dlg.FileName;
@@ -1264,13 +1264,13 @@ namespace DataEditorX
                 return;
             using (FolderBrowserDialog fdlg = new FolderBrowserDialog())
             {
-                fdlg.Description = LANG.GetMsg(LMSG.SelectImagePath);
+                fdlg.Description = LanguageHelper.GetMsg(LMSG.SelectImagePath);
                 if (fdlg.ShowDialog() == DialogResult.OK)
                 {
                     bool isreplace = MyMsg.Question(LMSG.IfReplaceExistingImage);
                     tasker.SetTask(MyTask.ConvertImages, null,
                                    fdlg.SelectedPath, ygopath.gamepath, isreplace.ToString());
-                    Run(LANG.GetMsg(LMSG.ConvertImage));
+                    Run(LanguageHelper.GetMsg(LMSG.ConvertImage));
                 }
             }
         }
@@ -1292,7 +1292,7 @@ namespace DataEditorX
                     tasker.SetTask(MyTask.ExportData, 
                         GetCardList(false), 
                         ygopath.gamepath, dlg.FileName);
-                    Run(LANG.GetMsg(LMSG.ExportData));
+                    Run(LanguageHelper.GetMsg(LMSG.ExportData));
                 }
             }
 
@@ -1490,15 +1490,15 @@ namespace DataEditorX
             //select open mse-set
             using (OpenFileDialog dlg = new OpenFileDialog())
             {
-                dlg.Title = LANG.GetMsg(LMSG.selectMseset);
-                dlg.Filter = LANG.GetMsg(LMSG.MseType);
+                dlg.Title = LanguageHelper.GetMsg(LMSG.selectMseset);
+                dlg.Filter = LanguageHelper.GetMsg(LMSG.MseType);
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     bool isUpdate = false;//是否替换存在的图片
                     isUpdate = MyMsg.Question(LMSG.IfReplaceExistingImage);
                     tasker.SetTask(MyTask.ReadMSE, null,
                                    dlg.FileName, isUpdate.ToString());
-                    Run(LANG.GetMsg(LMSG.ReadMSE));
+                    Run(LanguageHelper.GetMsg(LMSG.ReadMSE));
                 }
             }
         }

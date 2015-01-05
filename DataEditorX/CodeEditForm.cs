@@ -246,7 +246,7 @@ namespace DataEditorX
             {
                 using (SaveFileDialog sfdlg = new SaveFileDialog())
                 {
-                    sfdlg.Filter = LANG.GetMsg(LMSG.ScriptFilter);
+                    sfdlg.Filter = LanguageHelper.GetMsg(LMSG.ScriptFilter);
                     if (sfdlg.ShowDialog() == DialogResult.OK)
                     {
                         nowFile = sfdlg.FileName;
@@ -323,9 +323,9 @@ namespace DataEditorX
         void AboutToolStripMenuItemClick(object sender, EventArgs e)
         {
             MyMsg.Show(
-                LANG.GetMsg(LMSG.About) + "\t" + Application.ProductName + "\n"
-                + LANG.GetMsg(LMSG.Version) + "\t1.1.0.0\n"
-                + LANG.GetMsg(LMSG.Author) + "\t柯永裕\n"
+                LanguageHelper.GetMsg(LMSG.About) + "\t" + Application.ProductName + "\n"
+                + LanguageHelper.GetMsg(LMSG.Version) + "\t1.1.0.0\n"
+                + LanguageHelper.GetMsg(LMSG.Author) + "\t柯永裕\n"
                 + "Email:\t247321453@qq.com");
         }
 
@@ -333,7 +333,7 @@ namespace DataEditorX
         {
             using (OpenFileDialog sfdlg = new OpenFileDialog())
             {
-                sfdlg.Filter = LANG.GetMsg(LMSG.ScriptFilter);
+                sfdlg.Filter = LanguageHelper.GetMsg(LMSG.ScriptFilter);
                 if (sfdlg.ShowDialog() == DialogResult.OK)
                 {
                     nowFile = sfdlg.FileName;

@@ -42,10 +42,6 @@ namespace DataEditorX
         #region 设置界面，消息语言
         public MainForm()
         {
-            //检查更新
-            Thread th = new Thread(CheckUpdate);
-            th.IsBackground = true;//如果exe结束，则线程终止
-            th.Start();
             //初始化控件
             InitializeComponent();
         }
@@ -103,11 +99,11 @@ namespace DataEditorX
             //读取历史记录
             history.ReadHistory(MyPath.Combine(datapath, MyConfig.FILE_HISTORY));
             //加载多语言
-            LANG.LoadFormLabels(conflang);
+            LanguageHelper.LoadFormLabels(conflang);
         }
         void InitForm()
         {
-           LANG.SetFormLabel(this);
+           LanguageHelper.SetFormLabel(this);
            
            //设置所有窗口的语言
            DockContentCollection contents = dockPanel1.Contents;
@@ -115,7 +111,7 @@ namespace DataEditorX
            {
                if (dc is Form)
                {
-                   LANG.SetFormLabel((Form)dc);
+                   LanguageHelper.SetFormLabel((Form)dc);
                }
            }
             //添加历史菜单
@@ -182,7 +178,7 @@ namespace DataEditorX
         {
             CodeEditForm cf = new CodeEditForm();
             //设置界面语言
-            LANG.SetFormLabel(cf);
+            LanguageHelper.SetFormLabel(cf);
             //设置cdb列表
             cf.SetCDBList(history.GetcdbHistory());
             //初始化函数提示
@@ -200,7 +196,7 @@ namespace DataEditorX
             else
                 def = new DataEditForm(datapath, file);
             //设置语言
-            LANG.SetFormLabel(def);
+            LanguageHelper.SetFormLabel(def);
             //初始化界面数据
             def.InitControl(datacfg);
             def.Show(dockPanel1, DockState.Document);
@@ -254,28 +250,6 @@ namespace DataEditorX
                 }
             }
             return false;
-        }
-        #endregion
-
-        #region 加载，关闭
-        void MainFormLoad(object sender, System.EventArgs e)
-        {
-            //检查更新
-            //bgWorker1.RunWorkerAsync();
-        }
-
-        void MainFormFormClosing(object sender, FormClosingEventArgs e)
-        {
-#if DEBUG
-            LANG.GetFormLabel(this);
-            DockContentCollection contents = dockPanel1.Contents;
-            foreach (DockContent dc in contents)
-            {
-                LANG.GetFormLabel(dc);
-            }
-            //获取窗体文字
-            LANG.SaveLanguage(conflang + ".bak");
-#endif
         }
         #endregion
 
@@ -342,11 +316,11 @@ namespace DataEditorX
         {
             using (OpenFileDialog dlg = new OpenFileDialog())
             {
-                dlg.Title = LANG.GetMsg(LMSG.OpenFile);
+                dlg.Title = LanguageHelper.GetMsg(LMSG.OpenFile);
                 if (GetActive() != null || dockPanel1.Contents.Count == 0)//判断当前窗口是不是DataEditor
-                    dlg.Filter = LANG.GetMsg(LMSG.CdbType);
+                    dlg.Filter = LanguageHelper.GetMsg(LMSG.CdbType);
                 else
-                    dlg.Filter = LANG.GetMsg(LMSG.ScriptFilter);
+                    dlg.Filter = LanguageHelper.GetMsg(LMSG.ScriptFilter);
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     string file = dlg.FileName;
@@ -365,11 +339,11 @@ namespace DataEditorX
         {
             using (SaveFileDialog dlg = new SaveFileDialog())
             {
-                dlg.Title = LANG.GetMsg(LMSG.NewFile);
+                dlg.Title = LanguageHelper.GetMsg(LMSG.NewFile);
                 if (GetActive() != null)//判断当前窗口是不是DataEditor
-                    dlg.Filter = LANG.GetMsg(LMSG.CdbType);
+                    dlg.Filter = LanguageHelper.GetMsg(LMSG.CdbType);
                 else
-                    dlg.Filter = LANG.GetMsg(LMSG.ScriptFilter);
+                    dlg.Filter = LanguageHelper.GetMsg(LMSG.ScriptFilter);
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     string file = dlg.FileName;
@@ -513,5 +487,13 @@ namespace DataEditorX
             InitForm();
         }
         #endregion
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            //检查更新
+            Thread th = new Thread(CheckUpdate);
+            th.IsBackground = true;//如果exe结束，则线程终止
+            th.Start();
+        }
     }
 }

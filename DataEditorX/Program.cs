@@ -12,6 +12,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 using DataEditorX.Config;
+using DataEditorX.Language;
 
 namespace DataEditorX
 {
@@ -20,8 +21,15 @@ namespace DataEditorX
 		[STAThread]
 		private static void Main(string[] args)
 		{
-            string file = (args.Length > 0) ? args[0] : "";
-            if (MyConfig.OpenOnExistForm(file))//在已经存在的窗口打开文件
+            string arg = (args.Length > 0) ? args[0] : "";
+            if (arg == MyConfig.TAG_SAVE_LAGN || arg == MyConfig.TAG_SAVE_LAGN2)
+            {
+                //保存语言
+                SaveLanguage();
+                MessageBox.Show("Save Language OK.");
+                Environment.Exit(1);
+            }
+            if (MyConfig.OpenOnExistForm(arg))//在已经存在的窗口打开文件
                 Environment.Exit(1);
             else//新建窗口
             {
@@ -29,13 +37,32 @@ namespace DataEditorX
                 Application.SetCompatibleTextRenderingDefault(false);
                 MainForm mainForm = new MainForm();
                 //设置将要打开的文件
-                mainForm.setOpenFile(file);
+                mainForm.setOpenFile(arg);
                 //数据目录
                 mainForm.SetDataPath(MyPath.Combine(Application.StartupPath, MyConfig.TAG_DATA));
 
                 Application.Run(mainForm);
 			}
-		} 
+		}
+        static void SaveLanguage()
+        {
+            string datapath = MyPath.Combine(Application.StartupPath, MyConfig.TAG_DATA);
+            string conflang = MyConfig.GetLanguageFile(datapath);
+            LanguageHelper.LoadFormLabels(conflang);
+            LanguageHelper langhelper = new LanguageHelper();
+            MainForm form1 = new MainForm();
+            LanguageHelper.SetFormLabel(form1);
+            langhelper.GetFormLabel(form1);
+            DataEditForm form2 = new DataEditForm();
+            LanguageHelper.SetFormLabel(form2);
+            langhelper.GetFormLabel(form2);
+            CodeEditForm form3 = new CodeEditForm();
+            LanguageHelper.SetFormLabel(form3);
+            langhelper.GetFormLabel(form3);
+           // LANG.GetFormLabel(this);
+            //获取窗体文字
+            langhelper.SaveLanguage(conflang + ".bak");
+        }
 
 	}
 }

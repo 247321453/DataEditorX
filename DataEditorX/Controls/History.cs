@@ -108,7 +108,7 @@ namespace DataEditorX.Controls
                 mainForm.AddCdbMenu(tsmi);
             }
             mainForm.AddCdbMenu(new ToolStripSeparator());
-            ToolStripMenuItem tsmiclear = new ToolStripMenuItem(LANG.GetMsg(LMSG.ClearHistory));
+            ToolStripMenuItem tsmiclear = new ToolStripMenuItem(LanguageHelper.GetMsg(LMSG.ClearHistory));
             tsmiclear.Click += MenuHistoryClear_Click;
             mainForm.AddCdbMenu(tsmiclear);
             //lua历史
@@ -120,7 +120,7 @@ namespace DataEditorX.Controls
                 mainForm.AddLuaMenu(tsmi);
             }
             mainForm.AddLuaMenu(new ToolStripSeparator());
-            ToolStripMenuItem tsmiclear2 = new ToolStripMenuItem(LANG.GetMsg(LMSG.ClearHistory));
+            ToolStripMenuItem tsmiclear2 = new ToolStripMenuItem(LanguageHelper.GetMsg(LMSG.ClearHistory));
             tsmiclear2.Click += MenuHistoryClear2_Click;
             mainForm.AddLuaMenu(tsmiclear2);
         }
