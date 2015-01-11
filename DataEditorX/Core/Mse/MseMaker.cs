@@ -216,7 +216,7 @@ namespace DataEditorX.Core.Mse
             if (mc.Success)
                 return ((mc.Groups.Count > 1) ?
                     mc.Groups[1].Value : mc.Groups[0].Value)
-                    .Replace("\n", "\n\t\t");
+                    .Trim('\n').Replace("\n", "\n\t\t");
             return "";
         }
 
@@ -227,7 +227,7 @@ namespace DataEditorX.Core.Mse
             sb.Replace("\r", "\n");
             sb.Replace("\n\n", "\n");
             sb.Replace("\n", "\n\t\t");
-            return sb.ToString();
+            return sb.ToString().Trim('\n');
         }
         //获取星星
         public static string GetStar(long level)
