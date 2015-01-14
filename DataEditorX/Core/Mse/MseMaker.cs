@@ -415,12 +415,12 @@ namespace DataEditorX.Core.Mse
                     text = ReText(c.desc);
                 sb.AppendLine("	" + TAG_TEXT + ":");
                 //sb.AppendLine(cfg.regx_monster + ":" + cfg.regx_pendulum);
-                sb.AppendLine("		" + text);
+                sb.AppendLine("		" + reItalic(text));
                 sb.AppendLine(GetLine(TAG_PENDULUM, "medium"));
                 sb.AppendLine(GetLine(TAG_PSCALE1, ((c.level >> 0x18) & 0xff).ToString()));
                 sb.AppendLine(GetLine(TAG_PSCALE2, ((c.level >> 0x10) & 0xff).ToString()));
                 sb.AppendLine("	" + TAG_PEND_TEXT + ":");
-                sb.AppendLine("		" + GetDesc(c.desc, cfg.regx_pendulum));
+                sb.AppendLine("		" + reItalic(GetDesc(c.desc, cfg.regx_pendulum)));
             }
             else//一般怪兽
             {
@@ -444,7 +444,7 @@ namespace DataEditorX.Core.Mse
             sb.AppendLine(GetLine(TAG_LEVEL, GetSpellTrapSymbol(c, isSpell)));
             sb.AppendLine(GetLine(TAG_IMAGE, img));
             sb.AppendLine("	" + TAG_TEXT + ":");
-            sb.AppendLine("		" + ReText(c.desc));
+            sb.AppendLine("		" + reItalic(ReText(c.desc)));
             sb.AppendLine(GetLine(TAG_CODE, c.idString));
             return sb.ToString();
         }

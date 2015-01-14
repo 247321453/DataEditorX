@@ -1,0 +1,4 @@
+# database history
+F:\games\ygopro\test.cdb
+F:\games\ygopro\cards.cdb
+# script history

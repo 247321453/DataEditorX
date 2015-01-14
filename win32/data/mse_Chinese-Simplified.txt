@@ -6,7 +6,7 @@
 cn2tw = false
 ########################### 存档最大卡片数
 maxcount = 0
-imagepath = ./Images
+imagepath = E:\github\images
 ########################### Spell/Trap
 #jp setting
 # spell = %%
