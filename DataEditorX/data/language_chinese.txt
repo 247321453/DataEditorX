@@ -46,6 +46,7 @@ DataEditForm.mainMenu.menu_data	数据(&D)
 DataEditForm.mainMenu.menuitem_operacardsfile	同步操作卡片图片和脚本
 DataEditForm.mainMenu.menuitem_openfileinthis	用CodeEditor打开脚本
 DataEditForm.mainMenu.menuitem_findluafunc	从C++源码查找Lua函数
+DataEditForm.mainMenu.menuitem_saveasenter	自动分行
 DataEditForm.mainMenu.menuitem_readydk	从卡组文件读取卡片(&Y)
 DataEditForm.mainMenu.menuitem_readimages	从卡图文件夹读取卡片(&I)
 DataEditForm.mainMenu.menuitem_compdb	压缩数据库

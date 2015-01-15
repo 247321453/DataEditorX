@@ -44,6 +44,7 @@ namespace DataEditorX.Config
         /// 语言
         /// </summary>
         public const string TAG_LANGUAGE = "language";
+        public const string TAG_AUTO_LEN = "autolength";
         /// <summary>
         /// 临时文件
         /// </summary>

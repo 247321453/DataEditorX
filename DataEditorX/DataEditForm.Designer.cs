@@ -124,6 +124,7 @@ namespace DataEditorX
             this.lv_cardlist = new System.Windows.Forms.DListView();
             this.ch_cardcode = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_cardname = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.menuitem_saveasenter = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -279,6 +280,7 @@ namespace DataEditorX
             this.menuitem_compdb,
             this.menuitem_findluafunc,
             this.menuitem_exportdata,
+            this.menuitem_saveasenter,
             this.tsep5,
             this.menuitem_cutimages,
             this.menuitem_convertimage,
@@ -1010,6 +1012,13 @@ namespace DataEditorX
             this.ch_cardname.Text = "Card Name";
             this.ch_cardname.Width = 140;
             // 
+            // menuitem_saveasenter
+            // 
+            this.menuitem_saveasenter.Name = "menuitem_saveasenter";
+            this.menuitem_saveasenter.Size = new System.Drawing.Size(212, 22);
+            this.menuitem_saveasenter.Text = "Save as Auto Enter";
+            this.menuitem_saveasenter.Click += new System.EventHandler(this.menuitem_saveasenter_Click);
+            // 
             // DataEditForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1168,5 +1177,6 @@ namespace DataEditorX
         private System.Windows.Forms.ToolStripMenuItem menuitem_operacardsfile;
         private System.Windows.Forms.ToolStripSeparator tsep2;
         private System.Windows.Forms.ToolStripMenuItem menuitem_openfileinthis;
+        private System.Windows.Forms.ToolStripMenuItem menuitem_saveasenter;
     }
 }
