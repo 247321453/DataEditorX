@@ -1538,13 +1538,13 @@ namespace DataEditorX
                 dlg.Filter = LanguageHelper.GetMsg(LMSG.CdbType);
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
+                    Card[] cards = DataBase.Read(nowCdbFile, true, "");
+                    int count = cards.Length;
+                    if (cards == null || cards.Length == 0)
+                        return;
                     if (DataBase.Create(dlg.FileName))
                     {
                         //
-                        Card[] cards = DataBase.Read(nowCdbFile, true, "");
-                        int count = cards.Length;
-                        if (cards == null || cards.Length == 0)
-                            return;
                         int len = MyConfig.readInteger(MyConfig.TAG_AUTO_LEN, 30);
                         for (int i = 0; i < count; i++)
                         {
