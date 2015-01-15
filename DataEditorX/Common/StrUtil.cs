@@ -24,6 +24,8 @@ namespace DataEditorX.Common
                 else
                     i += 1;
                 sb.Append(c);
+                if (c == '\n' || c == '\r')
+                    i = 0;
                 if (i >= lineNum)
                 {
                     sb.Append(re);

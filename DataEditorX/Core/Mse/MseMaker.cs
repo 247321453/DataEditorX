@@ -425,7 +425,7 @@ namespace DataEditorX.Core.Mse
             else//一般怪兽
             {
                 sb.AppendLine("	" + TAG_TEXT + ":");
-                sb.AppendLine("		" + ReText(c.desc));
+                sb.AppendLine("		" + reItalic(ReText(c.desc)));
             }
             sb.AppendLine(GetLine(TAG_ATK, (c.atk < 0) ? UNKNOWN_ATKDEF : c.atk.ToString()));
             sb.AppendLine(GetLine(TAG_DEF, (c.def < 0) ? UNKNOWN_ATKDEF : c.def.ToString()));

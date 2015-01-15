@@ -141,6 +141,8 @@ namespace DataEditorX.Common
         {
             try
             {
+                if (File.Exists(filename))
+                    File.Delete(filename);
                 HttpWebRequest Myrq = (HttpWebRequest)System.Net.HttpWebRequest.Create(URL);
                 HttpWebResponse myrp = (HttpWebResponse)Myrq.GetResponse();
                 long totalBytes = myrp.ContentLength;

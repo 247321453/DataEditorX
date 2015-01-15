@@ -143,7 +143,8 @@ namespace DataEditorX.Controls
             if (tsmi != null)
             {
                 string file = tsmi.Text;
-                mainForm.Open(file);
+                if(File.Exists(file))
+                    mainForm.Open(file);
             }
         }
     }
