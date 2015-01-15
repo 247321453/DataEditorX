@@ -1548,7 +1548,7 @@ namespace DataEditorX
                         int len = MyConfig.readInteger(MyConfig.TAG_AUTO_LEN, 30);
                         for (int i = 0; i < count; i++)
                         {
-                            cards[i].desc = StrUtil.AutoEnter(cards[i].desc, len, " ");
+                            cards[i].desc = StrUtil.AutoEnter(cards[i].desc, len, ' ');
                         } 
                         DataBase.CopyDB(dlg.FileName, false, cards);
                         MyMsg.Show(LMSG.CopyCardsToDBIsOK);
