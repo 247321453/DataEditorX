@@ -1,4 +1,3 @@
 # database history
-D:\Program Files (x86)\ygopro\cards2.cdb
+F:\games\ygopro\cards.cdb
 # script history
-D:\Program Files (x86)\ygopro\script\c50755.lua

@@ -130,6 +130,7 @@ namespace DataEditorX.Core
                 //删除资源
                 if (deletefiles)
                 {
+                    dataform.SetImage(0);//释放当前使用的卡图
                     YGOUtil.CardDelete(c.id, dataform.GetPath(), false);
                 }
             }
