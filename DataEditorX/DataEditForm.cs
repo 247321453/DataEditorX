@@ -236,7 +236,7 @@ namespace DataEditorX
             this.datapath = datapath;
             confcover = MyPath.Combine(datapath, "cover.jpg");
             if (File.Exists(confcover))
-                m_cover = Image.FromFile(confcover);
+                m_cover = MyBitmap.readImage(confcover);
             else
                 m_cover = null;
         }
@@ -1233,26 +1233,18 @@ namespace DataEditorX
         }
         public void SetImage(long id)
         {
-            if (pl_image.BackgroundImage != null
-               && pl_image.BackgroundImage != m_cover)
-            {//释放资源占用
-                pl_image.BackgroundImage.Dispose();
-            }
-            Bitmap temp;
             string pic = ygopath.GetImage(id);
             if (menuitem_importmseimg.Checked)//显示MSE图片
             {
                 string msepic = MseMaker.GetCardImagePath(tasker.MSEImagePath, oldCard);
                 if(File.Exists(msepic))
                 {
-                    temp = new Bitmap(msepic);
-                    pl_image.BackgroundImage = temp;
+                    pl_image.BackgroundImage = MyBitmap.readImage(msepic);
                 }
             }
             else if (File.Exists(pic))
             {
-                temp = new Bitmap(pic);
-                pl_image.BackgroundImage = temp;
+                pl_image.BackgroundImage = MyBitmap.readImage(pic);
             }
             else
                 pl_image.BackgroundImage = m_cover;
@@ -1530,6 +1522,7 @@ namespace DataEditorX
         }
         #endregion
 
+        #region 空格
         private void menuitem_saveasenter_Click(object sender, EventArgs e)
         {
             using (SaveFileDialog dlg = new SaveFileDialog())
@@ -1549,6 +1542,10 @@ namespace DataEditorX
                         for (int i = 0; i < count; i++)
                         {
                             cards[i].desc = StrUtil.AutoEnter(cards[i].desc, len, ' ');
+                            for (int j = 0; j < Card.STR_MAX; j++)
+                            {
+                                cards[i].Str[j] = StrUtil.AutoEnter(cards[i].Str[j], len, ' ');
+                            }
                         } 
                         DataBase.CopyDB(dlg.FileName, false, cards);
                         MyMsg.Show(LMSG.CopyCardsToDBIsOK);
@@ -1556,5 +1553,6 @@ namespace DataEditorX
                 }
             }
         }
+        #endregion
     }
 }

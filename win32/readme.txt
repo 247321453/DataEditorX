@@ -1,4 +1,4 @@
-﻿[DataEditorX]2.3.0.5[DataEditorX]
+﻿[DataEditorX]2.3.0.6[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★运行环境(Environment)
@@ -41,7 +41,6 @@ open_file_in_this		用自带的脚本编辑器打开lua
 ★语言设置
 DataEditorX.exe.config
 <add key="language" value="chinese" />简体
-<add key="language" value="english" />英文
 其他语言请自己添加，需要2个文件，xxx为语言
 data/language_xxx.txt
 data/cardinfo_xxx.txt

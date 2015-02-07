@@ -43,6 +43,7 @@ namespace DataEditorX.Core
                 MyMsg.Show(LMSG.AddSucceed);
                 undoSQL = DataBase.GetDeleteSQL(c);
                 dataform.Search(true);
+                dataform.SetCard(c);
                 return true;
             }
             MyMsg.Error(LMSG.AddFail);
@@ -87,7 +88,6 @@ namespace DataEditorX.Core
                         undoSQL += DataBase.GetInsertSQL(oldCard, false);
                     }
                 }
-                dataform.SetImage(0);//释放当前使用的卡图
                 //如果删除旧卡片，则把资源修改名字,否则复制资源
                 if (modfiles)
                     YGOUtil.CardRename(c.id, oldCard.id, dataform.GetPath(), delold);
@@ -130,7 +130,6 @@ namespace DataEditorX.Core
                 //删除资源
                 if (deletefiles)
                 {
-                    dataform.SetImage(0);//释放当前使用的卡图
                     YGOUtil.CardDelete(c.id, dataform.GetPath(), false);
                 }
             }

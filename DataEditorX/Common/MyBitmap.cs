@@ -14,6 +14,14 @@ namespace DataEditorX.Common
     /// </summary>
     public static class MyBitmap
     {
+        public static Bitmap readImage(string file)
+        {
+            if (!File.Exists(file))
+                return null;
+            MemoryStream ms = new MemoryStream(File.ReadAllBytes(file));
+            return (Bitmap)Image.FromStream(ms);
+        }
+
         #region 缩放
         /// <summary>
         /// 缩放图像

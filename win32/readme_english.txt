@@ -25,7 +25,7 @@ data/cardinfo_xxx.txt types/series
 ★Language setting
 DataEditorX.exe.config
 <add key="language" value="chinese" />Simplified Chinese 
-<add key="language" value="english" />English
+chinese => english
 If you want to add a language，you need two file，xxx is a type of language:
 data/language_xxx.txt
 data/cardinfo_xxx.txt
