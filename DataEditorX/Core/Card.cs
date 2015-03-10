@@ -288,7 +288,7 @@ namespace DataEditorX.Core
             long i = 0, j = level & 0xff;
             for (i = 0; i < j; i++)
             {
-                if (i >= 0 && (i % 4) == 0)
+                if (i > 0 && (i % 4) == 0)
                     star += " ";
                 star += "★";
             }

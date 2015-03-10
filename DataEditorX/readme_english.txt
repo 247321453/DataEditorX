@@ -1,6 +1,6 @@
 ﻿
 ★Environment
-This program based on .Net2.0/winXP(need .Net2.0)/win7(with.Net2.0)/win8(need.Net3.5 incloud 2.0)
+This program based on .Net2.0/winXP(need .Net2.0)/win7(with.Net2.0)/win8(need.Net3.5 include 2.0)
 
 ★File association
 .lua Notepad++/Sublime text/DataEditorX
@@ -12,8 +12,8 @@ Click file with right mouse button, Open with, Browse Files, Choose confirm(Yes�
 Email:247321453@qq.com
 Title：DataEditorX X.X.X.X
 Text：
-The error message text：If there is a error message box,please press Ctrl+C,then paste in someplace.
-please give a detailed description of:card message;antivirus;programe location;the operation that time.
+The error message text: If there is a error message box, please press Ctrl+C, then paste in someplace.
+please give a detailed description of: card message; antivirus; programe location;the operation that time.
 
 
 ★Setting
@@ -52,7 +52,7 @@ you need it when you want to add or pendulum.
 
 
 ★DataEditor：
-IF you need to input Attack?, you can use anyone of ？/?/-2 instead. 
+If you need to input Attack "?", you can use anyone of ？/?/-2 instead. 
 The folder of pics, script and cdb should be in a same folder consistent.
 
 
@@ -76,11 +76,11 @@ pics
 
 ★Lua search
 Find lua from C++ Source
-Return in parameter type，C++ implement code
+Return in parameter type, C++ implement code
 
 ★Copy a card：
-Copy and Replace：If there's a card with same name, replace it.
-Copy without Replace：If there's a card with same name, ignore it.
+Copy and Replace: If there's a card with same name, replace it.
+Copy without Replace: If there's a card with same name, ignore it.
 
 
 ★Card search
@@ -91,8 +91,8 @@ Copy without Replace：If there's a card with same name, ignore it.
 	If there is a "?", input"-2"or"?"
 4.Search by card name：
 	AOJ%%		start with AOJ
-	流%%天		start with“流” and end with“天”
-	%%战士		end with “战士”
+	Shooting%%Dragon		start with “Shooting” and end with “Dragon”
+	%%Warrior		end with “Warrior”
 
 5.Search by card number
 --A card(or a card with same name) with card number of 10000000，

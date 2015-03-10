@@ -256,6 +256,7 @@ namespace DataEditorX
                         return false;
                 }
             }
+            oldtext = fctb.Text;
             File.WriteAllText(nowFile, alltext, new UTF8Encoding(false));
             return true;
         }

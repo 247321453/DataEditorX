@@ -356,7 +356,7 @@ namespace DataEditorX
             }
             List<long> keys = (List<long>)cb.Tag;
             int index = keys.IndexOf(k);
-            if (index>=0 && index < cb.Items.Count)
+            if (index >= 0 && index < cb.Items.Count)
                 cb.SelectedIndex = index;
             else
                 cb.SelectedIndex = 0;
