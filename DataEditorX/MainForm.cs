@@ -491,9 +491,11 @@ namespace DataEditorX
         private void MainForm_Load(object sender, EventArgs e)
         {
             //检查更新
-            Thread th = new Thread(CheckUpdate);
-            th.IsBackground = true;//如果exe结束，则线程终止
-            th.Start();
+			if (!MyConfig.readBoolean(MyConfig.TAG_AUTO_CHECK_UPDATE))
+				return;
+			Thread th = new Thread(CheckUpdate);
+			th.IsBackground = true;//如果exe结束，则线程终止
+			th.Start();
         }
     }
 }

@@ -59,6 +59,7 @@ DataEditForm.mainMenu.menuitem_cancelTask	Cancel Task
 DataEditForm.mainMenu.menuitem_help	Help(&H)
 DataEditForm.mainMenu.menuitem_about	About
 DataEditForm.mainMenu.menuitem_checkupdate	Check Update
+DataEditForm.mainMenu.menuitem_autocheckupdate	Auto Check Update
 DataEditForm.mainMenu.menuitem_github	GitHub
 #
 MainForm.mainMenu.menuitem_file	File(&F)

@@ -85,6 +85,10 @@ namespace DataEditorX.Config
         /// 用本程序打开文件
         /// </summary>
         public const string TAG_OPEN_IN_THIS = "open_file_in_this";
+		/// <summary>
+		/// 自动检查更新
+		/// </summary>
+		public const string TAG_AUTO_CHECK_UPDATE = "auto_check_update";
         /// <summary>
         /// 一般的裁剪
         /// </summary>

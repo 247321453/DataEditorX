@@ -60,6 +60,7 @@ DataEditForm.mainMenu.menuitem_cancelTask	取消任务
 DataEditForm.mainMenu.menuitem_help	帮助(&H)
 DataEditForm.mainMenu.menuitem_about	关于
 DataEditForm.mainMenu.menuitem_checkupdate	检查更新
+DataEditForm.mainMenu.menuitem_autocheckupdate	自动检查更新
 DataEditForm.mainMenu.menuitem_github	源码
 #
 MainForm.mainMenu.menuitem_file	文件(&F)

@@ -135,6 +135,8 @@ namespace DataEditorX
             menuitem_operacardsfile.Checked = MyConfig.readBoolean(MyConfig.TAG_DELETE_WITH);
             //用CodeEditor打开脚本
             menuitem_openfileinthis.Checked = MyConfig.readBoolean(MyConfig.TAG_OPEN_IN_THIS);
+			//自动检查更新
+			menuitem_autocheckupdate.Checked = MyConfig.readBoolean(MyConfig.TAG_AUTO_CHECK_UPDATE);
             if (nowCdbFile != null && File.Exists(nowCdbFile))
                 Open(nowCdbFile);
             //获取MSE配菜单
@@ -1520,6 +1522,12 @@ namespace DataEditorX
             menuitem_openfileinthis.Checked = !menuitem_openfileinthis.Checked;
             MyConfig.Save(MyConfig.TAG_OPEN_IN_THIS, menuitem_openfileinthis.Checked.ToString().ToLower());
         }
+		//自动检查更新
+		private void menuitem_autocheckupdate_Click(object sender, EventArgs e)
+		{
+			menuitem_autocheckupdate.Checked = !menuitem_autocheckupdate.Checked;
+			MyConfig.Save(MyConfig.TAG_AUTO_CHECK_UPDATE, menuitem_autocheckupdate.Checked.ToString().ToLower());
+		}
         #endregion
 
         #region 空格
