@@ -13,7 +13,7 @@ CodeEditForm.mainMenu.menuitem_setcard	Set DataBase
 CodeEditForm.mainMenu.menuitem_help	Help(&H)
 CodeEditForm.mainMenu.menuitem_about	About
 #
-DataEditForm.btn_img	Import Image
+DataEditForm.btn_img	Import Img
 DataEditForm.lb_types	Card type
 DataEditForm.lb_tiptexts	Script texts
 DataEditForm.lb_categorys	Category
@@ -28,8 +28,8 @@ DataEditForm.btn_del	Delete
 DataEditForm.btn_undo	Undo
 DataEditForm.btn_mod	Modify
 DataEditForm.btn_add	Add
-DataEditForm.btn_PageDown	Page Up
-DataEditForm.btn_PageUp	Page Down
+#DataEditForm.btn_PageDown	Page Down
+#DataEditForm.btn_PageUp	Page Up
 DataEditForm.lv_cardlist.0	Card Code
 DataEditForm.lv_cardlist.1	Card Name
 DataEditForm.mainMenu.menuitem_file	Fil(&F)
@@ -58,9 +58,10 @@ DataEditForm.mainMenu.menuitem_importmseimg	Set MSE'Image
 DataEditForm.mainMenu.menuitem_cancelTask	Cancel Task
 DataEditForm.mainMenu.menuitem_help	Help(&H)
 DataEditForm.mainMenu.menuitem_about	About
+DataEditForm.mainMenu.menuitem_language	Laguage
 DataEditForm.mainMenu.menuitem_checkupdate	Check Update
 DataEditForm.mainMenu.menuitem_autocheckupdate	Auto Check Update
-DataEditForm.mainMenu.menuitem_github	GitHub
+DataEditForm.mainMenu.menuitem_github	Sourse Code in GitHub
 #
 MainForm.mainMenu.menuitem_file	File(&F)
 MainForm.mainMenu.menuitem_open	Open
@@ -155,3 +156,4 @@ MainForm.mainMenu.menuitem_closeall	Close All
 0x46	If Save Script?
 0x47	Read MSE-set
 0x48	Read MSE-set is OK.
+0x49	Please restart program to apply changes.

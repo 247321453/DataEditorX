@@ -73,6 +73,7 @@ namespace DataEditorX
 			this.menuitem_help = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_about = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_checkupdate = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuitem_autocheckupdate = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_github = new System.Windows.Forms.ToolStripMenuItem();
 			this.cb_cardattribute = new System.Windows.Forms.ComboBox();
 			this.tb_cardname = new System.Windows.Forms.TextBox();
@@ -119,13 +120,13 @@ namespace DataEditorX
 			this.tb_setcode3 = new System.Windows.Forms.TextBox();
 			this.tb_setcode4 = new System.Windows.Forms.TextBox();
 			this.lb_cardcode = new System.Windows.Forms.Label();
-			this.menuitem_autocheckupdate = new System.Windows.Forms.ToolStripMenuItem();
 			this.pl_category = new System.Windows.Forms.DFlowLayoutPanel();
 			this.pl_cardtype = new System.Windows.Forms.DFlowLayoutPanel();
 			this.lb_scripttext = new System.Windows.Forms.DListBox();
 			this.lv_cardlist = new System.Windows.Forms.DListView();
 			this.ch_cardcode = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.ch_cardname = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.menuitem_language = new System.Windows.Forms.ToolStripMenuItem();
 			this.mainMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -392,6 +393,7 @@ namespace DataEditorX
 			// 
 			this.menuitem_help.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuitem_about,
+            this.menuitem_language,
             this.menuitem_checkupdate,
             this.menuitem_autocheckupdate,
             this.menuitem_github});
@@ -413,6 +415,13 @@ namespace DataEditorX
 			this.menuitem_checkupdate.Size = new System.Drawing.Size(189, 22);
 			this.menuitem_checkupdate.Text = "Check Update";
 			this.menuitem_checkupdate.Click += new System.EventHandler(this.Menuitem_checkupdateClick);
+			// 
+			// menuitem_autocheckupdate
+			// 
+			this.menuitem_autocheckupdate.Name = "menuitem_autocheckupdate";
+			this.menuitem_autocheckupdate.Size = new System.Drawing.Size(189, 22);
+			this.menuitem_autocheckupdate.Text = "Auto Check Update";
+			this.menuitem_autocheckupdate.Click += new System.EventHandler(this.menuitem_autocheckupdate_Click);
 			// 
 			// menuitem_github
 			// 
@@ -950,13 +959,6 @@ namespace DataEditorX
 			this.lb_cardcode.TabIndex = 7;
 			this.lb_cardcode.Text = "Card Code";
 			// 
-			// menuitem_autocheckupdate
-			// 
-			this.menuitem_autocheckupdate.Name = "menuitem_autocheckupdate";
-			this.menuitem_autocheckupdate.Size = new System.Drawing.Size(189, 22);
-			this.menuitem_autocheckupdate.Text = "Auto Check Update";
-			this.menuitem_autocheckupdate.Click += new System.EventHandler(this.menuitem_autocheckupdate_Click);
-			// 
 			// pl_category
 			// 
 			this.pl_category.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -1027,6 +1029,12 @@ namespace DataEditorX
 			// 
 			this.ch_cardname.Text = "Card Name";
 			this.ch_cardname.Width = 140;
+			// 
+			// menuitem_language
+			// 
+			this.menuitem_language.Name = "menuitem_language";
+			this.menuitem_language.Size = new System.Drawing.Size(189, 22);
+			this.menuitem_language.Text = "Language";
 			// 
 			// DataEditForm
 			// 
@@ -1188,5 +1196,6 @@ namespace DataEditorX
         private System.Windows.Forms.ToolStripMenuItem menuitem_openfileinthis;
         private System.Windows.Forms.ToolStripMenuItem menuitem_saveasenter;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_autocheckupdate;
+		private System.Windows.Forms.ToolStripMenuItem menuitem_language;
     }
 }

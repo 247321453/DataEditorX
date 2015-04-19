@@ -59,6 +59,7 @@ DataEditForm.mainMenu.menuitem_convertimage	批量导入卡图
 DataEditForm.mainMenu.menuitem_cancelTask	取消任务
 DataEditForm.mainMenu.menuitem_help	帮助(&H)
 DataEditForm.mainMenu.menuitem_about	关于
+DataEditForm.mainMenu.menuitem_language	语言
 DataEditForm.mainMenu.menuitem_checkupdate	检查更新
 DataEditForm.mainMenu.menuitem_autocheckupdate	自动检查更新
 DataEditForm.mainMenu.menuitem_github	源码
@@ -155,3 +156,4 @@ MainForm.mainMenu.menuitem_closeall	关闭所有
 0x46	是否保存脚本？
 0x47	读取MSE存档
 0x48	读取MSE存档完成！
+0x49	请重启程序使更改生效

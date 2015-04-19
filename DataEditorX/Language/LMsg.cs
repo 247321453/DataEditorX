@@ -89,7 +89,9 @@ namespace DataEditorX.Language
         SaveFileOK = 0x45,
         IfSaveScript =0x46,
         ReadMSE = 0x47,
-        ReadMSEisOK= 0x48,
+        ReadMSEisOK = 0x48,
+
+		PlzRestart = 0x49,
         COUNT,
     }
 }
