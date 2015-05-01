@@ -30,15 +30,15 @@
 载入卡片时调用
 一般是注册初始卡片效果，以及设置苏生限制等等
 ========== bit ===========
-●integer bit.band(int a, int b)
+●int bit.band(int a, int b)
 a与b的位与
-●integer bit.lshift(int a, int b)
+●int bit.lshift(int a, int b)
 a左移b
-●integer bit.bor(int a, int b)
+●int bit.bor(int a, int b)
 a与b的位或
-●integer bit.rshift(int a, int b)
+●int bit.rshift(int a, int b)
 a右移b
-●integer bit.bxor(int a, int b)
+●int bit.bxor(int a, int b)
 a与b的位异或
 ========== Card ==========
 ●int Card.GetCode(Card c)
@@ -69,8 +69,12 @@ a与b的位异或
 检查c对于超量怪兽xyzc的超量用等级是否是lv
 ●int Card.GetLeftScale(Card c)
 返回c的左灵摆刻度
+●int Card.GetOriginalLeftScale(Card c)
+返回c的原本的左灵摆刻度
 ●int Card.GetRightScale(Card c)
 返回c的右灵摆刻度
+●int Card.GetOriginalRightScale(Card c)
+返回c的原本的右灵摆刻度
 ●int Card.GetAttribute(Card c)
 返回c的当前属性
 注：对某些多属性怪兽如光与暗之龙，此函数的返回值可能是几个属性的组合值
@@ -305,7 +309,7 @@ RESET_CARD        重置卡片的效果      id为效果owner的卡号
 ●bool Card.IsRelateToBattle(Card c)
 检查c是否和本次战斗关联
 注：此效果通常用于伤害计算后伤害阶段结束前，用于检查战斗的卡是否离场过
-●int Card.CopyEffect(Card c, int code, int reset_flag, int reset_count)
+●int Card.CopyEffect(Card c, int code, int reset_flag[, int reset_count])
 为c添加卡号是code的卡的可复制的效果，并且添加额外的reset条件
 返回值是表示复制效果的代号id
 ●void Card.EnableReviveLimit(Card c)
@@ -405,11 +409,11 @@ e~=nil则检查c是否可以以效果e进行通常召唤的set，minc表示至�
 ●bool Card.IsPreviousLocation(Card c, int location)
 检查c之前的位置是否是location
 ●bool Card.IsLevelBelow(Card c, int level)
-检查c是否是等级level以下
+检查c是否是等级level以下（至少为1）
 ●bool Card.IsLevelAbove(Card c, int level)
 检查c是否是等级level以上
 ●bool Card.IsRankBelow(Card c, int rank)
-检查c是否是阶级rank以下
+检查c是否是阶级rank以下（至少为1）
 ●bool Card.IsRankAbove(Card c, int rank)
 检查c是否是阶级rank以上
 ●bool Card.IsAttackBelow(Card c, int atk)
@@ -436,8 +440,8 @@ e~=nil则检查c是否可以以效果e进行通常召唤的set，minc表示至�
 让玩家player以原因reason移除c上的count个countertype类型的指示物
 ●int Card.GetCounter(Card c, int countertype)
 返回c上的countertype类型的指示物的数量
-●void Card.EnableCounterPermit(Card c, int countertype)
-允许c放置那个需要“可以放置”才能放置的指示物countertype
+●void Card.EnableCounterPermit(Card c, int countertype[, int location])
+允许c[在位置location]放置那个需要“可以放置”才能放置的指示物countertype
 ●void Card.SetCounterLimit(Card c, int countertype, int count)
 设定c放置countertype类型指示物的上限
 ●bool Card.IsCanTurnSet(Card c)
@@ -622,7 +626,7 @@ EFFECT_COUNT_CODE_SINGLE        多个效果公共使用次数
 ●Group Group.CreateGroup()
 新建一个空的卡片组
 ●void Group.KeepAlive(Group g)
-让卡片组持续
+让卡片组持续，把卡片组设置为效果的LabelObject需要设置
 ●void Group.DeleteGroup(Group g)
 删除卡片组g
 ●Group Group.Clone(Group g)
@@ -648,8 +652,8 @@ EFFECT_COUNT_CODE_SINGLE        多个效果公共使用次数
 过滤函数，从g中筛选满足筛选条件f并且不等于ex的卡
 从第4个参数开始为额外参数
 ●int Group.FilterCount(Group g, function f, Card ex|nil, ...)
-过滤函数，和上一个函数基本相同不同指出在于此函数只返回满足条件的卡的数量
-●void Group.FilterSelect(Group g, int player, function f, int min, int max, Card ex|nil, ...)
+过滤函数，和Group.Filter基本相同，不同之处在于此函数只返回满足条件的卡的数量
+●Group Group.FilterSelect(Group g, int player, function f, int min, int max, Card ex|nil, ...)
 过滤函数，让玩家player从g中选择min-max张满足筛选条件f并且不等于ex的卡
 从第7个参数开始为额外参数
 ●Group Group.Select(Group g, int player, int min, int max, Card ex|nil)
@@ -744,7 +748,7 @@ f为返回一个interger值的函数从g中筛选出具有最大的f的值的卡
 此函数返回之前一次卡片操作实际操作的卡片组包括
 Duel.Destroy, Duel.Remove, Duel.SendtoGrave, 
 Duel.SendtoHand, Duel.SendtoDeck, Duel.Release, 
-Duel.ChangePosition, Duel.SpecialSummon
+Duel.ChangePosition, Duel.SpecialSummon, Duel.DiscardDeck
 ●void Duel.Summon(int player, Card c, bool ignore_count, Effect e|nil[, minc=0])
 让玩家以效果e对c进行通常召唤(非set)，至少使用minc个祭品
 如果e=nil,那么就按照一般的通常召唤规则进行通常召唤
@@ -817,10 +821,9 @@ c必须是以REASON_TEMPORARY原因离场，并且离场后没有离开过那个
 检查当前是否是event时点
 若get_info=true并且是正确的时点则还返回触发时点的信息 eg,ep,ev,re,r,rp
 ●void Duel.RaiseEvent(Group|Card eg, int code, Effect re, int r, int rp, int ep, int ev)
-以eg,ep,ev,re,r,rp触发一个code时点
+以eg,ep,ev,re,r,rp触发一个时点
 ●void Duel.RaiseSingleEvent(Card ec, int code, Effect re, int r, int rp, int ep, int ev)
-以eg,ep,ev,re,r,rp触发一个code单体时点
-##（只能触发EFFECT_TYPE_SINGLE的诱发效果？）
+以eg,ep,ev,re,r,rp为卡片ec触发一个单体时点
 ●bool Duel.CheckTiming(int timing)
 检查当前是否是timing提示时点
 ●int,int Duel.GetEnvironment()
@@ -862,17 +865,17 @@ is_step=true则是装备过程的分解，需要配合Duel.EquipComplete使用
 过滤函数让玩家player选择并丢弃满足筛选条件f兵不等于ex的min-max张手卡
 第7个参数开始为额外参数
 ●void Duel.DisableShuffleCheck([disable=true])
-使下一个操作不检查是否需要洗卡组或者洗手卡
+使下一个操作不检查是否需要洗切卡组或手卡
 注：如果不调用此函数，
 除了调用Duel.DiscardDeck和Duel.Draw之外从卡组中取出卡或者把卡加入手卡
-或者把卡加入卡组（非最上端或最底端）时，系统会自动在效果处理结束时洗卡组或手卡
+或者把卡加入卡组（非最上端或最底端）时，系统会自动在效果处理结束时洗切卡组或手卡
 如果不希望如此，比如从卡组顶端除外一张卡等操作，那么需要调用此函数
 此函数仅保证紧接着的一次操作不会进行洗卡检测
 ●void Duel.ShuffleDeck(int player)
-手动洗玩家player的卡组
+手动洗切玩家player的卡组
 注：会重置洗卡检测的状态
 ●void Duel.ShuffleHand(int player)
-手动洗玩家player的手卡
+手动洗切玩家player的手卡
 注：会重置洗卡检测的状态
 ●void Duel.ShuffleSetCard(Group g)
 洗切覆盖在怪兽区域的卡（魔术礼帽）
@@ -909,19 +912,17 @@ is_step=true则是装备过程的分解，需要配合Duel.EquipComplete使用
 使卡片c的已经发动的连锁都无效化，发生reset事件则重置
 ●void Duel.NegateSummon(Card|Group targets)
 使正在召唤，反转召唤，特殊召唤的targets的召唤无效
-●void Duel.IncreaseSummonedCount()
-增加回合玩家本回合通常召唤的次数
-##可以有参数Card c，但意义不明
+●void Duel.IncreaseSummonedCount([Card c])
+手动消耗1次玩家[对于卡片c]的通常召唤的次数
 ●bool Duel.CheckSummonedCount([Card c])
 检查回合玩家本回合是否还能通常召唤[卡片c]
-●int Duel.GetLocationCount(int player, int location[, int use_player, int reason])
-返回玩家player的场上location剩余的空格数
+●int Duel.GetLocationCount(int player, int location[, int use_player, int reason = LOCATION_REASON_TOFIELD])
+返回玩家player的场上location可用的空格数
 location只能是LOCATION_MZONE或者LOCATION_SZONE
+reason为LOCATION_REASON_TOFIELD或LOCATION_REASON_CONTROL
 ##额外参数与凯撒斗技场的效果有关
-##use_player为要使用这个区域的玩家，默认为当前玩家
-##reason为LOCATION_REASON_TOFIELD=0x1(默认值)或LOCATION_REASON_CONTROL=0x2（这两个宏未写入constant.lua）
 ●Card Duel.GetFieldCard(int player, int location, int seq)
-返回玩家player的场上位于location序号为seq的卡
+返回玩家player的场上位于location序号为seq的卡，主要用于获得灵摆区域的卡
 ●bool Duel.CheckLocation(int player, int location, int seq)
 检查玩家player的场上位于location序号为seq的空格是否可用
 ●int Duel.GetCurrentChain()
@@ -1214,6 +1215,8 @@ ACTIVITY_NORMALSUMMON   通常召唤（包括通常召唤的set）
 ACTIVITY_SPSUMMON       特殊召唤
 ACTIVITY_FLIPSUMMON     反转召唤
 ACTIVITY_CHAIN          发动效果
+●bool Duel.IsAbleToEnterBP()
+检查回合玩家能否进入战斗阶段
 ●bool Duel.VenomSwampCheck(Effect e, Card c)
 蛇毒沼泽专用。把攻击力被其效果变成0的卡片破坏
 ●void Duel.SwapDeckAndGrave(int player)

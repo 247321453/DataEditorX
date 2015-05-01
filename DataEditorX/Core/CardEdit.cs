@@ -128,7 +128,7 @@ namespace DataEditorX.Core
                 sql.Add(DataBase.GetDeleteSQL(c));//删除
                 undoSQL += DataBase.GetInsertSQL(c, true);
                 //删除资源
-                if (deletefiles)
+                if (deletefiles && MyMsg.Question(LMSG.IfDeleteFiles))
                 {
                     YGOUtil.CardDelete(c.id, dataform.GetPath(), false);
                 }

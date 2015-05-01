@@ -92,6 +92,8 @@ namespace DataEditorX.Language
         ReadMSEisOK = 0x48,
 
 		PlzRestart = 0x49,
+
+		IfDeleteFiles =0x4c,
         COUNT,
     }
 }

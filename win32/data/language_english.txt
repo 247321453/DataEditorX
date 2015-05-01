@@ -157,3 +157,4 @@ MainForm.mainMenu.menuitem_closeall	Close All
 0x47	Read MSE-set
 0x48	Read MSE-set is OK.
 0x49	Please restart program to apply changes.
+0x4c	Also delete pics and scripts?

@@ -363,8 +363,15 @@
 0xc3	Edge Imp	エッジインプ
 0xc4	Zefra	セフィラ
 0xc5	Void	煉(れん)獄(ごく)
+0xc6	Performage	Em
+0xc7	Dragoknight	竜剣士
+0xc8	Igknight	イグナイト
+0xc9	Aroma	アロマ
+0xca	Empowered Warrior	魔装戦士
+0xcb	Aether	イーサルウェポン
 0x100	Monster that lists a "Synchron" Monster as a Tuner.
 0x101	Fusion Monster that lists a Synchro Monster as a Fusion Material
 0x102	Fusion Monster that can only be Special Summoned with "Dark Fusion"
 0x103	Fusion Monster that lists "Cyber Dragon" as a Fusion Material
+0x104	Fusion Monster that lists "Red-Eyes" monster as a Fusion Material
 #end
