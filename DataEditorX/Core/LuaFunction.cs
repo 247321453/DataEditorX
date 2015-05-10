@@ -337,7 +337,7 @@ namespace DataEditorX
 			{
 				StreamWriter sw=new StreamWriter(fs, Encoding.UTF8);
 				sw.WriteLine("========== "+name+" ==========");
-				File.AppendAllText(funclisttxt, "========== "+name+" ==========");
+                File.AppendAllText(funclisttxt, "========== " + name + " ==========" + Environment.NewLine);
 				foreach(string k in fun.Keys)
 				{
 					string v=fun[k];
@@ -349,7 +349,7 @@ namespace DataEditorX
 						+code;
 					sw.WriteLine(txt);
 					
-					File.AppendAllText(funclisttxt,txt+Environment.NewLine);
+					File.AppendAllText(funclisttxt,txt + Environment.NewLine);
 				}
 				sw.Close();
 			}

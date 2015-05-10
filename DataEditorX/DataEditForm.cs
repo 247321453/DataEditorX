@@ -135,10 +135,14 @@ namespace DataEditorX
             menuitem_operacardsfile.Checked = MyConfig.readBoolean(MyConfig.TAG_DELETE_WITH);
             //用CodeEditor打开脚本
             menuitem_openfileinthis.Checked = MyConfig.readBoolean(MyConfig.TAG_OPEN_IN_THIS);
+			//自动检查更新
+			menuitem_autocheckupdate.Checked = MyConfig.readBoolean(MyConfig.TAG_AUTO_CHECK_UPDATE);
             if (nowCdbFile != null && File.Exists(nowCdbFile))
                 Open(nowCdbFile);
             //获取MSE配菜单
             AddMenuItemFormMSE();
+			//
+			GetLanguageItem();
             //   CheckUpdate(false);//检查更新
         }
         //窗体关闭
@@ -356,7 +360,7 @@ namespace DataEditorX
             }
             List<long> keys = (List<long>)cb.Tag;
             int index = keys.IndexOf(k);
-            if (index>=0 && index < cb.Items.Count)
+            if (index >= 0 && index < cb.Items.Count)
                 cb.SelectedIndex = index;
             else
                 cb.SelectedIndex = 0;
@@ -1381,8 +1385,8 @@ namespace DataEditorX
         }
         #endregion
 
-        #region 查找lua函数
-        private void menuitem_findluafunc_Click(object sender, EventArgs e)
+		#region 查找lua函数
+		private void menuitem_findluafunc_Click(object sender, EventArgs e)
         {
             string funtxt = MyPath.Combine(datapath, MyConfig.FILE_FUNCTION);
             using (FolderBrowserDialog fd = new FolderBrowserDialog())
@@ -1520,10 +1524,51 @@ namespace DataEditorX
             menuitem_openfileinthis.Checked = !menuitem_openfileinthis.Checked;
             MyConfig.Save(MyConfig.TAG_OPEN_IN_THIS, menuitem_openfileinthis.Checked.ToString().ToLower());
         }
-        #endregion
+		//自动检查更新
+		private void menuitem_autocheckupdate_Click(object sender, EventArgs e)
+		{
+			menuitem_autocheckupdate.Checked = !menuitem_autocheckupdate.Checked;
+			MyConfig.Save(MyConfig.TAG_AUTO_CHECK_UPDATE, menuitem_autocheckupdate.Checked.ToString().ToLower());
+		}
+		#endregion
 
-        #region 空格
-        private void menuitem_saveasenter_Click(object sender, EventArgs e)
+		#region 语言菜单
+		void GetLanguageItem()
+		{
+			if (!Directory.Exists(datapath))
+				return;
+			menuitem_language.DropDownItems.Clear();
+			string[] files = Directory.GetFiles(datapath);
+			foreach (string file in files)
+			{
+				string name = MyPath.getFullFileName(MyConfig.TAG_LANGUAGE, file);
+				if (string.IsNullOrEmpty(name))
+					continue;
+				TextInfo txinfo = new CultureInfo(CultureInfo.InstalledUICulture.Name).TextInfo;
+				ToolStripMenuItem tsmi = new ToolStripMenuItem(txinfo.ToTitleCase(name));
+				tsmi.ToolTipText = file;
+				tsmi.Click += SetLanguage_Click;
+				if (MyConfig.readString(MyConfig.TAG_LANGUAGE).Equals(name, StringComparison.OrdinalIgnoreCase))
+					tsmi.Checked = true;
+				menuitem_language.DropDownItems.Add(tsmi);
+			}
+		}
+		void SetLanguage_Click(object sender, EventArgs e)
+		{
+			if (isRun())
+				return;
+			if (sender is ToolStripMenuItem)
+			{
+				ToolStripMenuItem tsmi = (ToolStripMenuItem)sender;
+				MyConfig.Save(MyConfig.TAG_LANGUAGE, tsmi.Text);
+				GetLanguageItem();
+				MyMsg.Show(LMSG.PlzRestart);
+			}
+		}
+		#endregion
+
+		#region 空格
+		private void menuitem_saveasenter_Click(object sender, EventArgs e)
         {
             using (SaveFileDialog dlg = new SaveFileDialog())
             {

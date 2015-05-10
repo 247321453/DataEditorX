@@ -112,7 +112,7 @@ namespace DataEditorX.Core
                     str = GetType(CardType.TYPE_NORMAL);
                 str += GetType(CardType.TYPE_TRAP);
             }
-            return str;
+            return str.Replace(" ", "");
         }
 
         static string GetType(CardType type)
@@ -229,7 +229,7 @@ namespace DataEditorX.Core
             string[] newfiles = ygopath.GetCardfiles(newid);
             string[] oldfiles = ygopath.GetCardfiles(oldid);
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < oldfiles.Length; i++)
             {
                 if (File.Exists(oldfiles[i]))
                 {

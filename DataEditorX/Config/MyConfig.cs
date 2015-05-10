@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml;
 using System.IO;
+using System.Globalization;
 using DataEditorX.Common;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -85,6 +86,14 @@ namespace DataEditorX.Config
         /// 用本程序打开文件
         /// </summary>
         public const string TAG_OPEN_IN_THIS = "open_file_in_this";
+		/// <summary>
+		/// 自动检查更新
+		/// </summary>
+		public const string TAG_AUTO_CHECK_UPDATE = "auto_check_update";
+		/// <summary>
+		/// 检查系统语言
+		/// </summary>
+		public const string TAG_CHECK_SYSLANG = "check_system_language";
         /// <summary>
         /// 一般的裁剪
         /// </summary>
@@ -253,6 +262,24 @@ namespace DataEditorX.Config
         /// <returns></returns>
         public static string GetLanguageFile(string path)
         {
+			if (readBoolean(TAG_CHECK_SYSLANG) && Directory.Exists(path))
+			{
+				Save(TAG_CHECK_SYSLANG, "false");
+				string[] words = CultureInfo.InstalledUICulture.EnglishName.Split(' ');
+				string syslang = words[0];
+				string[] files = Directory.GetFiles(path);
+				foreach (string file in files)
+				{
+					string name = MyPath.getFullFileName(MyConfig.TAG_LANGUAGE, file);
+					if (string.IsNullOrEmpty(name))
+						continue;
+					if (syslang.Equals(name, StringComparison.OrdinalIgnoreCase))
+					{
+						Save(MyConfig.TAG_LANGUAGE, syslang);
+						break;
+					}
+				}
+			}
             return MyPath.Combine(path, MyPath.getFileName(MyConfig.TAG_LANGUAGE, GetAppConfig(TAG_LANGUAGE)));
         }
         /// <summary>
