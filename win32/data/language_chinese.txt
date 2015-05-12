@@ -25,7 +25,7 @@ DataEditForm.btn_reset	重置
 DataEditForm.btn_lua	脚本
 DataEditForm.btn_serach	搜索
 DataEditForm.btn_del	删除
-DataEditForm.btn_undo	还原
+DataEditForm.btn_undo	撤销
 DataEditForm.btn_mod	修改
 DataEditForm.btn_add	添加
 DataEditForm.btn_PageDown	下一页

@@ -205,17 +205,27 @@ namespace DataEditorX.Core
 
         #region 删除资源
         //删除资源
-        public static void CardDelete(long id, YgoPath ygopath, bool bak)
+        public static void CardDelete(long id, YgoPath ygopath, bool bak, bool restore = false)
         {
-            string[] files = ygopath.GetCardfiles(id);
+            string[] files = ygopath.GetCardfiles(id, restore);
+			string[] bakfiles = ygopath.GetCardfiles(id, true);
             for (int i = 0; i < files.Length; i++)
             {
                 if (File.Exists(files[i]))
                 {
-                    if (bak)
-                        File.Move(files[i], files[i] + ".bak");
-                    else
-                        File.Delete(files[i]);//删除文件
+					if (restore)
+					{
+						File.Move(files[i], files[i].Replace("bak", ""));
+						return;
+					}
+					if (bak)
+					{
+						if (File.Exists(bakfiles[i]))
+							File.Delete(bakfiles[i]);
+						File.Move(files[i], files[i] + ".bak");
+					}
+					else
+						File.Delete(files[i]);//删除文件
                 }
 
             }
@@ -241,5 +251,5 @@ namespace DataEditorX.Core
             }
         }
         #endregion
-    }
+	}
 }

@@ -10,10 +10,27 @@ namespace DataEditorX.Core
     public class CardEdit
     {
         IDataForm dataform;
-        string undoSQL;
+        public List<string> undoSQL;
+		public class FileModified
+		{
+			public bool modifiled = false;
+			public long oldid;
+			public long newid;
+			public bool delold;
+		}
+		public class FileDeleted
+		{
+			public bool deleted = false;
+			public List<long> ids = new List<long>();
+		}
+		public List<FileModified> undoModified;
+		public List<FileDeleted> undoDeleted;
         public CardEdit(IDataForm dataform)
         {
             this.dataform = dataform;
+			this.undoSQL = new List<string>();
+			this.undoModified = new List<FileModified>();
+			this.undoDeleted = new List<FileDeleted>();
         }
 
         #region 添加
@@ -41,7 +58,9 @@ namespace DataEditorX.Core
                 DataBase.GetInsertSQL(c, true)) >= 2)
             {
                 MyMsg.Show(LMSG.AddSucceed);
-                undoSQL = DataBase.GetDeleteSQL(c);
+                undoSQL.Add(DataBase.GetDeleteSQL(c));
+				undoModified.Add(new FileModified());
+				undoDeleted.Add(new FileDeleted());
                 dataform.Search(true);
                 dataform.SetCard(c);
                 return true;
@@ -73,7 +92,6 @@ namespace DataEditorX.Core
             if (c.id != oldCard.id)//修改了id
             {
                 sql = DataBase.GetInsertSQL(c, false);//插入
-                undoSQL = DataBase.GetDeleteSQL(c);//还原就是删除
                 bool delold = MyMsg.Question(LMSG.IfDeleteCard);
                 if (delold)//是否删除旧卡片
                 {
@@ -85,17 +103,34 @@ namespace DataEditorX.Core
                     }
                     else
                     {//删除成功，添加还原sql
-                        undoSQL += DataBase.GetInsertSQL(oldCard, false);
+                        undoSQL.Add(DataBase.GetDeleteSQL(c)+DataBase.GetInsertSQL(oldCard, false));
                     }
-                }
+				} else
+					undoSQL.Add(DataBase.GetDeleteSQL(c));//还原就是删除
                 //如果删除旧卡片，则把资源修改名字,否则复制资源
-                if (modfiles)
-                    YGOUtil.CardRename(c.id, oldCard.id, dataform.GetPath(), delold);
+				if (modfiles)
+				{
+					YGOUtil.CardRename(c.id, oldCard.id, dataform.GetPath(), delold);
+					FileModified modify = new FileModified();
+					modify.modifiled = true;
+					modify.oldid = oldCard.id;
+					modify.newid = c.id;
+					modify.delold = delold;
+					undoModified.Add(modify);
+					undoDeleted.Add(new FileDeleted());
+				}
+				else
+				{
+					undoModified.Add(new FileModified());
+					undoDeleted.Add(new FileDeleted());
+				}
             }
             else
             {//更新数据
                 sql = DataBase.GetUpdateSQL(c);
-                undoSQL = DataBase.GetUpdateSQL(oldCard);
+                undoSQL.Add(DataBase.GetUpdateSQL(oldCard));
+				undoModified.Add(new FileModified());
+				undoDeleted.Add(new FileDeleted());
             }
             if (DataBase.Command(dataform.GetOpenFile(), sql) > 0)
             {
@@ -119,24 +154,30 @@ namespace DataEditorX.Core
             Card[] cards = dataform.GetCardList(true);
             if (cards == null || cards.Length == 0)
                 return false;
+			string undo = "";
             if (!MyMsg.Question(LMSG.IfDeleteCard))
                 return false;
-            undoSQL = "";//还原
             List<string> sql = new List<string>();
+			FileDeleted delete = new FileDeleted();
             foreach (Card c in cards)
             {
                 sql.Add(DataBase.GetDeleteSQL(c));//删除
-                undoSQL += DataBase.GetInsertSQL(c, true);
+                undo += DataBase.GetInsertSQL(c, true);
                 //删除资源
-                if (deletefiles && MyMsg.Question(LMSG.IfDeleteFiles))
+                if (deletefiles)
                 {
-                    YGOUtil.CardDelete(c.id, dataform.GetPath(), false);
+                    YGOUtil.CardDelete(c.id, dataform.GetPath(), true);
+					delete.deleted = true;
+					delete.ids.Add(c.id);
                 }
             }
             if (DataBase.Command(dataform.GetOpenFile(), sql.ToArray()) >= (sql.Count * 2))
             {
                 MyMsg.Show(LMSG.DeleteSucceed);
                 dataform.Search(true);
+				undoSQL.Add(undo);
+				undoDeleted.Add(delete);
+				undoModified.Add(new FileModified());
                 return true;
             }
             else
@@ -192,12 +233,26 @@ namespace DataEditorX.Core
         //撤销
         public void Undo()
         {
-            if (string.IsNullOrEmpty(undoSQL))
+            if (undoSQL.Count == 0)
             {
-                return;
+				return;
             }
-            DataBase.Command(dataform.GetOpenFile(), undoSQL);
-            dataform.Search(true);
+			DataBase.Command(dataform.GetOpenFile(), undoSQL[undoSQL.Count - 1]);
+			undoSQL.RemoveAt(undoSQL.Count-1);
+			if (undoModified[undoModified.Count - 1].modifiled)
+			{
+				FileModified lastmodify = undoModified[undoModified.Count - 1];
+				YGOUtil.CardRename(lastmodify.oldid, lastmodify.newid, dataform.GetPath(), lastmodify.delold);
+			}
+			undoModified.RemoveAt(undoModified.Count - 1);
+			if (undoDeleted[undoDeleted.Count - 1].deleted)
+			{
+				FileDeleted lastdelete = undoDeleted[undoDeleted.Count - 1];
+				foreach (long id in lastdelete.ids)
+					YGOUtil.CardDelete(id, dataform.GetPath(), false, true);
+			}
+			undoDeleted.RemoveAt(undoDeleted.Count - 1);
+			dataform.Search(true);
         }
         #endregion
     }

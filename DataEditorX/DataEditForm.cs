@@ -712,12 +712,16 @@ namespace DataEditorX
         {
             if(cardedit != null)
                 cardedit.AddCard();
+			if (cardedit.undoSQL.Count != 0)
+				btn_undo.Enabled = true;
         }
         //修改
         void Btn_modClick(object sender, EventArgs e)
         {
             if (cardedit != null)
-                cardedit.ModCard(menuitem_operacardsfile.Checked);
+				cardedit.ModCard(menuitem_operacardsfile.Checked);
+			if (cardedit.undoSQL.Count != 0)
+				btn_undo.Enabled = true;
         }
         //打开脚本
         void Btn_luaClick(object sender, EventArgs e)
@@ -729,12 +733,16 @@ namespace DataEditorX
         void Btn_delClick(object sender, EventArgs e)
         {
             if (cardedit != null)
-                cardedit.DelCards(menuitem_operacardsfile.Checked);
+				cardedit.DelCards(menuitem_operacardsfile.Checked);
+			if (cardedit.undoSQL.Count != 0)
+				btn_undo.Enabled = true;
         }
         void Btn_undoClick(object sender, EventArgs e)
         {
             if (cardedit != null)
-                cardedit.Undo();
+				cardedit.Undo();
+			if (cardedit.undoSQL.Count == 0)
+				btn_undo.Enabled = false;
         }
         //导入卡图
         void Btn_imgClick(object sender, EventArgs e)
@@ -1083,6 +1091,20 @@ namespace DataEditorX
             if (cards == null || cards.Length == 0)
                 return;
             bool replace = MyMsg.Question(LMSG.IfReplaceExistingCard);
+			Card[] oldcards = DataBase.Read(nowCdbFile, true, "");
+			string undo = "";
+			foreach (Card c in cards)
+			{
+				undo += DataBase.GetDeleteSQL(c);
+			}
+			foreach (Card c in oldcards)
+			{
+				undo += DataBase.GetInsertSQL(c, !replace);
+			}
+			cardedit.undoSQL.Add(undo);
+			cardedit.undoModified.Add(new CardEdit.FileModified());
+			cardedit.undoDeleted.Add(new CardEdit.FileDeleted());
+			btn_undo.Enabled = true;
             DataBase.CopyDB(nowCdbFile, !replace, cards);
             Search(srcCard, true);
         }

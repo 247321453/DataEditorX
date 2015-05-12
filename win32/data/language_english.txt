@@ -1,12 +1,12 @@
-﻿#
+#
 CodeEditForm.mainMenu.menuitem_file	File(&F)
 CodeEditForm.mainMenu.menuitem_open	Open
 CodeEditForm.mainMenu.menuitem_save	Save
 CodeEditForm.mainMenu.menuitem_saveas	Save As
 CodeEditForm.mainMenu.menuitem_quit	Quit
 CodeEditForm.mainMenu.menuitem_setting	Tools(&S)
-CodeEditForm.mainMenu.menuitem_showmap	Show/Hide Document Maps
-CodeEditForm.mainMenu.menuitem_showinput	Show/Hide TextBox
+CodeEditForm.mainMenu.menuitem_showmap	Display/Hide Document Maps
+CodeEditForm.mainMenu.menuitem_showinput	Display/Hide TextBox
 CodeEditForm.mainMenu.menuitem_find	Find String
 CodeEditForm.mainMenu.menuitem_replace	Replace
 CodeEditForm.mainMenu.menuitem_setcard	Set DataBase
@@ -67,12 +67,11 @@ MainForm.mainMenu.menuitem_file	File(&F)
 MainForm.mainMenu.menuitem_open	Open
 MainForm.mainMenu.menuitem_new	New
 MainForm.mainMenu.menuitem_save	Save
-MainForm.mainMenu.menuitem_findluafunc	Find Lua Functions By C++
 MainForm.mainMenu.menuitem_copyselect	Copy Selected
 MainForm.mainMenu.menuitem_copyall	Copy All Search
 MainForm.mainMenu.menuitem_pastecards	Paste Cards
-MainForm.mainMenu.menuitem_comp1	Set Compare Database 1
-MainForm.mainMenu.menuitem_comp2	Set Compare Database 2
+MainForm.mainMenu.menuitem_comp1Set Compare Database 1
+MainForm.mainMenu.menuitem_comp2Set Compare Database 2
 MainForm.mainMenu.menuitem_history	DataBase Histroy
 MainForm.mainMenu.menuitem_shistory	Script History
 MainForm.mainMenu.menuitem_quit	Quit
@@ -80,7 +79,7 @@ MainForm.mainMenu.menuitem_windows	Windows(&W)
 MainForm.mainMenu.menuitem_dataeditor	DataEditor
 MainForm.mainMenu.menuitem_codeeditor	CodeEditor
 MainForm.mainMenu.menuitem_close	Close
-MainForm.mainMenu.menuitem_closeother	Close Other
+MainForm.mainMenu.menuitem_closeother	Close Others
 MainForm.mainMenu.menuitem_closeall	Close All
 #
 0x0	Info
@@ -95,11 +94,11 @@ MainForm.mainMenu.menuitem_closeall	Close All
 0x9	It's exitis!
 0xa	It's no changed.
 0xb	If delete Card(s)?
-0xc	If create script file？
+0xc	If create script file?
 0xd	If open database?
 0xe	If replace exitis cards?
 0xf	It's new version.\nWhether you need to download again?
-0x10	Check update fail，\nPlease Check Network.
+0x10	Check update fail. Please Check Network.
 0x11	Find a new version,\nIf Download it?
 0x12	File is't exitis!
 0x13	No select database!
@@ -107,7 +106,7 @@ MainForm.mainMenu.menuitem_closeall	Close All
 0x15	select ydk file
 0x16	selcet image folder
 0x17	Download succeed!
-0x18	Download fail！
+0x18	Download fail?
 0x19	No slect script text!
 0x1a	Delete succeed!
 0x1b	Delete fail!
@@ -118,7 +117,7 @@ MainForm.mainMenu.menuitem_closeall	Close All
 0x20	Author : 
 0x21	cdb file(*.cdb)|*.cdb|all files(*.*)|*.*
 0x22	ydk file(*.ydk)|*.ydk|all files(*.*)|*.*
-0x23	SetCode Input Error！
+0x23	SetCode Input Error?
 0x24	Select Image For Card
 0x25	jpg(*.jpg)|*.jpg|bmp(*.bmp)|*.bmp|png(*.png)|*.png|all files(*.*)|*.*
 0x26	The Task is runing.
