@@ -1097,9 +1097,12 @@ namespace DataEditorX
 			{
 				undo += DataBase.GetDeleteSQL(c);
 			}
-			foreach (Card c in oldcards)
+			if (oldcards != null && oldcards.Length != 0)
 			{
-				undo += DataBase.GetInsertSQL(c, !replace);
+				foreach (Card c in oldcards)
+				{
+					undo += DataBase.GetInsertSQL(c, !replace);
+				}
 			}
 			cardedit.undoSQL.Add(undo);
 			cardedit.undoModified.Add(new CardEdit.FileModified());

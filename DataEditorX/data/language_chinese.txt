@@ -157,4 +157,3 @@ MainForm.mainMenu.menuitem_closeall	关闭所有
 0x47	读取MSE存档
 0x48	读取MSE存档完成！
 0x49	请重启程序使更改生效
-0x4c	是否同时删除卡图、脚本等资源？
