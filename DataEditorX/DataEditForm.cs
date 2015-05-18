@@ -1090,7 +1090,7 @@ namespace DataEditorX
                 return;
             if (cards == null || cards.Length == 0)
                 return;
-            bool replace = MyMsg.Question(LMSG.IfReplaceExistingCard);
+			bool replace = false;
 			Card[] oldcards = DataBase.Read(nowCdbFile, true, "");
 			string undo = "";
 			foreach (Card c in cards)
@@ -1099,9 +1099,19 @@ namespace DataEditorX
 			}
 			if (oldcards != null && oldcards.Length != 0)
 			{
-				foreach (Card c in oldcards)
+				int i = 0;
+				foreach (Card oc in oldcards)
 				{
-					undo += DataBase.GetInsertSQL(c, !replace);
+					foreach (Card c in cards)
+					{
+						if (c.id == oc.id)
+						{
+							i += 1;
+							if (i == 1)
+								replace = MyMsg.Question(LMSG.IfReplaceExistingCard);
+							undo += DataBase.GetInsertSQL(oc, !replace);
+						}
+					}
 				}
 			}
 			cardedit.undoSQL.Add(undo);
