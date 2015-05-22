@@ -205,30 +205,53 @@ namespace DataEditorX.Core
 
         #region 删除资源
         //删除资源
-        public static void CardDelete(long id, YgoPath ygopath, bool bak, bool restore = false)
+		public enum DeleteOption
+		{
+			BACKUP,
+			RESTORE,
+			CLEAN,
+			NONE,
+		}
+
+        public static void CardDelete(long id, YgoPath ygopath, DeleteOption option)
         {
-            string[] files = ygopath.GetCardfiles(id, restore);
+            string[] files = ygopath.GetCardfiles(id);
 			string[] bakfiles = ygopath.GetCardfiles(id, true);
-            for (int i = 0; i < files.Length; i++)
-            {
-                if (File.Exists(files[i]))
-                {
-					if (restore)
-					{
-						File.Move(files[i], files[i].Replace("bak", ""));
-						return;
-					}
-					if (bak)
+			switch (option)
+			{
+				case DeleteOption.BACKUP:
+					for (int i = 0; i < files.Length; i++)
 					{
 						if (File.Exists(bakfiles[i]))
 							File.Delete(bakfiles[i]);
-						File.Move(files[i], files[i] + ".bak");
+						if (File.Exists(files[i]))
+							File.Move(files[i], files[i] + ".bak");
 					}
-					else
-						File.Delete(files[i]);//删除文件
-                }
-
-            }
+					break;
+				case DeleteOption.RESTORE:
+					for (int i = 0; i < bakfiles.Length; i++)
+					{
+						if (File.Exists(files[i]))
+							File.Delete(files[i]);
+						if (File.Exists(bakfiles[i]))
+							File.Move(bakfiles[i], bakfiles[i].Replace("bak", ""));
+					}
+					break;
+				case DeleteOption.CLEAN:
+					for (int i = 0; i < bakfiles.Length; i++)
+					{
+						if (File.Exists(bakfiles[i]))
+							File.Delete(bakfiles[i]);
+					}
+					break;
+				case DeleteOption.NONE:
+					for (int i = 0; i < files.Length; i++)
+					{
+						if (File.Exists(files[i]))
+							File.Delete(files[i]);
+					}
+					break;
+			}
         }
         #endregion
 

@@ -121,6 +121,14 @@ namespace DataEditorX.Core
                 }
             }
         }
+		public long GetLeftScale()
+		{
+			return (this.level >> 0x18) & 0xff;
+		}
+		public long GetRightScale()
+		{
+			return (this.level >> 0x10) & 0xff;
+		}
         #endregion
 
 		#region 比较、哈希值、操作符

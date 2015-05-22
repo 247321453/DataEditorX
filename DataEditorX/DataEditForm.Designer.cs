@@ -64,7 +64,6 @@ namespace DataEditorX
 			this.menuitem_compdb = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_findluafunc = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_exportdata = new System.Windows.Forms.ToolStripMenuItem();
-			this.menuitem_saveasenter = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsep5 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuitem_cutimages = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuitem_convertimage = new System.Windows.Forms.ToolStripMenuItem();
@@ -282,7 +281,6 @@ namespace DataEditorX
             this.menuitem_compdb,
             this.menuitem_findluafunc,
             this.menuitem_exportdata,
-            this.menuitem_saveasenter,
             this.tsep5,
             this.menuitem_cutimages,
             this.menuitem_convertimage,
@@ -350,13 +348,6 @@ namespace DataEditorX
 			this.menuitem_exportdata.Size = new System.Drawing.Size(212, 22);
 			this.menuitem_exportdata.Text = "Export Data";
 			this.menuitem_exportdata.Click += new System.EventHandler(this.Menuitem_exportdataClick);
-			// 
-			// menuitem_saveasenter
-			// 
-			this.menuitem_saveasenter.Name = "menuitem_saveasenter";
-			this.menuitem_saveasenter.Size = new System.Drawing.Size(212, 22);
-			this.menuitem_saveasenter.Text = "Save as Auto Enter";
-			this.menuitem_saveasenter.Click += new System.EventHandler(this.menuitem_saveasenter_Click);
 			// 
 			// tsep5
 			// 
@@ -1194,8 +1185,7 @@ namespace DataEditorX
         private System.Windows.Forms.ToolStripMenuItem menuitem_cutimages;
         private System.Windows.Forms.ToolStripMenuItem menuitem_operacardsfile;
         private System.Windows.Forms.ToolStripSeparator tsep2;
-        private System.Windows.Forms.ToolStripMenuItem menuitem_openfileinthis;
-        private System.Windows.Forms.ToolStripMenuItem menuitem_saveasenter;
+		private System.Windows.Forms.ToolStripMenuItem menuitem_openfileinthis;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_autocheckupdate;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_language;
     }

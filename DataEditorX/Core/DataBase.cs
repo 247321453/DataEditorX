@@ -312,8 +312,8 @@ namespace DataEditorX.Core
 				sb.Append(" and datas.ot = "+c.ot.ToString());
 			if(c.attribute>0)
 				sb.Append(" and datas.attribute = "+c.attribute.ToString());
-			if(c.level>0)
-				sb.Append(" and (datas.level & 255) = "+toInt(c.level));
+			if ((c.level & 0xff) > 0)
+				sb.Append(" and (datas.level & 255) = "+toInt(c.level & 0xff));
 			if(c.race>0)
 				sb.Append(" and datas.race = "+toInt(c.race));
 			if(c.type>0)

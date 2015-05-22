@@ -147,7 +147,19 @@ namespace DataEditorX
         }
         //窗体关闭
         void DataEditFormFormClosing(object sender, FormClosingEventArgs e)
-        {
+		{
+			//清理备份文件
+			List<long> delids = new List<long>();
+			foreach (CardEdit.FileDeleted deleted in cardedit.undoDeleted)
+			{
+				if (deleted != null && deleted.deleted)
+					delids.AddRange(deleted.ids);
+			}
+			if (delids.Count != 0)
+			{
+				foreach (long id in delids)
+					YGOUtil.CardDelete(id, GetPath(), YGOUtil.DeleteOption.CLEAN);
+			}
             //当前有任务执行，是否结束
             if (tasker != null && tasker.IsRuning())
             {
@@ -156,7 +168,6 @@ namespace DataEditorX
                     e.Cancel = true;
                     return;
                 }
-
             }
         }
         //窗体激活
@@ -626,6 +637,18 @@ namespace DataEditorX
 
             return true;
         }
+		//setcode, 灵摆刻度的搜索
+		public bool CardFilter(Card c, Card sc)
+		{
+			bool res = true;
+			if (sc.setcode != 0)
+				res &= c.IsSetCode(sc.setcode & 0xffff);
+			if (sc.GetLeftScale() != 0 )
+				res &= (c.GetLeftScale() == sc.GetLeftScale());
+			if (sc.GetRightScale() != 0 )
+				res &= (c.GetRightScale() == sc.GetRightScale());
+			return res;
+		}
         //设置卡片列表的结果
         public void SetCards(Card[] cards, bool isfresh)
         {
@@ -634,10 +657,8 @@ namespace DataEditorX
                 cardlist.Clear();
                 foreach (Card c in cards)
                 {
-                    if (srcCard.setcode == 0)
-                        cardlist.Add(c);//setcode搜索在这里进行
-                    else if (c.IsSetCode(srcCard.setcode & 0xffff))
-                        cardlist.Add(c);
+					if (CardFilter(c, srcCard))
+						cardlist.Add(c);
                 }
                 cardcount = cardlist.Count;
                 pageNum = cardcount / MaxRow;
@@ -1117,9 +1138,9 @@ namespace DataEditorX
 			cardedit.undoSQL.Add(undo);
 			cardedit.undoModified.Add(new CardEdit.FileModified());
 			cardedit.undoDeleted.Add(new CardEdit.FileDeleted());
-			btn_undo.Enabled = true;
             DataBase.CopyDB(nowCdbFile, !replace, cards);
-            Search(srcCard, true);
+			Search(srcCard, true);
+			btn_undo.Enabled = true;
         }
         //卡片另存为
         void CopyTo(Card[] cards)
@@ -1601,38 +1622,5 @@ namespace DataEditorX
 			}
 		}
 		#endregion
-
-		#region 空格
-		private void menuitem_saveasenter_Click(object sender, EventArgs e)
-        {
-            using (SaveFileDialog dlg = new SaveFileDialog())
-            {
-                dlg.Title = LanguageHelper.GetMsg(LMSG.SelectDataBasePath);
-                dlg.Filter = LanguageHelper.GetMsg(LMSG.CdbType);
-                if (dlg.ShowDialog() == DialogResult.OK)
-                {
-                    Card[] cards = DataBase.Read(nowCdbFile, true, "");
-                    int count = cards.Length;
-                    if (cards == null || cards.Length == 0)
-                        return;
-                    if (DataBase.Create(dlg.FileName))
-                    {
-                        //
-                        int len = MyConfig.readInteger(MyConfig.TAG_AUTO_LEN, 30);
-                        for (int i = 0; i < count; i++)
-                        {
-                            cards[i].desc = StrUtil.AutoEnter(cards[i].desc, len, ' ');
-                            for (int j = 0; j < Card.STR_MAX; j++)
-                            {
-                                cards[i].Str[j] = StrUtil.AutoEnter(cards[i].Str[j], len, ' ');
-                            }
-                        } 
-                        DataBase.CopyDB(dlg.FileName, false, cards);
-                        MyMsg.Show(LMSG.CopyCardsToDBIsOK);
-                    }
-                }
-            }
-        }
-        #endregion
     }
 }

@@ -166,7 +166,7 @@ namespace DataEditorX.Core
                 //删除资源
                 if (deletefiles)
                 {
-                    YGOUtil.CardDelete(c.id, dataform.GetPath(), true);
+                    YGOUtil.CardDelete(c.id, dataform.GetPath(), YGOUtil.DeleteOption.BACKUP);
 					delete.deleted = true;
 					delete.ids.Add(c.id);
                 }
@@ -238,7 +238,7 @@ namespace DataEditorX.Core
 				return;
             }
 			DataBase.Command(dataform.GetOpenFile(), undoSQL[undoSQL.Count - 1]);
-			undoSQL.RemoveAt(undoSQL.Count-1);
+			undoSQL.RemoveAt(undoSQL.Count - 1);
 			if (undoModified[undoModified.Count - 1].modifiled)
 			{
 				FileModified lastmodify = undoModified[undoModified.Count - 1];
@@ -249,7 +249,7 @@ namespace DataEditorX.Core
 			{
 				FileDeleted lastdelete = undoDeleted[undoDeleted.Count - 1];
 				foreach (long id in lastdelete.ids)
-					YGOUtil.CardDelete(id, dataform.GetPath(), false, true);
+					YGOUtil.CardDelete(id, dataform.GetPath(), YGOUtil.DeleteOption.RESTORE);
 			}
 			undoDeleted.RemoveAt(undoDeleted.Count - 1);
 			dataform.Search(true);
