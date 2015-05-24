@@ -7,6 +7,9 @@ cn2tw = false
 ########################### Setting
 maxcount = 200
 imagepath = ./Images
+########################### 中间图
+width = 345
+height = 346
 ########################### Spell/Trap
 spell = [Sepll Card%%]
 trap = [Trap Card%%]

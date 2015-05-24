@@ -7,6 +7,9 @@ cn2tw = false
 ########################### Setting
 maxcount = 0
 imagepath = ./Images
+########################### 中间图
+width = 345
+height = 346
 ########################### Spell/Trap
 #jp setting
 spell = %%

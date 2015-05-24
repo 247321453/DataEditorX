@@ -293,7 +293,8 @@ namespace DataEditorX.Core
                         break;
                     i++;
                     worker.ReportProgress(i / count, string.Format("{0}/{1}-{2}", i, count, num));
-                    zips.AddFile(img, Path.GetFileName(img), "");
+                    //TODO 先裁剪图片
+                    zips.AddFile(mseHelper.getImageCache(img), Path.GetFileName(img), "");
                 }
             }
             File.Delete(setFile);

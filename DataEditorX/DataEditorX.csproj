@@ -69,6 +69,7 @@
     </Compile>
     <Compile Include="Common\CheckUpdate.cs" />
     <Compile Include="Common\ConfHelper.cs" />
+    <Compile Include="Common\MyUtils.cs" />
     <Compile Include="Common\StrUtil.cs" />
     <Compile Include="Common\XMLReader.cs" />
     <Compile Include="Config\YgoPath.cs" />

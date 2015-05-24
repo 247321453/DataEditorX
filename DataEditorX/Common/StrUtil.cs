@@ -8,7 +8,7 @@ namespace DataEditorX.Common
     {
         public static string AutoEnter(string str, int lineNum, char re)
         {
-            if (str == null || str.Length == 0 || re == null)
+            if (str == null || str.Length == 0)
                 return str;
             str = str.Replace("\r\n", "\n");
             char[] ch = str.ToCharArray();
