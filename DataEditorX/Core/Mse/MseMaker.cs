@@ -731,7 +731,7 @@ namespace DataEditorX.Core.Mse
 				//md5为空
 				return img;
 			}
-			string file = MyPath.Combine(cfg.imagecache, md5+".png");
+			string file = MyPath.Combine(cfg.imagecache, md5);
 			if(!File.Exists(file)){
 				//生成缓存 
 				Bitmap bmp=MyBitmap.readImage(file);
