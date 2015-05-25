@@ -5,6 +5,7 @@
  * 时间: 12:48
  * 
  */
+using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Text;
@@ -16,6 +17,8 @@ using DataEditorX.Core.Info;
 using DataEditorX.Config;
 using DataEditorX.Language;
 using DataEditorX.Common;
+using System.Windows.Forms;
+using System.Threading;
 
 namespace DataEditorX.Core.Mse
 {
@@ -366,9 +369,9 @@ namespace DataEditorX.Core.Mse
 
 		#region 写存档
 		//写存档
-		public string[] WriteSet(string file, Card[] cards)
+		public Dictionary<Card, string> WriteSet(string file, Card[] cards)
 		{
-			List<string> list = new List<string>();
+			Dictionary<Card, string> list = new Dictionary<Card, string>();
 			string pic = cfg.imagepath;
 			using (FileStream fs = new FileStream(file,
 			                                      FileMode.Create, FileAccess.Write))
@@ -380,7 +383,7 @@ namespace DataEditorX.Core.Mse
 					string jpg = GetCardImagePath(pic, c);
 					if (!string.IsNullOrEmpty(jpg))
 					{
-						list.Add(jpg);
+						list.Add(c, jpg);
 						jpg = Path.GetFileName(jpg);
 					}
 					if (c.IsType(CardType.TYPE_SPELL) || c.IsType(CardType.TYPE_TRAP))
@@ -392,7 +395,7 @@ namespace DataEditorX.Core.Mse
 				sw.Close();
 			}
 
-			return list.ToArray();
+			return list;
 		}
 		//怪兽，pendulum怪兽
 		string getMonster(Card c, string img, bool isPendulum)
@@ -723,7 +726,12 @@ namespace DataEditorX.Core.Mse
 		}
 		#endregion
 		
-		public string getImageCache(string img){
+		/// <summary>
+		/// 图片缓存
+		/// </summary>
+		/// <param name="img"></param>
+		/// <returns></returns>
+		public string getImageCache(string img,Card card){
 			if(cfg.width<=0 && cfg.height<=0)
 				return img;
 			string md5=MyUtils.GetMD5HashFromFile(img);
@@ -733,14 +741,57 @@ namespace DataEditorX.Core.Mse
 			}
 			string file = MyPath.Combine(cfg.imagecache, md5);
 			if(!File.Exists(file)){
-				//生成缓存 
+				//生成缓存
 				Bitmap bmp=MyBitmap.readImage(file);
 				//缩放
-				bmp=MyBitmap.Zoom(bmp, cfg.width,cfg.height);
+				if(card!=null && card.IsType(CardType.TYPE_PENDULUM)){
+					bmp=MyBitmap.Zoom(bmp, cfg.pwidth,cfg.pheight);
+				}else{
+					bmp=MyBitmap.Zoom(bmp, cfg.width,cfg.height);
+				}
 				//保存文件
 				MyBitmap.SaveAsJPEG(bmp, file,100);
 			}
 			return img;
+		}
+		private static void exportSetThread(object obj){
+			string[] args=(string[])obj;
+			if(args==null||args.Length<3){
+				System.Windows.Forms.MessageBox.Show(Language.LanguageHelper.GetMsg(LMSG.exportMseImagesErr));
+				return;
+			}
+			string mse_path=args[0];
+			string setfile=args[1];
+			string path=args[2];
+			if(mse_path==null||mse_path.Length==0||setfile==null||setfile.Length==0){
+				System.Windows.Forms.MessageBox.Show(Language.LanguageHelper.GetMsg(LMSG.exportMseImagesErr));
+				return;
+			}else{
+				string cmd=" --export "+setfile.Replace("\\\\","\\").Replace("\\","/")+" {card.gamecode}.png";
+				System.Diagnostics.Process   ie   =   new   System.Diagnostics.Process();
+				ie.StartInfo.FileName   =   mse_path;
+				ie.StartInfo.Arguments   =  cmd;
+				ie.StartInfo.WorkingDirectory=path;
+				MyPath.CreateDir(path);
+				try{
+					ie.Start();
+					//等待结束，需要把当前方法放到线程里面
+					ie.WaitForExit();
+					ie.Close();
+					System.Windows.Forms.MessageBox.Show(Language.LanguageHelper.GetMsg(LMSG.exportMseImages));
+				}catch{
+					
+				}
+			}
+		}
+		public static void exportSet(string mse_path,string setfile,string path){
+			if(mse_path==null||mse_path.Length==0||setfile==null||setfile.Length==0){
+				return;
+			}
+			ParameterizedThreadStart ParStart = new ParameterizedThreadStart(exportSetThread);
+			Thread myThread = new Thread(ParStart);
+			myThread.IsBackground=true;
+			myThread.Start(new string[]{mse_path,setfile,path});
 		}
 	}
 }

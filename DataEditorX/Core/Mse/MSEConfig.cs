@@ -41,6 +41,10 @@ namespace DataEditorX.Core.Mse
 		public const string TAG_TYPE = "type";
 		public const string TAG_WIDTH="width";
 		public const string TAG_HEIGHT="height";
+		
+		
+		public const string TAG_PEND_WIDTH="pwidth";
+		public const string TAG_PEND_HEIGHT="pheight";
 
 		public const string TAG_IMAGE = "imagepath";
 		public const string TAG_REPALCE = "replace";
@@ -99,6 +103,12 @@ namespace DataEditorX.Core.Mse
 				else if (line.StartsWith(TAG_HEIGHT)){
 					height=ConfHelper.getIntegerValue(line,0);
 				}
+				else if (line.StartsWith(TAG_PEND_WIDTH)){
+					pwidth=ConfHelper.getIntegerValue(line,0);
+				}
+				else if (line.StartsWith(TAG_PEND_HEIGHT)){
+					pheight=ConfHelper.getIntegerValue(line,0);
+				}
 				else if (line.StartsWith(TAG_IMAGE))
 				{
 					//如果路径不合法，则为后面的路径
@@ -149,6 +159,10 @@ namespace DataEditorX.Core.Mse
 		/// 中间图高度
 		/// </summary>
 		public int height;
+		
+		public int pwidth;
+		public int pheight;
+		
 		//每个存档最大数
 		public int maxcount;
 		//图片路径

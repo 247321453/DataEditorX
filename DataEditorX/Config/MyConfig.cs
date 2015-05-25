@@ -17,6 +17,7 @@ namespace DataEditorX.Config
         #region 常量
         public const string TAG_SAVE_LAGN = "-savelanguage";
         public const string TAG_SAVE_LAGN2 = "-sl";
+        public const string TAG_MSE_PATH="mse_path";
         /// <summary>
         /// 窗口消息 打开文件
         /// </summary>

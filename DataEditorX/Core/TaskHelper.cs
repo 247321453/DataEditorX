@@ -278,23 +278,24 @@ namespace DataEditorX.Core
         public void SaveMSE(int num, string file, Card[] cards, bool isUpdate)
         {
             string setFile = file + ".txt";
-            string[] images = mseHelper.WriteSet(setFile, cards);
+            Dictionary<Card, string> images = mseHelper.WriteSet(setFile, cards);
             if (isUpdate)//仅更新文字
                 return;
             int i = 0;
-            int count = images.Length;
+            int count = images.Count;
             using (ZipStorer zips = ZipStorer.Create(file, ""))
             {
                 zips.EncodeUTF8 = true;//zip里面的文件名为utf8
                 zips.AddFile(setFile, "set", "");
-                foreach (string img in images)
+                foreach (Card c in images.Keys)
                 {
+                	string img=images[c];
                     if (isCancel)
                         break;
                     i++;
                     worker.ReportProgress(i / count, string.Format("{0}/{1}-{2}", i, count, num));
                     //TODO 先裁剪图片
-                    zips.AddFile(mseHelper.getImageCache(img), Path.GetFileName(img), "");
+                    zips.AddFile(mseHelper.getImageCache(img,c), Path.GetFileName(img), "");
                 }
             }
             File.Delete(setFile);
