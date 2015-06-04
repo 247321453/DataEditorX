@@ -369,6 +369,9 @@
 0xc9	Aroma	アロマ
 0xca	Empowered Warrior	魔装戦士
 0xcb	Aether	イーサルウェポン
+0xcc	Sibyl	占術姫
+0xcd	Aqua Actress	アクアアクトレス
+0xce	Aquarium 	アクアリウム
 0x100	Monster that lists a "Synchron" Monster as a Tuner.
 0x101	Fusion Monster that lists a Synchro Monster as a Fusion Material
 0x102	Fusion Monster that can only be Special Summoned with "Dark Fusion"
