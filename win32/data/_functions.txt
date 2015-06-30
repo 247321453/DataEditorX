@@ -274,14 +274,14 @@ copy_info=false或者自由时点的效果则只返回这个效果
 如果forced为true则不会检查c对e的免疫效果
 ●bool Card.IsHasEffect(Card c, int code)
 检查c是否受到效果种类是code的效果的影响
-●void Card.ResetEffect(Card c, int id, int reset_type)
-以重置类型为reset_type、重置种类为id手动重置c受到的效果的影响
-重置类型只能是以下类型，对应的重置种类为
-RESET_EVENT       发生事件重置        id为事件
-RESET_PHASE       阶段结束重置        id为阶段
-RESET_CODE        重置指定code的效果  id为效果的种类code，只能重置EFFECT_TYPE_SINGLE的永续型效果
-RESET_COPY        重置复制的效果      id为copy_id
-RESET_CARD        重置卡片的效果      id为效果owner的卡号
+●void Card.ResetEffect(Card c, int reset_code, int reset_type)
+以重置类型为reset_type、重置种类为reset_code手动重置c受到的效果的影响
+reset_type只能是以下类型，对应的重置种类为
+RESET_EVENT       发生事件重置        reset_code为事件
+RESET_PHASE       阶段结束重置        reset_code为阶段
+RESET_CODE        重置指定code的效果  reset_code为效果的种类code，只能重置EFFECT_TYPE_SINGLE的永续型效果
+RESET_COPY        重置复制的效果      reset_code为copy_id
+RESET_CARD        重置卡片的效果      reset_code为效果owner的卡号
 ●int Card.GetEffectCount(Card c, int code)
 返回c受到影响的种类是code的效果的数量
 ●Effect Card.RegisterFlagEffect(Card c, int code, int reset_flag, int property, int reset_count[, int label, int desc])
@@ -575,7 +575,8 @@ EFFECT_COUNT_CODE_SINGLE        同一张卡多个效果公共使用次数（不
 	o_range值影响的对方区域
 	如果property属性中指定了EFFECT_FLAG_ABSOLUTE_RANGE标志，
 		那么s_range指玩家1受到影响的区域，o_range指玩家2受到影响的区域
-	如果这是一个特殊召唤手续(EFFECT_SPSUMMON_PROC)的效果，
+	如果这是一个召唤(覆盖)/限制召唤(覆盖)/特殊召唤手续
+	(EFFECT_SUMMON_PROC/EFFECT_LIMIT_SUMMON_PROC/EFFECT_SPSUMMON_PROC等)的效果，
 		并且property指定了EFFECT_FLAG_SPSUM_PARAM标志，
 		那么s_range表示特殊召唤到的哪个玩家的场地，
 	o_range表示可选择的表示形式
@@ -1018,12 +1019,12 @@ Duel.GetChainInfo(0,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TARGET_CARDS)
 过滤函数，让玩家player从场上·手卡选择min-max张不等于ex的满足条件f的可解放的卡（非上级召唤用）
 ●Group Duel.GetTributeGroup(Card c)
 返回用于通常召唤c可解放（上级召唤用）的卡片组
-●int Duel.GetTributeCount(Card c[, Group mg])
-返回[mg中]用于通常召唤c的祭品数量
+●int Duel.GetTributeCount(Card c[, Group mg, bool ex=false])
+返回[mg中]用于通常召唤c的祭品数量，ex=true则允许对方场上的怪兽（太阳神之翼神龙-球体形）
 此数量不一定等于Duel.GetTributeGroup的返回值中的卡片数量
 因为某些卡可以作为两个祭品来使用
-●Group Duel.SelectTribute(int player, Card c, int min, int max[, Group mg])
-让玩家player[从mg中]选择用于通常召唤c的min-max个祭品
+●Group Duel.SelectTribute(int player, Card c, int min, int max[, Group mg, bool ex=false])
+让玩家player[从mg中]选择用于通常召唤c的min-max个祭品，ex=true则允许对方场上的怪兽（太阳神之翼神龙-球体形）
 ●int Duel.GetTargetCount(function f, int player, int s, int o, Card ex|nil, ...)
 基本同Duel.GetMatchingGroupCount，不同之处在于需要追加判定卡片是否能成为当前正在处理的效果的对象
 ●bool Duel.IsExistingTarget(function f, int player, int s, int o, int count, Card ex|nil, ...)
@@ -1105,6 +1106,17 @@ void Duel.SetTargetParam(inte param)
 让player以reason原因移除指定位置的min-max张叠放卡，返回值表示是否成功
 ●void Duel.Hint(int hint_type, int player, int desc)
 给玩家player发送hint_type类型的消息提示，提示内容为desc
+#hint_type只能为以下类型：
+#HINT_SELECTMSG	将提示内容写入缓存，用于选择卡片的提示，例如Duel.SelectMatchingCard等
+#HINT_OPSELECTED	向player提示“对方选择了：...”，常用于向对方玩家提示选择发动了什么效果
+#HINT_CARD		此时desc应为卡号，手动显示卡片发动的动画，常用于提示不入连锁的处理
+#HINT_RACE		此时desc应为种族，向player提示“对方宣言了：...”种族
+#HINT_ATTRIB		此时desc应为属性，向player提示“对方宣言了：...”属性
+#HINT_CODE		此时desc应为卡号，向player提示“对方宣言了：...”卡片
+#HINT_NUMBER		此时desc视为单纯的数字，向player提示“对方选择了：...”数字
+#HINT_MESSAGE	弹出一个对话框显示信息
+#HINT_EVENT		将提示内容写入缓存，用于时点的提示信息（诱发即时效果的提示）
+#HINT_EFFECT		同HINT_CARD
 ●void Duel.HintSelection(Group g)
 手动为g显示被选为对象的动画效果，并记录这些卡被选为对象
 ●bool Duel.SelectEffectYesNo(int player, Card c)

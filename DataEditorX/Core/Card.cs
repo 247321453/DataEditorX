@@ -87,7 +87,7 @@ namespace DataEditorX.Core
         public long[] GetSetCode()
         {
             long[] setcodes = new long[SETCODE_MAX];
-            for (int i = 0,k=0; i < SETCODE_MAX; k +=0x10,i++)
+            for (int i = 0,k = 0; i < SETCODE_MAX; k += 0x10, i++)
             {
                 setcodes[i] = (this.setcode >> k) & 0xffff;
             }

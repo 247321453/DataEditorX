@@ -238,7 +238,7 @@ namespace DataEditorX.Core
 		/// <param name="cards">卡片集合</param>
 		/// <param name="ignore">是否忽略存在</param>
 		/// <returns>更新数x2</returns>
-		public static int CopyDB(string DB, bool ignore,params Card[] cards)
+		public static int CopyDB(string DB, bool ignore, params Card[] cards)
 		{
 			int result = 0;
 			if ( File.Exists(DB) &&cards!=null)
@@ -264,7 +264,35 @@ namespace DataEditorX.Core
 			return result;
 		}
 		#endregion
-		
+
+		#region 删除记录
+		public static int DeleteDB(string DB, params Card[] cards)
+		{
+			int result = 0;
+			if (File.Exists(DB) && cards != null)
+			{
+				using (SQLiteConnection con = new SQLiteConnection(@"Data Source=" + DB))
+				{
+					con.Open();
+					using (SQLiteTransaction trans = con.BeginTransaction())
+					{
+						using (SQLiteCommand cmd = new SQLiteCommand(con))
+						{
+							foreach (Card c in cards)
+							{
+								cmd.CommandText = DataBase.GetDeleteSQL(c);
+								result += cmd.ExecuteNonQuery();
+							}
+						}
+						trans.Commit();
+					}
+					con.Close();
+				}
+			}
+			return result;
+		}
+		#endregion
+
 		#region 压缩数据库
 		public static void Compression(string db)
 		{

@@ -23,14 +23,23 @@ namespace DataEditorX.Core
 			public bool deleted = false;
 			public List<long> ids = new List<long>();
 		}
+		public class DBcopied
+		{
+			public bool copied = false;
+			public Card[] NewCards;
+			public bool replace;
+			public Card[] OldCards;
+		}
 		public List<FileModified> undoModified;
 		public List<FileDeleted> undoDeleted;
+		public List<DBcopied> undoCopied;
         public CardEdit(IDataForm dataform)
         {
             this.dataform = dataform;
 			this.undoSQL = new List<string>();
 			this.undoModified = new List<FileModified>();
 			this.undoDeleted = new List<FileDeleted>();
+			this.undoCopied = new List<DBcopied>();
         }
 
         #region 添加
@@ -61,6 +70,7 @@ namespace DataEditorX.Core
                 undoSQL.Add(DataBase.GetDeleteSQL(c));
 				undoModified.Add(new FileModified());
 				undoDeleted.Add(new FileDeleted());
+				undoCopied.Add(new DBcopied());
                 dataform.Search(true);
                 dataform.SetCard(c);
                 return true;
@@ -118,11 +128,13 @@ namespace DataEditorX.Core
 					modify.delold = delold;
 					undoModified.Add(modify);
 					undoDeleted.Add(new FileDeleted());
+					undoCopied.Add(new DBcopied());
 				}
 				else
 				{
 					undoModified.Add(new FileModified());
 					undoDeleted.Add(new FileDeleted());
+					undoCopied.Add(new DBcopied());
 				}
             }
             else
@@ -131,6 +143,7 @@ namespace DataEditorX.Core
                 undoSQL.Add(DataBase.GetUpdateSQL(oldCard));
 				undoModified.Add(new FileModified());
 				undoDeleted.Add(new FileDeleted());
+				undoCopied.Add(new DBcopied());
             }
             if (DataBase.Command(dataform.GetOpenFile(), sql) > 0)
             {
@@ -178,6 +191,7 @@ namespace DataEditorX.Core
 				undoSQL.Add(undo);
 				undoDeleted.Add(delete);
 				undoModified.Add(new FileModified());
+				undoCopied.Add(new DBcopied());
                 return true;
             }
             else
@@ -252,6 +266,13 @@ namespace DataEditorX.Core
 					YGOUtil.CardDelete(id, dataform.GetPath(), YGOUtil.DeleteOption.RESTORE);
 			}
 			undoDeleted.RemoveAt(undoDeleted.Count - 1);
+			if (undoCopied[undoCopied.Count - 1].copied)
+			{
+				DBcopied lastcopied = undoCopied[undoCopied.Count - 1];
+				DataBase.DeleteDB(dataform.GetOpenFile(), lastcopied.NewCards);
+				DataBase.CopyDB(dataform.GetOpenFile(), !lastcopied.replace, lastcopied.OldCards);
+			}
+			undoCopied.RemoveAt(undoCopied.Count - 1);
 			dataform.Search(true);
         }
         #endregion

@@ -1113,11 +1113,6 @@ namespace DataEditorX
 				return;
 			bool replace = false;
 			Card[] oldcards = DataBase.Read(nowCdbFile, true, "");
-			string undo = "";
-			foreach (Card c in cards)
-			{
-				undo += DataBase.GetDeleteSQL(c);
-			}
 			if (oldcards != null && oldcards.Length != 0)
 			{
 				int i = 0;
@@ -1129,16 +1124,26 @@ namespace DataEditorX
 						{
 							i += 1;
 							if (i == 1)
+							{
 								replace = MyMsg.Question(LMSG.IfReplaceExistingCard);
-							undo += DataBase.GetInsertSQL(oc, !replace);
+								break;
+							}
 						}
 					}
+					if (i > 0)
+						break;
 				}
 			}
-			cardedit.undoSQL.Add(undo);
+			cardedit.undoSQL.Add("");
 			cardedit.undoModified.Add(new CardEdit.FileModified());
 			cardedit.undoDeleted.Add(new CardEdit.FileDeleted());
 			DataBase.CopyDB(nowCdbFile, !replace, cards);
+			CardEdit.DBcopied copied = new CardEdit.DBcopied();
+			copied.copied = true;
+			copied.NewCards = cards;
+			copied.replace = replace;
+			copied.OldCards = oldcards;
+			cardedit.undoCopied.Add(copied);
 			Search(srcCard, true);
 			btn_undo.Enabled = true;
 		}
