@@ -1,6 +1,13 @@
 #DataEditorX
 Manage card database(.cdb file) for [ygopro](https://github.com/Fluorohydride/ygopro).
 
+##Download
+https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip   
+
+> **FAQ**   
+Q: I can't run the program.   
+A: Please install [.NET Framework](https://www.microsoft.com/en-us/download/details.aspx?id=25150).
+
 ##Functions
 Create, edit card database.   
 Compare, copy and paste card records across databases easily.   
