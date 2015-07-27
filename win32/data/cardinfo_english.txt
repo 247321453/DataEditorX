@@ -117,7 +117,7 @@
 ##setname
 -1	Custom
 0x0	Archetype
-0x1	Ally of Justice	Ａ·Ｏ·Ｊ
+0x1	Ally of Justice	A·O·J
 0x2	Genex	ジェネクス
 0x1002	R-Genex	レアル·ジェネクス
 0x2002	Genex Ally	A·ジェネクス
@@ -126,20 +126,20 @@
 0x5	Arcana Force	アルカナフォース
 0x6	Dark World	暗黑界
 0x7	Ancient Gear	アンティーク・ギア
-0x8	HERO	ＨＥＲＯ
-0x3008	Elemental HERO	Ｅ·ＨＥＲＯ
-0x6008	Evil HERO	Ｅ－ＨＥＲＯ
-0xc008	Destiny HERO	Ｄ·ＨＥＲＯ
-0x5008	Vision HERO	Ｖ·ＨＥＲＯ
-0xa008	Masked HERO	Ｍ·ＨＥＲＯ
+0x8	HERO	HERO
+0x3008	Elemental HERO	E·HERO
+0x6008	Evil HERO	E-HERO
+0xc008	Destiny HERO	D-HERO
+0x5008	Vision HERO	V·HERO
+0xa008	Masked HERO	M·HERO
 0x9	Neos	ネオス
 0xa	lswarm	ヴェルズ
 0x100a	Evilswarm	インヴェルズ
 0xb	Infernity	インフェルニティ
 0xc	Alien	エーリアン
 0xd	Saber	セイバー
-0x100d	X-Saber	Ｘ－セイバー
-0x300d	XX-Saber	ＸＸ－セイバー
+0x100d	X-Saber	X－セイバー
+0x300d	XX-Saber	XX－セイバー
 0xe	Watt	エレキ
 0xf	Ojama	オジャマ
 0x10	Gusto	ガスタ
@@ -161,15 +161,15 @@
 0x1c	N/A
 0x1d	Koa'ki Meiru	コアキメイル
 0x1e	Chrysalis	C（コクーン）
-0x1f	Neo-Spacian	Ｎ（ネオスペーシアン）
+0x1f	Neo-Spacian	N（ネオスペーシアン）
 0x20	Shien	紫炎
 0x21	Earthbound Immortal	地縛神
 0x22	Jurrac	ジュラック
-0x23	Malefic	ＳＩＮ
+0x23	Malefic	Sin
 0x24	Scrap	スクラップ
-0x25	Iron Chain	Ｃ（チェーン）
-0x26	Morphtronic	Ｄ（ディフォーマー）
-0x27	T.G.	ＴＧ（テックジーナス）
+0x25	Iron Chain	C（チェーン）
+0x26	Morphtronic	D（ディフォーマー）
+0x27	T.G.	TG（テックジーナス）
 0x28	Batteryman	電池メン
 0x29	Dragunity	ドラグニティ
 0x2a	Naturia	ナチュル
@@ -182,7 +182,7 @@
 0x30	Vylon	ヴァイロン
 0x31	Fortune Lady	フォーチュンレディ
 0x32	Volcanic	ヴォルカニック
-0x33	Blackwing	ＢＦ（ブラックフェザー）
+0x33	Blackwing	BF（ブラックフェザー）
 0x34	Crystal	宝玉
 0x1034	Crystal Beast	宝玉獣
 0x35	Fabled	魔轟神
@@ -198,7 +198,7 @@
 0x3e	Worm	ワーム
 0x3f	Majestic	セイヴァ
 0x40	Forbidden One	封印されし
-0x41	LV	ＬＶ
+0x41	LV	LV
 0x42	Nordic	極星
 0x3042	Nordic Ascendant	極星天
 0x6042	Nordic Beasts	極星獣
@@ -210,8 +210,8 @@
 0x46	Polymerization/Fusion	融合/フュージョン
 0x47	Gem-	ジェム
 0x1047	Gem-Knight	ジェムナイト
-0x48	Number	ＮＯ
-0x1048	Number C	ＣＮＯ
+0x48	Number	No.
+0x1048	Number C	CNo.
 0x49	Skyblaster	铳士
 0x4a	Timelord	時械神
 0x4b	Aesir	極神
@@ -265,7 +265,7 @@
 0x72	Geargia	ギアギア
 0x1072	Geargiano	ギアギアーノ
 0x73	Xyz	エクシーズ
-0x1073	CXyz	ＣＸ
+0x1073	CXyz	CX
 0x74	Mermail	水精鱗
 0x75	Abyss	アビス
 0x76	Heraldic Beast	紋章獣
@@ -288,7 +288,7 @@
 0x1081	Fire King Avatar	炎王獣
 0x82	Dododo	ドドド
 0x83	Gimmick Puppet	ギミック・パペット
-0x84	Battlin' Boxer	ＢＫ
+0x84	Battlin' Boxer	BK
 0x85	Super Defense Robot	SDロボ
 0x86	Star Seraph	光天使
 0x87	Umbral Horror	アンブラル
@@ -347,31 +347,34 @@
 0x10b5	Ritual Beast Tamer	霊獣使い
 0x20b5	Spiritual Beast	精霊獣
 0x40b5	Ritual Beast Ulti-	聖霊獣騎
-0xb6	Outer God
-0xb7	Elder God
-0xb8	Great Old One
+0xb6	Outer Entity	外神
+0xb7	Elder Entity	旧神
+0xb8	Old Entity	古神
 0xb9	Blaze Accelerator	ブレイズ·キャノン
 0xba	Raidraptor	RR
 0xbb	Infernoid	インフェルノイド
 0xbc	Jinzo	人造人間
 0xbd	Gaia The Fierce Knight	暗黒騎士ガイア
-0xbe	Monarchs	帝(てい)王(おう)
+0xbe	Monarchs	帝王
 0xbf	Charmer	霊使い
 0xc0	Familiar-Possessed	憑依装着
 0xc1	N/A
 0xc2	Power Tool	パワー·ツール
 0xc3	Edge Imp	エッジインプ
 0xc4	Zefra	セフィラ
-0xc5	Void	煉(れん)獄(ごく)
+0xc5	Void	煉獄
 0xc6	Performage	Em
 0xc7	Dragoknight	竜剣士
 0xc8	Igknight	イグナイト
 0xc9	Aroma	アロマ
 0xca	Empowered Warrior	魔装戦士
 0xcb	Aether	イーサルウェポン
-0xcc	Sibyl	占術姫
-0xcd	Aqua Actress	アクアアクトレス
+0xcc	Prediction Princess	占術姫
+0xcd	Aquaactress	アクアアクトレス
 0xce	Aquarium 	アクアリウム
+0xcf	Black Luster Soldier	カオス・ソルジャー
+0xd0	Majespecter	マジェスペクター
+0xd1	Graydle	グレイドル
 0x100	Monster that lists a "Synchron" Monster as a Tuner.
 0x101	Fusion Monster that lists a Synchro Monster as a Fusion Material
 0x102	Fusion Monster that can only be Special Summoned with "Dark Fusion"

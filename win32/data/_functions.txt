@@ -463,6 +463,8 @@ e~=nil则检查c是否可以以效果e进行通常召唤的set，minc表示至�
 检查c是否可以成为融合素材，ignore_mon=true则不检查c是否是怪兽
 ●bool Card.IsCanBeSynchroMaterial(Card c[, Card sc, Card tuner])
 检查c是否可以成为同调怪兽sc的同调素材
+●bool Card.IsCanBeRitualMaterial(Card c[, Card sc])
+检查c是否能作为仪式怪兽sc的祭品
 ●bool Card.IsCanBeXyzMaterial(Card c, Card sc|nil)
 检查c是否可以成为超量怪兽sc的超量素材
 ●bool Card.CheckFusionMaterial(Card c[, Group g, Card gc|nil, int chkf=PLAYER_NONE])
@@ -1180,8 +1182,9 @@ available是所有可选属性的组合值
 检查玩家player是否可以把卡组顶端count张卡送去墓地
 ●bool Duel.IsPlayerCanDiscardDeckAsCost(int player, int count)
 检查玩家player能否把卡组顶端count张卡送去墓地作为cost
-●bool Duel.IsPlayerCanSummon(int player, int sumtype, Card c)
-检查玩家player是否可以以sumtype方式通常召唤c
+●bool Duel.IsPlayerCanSummon(int player[, int sumtype, Card c])
+检查玩家player是否可以通常召唤[c，以sumtype方式]
+如果需要可选参数，则必须全部使用
 仅当玩家收到“不能上级召唤”等效果的影响时返回false
 ●bool Duel.IsPlayerCanSpecialSummon(int player[, int sumtype, int sumpos, int target_player, Card c])
 检查玩家player能否特殊召唤[c到target_player场上，以sumtype召唤方式，sumpos表示形式]

@@ -32,7 +32,7 @@ DataEditForm.btn_add	Add
 #DataEditForm.btn_PageUp	Page Up
 DataEditForm.lv_cardlist.0	Card Code
 DataEditForm.lv_cardlist.1	Card Name
-DataEditForm.mainMenu.menuitem_file	Fil(&F)
+DataEditForm.mainMenu.menuitem_file	File(&F)
 DataEditForm.mainMenu.menuitem_open	Open(&O)
 DataEditForm.mainMenu.menuitem_new	New(&N)
 DataEditForm.mainMenu.menuitem_copyselectto	Copy Selected...
@@ -47,7 +47,6 @@ DataEditForm.mainMenu.menuitem_readydk	Read From ydk File(&Y)
 DataEditForm.mainMenu.menuitem_readimages	Read From Images Path(&I)
 DataEditForm.mainMenu.menuitem_compdb	Compress DataBase
 DataEditForm.mainMenu.menuitem_exportdata	Export Data As zip
-DataEditForm.mainMenu.menuitem_saveasenter	Auto Enter
 DataEditForm.mainMenu.menuitem_mseconfig	Set MSE Config
 DataEditForm.mainMenu.menuitem_readmse	Read MSE-set
 DataEditForm.mainMenu.menuitem_saveasmse_select	Save Selected As MSE-set
@@ -91,24 +90,24 @@ MainForm.mainMenu.menuitem_closeall	Close All
 0x5	Create fail!
 0x6	Add succeed!
 0x7	Add fail!
-0x8	Code can't is 0!
-0x9	It's exitis!
+0x8	Code can't be 0!
+0x9	It already exists!
 0xa	It's no changed.
 0xb	If delete Card(s)?
 0xc	If create script file?
 0xd	If open database?
 0xe	If replace exitis cards?
-0xf	It's new version.\nWhether you need to download again?
+0xf	It's up to date.\nDo you want to download it again?
 0x10	Check update fail. Please Check Network.
 0x11	Find a new version,\nIf Download it?
-0x12	File is't exitis!
-0x13	No select database!
+0x12	File doesn't exitis!
+0x13	No selected database!
 0x14	select database file
 0x15	select ydk file
 0x16	selcet image folder
 0x17	Download succeed!
 0x18	Download fail?
-0x19	No slect script text!
+0x19	No selected script text!
 0x1a	Delete succeed!
 0x1b	Delete fail!
 0x1c	Modify succeed!
@@ -122,17 +121,17 @@ MainForm.mainMenu.menuitem_closeall	Close All
 0x24	Select Image For Card
 0x25	jpg(*.jpg)|*.jpg|bmp(*.bmp)|*.bmp|png(*.png)|*.png|all files(*.*)|*.*
 0x26	The Task is runing.
-0x27	Check Update...
-0x28	Copy Database...
+0x27	Checking Update...
+0x28	Copying Database...
 0x29	Copy Database OK
 0x2a	Save Mse-set file
 0x2b	MSE set(*.mse-set)|*.mse-set|all files(*.*)|*.*
-0x2c	Export Mse-set
+0x2c	Exporting Mse-set
 0x2d	Export Mse-set OK
-0x2e	Cut Images...
+0x2e	Cutting Images...
 0x2f	Cut Images OK
-0x30	No Select Cards
-0x31	If Replace Iamge When it's exisit?
+0x30	No Selected Cards
+0x31	If Replace Image When it's exisit?
 0x32	Converting Images
 0x33	Convert Images OK
 0x34	Compression DataBase OK

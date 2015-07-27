@@ -13,7 +13,7 @@ height = 317
 pwidth = 363
 pheight= 275
 ########################### Spell/Trap
-spell = [Sepll Card%%]
+spell = [Spell Card%%]
 trap = [Trap Card%%]
 ############################ language,style,other setting
 head = mse version: 0.3.8\r\ngame: yugioh\r\nstylesheet: standard\r\nset info:\r\n\tlanguage: EN\r\n\tedition: \r\n\tST mark is text: no\r\n\tpendulum image is small: yes
@@ -21,8 +21,8 @@ end = version control:\n\ttype: none\napprentice code:
 ############################ Text
 text = Pendulum Text :\n%ptext%\nMonster Text :\n%text%\n
 ############################
-pendulum-text = Pendulum Text :\n([\S\s]*?)\n\n
-monster-text = Monster Text :\n([\S\s]*)
+pendulum-text = \[ Pendulum Effect \]\s*\n(?:-n/a-)*([\S\s]*?)\n---
+monster-text = (?:Monster Effect|Flavor Text) \]\s*\n([\S\s]*)
 ########################### Replace
 #replace = \s <sym-auto>^</sym-auto>
 #replace = ([A-Z]) <i>$1</i>
