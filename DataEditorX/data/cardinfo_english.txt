@@ -364,7 +364,7 @@
 0xc4	Zefra	セフィラ
 0xc5	Void	煉獄
 0xc6	Performage	Em
-0xc7	Dragoknight	竜剣士
+0xc7	Dracoslayer	竜剣士
 0xc8	Igknight	イグナイト
 0xc9	Aroma	アロマ
 0xca	Empowered Warrior	魔装戦士
@@ -375,6 +375,8 @@
 0xcf	Black Luster Soldier	カオス・ソルジャー
 0xd0	Majespecter	マジェスペクター
 0xd1	Graydle	グレイドル
+0xd2	Kozmo
+0xd3	Kaiju
 0x100	Monster that lists a "Synchron" Monster as a Tuner.
 0x101	Fusion Monster that lists a Synchro Monster as a Fusion Material
 0x102	Fusion Monster that can only be Special Summoned with "Dark Fusion"

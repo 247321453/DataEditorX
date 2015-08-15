@@ -451,6 +451,7 @@ e~=nil则检查c是否可以以效果e进行通常召唤的set，minc表示至�
 返回c上的countertype类型的指示物的数量
 ●void Card.EnableCounterPermit(Card c, int countertype[, int location])
 允许c[在位置location]放置那个需要“可以放置”才能放置的指示物countertype
+location的默认值与c的种类有关，灵摆怪兽需要指定能否在怪兽区域或灵摆区域放置指示物
 ●void Card.SetCounterLimit(Card c, int countertype, int count)
 设定c放置countertype类型指示物的上限
 ●bool Card.IsCanTurnSet(Card c)
@@ -1153,10 +1154,10 @@ available是所有可选属性的组合值
 让玩家player宣言一个卡片代号
 ●int Duel.AnnounceType(int player)
 让玩家player宣言一个卡片类型
-●int Duel.AnnounceNumber(int player, int number, ...)
+●int,int Duel.AnnounceNumber(int player, int number, ...)
 让玩家player宣言一个数字
 从第二个参数开始，每一个参数代表一个可宣言的数字
-返回选择的选项的序号
+第一个返回值的宣言的数字，第二个返回值是宣言数字在所有选项中的位置
 ●int Duel.AnnounceCoin(int player)
 让玩家player宣言硬币的正反面
 ●... Duel.TossCoin(int player, int count)
