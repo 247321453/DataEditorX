@@ -22,11 +22,7 @@ win8(需要安装.Net3.5包含2.0)
 默认，lua是用本程序打开，如果需要修改，在★设置 open_file_in_this设为false
 
 ★bug反馈(Feedback)
-Email:247321453@qq.com
-标题：DataEditorX X.X.X.X
-内容：
-错误提示文字：（弹出出错框，请按Ctrl+C，然后找地方粘贴）
-详细描述：（卡片信息，杀毒软件，本程序目录，当时的详细操作等等）
+不接受任何bug和建议。
 
 ★设置
 DataEditorX.exe.config ★语言设置，★图片设置，★CodeEditor设置
