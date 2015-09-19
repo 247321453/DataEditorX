@@ -326,8 +326,7 @@ namespace DataEditorX
             MyMsg.Show(
                 LanguageHelper.GetMsg(LMSG.About) + "\t" + Application.ProductName + "\n"
                 + LanguageHelper.GetMsg(LMSG.Version) + "\t1.1.0.0\n"
-                + LanguageHelper.GetMsg(LMSG.Author) + "\t柯永裕\n"
-                + "Email:\t247321453@qq.com");
+                + LanguageHelper.GetMsg(LMSG.Author) + "\t菜菜");
         }
 
         void Menuitem_openClick(object sender, EventArgs e)

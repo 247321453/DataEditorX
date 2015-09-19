@@ -8,14 +8,6 @@ This program based on .Net2.0/winXP(need .Net2.0)/win7(with.Net2.0)/win8(need.Ne
 
 Click file with right mouse button, Open with, Browse Files, Choose confirm(Yes）
 
-★Feedback
-Email:247321453@qq.com
-Title：DataEditorX X.X.X.X
-Text：
-The error message text: If there is a error message box, please press Ctrl+C, then paste in someplace.
-please give a detailed description of: card message; antivirus; programe location;the operation that time.
-
-
 ★Setting
 DataEditorX.exe.config ★Language，★Image，★CodeEditor
 data/language_xxx.txt Interface and prompt message 
