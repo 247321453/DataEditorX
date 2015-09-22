@@ -7,7 +7,7 @@ cn2tw = false
 ########################### Setting
 maxcount = 0
 imagepath = ./Images
-########################### 中间图
+########################### Artwork
 width = 319
 height = 317
 pwidth = 363
@@ -23,11 +23,11 @@ end = version control:\n\ttype: none\napprentice code:
 text =【摇摆文本】\n%ptext%\n【怪兽效果】\n%text%\n
 ############################
 # chs jp
-pendulum-text = Pendulum Text :\n([\S\s]*?)\n\n
+pendulum-text = 】[\s\S]*?\n([\S\s]*?)\n【
 # cht pendulum-text = ([\S\s]*?)\n【
 # en  pendulum-text = Text:\n([\S\s]*?)\n[\S\s]*?Text:
 # chs jp cht
-monster-text = Monster Text :\n([\S\s]*)
+monster-text = [果|介|述|報]】\n([\S\s]*)
 # en  monster-text = Text:[\s\S]*?Text:\n([\S\s]*)
 ########################### Replace
 replace = ([·]) ・

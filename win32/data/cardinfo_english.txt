@@ -152,6 +152,7 @@
 0x15	B.E.S.	巨大戦艦
 0x16	oid	ロイド
 0x1016	Vehicroid	ビークロイド
+0x2016	Speedroid	SR（スピードロイド）
 0x17	Synchron	シンクロン
 0x18	Cloudian	雲魔物
 0x19	Gladiator Beast	剣闘獣
@@ -207,6 +208,7 @@
 0x43	Junk	ジャンク
 0x44	The Agent	代行者
 0x45	Archfiend	デーモン
+0x1045	Red Dragon Archfiend 	レッド・デーモン
 0x46	Polymerization/Fusion	融合/フュージョン
 0x47	Gem-	ジェム
 0x1047	Gem-Knight	ジェムナイト
@@ -339,8 +341,8 @@
 0xaf	D/D	DD
 0x10af	D/D/D	DDD
 0xb0	Gottoms	ガトムズ
-0xb1	Burning	Abyss
-0xb2	U.A.
+0xb1	Burning	Abyss	彼岸
+0xb2	U.A.	U.A.(ウルトラアスリート)
 0xb3	Yosenju	妖仙獣
 0xb4	Nekroz	影霊衣
 0xb5	Ritual Beast	霊獣
@@ -358,7 +360,7 @@
 0xbe	Monarchs	帝王
 0xbf	Charmer	霊使い
 0xc0	Familiar-Possessed	憑依装着
-0xc1	N/A
+0xc1	PSYFrame	PSYフレーム
 0xc2	Power Tool	パワー·ツール
 0xc3	Edge Imp	エッジインプ
 0xc4	Zefra	セフィラ
@@ -377,6 +379,8 @@
 0xd1	Graydle	グレイドル
 0xd2	Kozmo
 0xd3	Kaiju
+0xd4	Burgesstoma	버제스토마
+0xd5	Dante	ダンテ
 0x100	Monster that lists a "Synchron" Monster as a Tuner.
 0x101	Fusion Monster that lists a Synchro Monster as a Fusion Material
 0x102	Fusion Monster that can only be Special Summoned with "Dark Fusion"

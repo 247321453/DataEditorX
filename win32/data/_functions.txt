@@ -54,8 +54,12 @@ a与b的位异或
 返回c的当前代号（可能因为效果改变）
 ●int Card.GetOriginalCode(Card c)
 返回c的卡片记载的代号
+●int,int Card.GetOriginalCodeRule(Card c)
+返回c规则上的代号（这张卡规则上当作...使用）
 ●bool Card.IsSetCard(Card c, int setname)
 检查c是否是名字含有setname的卡
+●bool Card.IsPreviousSetCard(Card c, int setname)
+检查c位置变化之前是否是名字含有setname的卡
 ●int Card.GetType(Card c)
 返回c的当前类型
 ●int Card.GetOriginalType(Card c)
@@ -321,9 +325,12 @@ RESET_CARD        重置卡片的效果      reset_code为效果owner的卡号
 ●int Card.CopyEffect(Card c, int code, int reset_flag[, int reset_count])
 为c添加卡号是code的卡的可复制的效果，并且添加额外的reset条件
 返回值是表示复制效果的代号id
+●void Card.EnableUnsummonable(Card c)
+将c设置为不可通常召唤的怪兽
+##实际上是个不可复制、不会被无效的EFFECT_UNSUMMONABLE_CARD效果
 ●void Card.EnableReviveLimit(Card c)
 为c添加苏生限制
-##此函数也可通过Card.SetStatus实现
+##实际上是不可复制、不会被无效的EFFECT_UNSUMMONABLE_CARD和EFFECT_REVIVE_LIMIT效果
 ●void Card.CompleteProcedure(Card c)
 使c完成正规的召唤手续
 ##此函数也可通过Card.SetStatus实现
@@ -634,6 +641,8 @@ EFFECT_COUNT_CODE_SINGLE        同一张卡多个效果公共使用次数（不
 检查效果是否属于类型type
 ●bool Effect.IsActivatable(Effect e, int player)
 检查效果e能否由player发动
+●bool Effect.IsActivated(Effect e)
+检查效果e能否是发动的效果（机壳）
 ●int Effect.GetActivateLocation(Effect e)
 返回效果e的发动区域
 ========== Group ==========
