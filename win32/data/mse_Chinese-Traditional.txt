@@ -25,7 +25,7 @@ end = version control:\n\ttype: none\napprentice code:
 text =【摇摆文本】\n%ptext%\n【怪獸效果】\n%text%\n
 ############################
 # chs jp
-pendulum-text = 】[\s\S]*?\n([\S\s]*?)\n【
+pendulum-text = ([\S\s]*?)\n【
 # cht pendulum-text = ([\S\s]*?)\n【
 # en  pendulum-text = Text:\n([\S\s]*?)\n[\S\s]*?Text:
 # chs jp cht

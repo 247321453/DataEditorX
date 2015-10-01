@@ -8,6 +8,7 @@ This program based on .Net2.0/winXP(need .Net2.0)/win7(with.Net2.0)/win8(need.Ne
 
 Click file with right mouse button, Open with, Browse Files, Choose confirm(Yes）
 
+
 ★Setting
 DataEditorX.exe.config ★Language，★Image，★CodeEditor
 data/language_xxx.txt Interface and prompt message 
