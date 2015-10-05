@@ -220,19 +220,19 @@ namespace DataEditorX.Core.Mse
 			Match mc = regex.Match(desc);
 			if (mc.Success)
 				return ((mc.Groups.Count > 1) ?
-				        mc.Groups[1].Value : mc.Groups[0].Value)
-					.Trim('\n').Replace("\n", "\n\t\t");
+				        mc.Groups[1].Value : mc.Groups[0].Value);
 			return "";
 		}
 
 		public string ReText(string text)
 		{
+			text = text.Trim('\n');
 			StringBuilder sb = new StringBuilder(text);
 			sb.Replace("\r\n", "\n");
 			sb.Replace("\r", "\n");
 			sb.Replace("\n\n", "\n");
 			sb.Replace("\n", "\n\t\t");
-			return sb.ToString().Trim('\n');
+			return sb.ToString();
 		}
 		//获取星星
 		public static string GetStar(long level)
@@ -371,6 +371,7 @@ namespace DataEditorX.Core.Mse
 		//写存档
 		public Dictionary<Card, string> WriteSet(string file, Card[] cards)
 		{
+			MessageBox.Show(""+cfg.replaces.Keys[0]+"/"+cfg.replaces[cfg.replaces.Keys[0]]);
 			Dictionary<Card, string> list = new Dictionary<Card, string>();
 			string pic = cfg.imagepath;
 			using (FileStream fs = new FileStream(file,
@@ -417,20 +418,20 @@ namespace DataEditorX.Core.Mse
 			{
 				string text = GetDesc(c.desc, cfg.regx_monster);
 				if (string.IsNullOrEmpty(text))
-					text = ReText(c.desc);
+					text = c.desc;
 				sb.AppendLine("	" + TAG_TEXT + ":");
 				//sb.AppendLine(cfg.regx_monster + ":" + cfg.regx_pendulum);
-				sb.AppendLine("		" + reItalic(text));
+				sb.AppendLine("		" + ReText(reItalic(text)));
 				sb.AppendLine(GetLine(TAG_PENDULUM, "medium"));
 				sb.AppendLine(GetLine(TAG_PSCALE1, ((c.level >> 0x18) & 0xff).ToString()));
 				sb.AppendLine(GetLine(TAG_PSCALE2, ((c.level >> 0x10) & 0xff).ToString()));
 				sb.AppendLine("	" + TAG_PEND_TEXT + ":");
-				sb.AppendLine("		" + reItalic(GetDesc(c.desc, cfg.regx_pendulum)));
+				sb.AppendLine("		" + ReText(reItalic(GetDesc(c.desc, cfg.regx_pendulum))));
 			}
 			else//一般怪兽
 			{
 				sb.AppendLine("	" + TAG_TEXT + ":");
-				sb.AppendLine("		" + reItalic(ReText(c.desc)));
+				sb.AppendLine("		" + ReText(reItalic(c.desc)));
 			}
 			sb.AppendLine(GetLine(TAG_ATK, (c.atk < 0) ? UNKNOWN_ATKDEF : c.atk.ToString()));
 			sb.AppendLine(GetLine(TAG_DEF, (c.def < 0) ? UNKNOWN_ATKDEF : c.def.ToString()));
@@ -449,7 +450,7 @@ namespace DataEditorX.Core.Mse
 			sb.AppendLine(GetLine(TAG_LEVEL, GetSpellTrapSymbol(c, isSpell)));
 			sb.AppendLine(GetLine(TAG_IMAGE, img));
 			sb.AppendLine("	" + TAG_TEXT + ":");
-			sb.AppendLine("		" + reItalic(ReText(c.desc)));
+			sb.AppendLine("		" + ReText(reItalic(c.desc)));
 			sb.AppendLine(GetLine(TAG_CODE, c.idString));
 			return sb.ToString();
 		}

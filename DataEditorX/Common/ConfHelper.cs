@@ -33,7 +33,7 @@ namespace DataEditorX.Common
             int i = word.IndexOf(SEP_LINE);
             if (i > 0)
                 return word.Substring(0, i);
-            return "";
+            return word;
         }
         /// <summary>
         /// 从词中获取第二个值
