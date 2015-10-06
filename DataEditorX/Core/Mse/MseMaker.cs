@@ -371,7 +371,7 @@ namespace DataEditorX.Core.Mse
 		//写存档
 		public Dictionary<Card, string> WriteSet(string file, Card[] cards)
 		{
-			MessageBox.Show(""+cfg.replaces.Keys[0]+"/"+cfg.replaces[cfg.replaces.Keys[0]]);
+//			MessageBox.Show(""+cfg.replaces.Keys[0]+"/"+cfg.replaces[cfg.replaces.Keys[0]]);
 			Dictionary<Card, string> list = new Dictionary<Card, string>();
 			string pic = cfg.imagepath;
 			using (FileStream fs = new FileStream(file,
