@@ -226,13 +226,12 @@ namespace DataEditorX.Core.Mse
 
 		public string ReText(string text)
 		{
-			text = text.Trim('\n');
 			StringBuilder sb = new StringBuilder(text);
 			sb.Replace("\r\n", "\n");
-			sb.Replace("\r", "\n");
+			sb.Replace("\r", "");
 			sb.Replace("\n\n", "\n");
 			sb.Replace("\n", "\n\t\t");
-			return sb.ToString();
+			return sb.ToString().Trim('\n');
 		}
 		//获取星星
 		public static string GetStar(long level)
