@@ -732,8 +732,14 @@ namespace DataEditorX.Core.Mse
 		/// <param name="img"></param>
 		/// <returns></returns>
 		public string getImageCache(string img,Card card){
-			if(cfg.width<=0 && cfg.height<=0)
-				return img;
+			bool isPendulum =card!=null && card.IsType(CardType.TYPE_PENDULUM);
+			if(isPendulum){
+				if(cfg.pwidth<=0 && cfg.pheight<=0)
+					return img;
+			}else{
+				if(cfg.width<=0 && cfg.height<=0)
+					return img;
+			}
 			string md5=MyUtils.GetMD5HashFromFile(img);
 			if(MyUtils.Md5isEmpty(md5)||cfg.imagecache==null){
 				//md5为空
@@ -742,9 +748,9 @@ namespace DataEditorX.Core.Mse
 			string file = MyPath.Combine(cfg.imagecache, md5);
 			if(!File.Exists(file)){
 				//生成缓存
-				Bitmap bmp=MyBitmap.readImage(file);
+				Bitmap bmp=MyBitmap.readImage(img);
 				//缩放
-				if(card!=null && card.IsType(CardType.TYPE_PENDULUM)){
+				if(isPendulum){
 					bmp=MyBitmap.Zoom(bmp, cfg.pwidth,cfg.pheight);
 				}else{
 					bmp=MyBitmap.Zoom(bmp, cfg.width,cfg.height);
@@ -752,7 +758,7 @@ namespace DataEditorX.Core.Mse
 				//保存文件
 				MyBitmap.SaveAsJPEG(bmp, file,100);
 			}
-			return img;
+			return file;
 		}
 		private static void exportSetThread(object obj){
 			string[] args=(string[])obj;
