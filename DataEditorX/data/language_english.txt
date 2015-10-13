@@ -48,6 +48,7 @@ DataEditForm.mainMenu.menuitem_readimages	Read From Images Path(&I)
 DataEditForm.mainMenu.menuitem_compdb	Compress DataBase
 DataEditForm.mainMenu.menuitem_exportdata	Export Data As zip
 DataEditForm.mainMenu.menuitem_mseconfig	Set MSE Config
+DataEditForm.mainMenu.menuitem_testpendulumtext	test pendulum texts
 DataEditForm.mainMenu.menuitem_readmse	Read MSE-set
 DataEditForm.mainMenu.menuitem_saveasmse_select	Save Selected As MSE-set
 DataEditForm.mainMenu.menuitem_saveasmse	Save All As MSE-set

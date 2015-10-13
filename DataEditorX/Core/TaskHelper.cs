@@ -100,6 +100,10 @@ namespace DataEditorX.Core
         {
             return lastTask;
         }
+        
+        public void testPendulumText(string desc){
+        	mseHelper.testPendulum(desc);
+        }
         #endregion
 
         #region Other

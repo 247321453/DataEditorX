@@ -726,12 +726,17 @@ namespace DataEditorX.Core.Mse
 		}
 		#endregion
 		
+		#region images
 		/// <summary>
 		/// 图片缓存
 		/// </summary>
 		/// <param name="img"></param>
 		/// <returns></returns>
 		public string getImageCache(string img,Card card){
+			if(!cfg.reimage){
+				//不需要调整
+				return img;
+			}
 			bool isPendulum =card!=null && card.IsType(CardType.TYPE_PENDULUM);
 			if(isPendulum){
 				if(cfg.pwidth<=0 && cfg.pheight<=0)
@@ -760,6 +765,9 @@ namespace DataEditorX.Core.Mse
 			}
 			return file;
 		}
+		#endregion
+		
+		#region export
 		private static void exportSetThread(object obj){
 			string[] args=(string[])obj;
 			if(args==null||args.Length<3){
@@ -799,5 +807,22 @@ namespace DataEditorX.Core.Mse
 			myThread.IsBackground=true;
 			myThread.Start(new string[]{mse_path,setfile,path});
 		}
+		#endregion
+		
+		#region test
+		public void testPendulum(string desc){
+			if(desc==null||desc.Length==0){
+				MessageBox.Show("desc is null", "info");
+			}else{
+				string ptext=GetDesc(desc, cfg.regx_pendulum);
+				MessageBox.Show(reItalic(ptext), "pendulum");
+				string text = GetDesc(desc, cfg.regx_monster);
+				if (string.IsNullOrEmpty(text))
+					text = desc;
+				MessageBox.Show(reItalic(text), "effect");
+			}
+
+		}
+		#endregion
 	}
 }

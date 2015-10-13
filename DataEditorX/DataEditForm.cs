@@ -1645,5 +1645,13 @@ namespace DataEditorX
 				}
 			}
 		}
+		void Menuitem_testPendulumTextClick(object sender, EventArgs e)
+		{
+			Card c = GetCard();
+			if(c != null){
+				tasker.testPendulumText(c.desc);
+			}
+		}
+		
 	}
 }

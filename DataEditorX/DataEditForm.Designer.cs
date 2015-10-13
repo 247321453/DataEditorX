@@ -52,6 +52,8 @@ namespace DataEditorX
         	this.menuitem_readmse = new System.Windows.Forms.ToolStripMenuItem();
         	this.menuitem_saveasmse_select = new System.Windows.Forms.ToolStripMenuItem();
         	this.menuitem_saveasmse = new System.Windows.Forms.ToolStripMenuItem();
+        	this.menuitem_exportMSEimage = new System.Windows.Forms.ToolStripMenuItem();
+        	this.menuitem_testpendulumtext = new System.Windows.Forms.ToolStripMenuItem();
         	this.tsep7 = new System.Windows.Forms.ToolStripSeparator();
         	this.menuitem_importmseimg = new System.Windows.Forms.ToolStripMenuItem();
         	this.menu_data = new System.Windows.Forms.ToolStripMenuItem();
@@ -126,7 +128,6 @@ namespace DataEditorX
         	this.lv_cardlist = new System.Windows.Forms.DListView();
         	this.ch_cardcode = new System.Windows.Forms.ColumnHeader();
         	this.ch_cardname = new System.Windows.Forms.ColumnHeader();
-        	this.menuitem_exportMSEimage = new System.Windows.Forms.ToolStripMenuItem();
         	this.mainMenu.SuspendLayout();
         	this.SuspendLayout();
         	// 
@@ -221,6 +222,7 @@ namespace DataEditorX
         	        	        	this.menuitem_saveasmse_select,
         	        	        	this.menuitem_saveasmse,
         	        	        	this.menuitem_exportMSEimage,
+        	        	        	this.menuitem_testpendulumtext,
         	        	        	this.tsep7,
         	        	        	this.menuitem_importmseimg});
         	this.menu_image.Name = "menu_image";
@@ -258,6 +260,20 @@ namespace DataEditorX
         	this.menuitem_saveasmse.Size = new System.Drawing.Size(230, 22);
         	this.menuitem_saveasmse.Text = "All Now Save As MSE";
         	this.menuitem_saveasmse.Click += new System.EventHandler(this.Menuitem_saveasmseClick);
+        	// 
+        	// menuitem_exportMSEimage
+        	// 
+        	this.menuitem_exportMSEimage.Name = "menuitem_exportMSEimage";
+        	this.menuitem_exportMSEimage.Size = new System.Drawing.Size(230, 22);
+        	this.menuitem_exportMSEimage.Text = "Export MSE-Set to Images";
+        	this.menuitem_exportMSEimage.Click += new System.EventHandler(this.Menuitem_exportMSEimageClick);
+        	// 
+        	// menuitem_testpendulumtext
+        	// 
+        	this.menuitem_testpendulumtext.Name = "menuitem_testpendulumtext";
+        	this.menuitem_testpendulumtext.Size = new System.Drawing.Size(230, 22);
+        	this.menuitem_testpendulumtext.Text = "Test Pendulum Text";
+        	this.menuitem_testpendulumtext.Click += new System.EventHandler(this.Menuitem_testPendulumTextClick);
         	// 
         	// tsep7
         	// 
@@ -1030,13 +1046,6 @@ namespace DataEditorX
         	this.ch_cardname.Text = "Card Name";
         	this.ch_cardname.Width = 140;
         	// 
-        	// menuitem_exportMSEimage
-        	// 
-        	this.menuitem_exportMSEimage.Name = "menuitem_exportMSEimage";
-        	this.menuitem_exportMSEimage.Size = new System.Drawing.Size(230, 22);
-        	this.menuitem_exportMSEimage.Text = "Export MSE-Set to Images";
-        	this.menuitem_exportMSEimage.Click += new System.EventHandler(this.Menuitem_exportMSEimageClick);
-        	// 
         	// DataEditForm
         	// 
         	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1105,6 +1114,7 @@ namespace DataEditorX
         	this.ResumeLayout(false);
         	this.PerformLayout();
         }
+        private System.Windows.Forms.ToolStripMenuItem menuitem_testpendulumtext;
         private System.Windows.Forms.ToolStripMenuItem menuitem_exportMSEimage;
         private System.Windows.Forms.ToolStripMenuItem menuitem_exportdata;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;

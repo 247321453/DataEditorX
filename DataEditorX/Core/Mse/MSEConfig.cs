@@ -42,7 +42,7 @@ namespace DataEditorX.Core.Mse
 		public const string TAG_WIDTH="width";
 		public const string TAG_HEIGHT="height";
 		
-		
+		public const string TAG_REIMAGE="reimage";
 		public const string TAG_PEND_WIDTH="pwidth";
 		public const string TAG_PEND_HEIGHT="pheight";
 
@@ -133,6 +133,8 @@ namespace DataEditorX.Core.Mse
 				else if (line.StartsWith(TAG_TYPE))
 				{//类型
 					ConfHelper.DicAdd(typeDic, line);
+				}else if(line.StartsWith(TAG_REIMAGE)){
+					reimage = ConfHelper.getBooleanValue(line);
 				}
 			}
 		}
@@ -151,6 +153,10 @@ namespace DataEditorX.Core.Mse
 			}
 			SetConfig(tmp, path);
 		}
+		/// <summary>
+		/// 是否调整图片
+		/// </summary>
+		public bool reimage;
 		/// <summary>
 		/// 中间图宽度
 		/// </summary>
