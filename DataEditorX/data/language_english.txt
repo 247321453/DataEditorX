@@ -56,7 +56,7 @@ DataEditForm.mainMenu.menuitem_cutimages	Cut Images
 DataEditForm.mainMenu.menuitem_convertimage	Convert Images
 DataEditForm.mainMenu.menuitem_importmseimg	Set MSE'Image 
 DataEditForm.mainMenu.menuitem_cancelTask	Cancel Task
-DataEditForm.mainMenu.menuitem_exportMSEimage	export mse-set to images
+DataEditForm.mainMenu.menuitem_exportMSEimage	export mse-set to images(Click stop)
 DataEditForm.mainMenu.menuitem_help	Help(&H)
 DataEditForm.mainMenu.menuitem_about	About
 DataEditForm.mainMenu.menuitem_language	Laguage

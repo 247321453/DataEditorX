@@ -55,7 +55,7 @@ DataEditForm.mainMenu.menuitem_saveasmse_select	把选中导为MSE存档
 DataEditForm.mainMenu.menuitem_saveasmse	把结果导为MSE存档
 DataEditForm.mainMenu.menuitem_cutimages	批量裁剪卡图
 DataEditForm.mainMenu.menuitem_convertimage	批量导入卡图
-DataEditForm.mainMenu.menuitem_exportMSEimage	从MSE存档导出图片
+DataEditForm.mainMenu.menuitem_exportMSEimage	从MSE存档导出图片(再次点击停止)
 DataEditForm.mainMenu.menuitem_cancelTask	取消任务
 DataEditForm.mainMenu.menuitem_testpendulumtext	测试灵摆效果文本
 DataEditForm.mainMenu.menuitem_help	帮助(&H)

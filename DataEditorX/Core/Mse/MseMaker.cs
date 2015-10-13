@@ -768,6 +768,8 @@ namespace DataEditorX.Core.Mse
 		#endregion
 		
 		#region export
+		static System.Diagnostics.Process mseProcess;
+		static EventHandler exitHandler;
 		private static void exportSetThread(object obj){
 			string[] args=(string[])obj;
 			if(args==null||args.Length<3){
@@ -782,23 +784,36 @@ namespace DataEditorX.Core.Mse
 				return;
 			}else{
 				string cmd=" --export "+setfile.Replace("\\\\","\\").Replace("\\","/")+" {card.gamecode}.png";
-				System.Diagnostics.Process   ie   =   new   System.Diagnostics.Process();
-				ie.StartInfo.FileName   =   mse_path;
-				ie.StartInfo.Arguments   =  cmd;
-				ie.StartInfo.WorkingDirectory=path;
+				mseProcess   =   new   System.Diagnostics.Process();
+				mseProcess.StartInfo.FileName   =   mse_path;
+				mseProcess.StartInfo.Arguments   =  cmd;
+				mseProcess.StartInfo.WorkingDirectory=path;
+				mseProcess.EnableRaisingEvents=true;
 				MyPath.CreateDir(path);
 				try{
-					ie.Start();
+					mseProcess.Start();
 					//等待结束，需要把当前方法放到线程里面
-					ie.WaitForExit();
-					ie.Close();
+					mseProcess.WaitForExit();
+					mseProcess.Exited += new EventHandler(exitHandler);
+					mseProcess.Close();
+					mseProcess=null;
 					System.Windows.Forms.MessageBox.Show(Language.LanguageHelper.GetMsg(LMSG.exportMseImages));
 				}catch{
 					
 				}
 			}
 		}
-		public static void exportSet(string mse_path,string setfile,string path){
+		
+		public static bool MseIsRunning(){
+			return mseProcess != null;
+		}
+		public static void MseStop(){
+			try{
+				mseProcess.Kill();
+				mseProcess.Close();
+			}catch{}
+		}
+		public static void exportSet(string mse_path,string setfile,string path,EventHandler handler){
 			if(mse_path==null||mse_path.Length==0||setfile==null||setfile.Length==0){
 				return;
 			}
@@ -806,6 +821,7 @@ namespace DataEditorX.Core.Mse
 			Thread myThread = new Thread(ParStart);
 			myThread.IsBackground=true;
 			myThread.Start(new string[]{mse_path,setfile,path});
+			exitHandler = handler;
 		}
 		#endregion
 		

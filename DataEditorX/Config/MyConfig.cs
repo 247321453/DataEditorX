@@ -18,6 +18,7 @@ namespace DataEditorX.Config
         public const string TAG_SAVE_LAGN = "-savelanguage";
         public const string TAG_SAVE_LAGN2 = "-sl";
         public const string TAG_MSE_PATH="mse_path";
+        public const string TAG_MSE_EXPORT="mse_exprotpath";
         /// <summary>
         /// 窗口消息 打开文件
         /// </summary>
@@ -297,7 +298,8 @@ namespace DataEditorX.Config
         /// <param name="file"></param>
         public static bool OpenOnExistForm(string file)
         {
-            Process instance = RunningInstance();
+            Process instance = RunningInstance(Assembly.GetExecutingAssembly().Location.
+                        Replace('/', Path.DirectorySeparatorChar));
             if (instance == null)
             {
                 return false;
@@ -320,7 +322,7 @@ namespace DataEditorX.Config
             //发送消息
             User32.SendMessage(Process.GetCurrentProcess().MainWindowHandle, MyConfig.WM_OPEN, 0, 0);
         }
-        static Process RunningInstance()
+        public static Process RunningInstance(string filename)
         {
             Process current = Process.GetCurrentProcess();
             Process[] processes = Process.GetProcessesByName(current.ProcessName);
@@ -331,9 +333,7 @@ namespace DataEditorX.Config
                 if (process.Id != current.Id)
                 {
                     //保证要打开的进程同已经存在的进程来自同一文件路径
-                    if (Assembly.GetExecutingAssembly().Location.
-                        Replace('/', Path.DirectorySeparatorChar)
-                        == current.MainModule.FileName)
+                    if (filename == current.MainModule.FileName)
                     {
                         //返回已经存在的进程
                         return process;

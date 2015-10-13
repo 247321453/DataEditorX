@@ -13,12 +13,11 @@ using System.IO;
 using System.Windows.Forms;
 
 using DataEditorX.Common;
+using DataEditorX.Config;
 using DataEditorX.Core;
+using DataEditorX.Core.Mse;
 using DataEditorX.Language;
 using WeifenLuo.WinFormsUI.Docking;
-
-using DataEditorX.Config;
-using DataEditorX.Core.Mse;
 
 namespace DataEditorX
 {
@@ -1632,6 +1631,20 @@ namespace DataEditorX
 		{
 			if (isRun())
 				return;
+			string msepath=MyPath.GetRealPath(MyConfig.readString(MyConfig.TAG_MSE_PATH));
+			if(!File.Exists(msepath)){
+				MyMsg.Error(LMSG.exportMseImagesErr);
+				menuitem_exportMSEimage.Checked=false;
+				return;
+			}else{
+				if(MseMaker.MseIsRunning()){
+					MseMaker.MseStop();
+					menuitem_exportMSEimage.Checked=false;
+					return;
+				}else{
+					
+				}
+			}
 			//select open mse-set
 			using (OpenFileDialog dlg = new OpenFileDialog())
 			{
@@ -1640,8 +1653,13 @@ namespace DataEditorX
 				if (dlg.ShowDialog() == DialogResult.OK)
 				{
 					string mseset=dlg.FileName;
-					string msepath=MyConfig.readString(MyConfig.TAG_MSE_PATH);
-					MseMaker.exportSet(msepath, mseset, MyPath.Combine(Application.StartupPath, "cache"));
+					string exportpath=MyPath.GetRealPath(MyConfig.readString(MyConfig.TAG_MSE_EXPORT));
+					MseMaker.exportSet(msepath, mseset, exportpath, delegate{
+					                   	menuitem_exportMSEimage.Checked=false;
+					                   });
+					menuitem_exportMSEimage.Checked=true;
+				}else{
+					menuitem_exportMSEimage.Checked=false;
 				}
 			}
 		}
