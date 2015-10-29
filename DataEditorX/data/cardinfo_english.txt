@@ -381,6 +381,10 @@
 0xd3	Kaiju
 0xd4	Burgesstoma	버제스토마
 0xd5	Dante	ダンテ
+0xd6	Destruction Sword	破壊剣
+0xd7	Buster Blader	バスター・ブレイダー
+0xd8	Dinomist	ダイナミスト
+0xd9	Shiranui	不知火
 0x100	Monster that lists a "Synchron" Monster as a Tuner.
 0x101	Fusion Monster that lists a Synchro Monster as a Fusion Material
 0x102	Fusion Monster that can only be Special Summoned with "Dark Fusion"

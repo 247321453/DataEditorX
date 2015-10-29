@@ -1,4 +1,6 @@
 ﻿★更新历史
+2.4.0.1
+更新数据
 2.4.0.0
 1.mse的相对路径，默认为当前MagicSetEditor2，其他地方请设置config的mse_path，
 导出的文件夹为export，其他地方请设置config的mse_exprotpath，

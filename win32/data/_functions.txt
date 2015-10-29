@@ -467,8 +467,8 @@ location的默认值与c的种类有关，灵摆怪兽需要指定能否在怪�
 检查c是否可以放置count个countertype类型的指示物
 ●bool Card.IsCanRemoveCounter(Card c, int player, int countertype, int count, int reason)
 检查玩家player是否可以以原因reason移除c上的count个countertype类型的指示物
-●bool Card.IsCanBeFusionMaterial(Card c[, bool ignore_mon=false])
-检查c是否可以成为融合素材，ignore_mon=true则不检查c是否是怪兽
+●bool Card.IsCanBeFusionMaterial(Card c[, Card fc, bool ignore_mon=false])
+检查c是否可以成为[融合怪兽fc的]融合素材，ignore_mon=true则不检查c是否是怪兽
 ●bool Card.IsCanBeSynchroMaterial(Card c[, Card sc, Card tuner])
 检查c是否可以成为同调怪兽sc的同调素材
 ●bool Card.IsCanBeRitualMaterial(Card c[, Card sc])
@@ -769,10 +769,13 @@ f为返回一个interger值的函数，从g中筛选出具有最大的f的值的
 如果player是nil则返回卡的持有者的卡组
 如果seq=0，则是返回卡组最顶端；seq=1则是返回卡组最底端；
 其余情况则是返回最顶端并且标记需要洗卡组
+●int Duel.PSendtoExtra(Card|Group targets, int player|nil, int reason)
+以reason原因把灵摆卡targets送去玩家player的额外卡组，返回值是实际被操作的数量
+如果player是nil则返回卡的持有者的额外卡组
 ●Group Duel.GetOperatedGroup()
 此函数返回之前一次卡片操作实际操作的卡片组包括
 Duel.Destroy, Duel.Remove, Duel.SendtoGrave, 
-Duel.SendtoHand, Duel.SendtoDeck, Duel.Release, 
+Duel.SendtoHand, Duel.SendtoDeck, Duel.PSendtoExtra, Duel.Release, 
 Duel.ChangePosition, Duel.SpecialSummon, Duel.DiscardDeck
 ●void Duel.Summon(int player, Card c, bool ignore_count, Effect e|nil[, minc=0])
 让玩家以效果e对c进行通常召唤(非set)，至少使用minc个祭品
@@ -1025,7 +1028,7 @@ Duel.GetChainInfo(0,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TARGET_CARDS)
 第5个参数开始为额外参数
 ●Group Duel.SelectReleaseGroup(int sel_player, function f, int min, int max, Card ex|nil, ...)
 过滤函数，让玩家player从场上选择min-max张不等于ex的满足条件f的可解放的卡（非上级召唤用）
-●boolean Duel.CheckReleaseGroupEx(int player, function f, int count, Card ex|nil, ...)
+●bool Duel.CheckReleaseGroupEx(int player, function f, int count, Card ex|nil, ...)
 检查玩家player场上·手卡是否存在至少count张满足过滤条件f并且不等于ex的可解放的卡（非上级召唤用）
 ●Group Duel.SelectReleaseGroupEx(int player, function f, int min, int max, Card ex|nil, ...)
 过滤函数，让玩家player从场上·手卡选择min-max张不等于ex的满足条件f的可解放的卡（非上级召唤用）

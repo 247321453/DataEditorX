@@ -1,4 +1,4 @@
-﻿[DataEditorX]2.3.5.4[DataEditorX]
+﻿[DataEditorX]2.4.0.1[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★运行环境(Environment)
@@ -21,8 +21,6 @@ win8(需要安装.Net3.5包含2.0)
 注意：
 默认，lua是用本程序打开，如果需要修改，在★设置 open_file_in_this设为false
 
-★bug反馈(Feedback)
-不接受任何bug和建议。
 
 ★设置
 DataEditorX.exe.config ★语言设置，★图片设置，★CodeEditor设置
