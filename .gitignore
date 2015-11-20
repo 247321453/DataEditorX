@@ -21,6 +21,7 @@ mse-set.txt
 .metadata
 bin/
 tmp/
+.vs/
 *.tmp
 *.bak
 *.swp

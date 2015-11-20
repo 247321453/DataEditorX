@@ -142,7 +142,7 @@ namespace DataEditorX.Common
                     if ( ici != null )
                         bitmap.Save(filename, ici, encoderParams);
                     else
-                        bitmap.Save(filename);
+                        bitmap.Save(filename, ImageFormat.Jpeg);
                 }
                 return true;
             }

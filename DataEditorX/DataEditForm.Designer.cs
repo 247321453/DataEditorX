@@ -122,10 +122,10 @@ namespace DataEditorX
         	this.tb_setcode3 = new System.Windows.Forms.TextBox();
         	this.tb_setcode4 = new System.Windows.Forms.TextBox();
         	this.lb_cardcode = new System.Windows.Forms.Label();
-        	this.pl_category = new System.Windows.Forms.DFlowLayoutPanel();
-        	this.pl_cardtype = new System.Windows.Forms.DFlowLayoutPanel();
-        	this.lb_scripttext = new System.Windows.Forms.DListBox();
-        	this.lv_cardlist = new System.Windows.Forms.DListView();
+        	this.pl_category = new DFlowLayoutPanel();
+        	this.pl_cardtype = new DFlowLayoutPanel();
+        	this.lb_scripttext = new DListBox();
+        	this.lv_cardlist = new DListView();
         	this.ch_cardcode = new System.Windows.Forms.ColumnHeader();
         	this.ch_cardname = new System.Windows.Forms.ColumnHeader();
         	this.mainMenu.SuspendLayout();
@@ -1143,8 +1143,8 @@ namespace DataEditorX
         private System.Windows.Forms.Label lb_tiptexts;
         private System.Windows.Forms.Label lb_categorys;
         private System.Windows.Forms.Label lb_types;
-        private System.Windows.Forms.DFlowLayoutPanel pl_category;
-        private System.Windows.Forms.DFlowLayoutPanel pl_cardtype;
+        private DFlowLayoutPanel pl_category;
+        private DFlowLayoutPanel pl_cardtype;
         private System.Windows.Forms.Button btn_serach;
         private System.Windows.Forms.Button btn_reset;
         private System.Windows.Forms.Button btn_lua;
@@ -1169,7 +1169,7 @@ namespace DataEditorX
         private System.Windows.Forms.TextBox tb_pleft;
         private System.Windows.Forms.Label lb_pleft_right;
         private System.Windows.Forms.TextBox tb_edittext;
-        private System.Windows.Forms.DListBox lb_scripttext;
+        private DListBox lb_scripttext;
         private System.Windows.Forms.TextBox tb_cardtext;
         private System.Windows.Forms.ComboBox cb_setname3;
         private System.Windows.Forms.ComboBox cb_setname4;
@@ -1182,7 +1182,7 @@ namespace DataEditorX
         private System.Windows.Forms.ComboBox cb_cardattribute;
         private System.Windows.Forms.ColumnHeader ch_cardname;
         private System.Windows.Forms.ColumnHeader ch_cardcode;
-        private System.Windows.Forms.DListView lv_cardlist;
+        private DListView lv_cardlist;
         private System.Windows.Forms.ToolStripMenuItem menuitem_checkupdate;
         private System.Windows.Forms.ToolStripMenuItem menuitem_about;
         private System.Windows.Forms.ToolStripMenuItem menuitem_help;

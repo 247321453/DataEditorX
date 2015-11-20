@@ -73,7 +73,13 @@
     <Compile Include="Common\StrUtil.cs" />
     <Compile Include="Common\XMLReader.cs" />
     <Compile Include="Config\YgoPath.cs" />
-    <Compile Include="Controls\DoubleContorl.cs">
+    <Compile Include="Controls\DFlowLayoutPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\DListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\DListView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\FastColoredTextBoxEx.cs">
