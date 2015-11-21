@@ -124,6 +124,7 @@ namespace DataEditorX.Core
                                 saveimg1, imgSet.quilty);
             MyBitmap.SaveAsJPEG(MyBitmap.Zoom(bmp, imgSet.w, imgSet.h),
                                 saveimg2, imgSet.quilty);
+			bmp.Dispose();
         }
         #endregion
 
@@ -193,6 +194,7 @@ namespace DataEditorX.Core
                     {
                         bmp = MyBitmap.Cut(bp, imgSet.normalArea);
                     }
+					bp.Dispose();
                     MyBitmap.SaveAsJPEG(bmp, savejpg, imgSet.quilty);
                     //bmp.Save(savejpg, ImageFormat.Png);
                 }
