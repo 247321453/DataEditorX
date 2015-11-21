@@ -118,7 +118,7 @@ namespace DataEditorX.Common
         /// <param name="filename">保存路径</param>
         /// <param name="quality">质量</param>
         /// <returns>是否保存成功</returns>
-        public static bool SaveAsJPEG(Bitmap bitmap, string filename, int quality)
+        public static bool SaveAsJPEG(Bitmap bitmap, string filename, int quality=90)
         {
             if ( bitmap != null )
             {
@@ -134,17 +134,23 @@ namespace DataEditorX.Common
                     if ( codec.MimeType.IndexOf("jpeg") > -1 )
                     {
                         ici = codec;
+                        break;
                     }
-                    if ( quality < 0 || quality > 100 )
-                        quality = 60;
-                    EncoderParameters encoderParams = new EncoderParameters();
-                    encoderParams.Param[0] = new EncoderParameter(Encoder.Quality, (long)quality);
-                    if ( ici != null )
-                        bitmap.Save(filename, ici, encoderParams);
-                    else
-                        bitmap.Save(filename, ImageFormat.Jpeg);
                 }
-                return true;
+                if (quality < 0 || quality > 100)
+                    quality = 60;
+                EncoderParameters encoderParams = new EncoderParameters();
+                encoderParams.Param[0] = new EncoderParameter(Encoder.Quality, (long)quality);
+                if (ici != null)
+                {
+                    bitmap.Save(filename, ici, encoderParams);
+                    bitmap.Dispose();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             return false;
         }
