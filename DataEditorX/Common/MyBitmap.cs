@@ -48,6 +48,7 @@ namespace DataEditorX.Common
                 Rectangle srcRect = new Rectangle(0, 0, sourceBitmap.Width, sourceBitmap.Height);
                 graphics.DrawImage(sourceBitmap, newRect, srcRect, GraphicsUnit.Pixel);
                 graphics.Dispose();
+                sourceBitmap.Dispose();
                 return b;
             }
             return sourceBitmap;
@@ -104,6 +105,7 @@ namespace DataEditorX.Common
                 Rectangle srcRect = new Rectangle(StartX, StartY, cutWidth, cutHeight);
                 graphics.DrawImage(sourceBitmap, cutRect, srcRect, GraphicsUnit.Pixel);
                 graphics.Dispose();
+                sourceBitmap.Dispose();
                 return bitmap;
             }
             return sourceBitmap;
