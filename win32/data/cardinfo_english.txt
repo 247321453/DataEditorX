@@ -199,7 +199,7 @@
 0x3e	Worm	ワーム
 0x3f	Majestic	セイヴァ
 0x40	Forbidden One	封印されし
-0x41	LV	LV
+0x41	LV	LV(レベル)
 0x42	Nordic	極星
 0x3042	Nordic Ascendant	極星天
 0x6042	Nordic Beasts	極星獣
@@ -267,7 +267,7 @@
 0x72	Geargia	ギアギア
 0x1072	Geargiano	ギアギアーノ
 0x73	Xyz	エクシーズ
-0x1073	CXyz	CX
+0x1073	CXyz	CX(カオスエクシーズ)
 0x74	Mermail	水精鱗
 0x75	Abyss	アビス
 0x76	Heraldic Beast	紋章獣
@@ -283,14 +283,14 @@
 0x7c	Fire Formation	炎舞
 0x7d	Hazy	ヘイズ
 0x107d	Hazy Flame	陽炎獣
-0x7e	ZW	ＺＷ
+0x7e	ZW	ZW(ゼアル・ウェポン)
 0x7f	Utopia	希望皇ホープ
 0x80	Duston	ダストン
 0x81	Fire King	炎王
 0x1081	Fire King Avatar	炎王獣
 0x82	Dododo	ドドド
 0x83	Gimmick Puppet	ギミック・パペット
-0x84	Battlin' Boxer	BK
+0x84	Battlin' Boxer	BK(バーニングナックラー)
 0x85	Super Defense Robot	SDロボ
 0x86	Star Seraph	光天使
 0x87	Umbral Horror	アンブラル
@@ -321,7 +321,7 @@
 0x109c	Stellarknight	ステラナイト
 0x9d	Shaddoll	影依
 0x9e	Yang Zing	龙星
-0x9f	Performapal	EM
+0x9f	Performapal	EM(エンタメイト)
 0xa0	Legendary Knight	伝説の騎士
 0xa1	Legendary Dragon	伝説の竜
 0xa2	Dark Magician	ブラック·マジシャン
@@ -342,7 +342,7 @@
 0x10af	D/D/D	DDD
 0xb0	Gottoms	ガトムズ
 0xb1	Burning	Abyss	彼岸
-0xb2	U.A.	U.A.(ウルトラアスリート)
+0xb2	U.A.	U.A.
 0xb3	Yosenju	妖仙獣
 0xb4	Nekroz	影霊衣
 0xb5	Ritual Beast	霊獣
@@ -353,7 +353,7 @@
 0xb7	Elder Entity	旧神
 0xb8	Old Entity	古神
 0xb9	Blaze Accelerator	ブレイズ·キャノン
-0xba	Raidraptor	RR
+0xba	Raidraptor	RR(レイド・ラプターズ)
 0xbb	Infernoid	インフェルノイド
 0xbc	Jinzo	人造人間
 0xbd	Gaia The Fierce Knight	暗黒騎士ガイア
@@ -365,7 +365,7 @@
 0xc3	Edge Imp	エッジインプ
 0xc4	Zefra	セフィラ
 0xc5	Void	煉獄
-0xc6	Performage	Em
+0xc6	Performage	Em(エンタメイジ)
 0xc7	Dracoslayer	竜剣士
 0xc8	Igknight	イグナイト
 0xc9	Aroma	アロマ
@@ -392,4 +392,5 @@
 0x10dc	Super Quantum Mecha Pilot	超量士
 0x20dc	Super Quantum Mecha Beast	超量機獣
 0xdd	Blue-Eyes	ブルーアイズ
+0xde	Exodia	エクゾディア
 #end
