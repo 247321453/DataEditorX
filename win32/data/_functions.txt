@@ -56,10 +56,16 @@ a与b的位异或
 返回c的卡片记载的代号
 ●int,int Card.GetOriginalCodeRule(Card c)
 返回c规则上的代号（这张卡规则上当作...使用）
+●int,int,... Card.GetFusionCode(Card c)
+返回c作为融合素材时的卡号（包括c原本的卡号）
+●bool Card.IsFusionCode(Card c, int code)
+检查c作为融合素材时能否当作卡号为code的卡
 ●bool Card.IsSetCard(Card c, int setname)
 检查c是否是名字含有setname的卡
 ●bool Card.IsPreviousSetCard(Card c, int setname)
 检查c位置变化之前是否是名字含有setname的卡
+●bool Card.IsFusionSetCard(Card c, int setname)
+检查c作为融合素材时能否当作名字含有setname的卡
 ●int Card.GetType(Card c)
 返回c的当前类型
 ●int Card.GetOriginalType(Card c)
@@ -346,15 +352,15 @@ RESET_CARD        重置卡片的效果      reset_code为效果owner的卡号
 ●bool Card.IsSynchroSummonable(Card c ,Card tuner|nil[, Group mg])
 检查是否可以以tuner作为调整，场上的卡[或mg]为同调素材对c进行同调召唤手续
 如果tuner是nil，此函数与Card.IsSpecialSummonable作用相同
-●bool Card.IsXyzSummonable(Card c, Group mg|nil)
-检查是否可以以mg为超量素材对c进行超量召唤手续
+●bool Card.IsXyzSummonable(Card c, Group mg|nil[, min=0, max=0])
+检查是否可以在mg中选出[min-max个]超量素材对c进行超量召唤手续
 如果mg为nil，此函数与Card.IsSpecialSummonable作用相同
-●bool Card.IsSummonable(Card c, bool ignore_count, Effect e|nil[, int minc=0])
+●bool Card.IsSummonable(Card c, bool ignore_count, Effect e|nil[, int min=0])
 检查c是否进行通常召唤（不包含通常召唤的set)，ignore_count=true则不检查召唤次数限制
-e~=nil则检查c是否可以以效果e进行通常召唤，minc表示至少需要的祭品数（用于区分妥协召唤与上级召唤）
-●bool Card.IsMSetable(Card, bool ignore_count, Effect e|nil[, int minc=0])
+e~=nil则检查c是否可以以效果e进行通常召唤，min表示至少需要的祭品数（用于区分妥协召唤与上级召唤）
+●bool Card.IsMSetable(Card, bool ignore_count, Effect e|nil[, int min=0])
 检查c是否可进行通常召唤的set，ignore_count=true则不检查召唤次数限制
-e~=nil则检查c是否可以以效果e进行通常召唤的set，minc表示至少需要的祭品数（用于区分妥协召唤set与上级召唤set）
+e~=nil则检查c是否可以以效果e进行通常召唤的set，min表示至少需要的祭品数（用于区分妥协召唤set与上级召唤set）
 ●bool Card.IsSSetable(Card c[, bool ignore_field=false])
 检查c是否可以set到魔法陷阱区，ignore_field=true则无视魔陷区格子限制
 ●bool Card.IsCanBeSpecialSummoned(Card c, Effect e, int sumtype, int sumplayer, bool nocheck, bool nolimit[, int sumpos=POS_FACEUP, int target_player=sumplayer])
@@ -552,7 +558,7 @@ ASSUME_DEFENCE      守备力
 为效果e设置Type属性
 ●void Effect.SetCode(Effect e, int code)
 为效果e设置Code属性
-●void Effect.SetProperty(Effect e, int prop)
+●void Effect.SetProperty(Effect e, int prop1[, int prop2])
 设置Property属性
 ●void Effect.SetRange(Effect e, int range)
 为效果e设置Range属性
@@ -602,7 +608,7 @@ EFFECT_COUNT_CODE_SINGLE        同一张卡多个效果公共使用次数（不
 返回code属性
 ●int Effect.GetType(Effect e)
 返回Type属性
-●int Effect.GetProperty(Effect e)
+●int,int Effect.GetProperty(Effect e)
 返回Property属性
 ●int Effect.GetLabel(Effect e)
 返回Label属性
@@ -633,8 +639,8 @@ EFFECT_COUNT_CODE_SINGLE        同一张卡多个效果公共使用次数（不
 返回OwnerPlayer属性，一般是Owner的控制者
 ●int Effect.GetHandlerPlayer(Effect e)
 返回当前者，一般是Handle的控制者
-●bool Effect.IsHasProperty(Effect e, int prop)
-检查效果是否含有标志prop
+●bool Effect.IsHasProperty(Effect e, int prop1[, int prop2])
+检查效果是否含有标志prop1[和prop2]
 ●bool Effect.IsHasCategory(Effect e, int cate)
 检查效果是否含有效果分类cate
 ●bool Effect.IsHasType(Effect e, int type)
@@ -777,18 +783,19 @@ f为返回一个interger值的函数，从g中筛选出具有最大的f的值的
 Duel.Destroy, Duel.Remove, Duel.SendtoGrave, 
 Duel.SendtoHand, Duel.SendtoDeck, Duel.PSendtoExtra, Duel.Release, 
 Duel.ChangePosition, Duel.SpecialSummon, Duel.DiscardDeck
-●void Duel.Summon(int player, Card c, bool ignore_count, Effect e|nil[, minc=0])
-让玩家以效果e对c进行通常召唤(非set)，至少使用minc个祭品
+●void Duel.Summon(int player, Card c, bool ignore_count, Effect e|nil[, min=0])
+让玩家以效果e对c进行通常召唤(非set)，至少使用min个祭品
 如果e=nil,那么就按照一般的通常召唤规则进行通常召唤
 如果ignore_count=true，则忽略每回合的通常召唤次数限制
 ●void Duel.SpecialSummonRule(int player, Card c)
 让玩家player对c进行特殊召唤手续
 ●void Duel.SynchroSummon(int player, Card c, Card tuner[, Group mg])
 让玩家player以tuner作为调整[mg为素材]对c进行同调召唤手续
-●void Duel.XyzSummon(int player, Card c, Group mg|nil)
-让玩家player[以mg为素材]对c进行超量召唤手续
-●void Duel.MSet(int player, Card c, bool ignore_count, Effect e|nil[, minc=0])
-让玩家以效果e对c进行通常召唤的Set，至少使用mint个祭品
+●void Duel.XyzSummon(int player, Card c, Group mg|nil[, min=0, max=0])
+让玩家player[从mg中][选min-max个素材]对c进行超量召唤手续
+mg非空且min为0则直接把mg全部作为超量素材
+●void Duel.MSet(int player, Card c, bool ignore_count, Effect e|nil[, min=0])
+让玩家以效果e对c进行通常召唤的Set，至少使用min个祭品
 如果e=nil,那么就按照一般的通常召唤规则进行通常召唤
 如果ignore_count=true，则忽略每回合的通常召唤次数限制
 ●void|int Duel.SSet(int player, Card|Group targets[, int target_player = player])
@@ -1107,8 +1114,8 @@ void Duel.SetTargetParam(inte param)
 返回连锁chainc包含的操作分类的数量
 ●bool Duel.CheckXyzMaterial(Card c, function f, int lv, int min, int max, Group mg|nil)
 检查场上或mg中是否存在超量召唤c的超量用等级为lv的min-max个满足条件f的叠放素材
-●Group Duel.SelectXyzMaterial(int player, Card c, function f, int lv, int min, int max)
-让玩家player为超量怪兽c选择超量用等级为lv的min-max个满足条件f的叠放素材
+●Group Duel.SelectXyzMaterial(int player, Card c, function f, int lv, int min, int max[, Group mg])
+让玩家player为超量怪兽c[从mg中]选择超量用等级为lv的min-max个满足条件f的叠放素材
 ●void Duel.Overlay(Card c, Card|Group ocard)
 把ocard作为c的叠放卡叠放
 ●Group Duel.GetOverlayGroup(int player, int s, int o)
@@ -1162,8 +1169,8 @@ available是所有可选种族的组合值
 available是所有可选属性的组合值
 ●int Duel.AnnounceLevel(int player)
 让玩家宣言一个等级
-●int Duel.AnnounceCard(int player)
-让玩家player宣言一个卡片代号
+●int Duel.AnnounceCard(int player[, type=TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP])
+让玩家player宣言一个[type类型的]卡片代号
 ●int Duel.AnnounceType(int player)
 让玩家player宣言一个卡片类型
 ●int,int Duel.AnnounceNumber(int player, int number, ...)

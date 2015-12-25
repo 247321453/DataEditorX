@@ -133,7 +133,7 @@ STATUS_TO_DISABLE			=0x0004		--将变成无效
 STATUS_PROC_COMPLETE		=0x0008		--完成正规召唤（解除苏生限制）
 STATUS_SET_TURN				=0x0010		--覆盖
 STATUS_NO_LEVEL				=0x0020		--无等级
-STATUS_REVIVE_LIMIT			=0x0040		--(N/A)
+STATUS_SET_AVAILABLE		=0x0040		--裡側狀態可發動
 STATUS_SPSUMMON_STEP		=0x0080		--效果特召處理中
 STATUS_FORM_CHANGED			=0x0100		--改变过表示形式
 STATUS_SUMMONING			=0x0200		--召唤中
@@ -153,7 +153,7 @@ STATUS_INITIALIZING			=0x400000	--初始化..
 STATUS_ACTIVATED			=0x800000	--效果已发动
 STATUS_JUST_POS				=0x1000000	--已改變表示形式(用於STATUS_CONTINUOUS_POS判定)
 STATUS_CONTINUOUS_POS		=0x2000000	--改變後再次設定成其他表示形式
-STATUS_IS_PUBLIC			=0x4000000	--公开展示
+STATUS_IS_PUBLIC			=0x4000000	--(N/A)
 STATUS_ACT_FROM_HAND		=0x8000000	--從手牌发动
 STATUS_OPPO_BATTLE			=0x10000000	--和對手的怪兽戰鬥
 STATUS_FLIP_SUMMON_TURN		=0x20000000	--在本回合反转召唤
@@ -174,11 +174,13 @@ COUNTER_NEED_ENABLE			=0x2000	--可以放置某指示物
 PHASE_DRAW			=0x01	--抽卡阶段
 PHASE_STANDBY		=0x02	--准备阶段
 PHASE_MAIN1			=0x04	--主要阶段1
-PHASE_BATTLE		=0x08	--战斗阶段
-PHASE_DAMAGE		=0x10	--伤害步驟
-PHASE_DAMAGE_CAL	=0x20	--伤害计算时
-PHASE_MAIN2			=0x40	--主要阶段2
-PHASE_END			=0x80	--结束阶段
+PHASE_BATTLE_START	=0x08	--战斗阶段开始
+PHASE_BATTLE_STEP	=0x10	--战斗步驟
+PHASE_DAMAGE		=0x20	--伤害步驟
+PHASE_DAMAGE_CAL	=0x40	--伤害计算时
+PHASE_BATTLE		=0x80	--战斗阶段結束
+PHASE_MAIN2			=0x100	--主要阶段2
+PHASE_END			=0x200	--结束阶段
 --Player	--玩家
 PLAYER_NONE			=2		--2个玩家都不是
 PLAYER_ALL			=3		--2个玩家都是
@@ -198,18 +200,10 @@ CHAININFO_CHAIN_ID				=0x800	--连锁ID
 CHAININFO_TYPE					=0x1000	--连锁类型
 CHAININFO_EXTTYPE				=0x2000	--连锁额外类型
 --========== Reset ==========	--重置条件（注意：重置条件可以多个相加）
---PHASE_DRAW		--抽卡阶段重置
---PHASE_STANDBY		--准备阶段重置
---PHASE_MAIN1		--主要阶段1重置
---PHASE_BATTLE		--战斗阶段重置
---PHASE_DAMAGE		--伤害计算前重置
---PHASE_DAMAGE_CAL	--伤害计算时重置
---PHASE_MAIN2		--主要阶段2重置
---PHASE_END			--结束阶段重置
-RESET_SELF_TURN		=0x0100				--自己回合结束重置
-RESET_OPPO_TURN		=0x0200				--对方回合结束重置
-RESET_PHASE			=0x0400				--阶段结束重置(一般和上面那些阶段配合使用)
-RESET_CHAIN			=0x0800				--连锁结束重置
+RESET_SELF_TURN		=0x10000000			--自己回合结束重置
+RESET_OPPO_TURN		=0x20000000			--对方回合结束重置
+RESET_PHASE			=0x40000000			--阶段结束重置(一般和上面那些阶段配合使用)
+RESET_CHAIN			=0x80000000			--连锁结束重置
 RESET_EVENT			=0x1000				--指定的條件下重置(一般和下面这些事件配合使用)
 RESET_CARD			=0x2000				--重置Owner為指定卡片的效果
 RESET_CODE			=0x4000				--重置指定Code的single效果(不含EFFECT_FLAG_SINGLE_RANGE)
@@ -486,6 +480,8 @@ EFFECT_UNSUMMONABLE_CARD		=336	--不能通常召唤的怪獸
 EFFECT_DISABLE_CHAIN_FIELD		=337	--連鎖串中場上發動的效果無效(Duel.NegateRelatedChain())
 EFFECT_DISCARD_COST_CHANGE		=338	--反制陷阱捨棄手牌的代價改變(解放之阿里阿德涅)
 EFFECT_HAND_SYNCHRO				=339	--用手牌的怪獸當作同步素材
+EFFECT_ADD_FUSION_CODE			=340	--作为融合素材时可以当作某一卡名(融合识别)
+EFFECT_ADD_FUSION_SETCODE		=341	--作为融合素材时可以当作某一字段(魔玩具改造)
 
 --下面是诱发效果的诱发事件、时点 （如果是TYPE_SINGLE则自己发生以下事件后触发，如果TYPE_FIELD则场上任何卡发生以下事件都触发）
 EVENT_STARTUP					=1000	--游戏开始时
@@ -585,7 +581,7 @@ CATEGORY_DICE				=0x2000000	--骰子效果
 CATEGORY_LEAVE_GRAVE		=0x4000000	--离开墓地效果
 CATEGORY_LVCHANGE			=0x8000000	--改变等级效果
 CATEGORY_NEGATE				=0x10000000	--使发动无效效果
-CATEGORY_ANNOUNCE			=0x20000000	--宣言效果
+CATEGORY_ANNOUNCE			=0x20000000	--發動時宣言卡名的效果
 --Hint
 HINT_EVENT				=1
 HINT_MESSAGE			=2
@@ -702,7 +698,7 @@ ACTIVITY_ATTACK			=5		--
 ACTIVITY_BATTLE_PHASE	=6		-- not available in custom counter
 ACTIVITY_CHAIN			=7		-- only available in custom counter
 --announce type（宣言类型，CATEGORY_ANNOUNCE的OperationInfo的target_param）
-ANNOUNCE_CARD			=1		--宣言卡片
+ANNOUNCE_CARD			=0x7	--宣言卡片
 --special cards
 CARD_MARINE_DOLPHIN		=78734254	--海洋海豚
 CARD_TWINKLE_MOSS		=13857930	--光輝苔蘚

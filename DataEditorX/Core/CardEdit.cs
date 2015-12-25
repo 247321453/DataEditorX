@@ -4,6 +4,7 @@ using System.Text;
 using System.IO;
 using DataEditorX.Config;
 using DataEditorX.Language;
+using DataEditorX.Core.Info;
 
 namespace DataEditorX.Core
 {
@@ -210,9 +211,16 @@ namespace DataEditorX.Core
             if (!dataform.CheckOpen())
                 return false;
             Card c = dataform.GetCard();
-            if (c.id <= 0)//卡片密码不能小于等于0
+            if (c.id <= 0 || c.IsType(CardType.TYPE_NORMAL) && !c.IsType(CardType.TYPE_PENDULUM))//卡片密码不能小于等于0, 非灵摆的通常怪兽无需脚本
                 return false;
-            string lua = dataform.GetPath().GetScript(c.id);
+			long id = c.id;
+			if(c.alias != 0)
+			{
+				long dif = c.id - c.alias;
+				if (dif > -10 && dif < 10)
+					id = c.alias;
+			}
+            string lua = dataform.GetPath().GetScript(id);
             if (!File.Exists(lua))
             {
                 MyPath.CreateDirByFile(lua);
@@ -223,7 +231,7 @@ namespace DataEditorX.Core
                     {
                         StreamWriter sw = new StreamWriter(fs, new UTF8Encoding(false));
                         sw.WriteLine("--" + c.name);
-                        sw.WriteLine("function c"+c.id.ToString()+".initial_effect(c)");
+                        sw.WriteLine("function c"+id.ToString()+".initial_effect(c)");
                         sw.WriteLine("\t");
                         sw.WriteLine("end");
                         sw.Close();
