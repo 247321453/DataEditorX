@@ -128,9 +128,9 @@
 0x7	Ancient Gear	アンティーク・ギア
 0x8	HERO	HERO
 0x3008	Elemental HERO	E·HERO
-#0x6008	Evil HERO	E-HERO
+0x6008	N/A	Evil HERO	E-HERO
 0xc008	Destiny HERO	D-HERO
-#0x5008	Vision HERO	V·HERO
+0x5008	N/A	Vision HERO	V·HERO
 0xa008	Masked HERO	M·HERO
 0x9	Neos	ネオス
 0xa	lswarm	ヴェルズ
@@ -139,7 +139,7 @@
 0xc	Alien	エーリアン
 0xd	Saber	セイバー
 0x100d	X-Saber	X－セイバー
-#0x300d	XX-Saber	XX－セイバー
+0x300d	N/A	XX-Saber	XX－セイバー
 0xe	Watt	エレキ
 0xf	Ojama	オジャマ
 0x10	Gusto	ガスタ
@@ -214,7 +214,7 @@
 0x48	Number	No.
 0x1048	Number C	CNo.
 0x49	Skyblaster	銃士
-#0x4a	Timelord	時械神
+0x4a	N/A	Timelord	時械神
 0x4b	Aesir	極神
 0x4c	Trap Hole	落とし穴
 0x4e	Evol	エヴォル
@@ -246,18 +246,18 @@
 0x65	Infestation	侵略の
 0x66	Warrior	ウォリアー
 0x1066	Symphonic Warrior	音響戦士
-#0x67	Iron	アイアン
-#0x68	Tin	ブリキ
+0x67	N/A	Iron	アイアン
+0x68	N/A	Tin	ブリキ
 0x69	Hieratic	聖刻
 0x6a	Butterspy	幻蝶の刺客
 0x6b	Bounzer	バウンサー
-#0x6c	Lightray	ライトレイ
+0x6c	N/A	Lightray	ライトレイ
 0x6d	Djinn	魔人
 0x6e	Prophecy	魔導
 0x106e	Spellbook	魔導書
 0x6f	Heroic	ヒロイック
 0x106f	Heroic Challenger	H・C	
-#0x206f	Heroic Champion	H－C
+0x206f	N/A	Heroic Champion	H－C
 0x70	Chronomaly	先史遺産
 0x71	Madolche	マドルチェ
 0x72	Geargia	ギアギア
@@ -293,10 +293,10 @@
 0x87	Umbral Horror	アンブラル
 0x88	Bujin	武神
 0x89	Hole	ホール
-#0x8a	蟲惑
+0x8a	N/A	蟲惑
 0x108a	Traptrix	蟲惑魔
 0x8b	Malicevorous	マリスボラス
-#0x8c	Druid	ドルイド
+0x8c	N/A	Druid	ドルイド
 0x8d	Ghostrick	ゴーストリック
 0x8e	Vampire	ヴァンパイア
 0x8f	Zubaba	ズババ
