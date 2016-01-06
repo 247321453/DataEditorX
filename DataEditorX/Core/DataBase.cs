@@ -403,7 +403,7 @@ namespace DataEditorX.Core
 				st.Append(";\nINSERT or replace into texts values(");
 			st.Append(c.id.ToString()); st.Append(",'");
 			st.Append(c.name.Replace("'", "''")); st.Append("','");
-			st.Append(c.desc.Replace("'", "''"));
+			st.Append(c.desc.Replace("'", "''").Replace("\r", "").Replace("\n", "' || X'0A' || '"));
 			for ( int i = 0; i < 0x10; i++ )
 			{
 				st.Append("','"); st.Append(c.Str[i].Replace("'", "''"));
