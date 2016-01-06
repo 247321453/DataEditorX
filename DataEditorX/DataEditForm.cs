@@ -1670,6 +1670,24 @@ namespace DataEditorX
 				tasker.testPendulumText(c.desc);
 			}
 		}
+		void Menuitem_export_select_sqlClick(object sender, EventArgs e)
+		{
+				using(SaveFileDialog dlg = new SaveFileDialog()){
+				if(dlg.ShowDialog() == DialogResult.OK){
+					DataBase.exportSql(dlg.FileName, GetCardList(true));
+					MyMsg.Show("OK");
+				}
+			}
+		}
+		void Menuitem_export_all_sqlClick(object sender, EventArgs e)
+		{
+			using(SaveFileDialog dlg = new SaveFileDialog()){
+				if(dlg.ShowDialog() == DialogResult.OK){
+					DataBase.exportSql(dlg.FileName, GetCardList(false));
+					MyMsg.Show("OK");
+				}
+			}
+		}
 		
 	}
 }

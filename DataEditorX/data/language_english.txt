@@ -54,7 +54,9 @@ DataEditForm.mainMenu.menuitem_saveasmse_select	Save Selected As MSE-set
 DataEditForm.mainMenu.menuitem_saveasmse	Save All As MSE-set
 DataEditForm.mainMenu.menuitem_cutimages	Cut Images
 DataEditForm.mainMenu.menuitem_convertimage	Convert Images
-DataEditForm.mainMenu.menuitem_importmseimg	Set MSE'Image 
+DataEditForm.mainMenu.menuitem_importmseimg	Set MSE'Image
+DataEditForm.mainMenu.menuitem_export_all_sql	Export all to sql
+DataEditForm.mainMenu.menuitem_export_select_sql	Export select to sql
 DataEditForm.mainMenu.menuitem_cancelTask	Cancel Task
 DataEditForm.mainMenu.menuitem_exportMSEimage	export mse-set to images(Click stop)
 DataEditForm.mainMenu.menuitem_help	Help(&H)

@@ -160,16 +160,16 @@ namespace DataEditorX.Core
 			return text;
 		}
 
-        public static Card[] Read(string DB, bool reNewLine, params long[] ids)
-        {
-            List<string> idlist = new List<string>();
-            foreach (long id in ids)
-            {
-                idlist.Add(id.ToString());
-            }
-            return Read(DB, reNewLine, idlist.ToArray());
-        }
-        /// <summary>
+		public static Card[] Read(string DB, bool reNewLine, params long[] ids)
+		{
+			List<string> idlist = new List<string>();
+			foreach (long id in ids)
+			{
+				idlist.Add(id.ToString());
+			}
+			return Read(DB, reNewLine, idlist.ToArray());
+		}
+		/// <summary>
 		/// 根据密码集合，读取数据
 		/// </summary>
 		/// <param name="DB">数据库</param>
@@ -325,8 +325,8 @@ namespace DataEditorX.Core
 		{
 			StringBuilder sb=new StringBuilder();
 			sb.Append("SELECT datas.*,texts.* FROM datas,texts WHERE datas.id=texts.id ");
-            if (c == null)
-                return sb.ToString();
+			if (c == null)
+				return sb.ToString();
 			if(!string.IsNullOrEmpty(c.name)){
 				if(c.name.IndexOf("%%")>=0)
 					c.name=c.name.Replace("%%","%");
@@ -377,12 +377,10 @@ namespace DataEditorX.Core
 		/// 转换为插入语句
 		/// </summary>
 		/// <param name="c">卡片数据</param>
+		/// <param name="ignore"></param>
 		/// <returns>SQL语句</returns>
 		public static string GetInsertSQL(Card c, bool ignore)
 		{
-            if (c == null)
-                return "";
-
 			StringBuilder st = new StringBuilder();
 			if(ignore)
 				st.Append("INSERT or ignore into datas values(");
@@ -391,18 +389,18 @@ namespace DataEditorX.Core
 			st.Append(c.id.ToString()); st.Append(",");
 			st.Append(c.ot.ToString()); st.Append(",");
 			st.Append(c.alias.ToString()); st.Append(",");
-			st.Append(c.setcode.ToString()); st.Append(",");
-			st.Append(c.type.ToString()); st.Append(",");
+			st.Append("0x"+c.setcode.ToString("x")); st.Append(",");
+			st.Append("0x"+c.type.ToString("x")); st.Append(",");
 			st.Append(c.atk.ToString()); ; st.Append(",");
 			st.Append(c.def.ToString()); st.Append(",");
-			st.Append(c.level.ToString()); st.Append(",");
-			st.Append(c.race.ToString()); st.Append(",");
-			st.Append(c.attribute.ToString()); st.Append(",");
-			st.Append(c.category.ToString()); st.Append(")");
+			st.Append("0x"+c.level.ToString("x")); st.Append(",");
+			st.Append("0x"+c.race.ToString("x")); st.Append(",");
+			st.Append("0x"+c.attribute.ToString("x")); st.Append(",");
+			st.Append("0x"+c.category.ToString("x")); st.Append(")");
 			if(ignore)
-				st.Append(";INSERT or ignore into texts values(");
+				st.Append(";\nINSERT or ignore into texts values(");
 			else
-				st.Append(";INSERT or replace into texts values(");
+				st.Append(";\nINSERT or replace into texts values(");
 			st.Append(c.id.ToString()); st.Append(",'");
 			st.Append(c.name.Replace("'", "''")); st.Append("','");
 			st.Append(c.desc.Replace("'", "''"));
@@ -426,9 +424,6 @@ namespace DataEditorX.Core
 		public static string GetUpdateSQL(Card c)
 		{
 			StringBuilder st = new StringBuilder();
-            if (c == null)
-                return "";
-
 			st.Append("update datas set ot="); st.Append(c.ot.ToString());
 			st.Append(",alias="); st.Append(c.alias.ToString());
 			st.Append(",setcode="); st.Append(c.setcode.ToString());
@@ -472,5 +467,18 @@ namespace DataEditorX.Core
 		}
 		#endregion
 		#endregion
+		
+		
+		public static void exportSql(String file,params Card[] cards){
+			using (FileStream fs = new FileStream(file, FileMode.Create, FileAccess.Write))
+			{
+				StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
+				foreach (Card c in cards)
+				{
+					sw.WriteLine(GetInsertSQL(c, false));
+				}
+				sw.Close();
+			}
+		}
 	}
 }

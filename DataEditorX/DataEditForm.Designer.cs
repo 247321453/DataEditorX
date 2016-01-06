@@ -64,6 +64,8 @@ namespace DataEditorX
         	this.menuitem_readimages = new System.Windows.Forms.ToolStripMenuItem();
         	this.tsep6 = new System.Windows.Forms.ToolStripSeparator();
         	this.menuitem_compdb = new System.Windows.Forms.ToolStripMenuItem();
+        	this.menuitem_export_select_sql = new System.Windows.Forms.ToolStripMenuItem();
+        	this.menuitem_export_all_sql = new System.Windows.Forms.ToolStripMenuItem();
         	this.menuitem_findluafunc = new System.Windows.Forms.ToolStripMenuItem();
         	this.menuitem_exportdata = new System.Windows.Forms.ToolStripMenuItem();
         	this.tsep5 = new System.Windows.Forms.ToolStripSeparator();
@@ -122,10 +124,10 @@ namespace DataEditorX
         	this.tb_setcode3 = new System.Windows.Forms.TextBox();
         	this.tb_setcode4 = new System.Windows.Forms.TextBox();
         	this.lb_cardcode = new System.Windows.Forms.Label();
-        	this.pl_category = new DFlowLayoutPanel();
-        	this.pl_cardtype = new DFlowLayoutPanel();
-        	this.lb_scripttext = new DListBox();
-        	this.lv_cardlist = new DListView();
+        	this.pl_category = new DataEditorX.DFlowLayoutPanel();
+        	this.pl_cardtype = new DataEditorX.DFlowLayoutPanel();
+        	this.lb_scripttext = new DataEditorX.DListBox();
+        	this.lv_cardlist = new DataEditorX.DListView();
         	this.ch_cardcode = new System.Windows.Forms.ColumnHeader();
         	this.ch_cardname = new System.Windows.Forms.ColumnHeader();
         	this.mainMenu.SuspendLayout();
@@ -134,10 +136,10 @@ namespace DataEditorX
         	// mainMenu
         	// 
         	this.mainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-        	        	        	this.menuitem_file,
-        	        	        	this.menu_image,
-        	        	        	this.menu_data,
-        	        	        	this.menuitem_help});
+			this.menuitem_file,
+			this.menu_image,
+			this.menu_data,
+			this.menuitem_help});
         	this.mainMenu.Location = new System.Drawing.Point(0, 0);
         	this.mainMenu.Name = "mainMenu";
         	this.mainMenu.Size = new System.Drawing.Size(859, 25);
@@ -147,15 +149,15 @@ namespace DataEditorX
         	// menuitem_file
         	// 
         	this.menuitem_file.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-        	        	        	this.menuitem_open,
-        	        	        	this.menuitem_new,
-        	        	        	this.toolStripSeparator3,
-        	        	        	this.menuitem_copyselectto,
-        	        	        	this.menuitem_copyto,
-        	        	        	this.tsep4,
-        	        	        	this.menuitem_openLastDataBase,
-        	        	        	this.toolStripSeparator2,
-        	        	        	this.menuitem_quit});
+			this.menuitem_open,
+			this.menuitem_new,
+			this.toolStripSeparator3,
+			this.menuitem_copyselectto,
+			this.menuitem_copyto,
+			this.tsep4,
+			this.menuitem_openLastDataBase,
+			this.toolStripSeparator2,
+			this.menuitem_quit});
         	this.menuitem_file.Name = "menuitem_file";
         	this.menuitem_file.Size = new System.Drawing.Size(53, 21);
         	this.menuitem_file.Text = "File(&F)";
@@ -216,15 +218,15 @@ namespace DataEditorX
         	// menu_image
         	// 
         	this.menu_image.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-        	        	        	this.menuitem_mseconfig,
-        	        	        	this.tsep3,
-        	        	        	this.menuitem_readmse,
-        	        	        	this.menuitem_saveasmse_select,
-        	        	        	this.menuitem_saveasmse,
-        	        	        	this.menuitem_exportMSEimage,
-        	        	        	this.menuitem_testpendulumtext,
-        	        	        	this.tsep7,
-        	        	        	this.menuitem_importmseimg});
+			this.menuitem_mseconfig,
+			this.tsep3,
+			this.menuitem_readmse,
+			this.menuitem_saveasmse_select,
+			this.menuitem_saveasmse,
+			this.menuitem_exportMSEimage,
+			this.menuitem_testpendulumtext,
+			this.tsep7,
+			this.menuitem_importmseimg});
         	this.menu_image.Name = "menu_image";
         	this.menu_image.Size = new System.Drawing.Size(69, 21);
         	this.menu_image.Text = "Image(&I)";
@@ -290,20 +292,22 @@ namespace DataEditorX
         	// menu_data
         	// 
         	this.menu_data.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-        	        	        	this.menuitem_operacardsfile,
-        	        	        	this.menuitem_openfileinthis,
-        	        	        	this.tsep2,
-        	        	        	this.menuitem_readydk,
-        	        	        	this.menuitem_readimages,
-        	        	        	this.tsep6,
-        	        	        	this.menuitem_compdb,
-        	        	        	this.menuitem_findluafunc,
-        	        	        	this.menuitem_exportdata,
-        	        	        	this.tsep5,
-        	        	        	this.menuitem_cutimages,
-        	        	        	this.menuitem_convertimage,
-        	        	        	this.tsep1,
-        	        	        	this.menuitem_cancelTask});
+			this.menuitem_operacardsfile,
+			this.menuitem_openfileinthis,
+			this.tsep2,
+			this.menuitem_readydk,
+			this.menuitem_readimages,
+			this.tsep6,
+			this.menuitem_compdb,
+			this.menuitem_export_select_sql,
+			this.menuitem_export_all_sql,
+			this.menuitem_findluafunc,
+			this.menuitem_exportdata,
+			this.tsep5,
+			this.menuitem_cutimages,
+			this.menuitem_convertimage,
+			this.tsep1,
+			this.menuitem_cancelTask});
         	this.menu_data.Name = "menu_data";
         	this.menu_data.Size = new System.Drawing.Size(62, 21);
         	this.menu_data.Text = "Data(&T)";
@@ -353,6 +357,20 @@ namespace DataEditorX
         	this.menuitem_compdb.Text = "Compression DataBase";
         	this.menuitem_compdb.Click += new System.EventHandler(this.menuitem_compdb_Click);
         	// 
+        	// menuitem_export_select_sql
+        	// 
+        	this.menuitem_export_select_sql.Name = "menuitem_export_select_sql";
+        	this.menuitem_export_select_sql.Size = new System.Drawing.Size(212, 22);
+        	this.menuitem_export_select_sql.Text = "Export select to Sql";
+        	this.menuitem_export_select_sql.Click += new System.EventHandler(this.Menuitem_export_select_sqlClick);
+        	// 
+        	// menuitem_export_all_sql
+        	// 
+        	this.menuitem_export_all_sql.Name = "menuitem_export_all_sql";
+        	this.menuitem_export_all_sql.Size = new System.Drawing.Size(212, 22);
+        	this.menuitem_export_all_sql.Text = "Export all to Sql";
+        	this.menuitem_export_all_sql.Click += new System.EventHandler(this.Menuitem_export_all_sqlClick);
+        	// 
         	// menuitem_findluafunc
         	// 
         	this.menuitem_findluafunc.Name = "menuitem_findluafunc";
@@ -401,11 +419,11 @@ namespace DataEditorX
         	// menuitem_help
         	// 
         	this.menuitem_help.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-        	        	        	this.menuitem_about,
-        	        	        	this.menuitem_language,
-        	        	        	this.menuitem_checkupdate,
-        	        	        	this.menuitem_autocheckupdate,
-        	        	        	this.menuitem_github});
+			this.menuitem_about,
+			this.menuitem_language,
+			this.menuitem_checkupdate,
+			this.menuitem_autocheckupdate,
+			this.menuitem_github});
         	this.menuitem_help.Name = "menuitem_help";
         	this.menuitem_help.Size = new System.Drawing.Size(64, 21);
         	this.menuitem_help.Text = "Help(&H)";
@@ -670,7 +688,7 @@ namespace DataEditorX
         	// btn_PageUp
         	// 
         	this.btn_PageUp.Anchor = System.Windows.Forms.AnchorStyles.Top;
-        	this.btn_PageUp.Location = new System.Drawing.Point(-1, 543);
+        	this.btn_PageUp.Location = new System.Drawing.Point(0, 543);
         	this.btn_PageUp.Name = "btn_PageUp";
         	this.btn_PageUp.Size = new System.Drawing.Size(64, 27);
         	this.btn_PageUp.TabIndex = 5;
@@ -1019,13 +1037,13 @@ namespace DataEditorX
         	this.lv_cardlist.Anchor = System.Windows.Forms.AnchorStyles.Top;
         	this.lv_cardlist.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
         	this.lv_cardlist.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-        	        	        	this.ch_cardcode,
-        	        	        	this.ch_cardname});
+			this.ch_cardcode,
+			this.ch_cardname});
         	this.lv_cardlist.FullRowSelect = true;
         	this.lv_cardlist.GridLines = true;
         	this.lv_cardlist.HideSelection = false;
         	this.lv_cardlist.LabelWrap = false;
-        	this.lv_cardlist.Location = new System.Drawing.Point(-1, 27);
+        	this.lv_cardlist.Location = new System.Drawing.Point(0, 27);
         	this.lv_cardlist.Name = "lv_cardlist";
         	this.lv_cardlist.Scrollable = false;
         	this.lv_cardlist.ShowItemToolTips = true;
@@ -1113,6 +1131,7 @@ namespace DataEditorX
         	this.mainMenu.PerformLayout();
         	this.ResumeLayout(false);
         	this.PerformLayout();
+
         }
         private System.Windows.Forms.ToolStripMenuItem menuitem_testpendulumtext;
         private System.Windows.Forms.ToolStripMenuItem menuitem_exportMSEimage;
@@ -1207,5 +1226,7 @@ namespace DataEditorX
 		private System.Windows.Forms.ToolStripMenuItem menuitem_openfileinthis;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_autocheckupdate;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_language;
+		private System.Windows.Forms.ToolStripMenuItem menuitem_export_select_sql;
+		private System.Windows.Forms.ToolStripMenuItem menuitem_export_all_sql;
     }
 }

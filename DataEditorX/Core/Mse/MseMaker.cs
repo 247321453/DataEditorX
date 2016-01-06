@@ -731,13 +731,14 @@ namespace DataEditorX.Core.Mse
 		/// 图片缓存
 		/// </summary>
 		/// <param name="img"></param>
+		/// <param name="card"></param>
 		/// <returns></returns>
 		public string getImageCache(string img,Card card){
 			if(!cfg.reimage){
 				//不需要调整
 				return img;
 			}
-			bool isPendulum =card!=null && card.IsType(CardType.TYPE_PENDULUM);
+			bool isPendulum = card.IsType(CardType.TYPE_PENDULUM);
 			if(isPendulum){
 				if(cfg.pwidth<=0 && cfg.pheight<=0)
 					return img;
@@ -779,7 +780,7 @@ namespace DataEditorX.Core.Mse
 			string mse_path=args[0];
 			string setfile=args[1];
 			string path=args[2];
-			if(mse_path==null||mse_path.Length==0||setfile==null||setfile.Length==0){
+			if(string.IsNullOrEmpty(mse_path)||string.IsNullOrEmpty(setfile)){
 				System.Windows.Forms.MessageBox.Show(Language.LanguageHelper.GetMsg(LMSG.exportMseImagesErr));
 				return;
 			}else{
@@ -814,7 +815,7 @@ namespace DataEditorX.Core.Mse
 			}catch{}
 		}
 		public static void exportSet(string mse_path,string setfile,string path,EventHandler handler){
-			if(mse_path==null||mse_path.Length==0||setfile==null||setfile.Length==0){
+			if(string.IsNullOrEmpty(mse_path)||setfile==null||setfile.Length==0){
 				return;
 			}
 			ParameterizedThreadStart ParStart = new ParameterizedThreadStart(exportSetThread);
@@ -827,7 +828,7 @@ namespace DataEditorX.Core.Mse
 		
 		#region test
 		public void testPendulum(string desc){
-			if(desc==null||desc.Length==0){
+			if(string.IsNullOrEmpty(desc)){
 				MessageBox.Show("desc is null", "info");
 			}else{
 				string ptext=GetDesc(desc, cfg.regx_pendulum);

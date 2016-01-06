@@ -58,6 +58,8 @@ DataEditForm.mainMenu.menuitem_convertimage	批量导入卡图
 DataEditForm.mainMenu.menuitem_exportMSEimage	从MSE存档导出图片(再次点击停止)
 DataEditForm.mainMenu.menuitem_cancelTask	取消任务
 DataEditForm.mainMenu.menuitem_testpendulumtext	测试灵摆效果文本
+DataEditForm.mainMenu.menuitem_export_all_sql	所有卡片导出为sql
+DataEditForm.mainMenu.menuitem_export_select_sql	选择卡片导出为sql
 DataEditForm.mainMenu.menuitem_help	帮助(&H)
 DataEditForm.mainMenu.menuitem_about	关于
 DataEditForm.mainMenu.menuitem_language	语言
