@@ -379,7 +379,7 @@ namespace DataEditorX.Core
 		/// <param name="c">卡片数据</param>
 		/// <param name="ignore"></param>
 		/// <returns>SQL语句</returns>
-		public static string GetInsertSQL(Card c, bool ignore)
+		public static string GetInsertSQL(Card c, bool ignore,bool hex= false)
 		{
 			StringBuilder st = new StringBuilder();
 			if(ignore)
@@ -389,14 +389,26 @@ namespace DataEditorX.Core
 			st.Append(c.id.ToString()); st.Append(",");
 			st.Append(c.ot.ToString()); st.Append(",");
 			st.Append(c.alias.ToString()); st.Append(",");
-			st.Append("0x"+c.setcode.ToString("x")); st.Append(",");
-			st.Append("0x"+c.type.ToString("x")); st.Append(",");
+			if(hex){
+				st.Append("0x"+c.setcode.ToString("x")); st.Append(",");
+				st.Append("0x"+c.type.ToString("x")); st.Append(",");
+			}else{
+				st.Append(c.setcode.ToString()); st.Append(",");
+				st.Append(c.type.ToString()); st.Append(",");
+			}
 			st.Append(c.atk.ToString()); ; st.Append(",");
 			st.Append(c.def.ToString()); st.Append(",");
-			st.Append("0x"+c.level.ToString("x")); st.Append(",");
-			st.Append("0x"+c.race.ToString("x")); st.Append(",");
-			st.Append("0x"+c.attribute.ToString("x")); st.Append(",");
-			st.Append("0x"+c.category.ToString("x")); st.Append(")");
+			if(hex){
+				st.Append("0x"+c.level.ToString("x")); st.Append(",");
+				st.Append("0x"+c.race.ToString("x")); st.Append(",");
+				st.Append("0x"+c.attribute.ToString("x")); st.Append(",");
+				st.Append("0x"+c.category.ToString("x")); st.Append(")");
+			}else{
+				st.Append(c.level.ToString()); st.Append(",");
+				st.Append(c.race.ToString()); st.Append(",");
+				st.Append(c.attribute.ToString()); st.Append(",");
+				st.Append(c.category.ToString()); st.Append(")");
+			}
 			if(ignore)
 				st.Append(";\nINSERT or ignore into texts values(");
 			else
@@ -475,7 +487,7 @@ namespace DataEditorX.Core
 				StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
 				foreach (Card c in cards)
 				{
-					sw.WriteLine(GetInsertSQL(c, false));
+					sw.WriteLine(GetInsertSQL(c, false, true));
 				}
 				sw.Close();
 			}

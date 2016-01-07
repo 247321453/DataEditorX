@@ -1,4 +1,4 @@
-﻿[DataEditorX]2.4.0.7[DataEditorX]
+﻿[DataEditorX]2.4.0.8[DataEditorX]
 [URL]https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip[URL]
 
 ★运行环境(Environment)
