@@ -389,4 +389,6 @@
 0x20dc	Super Quantum Mecha Beast	超量機獣
 0xdd	Blue-Eyes	ブルーアイズ
 0xde	Exodia	エクゾディア
+0xdf	Lunalight	ムーンライト
+0xe0	Amorphage	アモルファージ
 #end

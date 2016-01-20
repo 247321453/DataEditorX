@@ -322,6 +322,10 @@ RESET_CARD        重置卡片的效果      reset_code为效果owner的卡号
 检查c是否和效果e有联系
 注：每次发动进入连锁的效果时，发动效果的卡，以及发动效果时指定的对象
 （用Duel.SetTargetCard或者Duel.SelectTarget指定的，包括取对象和不取对象）
+●bool Card.IsRelateToChain(Card c, int chainc)
+检查c是否和连锁chainc有联系
+注：每次发动进入连锁的效果时，发动效果的卡，以及发动效果时指定的对象
+（用Duel.SetTargetCard或者Duel.SelectTarget指定的，包括取对象和不取对象）
 会自动与那个效果建立联系，一旦离场，联系会重置
 ●bool Card.IsRelateToCard(Card c1, Card c2)
 检查c1是否和c2有联系
@@ -331,6 +335,9 @@ RESET_CARD        重置卡片的效果      reset_code为效果owner的卡号
 ●int Card.CopyEffect(Card c, int code, int reset_flag[, int reset_count])
 为c添加卡号是code的卡的可复制的效果，并且添加额外的reset条件
 返回值是表示复制效果的代号id
+●int Card.ReplaceEffect(Card c, int code, int reset_flag[, int reset_count])
+把c的效果替换为卡号是code的卡的效果，并且添加额外的reset条件
+返回值是表示替换效果的代号id
 ●void Card.EnableUnsummonable(Card c)
 将c设置为不可通常召唤的怪兽
 ##实际上是个不可复制、不会被无效的EFFECT_UNSUMMONABLE_CARD效果
@@ -823,11 +830,12 @@ s表示对player来说的己方的可移除指示物的位置，o表示对player
 ●int Duel.GetCounter(int player, int s, int o, int countertype)
 返回场上存在的countertype类型的指示物的数量
 s表示对player来说的己方的可移除指示物的位置，o表示对player来说的对方的可移除指示物的位置
-●int Duel.ChangePosition(Card|Group targets, int au[, int ad=au, int du=au, int dd=au, bool noflip=false])
+●int Duel.ChangePosition(Card|Group targets, int au[, int ad=au, int du=au, int dd=au, bool noflip=false, bool setavailable=false])
 改变targets的表示形式返回实际操作的数量
 表侧攻击表示的变成au，里侧攻击表示的变成ad, 
 表侧守备表示变成du,里侧守备表示变成dd
-如果noflip=true则不触发翻转效果（但会触发翻转时的诱发效果）
+如果noflip=true则不触发反转效果（但会触发反转时的诱发效果）
+如果setavailable=true则对象之后变成里侧也发动反转效果
 ●int Duel.Release(Card|Group targets, int reason)
 以reason原因解放targets返回值是实际解放的数量
 如果reason含有REASON_COST，则不会检查卡片是否不受效果影响
@@ -988,8 +996,9 @@ Duel.GetChainInfo(0,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TARGET_CARDS)
 返回连锁的所有的对象卡，一般只有一个对象时使用
 ●int Duel.GetCurrentPhase()
 返回当前的阶段
-●void Duel.SkipPhase(int player, int phase, int reset_flag, int reset_count)
+●void Duel.SkipPhase(int player, int phase, int reset_flag, int reset_count[, int value])
 跳过玩家player的phase阶段，并在特定的阶段后reset，reset参数和效果相同
+#value只对phase=PHASE_BATTLE才有用，value=1跳过战斗阶段的结束步骤，用于“变成回合结束阶段”等（招财猫王，闪光弹）
 ●bool Duel.IsDamageCalculated()
 用于在伤害阶段检查是否已经计算了战斗伤害
 ●Card Duel.GetAttacker()
@@ -1330,8 +1339,9 @@ filter为仪式怪兽满足的条件，素材的等级之和可以超过仪式�
 ●void aux.AddRitualProcEqual(Card c, function filter)
 为c添加仪式召唤效果
 filter为仪式怪兽满足的条件，素材的等级之和必须等于仪式怪兽的等级
-●void aux.AddPendulumProcedure(Card c)
-为灵摆怪兽c添加灵摆召唤手续
+●void aux.EnablePendulumAttribute(Card c[, active_effect=true])
+为灵摆怪兽c添加灵摆怪兽属性（灵摆召唤，灵摆卡的发动）
+active_effect=false则不注册灵摆卡“卡的发动”的效果
 ●void aux.EnableDualAttribute(Card c)
 为c添加二重怪兽属性
 ●bool aux.IsDualState(Effect e)
