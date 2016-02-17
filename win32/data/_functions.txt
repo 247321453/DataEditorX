@@ -524,8 +524,8 @@ CHINT_NUMBER            数字
 CHINT_DESC              描述
 ●void Card.ReverseInDeck(Card c)
 设置c在卡组中正面表示
-●void Card.SetUniqueOnField(Card c, int s, int o, int unique_code)
-设置c以unique_code只能在场上只能存在1张
+●void Card.SetUniqueOnField(Card c, int s, int o, int unique_code[, int unique_location=LOCATIOIN_ONFIELD])
+设置c以unique_code只能在场上[或怪兽区域或魔陷区域，由unique_location决定]只能存在1张
 s不为0会检查自己场上的唯一性，o不为0则检查对方场上的唯一性
 ●bool Card.CheckUniqueOnField(Card c,int check_player)
 检查c在check_player场上的唯一性
@@ -1365,6 +1365,8 @@ proc=true则解除苏生限制
 ●void Debug.SetPlayerInfo(int playerid, int lp, int startcount, int drawcount)
 设置玩家信息，基本分为lp，初始手卡为startcount张，每回合抽drawcount张
 playerid 下方 0,上方 1
+●void Debug.PreSummon(Card c, int sum_type[, int sum_location=0])
+设置卡片c的召唤信息：以sum_type方法(通常召唤、特殊召唤等)[从sum_location]出场
 ●bool Debug.PreEquip(Card equip_card, Card target)
 为target添加装备equip_card
 ●void Debug.PreSetTarget(Card c, Card target)

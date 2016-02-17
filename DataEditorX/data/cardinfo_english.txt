@@ -320,8 +320,10 @@
 0x9f	Performapal	EM(エンタメイト)
 0xa0	Legendary Knight	伝説の騎士
 0xa1	Legendary Dragon	伝説の竜
-0xa2	Dark Magician	ブラック·マジシャン
-0x10a2	Dark Magician Girl	ブラック・マジシャン・ガール
+0xa2	N/A	Magician	マジシャン
+0x10a2	Dark Magician	ブラック·マジシャン
+0x20a2	Magician Girl	マジシャン·ガール
+0x30a2	Dark Magician Girl	ブラック·マジシャン·ガール
 0xa3	Stardust	スターダスト
 0xa4	Winged Kuriboh	ハネクリボー
 0xa5	Change	チェンジ
