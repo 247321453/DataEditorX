@@ -8,10 +8,13 @@ https://github.com/247321453/DataEditorX/raw/master/win32/win32.zip
 Q: I can't run the program.   
 A: Please install [.NET Framework](https://www.microsoft.com/en-us/download/details.aspx?id=25150).
 
-##Functions
-Create, edit card database.   
-Compare, copy and paste card records across databases easily.   
-Open and edit card scripts(.lua file).  
+##Features
+* Create and edit card databases.   
+* Compare, copy and paste card records across databases easily.   
+* Read card records from ygopro decks(.ydk file) or card picture folders(eg. pics folder of ygooro).  
+* Create and edit card scripts(.lua file).  
+* Export and import [MSE](https://github.com/247321453/MagicSetEditor2) sets.   
+...
 
 > **FAQ**   
 Q: How to add a new archetype?  
