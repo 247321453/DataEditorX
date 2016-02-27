@@ -33,32 +33,61 @@ namespace DataEditorX.Core
 			if(this.rarity==null)
 				return "common";
 			string rarity=this.rarity.Trim().ToLower();
-			if(rarity.Equals("common")){
+			if(rarity.Equals("common") || rarity.Equals("short print"))
+			{
 				return "common";
 			}
-			if(rarity.Equals("rare")){
+			if(rarity.Equals("rare") ||rarity.Equals("normal rare"))
+			{
 				return "rare";
 			}
-			if(rarity.Equals("super") ||rarity.Equals("super rare")){
-				return "super rare";
-			}
-			if(rarity.Contains("secret")){
-				return "secret rare";
-			}
-			if(rarity.Contains("parallel")){
+			else if(rarity.Contains("parallel") || rarity.Contains("Kaiba") || rarity.Contains("duel terminal"))
+			{
 				return "parallel rare";
 			}
-			if(rarity.Contains("ultimate")){
-				return "ultimate rare";
+			else if(rarity.Contains("super") ||rarity.Contains("holofoil"))
+			{
+				return "super rare";
 			}
-			if(rarity.Contains("ultra")){
+			else if(rarity.Contains("ultra"))
+			{
 				return "ultra rare";
 			}
-			if(rarity.Contains("gold")){
-				return "gold tech";
+			else if(rarity.Contains("secret"))
+			{
+				return "secret rare";
 			}
-			if(rarity.Contains("promo")){
-				return "promo";
+			else if(rarity.Contains("gold"))
+			{
+				return "gold rare";
+			}
+			else if(rarity.Contains("ultimate"))
+			{
+				return "ultimate rare";
+			}
+			else if(rarity.Contains("prismatic"))
+			{
+				return "prismatic rare";
+			}
+			else if(rarity.Contains("star"))
+			{
+				return "star rare";
+			}
+			else if(rarity.Contains("mosaic"))
+			{
+				return "mosaic rare";
+			}
+			else if(rarity.Contains("platinum"))
+			{
+				return "platinum rare";
+			}
+			else if(rarity.Contains("ghost") || rarity.Contains("holographic"))
+			{
+				return "ghost rare";
+			}
+			else if(rarity.Contains("millenium"))
+			{
+				return "millenium rare";
 			}
 			return this.rarity.Split('/')[0];
 		}
