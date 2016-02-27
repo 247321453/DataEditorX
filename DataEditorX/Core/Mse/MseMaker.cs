@@ -45,6 +45,8 @@ namespace DataEditorX.Core.Mse
 		public const string TAG_TEXT = "rule text";
 		public const string TAG_ATK = "attack";
 		public const string TAG_DEF = "defense";
+		public const string TAG_NUMBER = "number";
+		public const string TAG_RARITY = "rarity";
 		public const string TAG_PENDULUM = "pendulum";
 		public const string TAG_PSCALE1 = "pendulum scale 1";
 		public const string TAG_PSCALE2 = "pendulum scale 2";
@@ -368,7 +370,7 @@ namespace DataEditorX.Core.Mse
 
 		#region 写存档
 		//写存档
-		public Dictionary<Card, string> WriteSet(string file, Card[] cards)
+		public Dictionary<Card, string> WriteSet(string file, Card[] cards,string cardpack_db,bool rarity=true)
 		{
 //			MessageBox.Show(""+cfg.replaces.Keys[0]+"/"+cfg.replaces[cfg.replaces.Keys[0]]);
 			Dictionary<Card, string> list = new Dictionary<Card, string>();
@@ -386,10 +388,11 @@ namespace DataEditorX.Core.Mse
 						list.Add(c, jpg);
 						jpg = Path.GetFileName(jpg);
 					}
+					CardPack cardpack=DataBase.findPack(cardpack_db, c.id);
 					if (c.IsType(CardType.TYPE_SPELL) || c.IsType(CardType.TYPE_TRAP))
-						sw.WriteLine(getSpellTrap(c, jpg, c.IsType(CardType.TYPE_SPELL)));
+						sw.WriteLine(getSpellTrap(c, jpg, c.IsType(CardType.TYPE_SPELL), cardpack,rarity));
 					else
-						sw.WriteLine(getMonster(c, jpg, c.IsType(CardType.TYPE_PENDULUM)));
+						sw.WriteLine(getMonster(c, jpg, c.IsType(CardType.TYPE_PENDULUM),cardpack,rarity));
 				}
 				sw.WriteLine(cfg.end);
 				sw.Close();
@@ -398,7 +401,7 @@ namespace DataEditorX.Core.Mse
 			return list;
 		}
 		//怪兽，pendulum怪兽
-		string getMonster(Card c, string img, bool isPendulum)
+		string getMonster(Card c, string img, bool isPendulum,CardPack cardpack=null,bool rarity=true)
 		{
 			StringBuilder sb = new StringBuilder();
 			string[] types = GetTypes(c);
@@ -413,6 +416,12 @@ namespace DataEditorX.Core.Mse
 			sb.AppendLine(GetLine(TAG_TYPE2, cn2tw(types[1])));
 			sb.AppendLine(GetLine(TAG_TYPE3, cn2tw(types[2])));
 			sb.AppendLine(GetLine(TAG_TYPE4, cn2tw(types[3])));
+			if(cardpack!=null){
+				sb.AppendLine(GetLine(TAG_NUMBER, cardpack.pack_id));
+				if(rarity){
+					sb.AppendLine(GetLine(TAG_RARITY, cardpack.getMseRarity()));
+				}
+			}
 			if (isPendulum)//P怪兽
 			{
 				string text = GetDesc(c.desc, cfg.regx_monster);
@@ -439,7 +448,7 @@ namespace DataEditorX.Core.Mse
 			return sb.ToString();
 		}
 		//魔法陷阱
-		string getSpellTrap(Card c, string img, bool isSpell)
+		string getSpellTrap(Card c, string img, bool isSpell,CardPack cardpack=null,bool rarity=true)
 		{
 			StringBuilder sb = new StringBuilder();
 			sb.AppendLine(TAG_CARD + ":");
@@ -448,6 +457,12 @@ namespace DataEditorX.Core.Mse
 			sb.AppendLine(GetLine(TAG_ATTRIBUTE, isSpell ? "spell" : "trap"));
 			sb.AppendLine(GetLine(TAG_LEVEL, GetSpellTrapSymbol(c, isSpell)));
 			sb.AppendLine(GetLine(TAG_IMAGE, img));
+			if(cardpack!=null){
+				sb.AppendLine(GetLine(TAG_NUMBER, cardpack.pack_id));
+				if(rarity){
+					sb.AppendLine(GetLine(TAG_RARITY, cardpack.getMseRarity()));
+				}
+			}
 			sb.AppendLine("	" + TAG_TEXT + ":");
 			sb.AppendLine("		" + ReText(reItalic(c.desc)));
 			sb.AppendLine(GetLine(TAG_CODE, c.idString));

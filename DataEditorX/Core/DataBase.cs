@@ -492,5 +492,34 @@ namespace DataEditorX.Core
 				sw.Close();
 			}
 		}
+		
+		public static CardPack findPack(string db, long id){
+			CardPack cardpack=null;
+			if ( File.Exists(db) && id>=0)
+			{
+				using ( SQLiteConnection sqliteconn = new SQLiteConnection(@"Data Source=" + db) )
+				{
+					sqliteconn.Open();
+					using ( SQLiteCommand sqlitecommand = new SQLiteCommand(sqliteconn) )
+					{
+						sqlitecommand.CommandText = "select id,pack_id,pack,rarity,date from pack where id="+id+" order by date desc";
+						using ( SQLiteDataReader reader = sqlitecommand.ExecuteReader() )
+						{
+							if(reader.Read())
+							{
+								cardpack=new CardPack(id);
+								cardpack.pack_id=reader.GetString(1);
+								cardpack.pack_name=reader.GetString(2);
+								cardpack.rarity=reader.GetString(3);
+								cardpack.date=reader.GetString(4);
+							}
+							reader.Close();
+						}
+					}
+					sqliteconn.Close();
+				}
+			}
+			return cardpack;
+		}
 	}
 }

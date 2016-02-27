@@ -246,12 +246,16 @@ namespace DataEditorX.Config
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static bool readBoolean(string key)
+        public static bool readBoolean(string key,bool def=false)
         {
-            if (readString(key).ToLower() == "true")
-                return true;
-            else
-                return false;
+        	string val= readString(key);
+        	if("true".Equals(val, StringComparison.OrdinalIgnoreCase)){
+        		return true;
+        	}
+        	if("false".Equals(val, StringComparison.OrdinalIgnoreCase)){
+        		return false;
+        	}
+            return def;
         }
         #endregion 
 

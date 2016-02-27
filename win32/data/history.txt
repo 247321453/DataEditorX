@@ -1,4 +1,0 @@
-# database history
-D:\code\a.cdb
-D:\code\italian.cdb
-# script history

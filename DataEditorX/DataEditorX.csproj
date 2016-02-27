@@ -108,6 +108,7 @@
     <Compile Include="Config\DataManager.cs" />
     <Compile Include="Config\ImageSet.cs" />
     <Compile Include="Core\LuaFunction.cs" />
+    <Compile Include="Core\Mse\CardPack.cs" />
     <Compile Include="Core\Mse\MSECons.cs" />
     <Compile Include="Core\Mse\MseMaker.cs" />
     <Compile Include="Core\Mse\MSEConfig.cs" />
