@@ -30,9 +30,9 @@ namespace DataEditorX.Core
 		public string date;
 		
 		public string getMseRarity(){
-			if(rarity==null)
+			if(this.rarity==null)
 				return "common";
-			rarity=rarity.Trim().ToLower();
+			string rarity=this.rarity.Trim().ToLower();
 			if(rarity.Equals("common")){
 				return "common";
 			}
@@ -60,7 +60,7 @@ namespace DataEditorX.Core
 			if(rarity.Contains("promo")){
 				return "promo";
 			}
-			return "common";
+			return this.rarity.Split('/')[0];
 		}
 	}
 }
