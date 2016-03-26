@@ -332,10 +332,10 @@ namespace DataEditorX.Core
 					c.name=c.name.Replace("%%","%");
 				else
 					c.name="%"+c.name.Replace("%","/%").Replace("_","/_")+"%";
-				sb.Append(" and texts.name like '"+c.name+"' ");
+				sb.Append(" and texts.name like '"+c.name.Replace("'", "''")+"' ");
 			}
 			if(!string.IsNullOrEmpty(c.desc))
-				sb.Append(" and texts.desc like '%"+c.desc+"%' ");
+				sb.Append(" and texts.desc like '%"+c.desc.Replace("'", "''") + "%' ");
 			if(c.ot>0)
 				sb.Append(" and datas.ot = "+c.ot.ToString());
 			if(c.attribute>0)

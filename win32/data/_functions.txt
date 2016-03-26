@@ -50,7 +50,7 @@ a右移b
 ●int bit.bxor(int a, int b)
 a与b的位异或
 ========== Card ==========
-●int Card.GetCode(Card c)
+●int[,int] Card.GetCode(Card c)
 返回c的当前代号（可能因为效果改变）
 ●int Card.GetOriginalCode(Card c)
 返回c的卡片记载的代号
@@ -183,8 +183,8 @@ a与b的位异或
 ●int Card.GetRealFieldID(Card c)
 返回c转移到当前位置的真实的时间标识
 卡片从里侧翻开不会改变此数值
-●bool Card.IsCode(Card c, int code)
-检查c的卡号是否是code
+●bool Card.IsCode(Card c, int code1[, int code2,...])
+检查c的卡号是否是code1[, 或者为code2...]
 ●bool Card.IsType(Card c, int type)
 检查c是否属于类型type
 ●bool Card.IsRace(Card c, int race)
@@ -309,7 +309,7 @@ RESET_CARD        重置卡片的效果      reset_code为效果owner的卡号
 ●int Card.GetFlagEffectLabel(Card c, int code)
 返回c的种类为code的标识效果的Label，没有此效果则返回nil
 ●void Card.CreateRelation(Card c1, Card c2, int reset_flag)
-为c1建立于c2的联系此联系仅会由于RESET_EVENT的事件reset
+为c1建立于c2的联系此联系，仅会由于c1发生RESET_EVENT的事件reset
 ●void Card.ReleaseRelation(Card c1, Card c2)
 手动释放c1对于c2的联系
 ●void Card.CreateEffectRelation(Card c, Effect e)
@@ -351,7 +351,6 @@ RESET_CARD        重置卡片的效果      reset_code为效果owner的卡号
 检查c是否处于无效状态
 ●bool Card.IsDestructable(Card c[, Effect e])
 检查c是否是可破坏的
-注：不可破坏指的是类似场地护罩，宫廷的规矩等“破壊できない”的效果
 ●bool Card.IsSummonableCard(Card c)
 检查c是否是可通常召唤的卡
 ●bool Card.IsSpecialSummonable(Card c)
@@ -463,8 +462,8 @@ e~=nil则检查c是否可以以效果e进行通常召唤的set，min表示至少
 ●bool Card.IsControlerCanBeChanged(Card c)
 检查c的控制权是否可以改变
 注：此函数会在Card.IsAbleToChangeControler的基础上追加检测场上的空格位
-●bool Card.AddCounter(Card c, int countertype, int count)
-为c放置count个countertype类型的指示物
+●bool Card.AddCounter(Card c, int countertype, int count[, int singly=false])
+为c放置count个countertype类型的指示物，singly为true表示逐个添加至上限为止
 ●void Card.RemoveCounter(Card c, int player, int countertype, int count, int reason)
 让玩家player以原因reason移除c上的count个countertype类型的指示物
 ●int Card.GetCounter(Card c, int countertype)
@@ -476,8 +475,8 @@ location的默认值与c的种类有关，灵摆怪兽需要指定能否在怪�
 设定c放置countertype类型指示物的上限
 ●bool Card.IsCanTurnSet(Card c)
 检查c是否可以转成里侧表示
-●bool Card.IsCanAddCounter(Card c, int countertype, int count)
-检查c是否可以放置count个countertype类型的指示物
+●bool Card.IsCanAddCounter(Card c, int countertype, int count[, int singly=false])
+检查c是否可以[逐个(singly=true)]放置count个countertype类型的指示物
 ●bool Card.IsCanRemoveCounter(Card c, int player, int countertype, int count, int reason)
 检查玩家player是否可以以原因reason移除c上的count个countertype类型的指示物
 ●bool Card.IsCanBeFusionMaterial(Card c[, Card fc, bool ignore_mon=false])
@@ -1091,6 +1090,8 @@ f1是调整需要满足的过滤条件，f2是调整以外的部分需要满足�
 包含手上，场上可解放的以及墓地的仪式魔人等卡
 ●void Duel.ReleaseRitualMaterial(Group g)
 解放仪式用的素材g，如果是墓地的仪式魔人等卡则除外
+●void Duel.SetSelectedCard(Card|Group cards)
+将cards设置为Group.SelectWithSumEqual或Group.SelectWithSumGreater已选择的卡片，
 ●void Duel.SetTargetCard(Card|Group targets)
 把当前正在处理的连锁的对象设置成targets
 注，这里的对象指的的广义的对象，包括不取对象的效果可能要处理的对象

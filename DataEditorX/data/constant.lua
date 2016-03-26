@@ -1,6 +1,6 @@
 --Card id
 MIN_ID	=1000		--4 digit, by DataManager::GetDesc()
-MAX_ID	=999999999	--9 digit, by field::select_chain()
+MAX_ID	=268435455	--9 digit, by DataManager::GetDesc()
 --Locations 区域
 LOCATION_DECK		=0x01		--卡组
 LOCATION_HAND		=0x02		--手牌
@@ -31,7 +31,7 @@ POS_FACEDOWN_ATTACK		=0x2	--里侧攻击
 TYPE_MONSTER		=0x1		--怪兽卡
 TYPE_SPELL			=0x2		--魔法卡
 TYPE_TRAP			=0x4		--陷阱卡
-TYPE_NORMAL			=0x10		--通常
+TYPE_NORMAL			=0x10		--通常怪兽
 TYPE_EFFECT			=0x20		--效果
 TYPE_FUSION			=0x40		--融合
 TYPE_RITUAL			=0x80		--仪式
@@ -131,9 +131,9 @@ STATUS_DISABLED				=0x0001		--效果被无效
 STATUS_TO_ENABLE			=0x0002		--将变成有效
 STATUS_TO_DISABLE			=0x0004		--将变成无效
 STATUS_PROC_COMPLETE		=0x0008		--完成正规召唤（解除苏生限制）
-STATUS_SET_TURN				=0x0010		--覆盖
+STATUS_SET_TURN				=0x0010		--在本回合覆盖
 STATUS_NO_LEVEL				=0x0020		--无等级
-STATUS_SET_AVAILABLE		=0x0040		--N/A
+STATUS_BATTLE_RESULT		=0x0040		--傷害計算結果預計要破壞的怪獸
 STATUS_SPSUMMON_STEP		=0x0080		--效果特召處理中
 STATUS_FORM_CHANGED			=0x0100		--改变过表示形式
 STATUS_SUMMONING			=0x0200		--召唤中
@@ -146,14 +146,14 @@ STATUS_COPYING_EFFECT		=0x8000		--复制效果
 STATUS_CHAINING				=0x10000	--正在連鎖串中
 STATUS_SUMMON_DISABLED		=0x20000	--召唤无效後尚未移動
 STATUS_ACTIVATE_DISABLED	=0x40000	--发动无效後尚未移動
-STATUS_UNSUMMONABLE_CARD	=0x80000	--(N/A)
+STATUS_EFFECT_REPLACED		=0x80000	--效果被替代(红莲霸权)
 STATUS_UNION				=0x100000	--同盟
-STATUS_ATTACK_CANCELED		=0x200000	--攻击取消（卷回？）
+STATUS_ATTACK_CANCELED		=0x200000	--攻击取消
 STATUS_INITIALIZING			=0x400000	--初始化..
 STATUS_ACTIVATED			=0x800000	--效果已发动
 STATUS_JUST_POS				=0x1000000	--已改變表示形式(用於STATUS_CONTINUOUS_POS判定)
 STATUS_CONTINUOUS_POS		=0x2000000	--改變後再次設定成其他表示形式
-STATUS_IS_PUBLIC			=0x4000000	--(N/A)
+STATUS_IS_PUBLIC			=0x4000000	--N/A
 STATUS_ACT_FROM_HAND		=0x8000000	--從手牌发动
 STATUS_OPPO_BATTLE			=0x10000000	--和對手的怪兽戰鬥
 STATUS_FLIP_SUMMON_TURN		=0x20000000	--在本回合反转召唤
@@ -269,7 +269,7 @@ EFFECT_FLAG_IMMEDIATELY_APPLY	=0x80000000	--卡在发动时效果就立即适用
 
 EFFECT_FLAG2_NAGA			=0x0001 --
 EFFECT_FLAG2_COF			=0x0002 --
---========== Codes ==========	--对永续性效果表示效果类型 EFFECT开头，对诱发型效果表示触发效果的事件/时点 EVENT开头
+--========== Codes ==========	--对永续性效果表示效果类型(EFFECT开头)，对诱发型效果表示触发效果的事件/时点(EVENT开头)
 EFFECT_IMMUNE_EFFECT			=1		--效果免疫
 EFFECT_DISABLE					=2		--效果无效（技能抽取）
 EFFECT_CANNOT_DISABLE			=3		--卡不能被无效
@@ -277,7 +277,7 @@ EFFECT_SET_CONTROL				=4		--设置控制权
 EFFECT_CANNOT_CHANGE_CONTROL	=5		--不能改变控制权
 EFFECT_CANNOT_ACTIVATE			=6		--玩家不能发动效果
 EFFECT_CANNOT_TRIGGER			=7		--卡不能发动效果
-EFFECT_DISABLE_EFFECT			=8		--效果无效 （聖杯）
+EFFECT_DISABLE_EFFECT			=8		--效果无效（聖杯）
 EFFECT_DISABLE_CHAIN			=9		--在連鎖串中無效(processor.cpp)
 EFFECT_DISABLE_TRAPMONSTER		=10		--陷阱怪兽无效
 EFFECT_CANNOT_INACTIVATE		=12		--发动不能被无效
@@ -307,16 +307,16 @@ EFFECT_SET_PROC					=36		--放置（通常召唤）规则
 EFFECT_LIMIT_SET_PROC			=37		--放置（通常召唤）规则限制
 EFFECT_DEVINE_LIGHT				=38		--神圣光辉（魔术礼帽）
 EFFECT_CANNOT_DISABLE_FLIP_SUMMON	=39	--翻转召唤不会无效
-EFFECT_INDESTRUCTABLE			=40		--不能被破坏（宫廷的规矩）
+EFFECT_INDESTRUCTABLE			=40		--N/A
 EFFECT_INDESTRUCTABLE_EFFECT	=41		--不会被效果破坏
 EFFECT_INDESTRUCTABLE_BATTLE	=42		--不会被战斗破坏
 EFFECT_UNRELEASABLE_SUM			=43		--不能做上级召唤的祭品
 EFFECT_UNRELEASABLE_NONSUM		=44		--不能做上级召唤以外的祭品
-EFFECT_DESTROY_SUBSTITUTE		=45		--代替破坏（别人破坏时牺牲自己
+EFFECT_DESTROY_SUBSTITUTE		=45		--必選的代替破壞(此卡被破壞時用其他卡代替)
 EFFECT_CANNOT_RELEASE			=46		--不能进行解放行为
 EFFECT_INDESTRUCTABLE_COUNT		=47 	--一回合几次不会被破坏
 EFFECT_UNRELEASABLE_EFFECT		=48		--不能被解放
-EFFECT_DESTROY_REPLACE			=50		--代替破坏（自己破坏时牺牲别人
+EFFECT_DESTROY_REPLACE			=50		--可選的代替破壞(將破壞改成其他動作)
 EFFECT_RELEASE_REPLACE			=51		--代替解放
 EFFECT_SEND_REPLACE				=52		--可以不送去XX而送去OO（甜点城堡等）
 EFFECT_CANNOT_DISCARD_HAND		=55		--不能丢弃手牌
@@ -358,8 +358,8 @@ EFFECT_SSET_COST				=95		--魔陷放置代价
 EFFECT_ATTACK_COST				=96		--攻击代价（霞之谷猎鹰）
 
 EFFECT_UPDATE_ATTACK			=100	--改变攻击力（攻击力增加/减少）
-EFFECT_SET_ATTACK				=101	--设置攻击力（攻击变成）
-EFFECT_SET_ATTACK_FINAL			=102	--设置最终攻击力（神之化身）
+EFFECT_SET_ATTACK				=101	--设置攻击力(永續型效果、攻擊力變成X特殊召喚)
+EFFECT_SET_ATTACK_FINAL			=102	--设置最终攻击力(所有入連鎖的改變攻擊力)
 EFFECT_SET_BASE_ATTACK			=103	--设置原本攻击力
 EFFECT_UPDATE_DEFENCE			=104	--改变防御力
 EFFECT_SET_DEFENCE				=105	--设置防御力
@@ -418,7 +418,7 @@ EFFECT_ATTACK_ALL				=193	--可以攻击所有怪兽
 EFFECT_EXTRA_ATTACK				=194	--增加攻击次数
 EFFECT_MUST_BE_ATTACKED			=195	--必须攻击（那只怪兽）
 EFFECT_AUTO_BE_ATTACKED			=196	--只能攻击（那只怪兽）
-EFFECT_ATTACK_DISABLED			=197	--攻击已被無效(processor.cpp)
+EFFECT_ATTACK_DISABLED			=197	--攻击無效(Duel.NegateAttack())
 EFFECT_NO_BATTLE_DAMAGE			=200	--不会给对方造成战斗伤害
 EFFECT_AVOID_BATTLE_DAMAGE		=201	--不会对自己造成战斗伤害
 EFFECT_REFLECT_BATTLE_DAMAGE	=202	--反弹战斗伤害
@@ -443,7 +443,7 @@ EFFECT_EXTRA_RITUAL_MATERIAL		=243--在墓地当做仪式祭品
 EFFECT_NONTUNER						=244--同时当作调整以外的怪兽（幻影王 幽骑）
 EFFECT_OVERLAY_REMOVE_REPLACE		=245--代替去除超量素材
 EFFECT_SCRAP_CHIMERA				=246--废铁奇美拉
-EFFECT_SPSUM_EFFECT_ACTIVATED	=250	--发动特殊召唤的效果（冥府的使者 格斯）
+EFFECT_SPSUM_EFFECT_ACTIVATED	=250	--N/A
 EFFECT_MATERIAL_CHECK			=251	--检查素材
 EFFECT_DISABLE_FIELD			=260	--无效区域（扰乱王等）
 EFFECT_USE_EXTRA_MZONE			=261	--怪兽区域封锁
@@ -500,9 +500,9 @@ EVENT_LEAVE_FIELD_P				=1019	--永久离场时
 EVENT_CHAIN_SOLVING				=1020	--连锁处理开始时（EVENT_CHAIN_ACTIVATING之後）
 EVENT_CHAIN_ACTIVATING			=1021	--连锁处理准备中
 EVENT_CHAIN_SOLVED				=1022	--连锁处理结束时
-EVENT_CHAIN_ACTIVATED			=1023	--(N/A)
-EVENT_CHAIN_NEGATED				=1024	--连锁被无效时（发动无效，EVENT_CHAIN_ACTIVATING之後）
-EVENT_CHAIN_DISABLED			=1025	--连锁被无效时（效果无效）
+EVENT_CHAIN_ACTIVATED			=1023	--N/A
+EVENT_CHAIN_NEGATED				=1024	--连锁发动无效时（EVENT_CHAIN_ACTIVATING之後）
+EVENT_CHAIN_DISABLED			=1025	--连锁效果无效时
 EVENT_CHAIN_END					=1026	--连锁串结束时
 EVENT_CHAINING					=1027	--效果发动时
 EVENT_BECOME_TARGET				=1028	--成为效果对象时
@@ -551,6 +551,7 @@ EVENT_PHASE						=0x1000	--阶段结束时
 EVENT_PHASE_START				=0x2000	--阶段开始时
 EVENT_ADD_COUNTER				=0x10000--增加指示物时
 EVENT_REMOVE_COUNTER			=0x20000--去除指示物时
+EVENT_CUSTOM					=0x10000000	--自訂事件
 --Categorys	效果分类（表示这个效果将要发生什么事，OperationInfo设置了效果分类才能触发针对这一类型发动的卡，如破坏->星尘龙
 CATEGORY_DESTROY			=0x1		--破坏效果
 CATEGORY_RELEASE			=0x2    	--解放效果
@@ -664,29 +665,33 @@ TIMING_TODECK				=0x400000   	--回卡组时点
 TIMING_TOGRAVE				=0x800000   	--进墓地时点
 TIMING_BATTLE_PHASE			=0x1000000  	--战斗阶段时点
 TIMING_EQUIP				=0x2000000  	--装备时点
+TIMING_BATTLE_STEP_END		=0x4000000  	--戰鬥步驟結束時
+----组合时点
+TIMINGS_CHECK_MONSTER       =0x1c0 -- 怪兽正面上场
+TIMINGS_CHECK_MONSTER_E     =0x1e0 -- 怪兽正面上场 + EP
 --Global flag	--特殊标记
 GLOBALFLAG_DECK_REVERSE_CHECK	=0x1		--卡组翻转标记
 GLOBALFLAG_BRAINWASHING_CHECK	=0x2		--洗脑解除标记
 GLOBALFLAG_SCRAP_CHIMERA		=0x4		--废铁奇美拉标记
-GLOBALFLAG_DELAYED_QUICKEFFECT	=0x8		--小丑和锁鸟标记
-GLOBALFLAG_DETACH_EVENT			=0x10		--超量素材被取除标记
+GLOBALFLAG_DELAYED_QUICKEFFECT	=0x8		--場合型QE
+GLOBALFLAG_DETACH_EVENT			=0x10		--EVENT_DETACH_MATERIAL
 GLOBALFLAG_MUST_BE_SMATERIAL	=0x20		--必须作为同调素材（波动龙 声子龙）
-GLOBALFLAG_SPSUMMON_COUNT		=0x40		--特殊召唤次数标记
+GLOBALFLAG_SPSUMMON_COUNT		=0x40		--玩家的特殊召唤次数限制
 GLOBALFLAG_XMAT_COUNT_LIMIT		=0x80		--超量素材数量限制标记（光天使 天座）
-GLOBALFLAG_SELF_TOGRAVE			=0x100		--
-GLOBALFLAG_SPSUMMON_ONCE		=0x200		--
+GLOBALFLAG_SELF_TOGRAVE			=0x100		--不入連鎖的送墓檢查(EFFECT_SELF_TOGRAVE)
+GLOBALFLAG_SPSUMMON_ONCE		=0x200		--1回合只能特殊召喚1次(Card.SetSPSummonOnce())
 --count_code
-EFFECT_COUNT_CODE_OATH			=0x10000000 --使用次数限制(誓约效果)
+EFFECT_COUNT_CODE_OATH			=0x10000000 --发动次数限制(誓约次数, 发动被无效不计数)
 EFFECT_COUNT_CODE_DUEL			=0x20000000 --决斗中使用次数
-EFFECT_COUNT_CODE_SINGLE		=0x1		--多个效果公共使用次数
+EFFECT_COUNT_CODE_SINGLE		=0x1		--同一张卡的多个效果公共使用次数
 --特殊选项
 DUEL_TEST_MODE			=0x01		--测试模式(目前暫無)
 DUEL_ATTACK_FIRST_TURN	=0x02		--第一回合可以攻击(用于残局)
-DUEL_NO_CHAIN_HINT		=0x04		--不提示连锁
-DUEL_ENABLE_PRIORITY	=0x08		--启动优先权
+DUEL_NO_CHAIN_HINT		=0x04		--N/A
+DUEL_OBSOLETE_RULING	=0x08		--使用舊規則
 DUEL_PSEUDO_SHUFFLE		=0x10		--不洗牌
 DUEL_TAG_MODE			=0x20		--双打PP
-DUEL_SIMPLE_AI			=0x40		--AI
+DUEL_SIMPLE_AI			=0x40		--AI(用于残局)
 --Activity counter
 --global: 1-6 (binary: 5,6)
 --custom: 1-5,7 (binary: 1-5)
@@ -699,6 +704,6 @@ ACTIVITY_BATTLE_PHASE	=6		-- not available in custom counter
 ACTIVITY_CHAIN			=7		-- only available in custom counter
 --announce type（宣言类型，CATEGORY_ANNOUNCE的OperationInfo的target_param）
 ANNOUNCE_CARD			=0x7	--宣言卡片
---special cards
+--cards with double names
 CARD_MARINE_DOLPHIN		=78734254	--海洋海豚
 CARD_TWINKLE_MOSS		=13857930	--光輝苔蘚
