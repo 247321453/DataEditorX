@@ -87,6 +87,7 @@
     </Compile>
     <Compile Include="Common\MyPath.cs" />
     <Compile Include="Controls\History.cs" />
+    <Compile Include="Core\CommandManager.cs" />
     <Compile Include="Core\IDataForm.cs" />
     <Compile Include="Controls\IEditForm.cs" />
     <Compile Include="Controls\IMainForm.cs" />

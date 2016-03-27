@@ -3,10 +3,9 @@ using System.Text;
 using System.IO;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Microsoft.VisualBasic;
+using Microsoft.VisualBasic.FileIO;
 using System.Configuration;
 using DataEditorX.Config;
-using System.Windows.Forms;
 
 using DataEditorX.Core.Info;
 
@@ -205,59 +204,20 @@ namespace DataEditorX.Core
 
         #region 删除资源
         //删除资源
-		public enum DeleteOption
-		{
-			BACKUP,
-			RESTORE,
-			CLEAN,
-			NONE,
-		}
-
-        public static void CardDelete(long id, YgoPath ygopath, DeleteOption option)
+        public static void CardDelete(long id, YgoPath ygopath)
         {
             string[] files = ygopath.GetCardfiles(id);
-			string[] bakfiles = ygopath.GetCardfiles(id, true);
-			switch (option)
+			for (int i = 0; i < files.Length; i++)
 			{
-				case DeleteOption.BACKUP:
-					for (int i = 0; i < files.Length; i++)
-					{
-						if (File.Exists(bakfiles[i]))
-							File.Delete(bakfiles[i]);
-						if (File.Exists(files[i]))
-							File.Move(files[i], files[i] + ".bak");
-					}
-					break;
-				case DeleteOption.RESTORE:
-					for (int i = 0; i < bakfiles.Length; i++)
-					{
-						if (File.Exists(files[i]))
-							File.Delete(files[i]);
-						if (File.Exists(bakfiles[i]))
-							File.Move(bakfiles[i], bakfiles[i].Replace("bak", ""));
-					}
-					break;
-				case DeleteOption.CLEAN:
-					for (int i = 0; i < bakfiles.Length; i++)
-					{
-						if (File.Exists(bakfiles[i]))
-							File.Delete(bakfiles[i]);
-					}
-					break;
-				case DeleteOption.NONE:
-					for (int i = 0; i < files.Length; i++)
-					{
-						if (File.Exists(files[i]))
-							File.Delete(files[i]);
-					}
-					break;
+					if (FileSystem.FileExists(files[i]))
+						FileSystem.DeleteFile(files[i], UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
 			}
         }
         #endregion
 
         #region 资源改名
         //资源改名
-        public static void CardRename(long newid, long oldid, YgoPath ygopath, bool delold)
+        public static void CardRename(long newid, long oldid, YgoPath ygopath)
         {
             string[] newfiles = ygopath.GetCardfiles(newid);
             string[] oldfiles = ygopath.GetCardfiles(oldid);
@@ -266,13 +226,32 @@ namespace DataEditorX.Core
             {
                 if (File.Exists(oldfiles[i]))
                 {
-                    if (delold)
-                        File.Move(oldfiles[i], newfiles[i]);
-                    else
-                        File.Copy(oldfiles[i], newfiles[i], false);
+					try {
+						File.Move(oldfiles[i], newfiles[i]);
+					}
+					catch { }
                 }
             }
         }
-        #endregion
+		#endregion
+
+		#region 复制资源
+		public static void CardCopy(long newid, long oldid, YgoPath ygopath)
+		{
+			string[] newfiles = ygopath.GetCardfiles(newid);
+			string[] oldfiles = ygopath.GetCardfiles(oldid);
+
+			for (int i = 0; i < oldfiles.Length; i++)
+			{
+				if (File.Exists(oldfiles[i]))
+				{
+					try {
+						File.Copy(oldfiles[i], newfiles[i], false);
+					}
+					catch { }
+				}
+			}
+		}
+		#endregion
 	}
 }

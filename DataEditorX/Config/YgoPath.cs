@@ -20,7 +20,7 @@ namespace DataEditorX.Config
             luapath = MyPath.Combine(gamepath, "script");
             ydkpath = MyPath.Combine(gamepath, "deck");
             replaypath = MyPath.Combine(gamepath, "replay");
-        }
+		}
         /// <summary>游戏目录</summary>
         public string gamepath;
         /// <summary>大图目录</summary>
@@ -36,71 +36,63 @@ namespace DataEditorX.Config
         /// <summary>录像目录</summary>
         public string replaypath;
 
-		public string GetImage(long id, bool bak = false)
+		public string GetImage(long id)
         {
-			return GetImage(id.ToString(), bak);
+			return GetImage(id.ToString());
         }
-		public string GetImageThum(long id, bool bak = false)
+		public string GetImageThum(long id)
         {
-			return GetImageThum(id.ToString(), bak);
+			return GetImageThum(id.ToString());
         }
-		public string GetImageField(long id, bool bak = false)
+		public string GetImageField(long id)
         {
-			return GetImageField(id.ToString(), bak);//场地图
+			return GetImageField(id.ToString());//场地图
         }
-		public string GetScript(long id, bool bak = false)
+		public string GetScript(long id)
         {
-			return GetScript(id.ToString(), bak);
+			return GetScript(id.ToString());
         }
         public string GetYdk(string name)
         {
             return MyPath.Combine(ydkpath, name + ".ydk");
         }
         //字符串id
-        public string GetImage(string id, bool bak = false)
+        public string GetImage(string id)
         {
-			if (bak)
-				return MyPath.Combine(picpath, id + ".jpg.bak");
             return MyPath.Combine(picpath, id + ".jpg");
         }
-		public string GetImageThum(string id, bool bak = false)
+		public string GetImageThum(string id)
         {
-			if (bak)
-				return MyPath.Combine(picpath2, id + ".jpg.bak");
             return MyPath.Combine(picpath2, id + ".jpg");
         }
-		public string GetImageField(string id, bool bak = false)
+		public string GetImageField(string id)
         {
-			if (bak)
-				return MyPath.Combine(fieldpath, id + ".png.bak");
             return MyPath.Combine(fieldpath, id+ ".png");//场地图
         }
-		public string GetScript(string id, bool bak = false)
+		public string GetScript(string id)
         {
-			if (bak)
-				return MyPath.Combine(luapath, "c" + id + ".lua.bak");
             return MyPath.Combine(luapath, "c" + id + ".lua");
         }
 
-		public string[] GetCardfiles(long id, bool bak = false)
+		public string[] GetCardfiles(long id)
         {
             string[] files = new string[]{
-                GetImage(id, bak),//大图
-                GetImageThum(id, bak),//小图
-                GetImageField(id, bak),//场地图
-                GetScript(id, bak)
+                GetImage(id),//大图
+                GetImageThum(id),//小图
+                GetImageField(id),//场地图
+                GetScript(id)
            };
             return files;
         }
-		public string[] GetCardfiles(string id, bool bak = false)
+		public string[] GetCardfiles(string id)
         {
             string[] files = new string[]{
-                GetImage(id, bak),//大图
-                GetImageThum(id, bak),//小图
-                GetImageField(id, bak),//场地图
-                GetScript(id, bak)
+                GetImage(id),//大图
+                GetImageThum(id),//小图
+                GetImageField(id),//场地图
+                GetScript(id)
            };
             return files;
         }
-    }
+	}
 }
