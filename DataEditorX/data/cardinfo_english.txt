@@ -393,4 +393,7 @@
 0xde	Exodia	エクゾディア
 0xdf	Lunalight	ムーンライト
 0xe0	Amorphage	アモルファージ
+0xe1	Metalphosis	メタルフォーゼ
+0xe2	Tramid	トラミッド
+0xe3	Houkai	方界
 #end
