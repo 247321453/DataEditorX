@@ -496,11 +496,12 @@ location的默认值与c的种类有关，灵摆怪兽需要指定能否在怪�
 检查c是否可以成为效果e的对象
 ●bool Card.IsCanBeBattleTarget(Card c1, Card c2)
 检查c1是否可以成为c2的攻击目标
-●void Card.AddTrapMonsterAttribute(Card c, int extra_type, int attribute, int race, int level, int atk, int def)
-为c添加陷阱怪兽属性，extra_type为额外的卡片类型
+●void Card.AddMonsterAttribute(Card c, int attribute, int race, int level, int atk, int def)
+为魔陷卡c添加怪兽数值
+注：在数据库中有记录的数值视为原本数值，此处设置为0
+●void Card.TrapMonsterComplete(Card c, int extra_type)
+使陷阱怪兽c占用一个魔法陷阱格子，并添加extra_type怪兽类型
 注：陷阱怪兽属性指的是同时作为怪兽和陷阱，并且额外使一个魔法陷阱的格子不能使用
-●void Card.TrapMonsterBlock(Card c)
-使陷阱怪兽c占用一个魔法陷阱格子
 ●void Card.CancelToGrave(Card c[, bool cancel=true])
 取消送墓确定状态，cancel=false则重新设置送墓确定状态
 注：送墓确定状态指的是在场上发动的不留场的魔法和陷阱后，这些卡片的状态

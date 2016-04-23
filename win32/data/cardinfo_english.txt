@@ -372,7 +372,8 @@
 0xcc	Prediction Princess	占術姫
 0xcd	Aquaactress	アクアアクトレス
 0xce	Aquarium 	アクアリウム
-0xcf	Black Luster Soldier	カオス・ソルジャー
+0xcf	Chaos	カオス
+0x10cf	Black Luster Soldier	カオス・ソルジャー
 0xd0	Majespecter	マジェスペクター
 0xd1	Graydle	グレイドル
 0xd2	Kozmo
@@ -395,5 +396,6 @@
 0xe0	Amorphage	アモルファージ
 0xe1	Metalphosis	メタルフォーゼ
 0xe2	Tramid	トラミッド
-0xe3	Houkai	方界
+0xe3	Cubic	方界
+0xe4	Celtic Guard	エルフの剣士
 #end
