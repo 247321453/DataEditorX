@@ -16,7 +16,7 @@
 # 注：关于过滤条件函数
 #  过滤条件函数是指第一个参数是Card类型，并且返回值是boolean的函数。此函数用于在一些获取满足条件的卡片组的过滤函数中重复调用。过滤条件函数可以有不定的参数，第二个开始的参数从过滤函数的额外参数获得。举例：
 # function sample_filter(c, atk, def)
-# 	return c:GetAttack()>=atk and c:GetDefence()>=def
+# 	return c:GetAttack()>=atk and c:GetDefense()>=def
 # end
 # 此函数对于一张卡c，如果攻击力>=atk并且守备力>=def则返回true，否则返回false
 # g=Duel.GetFieldGroup(0,LOCATION_HAND,0) --获取玩家1的手卡
@@ -110,11 +110,11 @@ a与b的位异或
 返回c的原本攻击力
 ●int Card.GetTextAttack(Card c)
 返回c的卡片记载的攻击力
-●int Card.GetDefence(Card c)
+●int Card.GetDefense(Card c)
 返回c的当前守备力，返回值是负数表示是"?"
-●int Card.GetBaseDefence(Card c)
+●int Card.GetBaseDefense(Card c)
 返回c的原本守备力
-●int Card.GetTextDefence(Card c)
+●int Card.GetTextDefense(Card c)
 返回c的卡片记载的守备力
 ●int Card.GetPreviousCodeOnField(Card c)
 返回c位置变化之前的卡号
@@ -130,7 +130,7 @@ a与b的位异或
 返回c位置变化之前的种族
 ●int Card.GetPreviousAttackOnField(Card c)
 返回c位置变化之前的攻击力
-●int Card.GetPreviousDefenceOnField(Card c)
+●int Card.GetPreviousDefenseOnField(Card c)
 返回c位置变化之前的守备力
 ●int Card.GetOwner(Card c)
 返回c的持有者
@@ -419,7 +419,7 @@ e~=nil则检查c是否可以以效果e进行通常召唤的set，min表示至少
 检查c是否是攻击表示
 ●bool Card.IsFacedown(Card c)
 检查c是否是里侧表示
-●bool Card.IsDefencePos(Card c)
+●bool Card.IsDefensePos(Card c)
 检查c是否是守备表示
 ●bool Card.IsPosition(Card c, int pos)
 检查c是否是表示形式pos
@@ -448,9 +448,9 @@ e~=nil则检查c是否可以以效果e进行通常召唤的set，min表示至少
 检查c是否是攻击力atk以下（至少为0）
 ●bool Card.IsAttackAbove(Card c, int atk)
 检查c是否是攻击力atk以上
-●bool Card.IsDefenceBelow(Card c, int def)
+●bool Card.IsDefenseBelow(Card c, int def)
 检查c是否是守备力def以下（至少为0）
-●bool Card.IsDefenceAbove(Card c, int def)
+●bool Card.IsDefenseAbove(Card c, int def)
 检查c是否是守备力def以上
 ●bool Card.IsPublic(Card c)
 检查c是否处于公开状态
@@ -490,6 +490,8 @@ location的默认值与c的种类有关，灵摆怪兽需要指定能否在怪�
 ●bool Card.CheckFusionMaterial(Card c[, Group g, Card gc|nil, int chkf=PLAYER_NONE])
 检查g是否包含了c需要[必须包含gc在内]的一组融合素材
 ##根据c的种类为EFFECT_FUSION_MATERIAL的效果的Condition函数检查
+●bool Card.CheckFusionSubstitute(Card c, Card fc)
+检查c能否代替融合怪兽fc的记述卡名的素材
 ●bool Card.IsImmuneToEffect(Card c, Effect e)
 检查c是否免疫效果e（即不受效果e的影响）
 ●bool Card.IsCanBeEffectTarget(Card c, Effect e)
@@ -541,7 +543,7 @@ ASSUME_RANK         阶级
 ASSUME_ATTRIBUTE    属性
 ASSUME_RACE         种族
 ASSUME_ATTACK       攻击力
-ASSUME_DEFENCE      守备力
+ASSUME_DEFENSE      守备力
 ●void Card.SetSPSummonOnce(Card c, int spsummon_code)
 设置c一回合只能进行1次特殊召唤（灵兽，波动龙）
 相同的spsummon_code共用1个次数
@@ -782,13 +784,13 @@ f为返回一个interger值的函数，从g中筛选出具有最大的f的值的
 如果player是nil则返回卡的持有者的卡组
 如果seq=0，则是返回卡组最顶端；seq=1则是返回卡组最底端；
 其余情况则是返回最顶端并且标记需要洗卡组
-●int Duel.PSendtoExtra(Card|Group targets, int player|nil, int reason)
+●int Duel.SendtoExtraP(Card|Group targets, int player|nil, int reason)
 以reason原因把灵摆卡targets送去玩家player的额外卡组，返回值是实际被操作的数量
 如果player是nil则返回卡的持有者的额外卡组
 ●Group Duel.GetOperatedGroup()
 此函数返回之前一次卡片操作实际操作的卡片组包括
 Duel.Destroy, Duel.Remove, Duel.SendtoGrave, 
-Duel.SendtoHand, Duel.SendtoDeck, Duel.PSendtoExtra, Duel.Release, 
+Duel.SendtoHand, Duel.SendtoDeck, Duel.SendtoExtraP, Duel.Release, 
 Duel.ChangePosition, Duel.SpecialSummon, Duel.DiscardDeck
 ●void Duel.Summon(int player, Card c, bool ignore_count, Effect e|nil[, min=0])
 让玩家以效果e对c进行通常召唤(非set)，至少使用min个祭品
@@ -808,7 +810,7 @@ mg非空且min为0则直接把mg全部作为超量素材
 ●void|int Duel.SSet(int player, Card|Group targets[, int target_player = player])
 让玩家player把targets放置到target_player的魔法陷阱区
 若targets为Group，则返回成功操作的数量
-●Card Duel.CreateToken(int player, int code[, int setcode, int attack, inte defence, int level, int race, int attribute])
+●Card Duel.CreateToken(int player, int code[, int setcode, int attack, inte defense, int level, int race, int attribute])
 以传入的参数数值新建一个Token并返回
 ●int Duel.SpecialSummon(Card|Group targets, int sumtype, int sumplayer, int target_player, bool nocheck, bool nolimit, int pos)
 让玩家player以sumtype方式，pos表示形式把targets特殊召唤到target_player场上
@@ -821,6 +823,8 @@ mg非空且min为0则直接把mg全部作为超量素材
 返回值表示是否特殊召唤成功
 ●void|int Duel.SpecialSummonComplete()
 此函数在确定复数个Duel.SpecialSummonStep调用完毕之后调用，用于触发事件
+●bool Duel.IsCanAddCounter(int player, int countertype, int count, Card c)
+检查玩家player能否向卡片c添加count个countertype类型的指示物
 ●bool Duel.RemoveCounter(int player, int s, int o, int countertype, int count, int reason)
 让玩家player以reason为原因移除场上存在的countertype类型的count个指示物，返回值表示是否成功
 s表示对player来说的己方的可移除指示物的位置，o表示对player来说的对方的可移除指示物的位置
@@ -884,20 +888,24 @@ e表示要限制连锁的效果，ep表示要限制连锁的玩家，tp表示发
 ●int Duel.Draw(int player, int count, int reason)
 让玩家player以原因reason抽count张卡，返回实际抽的卡的数量
 如果reason含有REASON_RULE则此次抽卡不受“不能抽卡”的效果的影响
-●int Duel.Damage(int player, int value, int reason)
+●int Duel.Damage(int player, int value, int reason[, bool is_step=false])
 以reason原因给与玩家player造成value的伤害，返回实际收到的伤害值
 如果受到伤害变成回复等效果的影响时，返回值为0.
-●int Duel.Recover(int player, int value, int reason)
+is_step为true则是伤害/恢复LP过程的分解，需要调用Duel.RDComplete()触发时点
+●int Duel.Recover(int player, int value, int reason[, bool is_step=false])
 以reason原因使玩家player回复value的LP，返回实际的回复值
 如果受到回复变成伤害等效果的影响时，返回值为0.
+is_step为true则是伤害/恢复LP过程的分解，需要调用Duel.RDComplete()触发时点
+●void Duel.RDComplete()
+在调用Duel.Damage/Duel.Recover时，若is_step参数为true，则需调用此函数触发时点
 ●bool Duel.Equip(int player, Card c1, Card c2[, bool up=true, bool is_step=false])
 把c1作为玩家player的装备卡装备给c2，返回值表示是否成功
 up=false则保持装备卡之前的表示形式
 is_step=true则是装备过程的分解，需要配合Duel.EquipComplete使用
 ●void Duel.EquipComplete()
 在调用Duel.Equip时，若is_step参数为true，则需调用此函数触发时点
-●bool Duel.GetControl(Card c, int player[, int reset_phase=0, int reset_count=0])
-让玩家player得到c的控制权，返回值表示是否成功
+●bool Duel.GetControl(Card|Group targets, int player[, int reset_phase=0, int reset_count=0])
+让玩家player得到targets的控制权，返回值表示是否成功
 ●bool Duel.SwapControl(Card c1, Card c2[, int reset_phase=0, int reset_count=0])
 交换c1与c2的控制权，返回值表示是否成功
 ●bool Duel.CheckLPCost(int player, int cost)
@@ -927,10 +935,10 @@ is_step=true则是装备过程的分解，需要配合Duel.EquipComplete使用
 ●void Duel.ChangeAttacker(Card c)
 将攻击怪兽变为c
 注：此函数会使原来的攻击怪兽视为攻击过
-●void Duel.ReplaceAttacker(Card c)
-用c代替当前攻击的卡进行伤害阶段
-●void Duel.ChangeAttackTarget(Card c|nil)
-将攻击对象变为c，c为nil表示直接攻击
+#●void Duel.ReplaceAttacker(Card c)
+#用c代替当前攻击的卡进行伤害阶段
+●bool Duel.ChangeAttackTarget(Card c|nil)
+将攻击对象变为c，c为nil表示直接攻击，返回值表示是否成功转移攻击对象
 ●void Duel.ReplaceAttackTarget(Card c)
 (预留）
 ●void Duel.CalculateDamage(Card c1, Card c2)
@@ -1274,10 +1282,12 @@ ACTIVITY_NORMALSUMMON   通常召唤（包括通常召唤的set）
 ACTIVITY_SPSUMMON       特殊召唤
 ACTIVITY_FLIPSUMMON     反转召唤
 ACTIVITY_CHAIN          发动效果
+●int Duel.GetBattledCount(int player)
+返回玩家player这回合战斗过的次数 
 ●bool Duel.IsAbleToEnterBP()
 检查回合玩家能否进入战斗阶段
-●bool Duel.VenomSwampCheck(Effect e, Card c)
-蛇毒沼泽专用。把攻击力被其效果变成0的卡片破坏
+#●bool Duel.VenomSwampCheck(Effect e, Card c)
+#蛇毒沼泽专用。把攻击力被其效果变成0的卡片破坏
 ●void Duel.SwapDeckAndGrave(int player)
 现世与冥界的逆转专用。把玩家player的卡组和墓地交换
 ●void Duel.MajesticCopy(Card c1, Card c2)

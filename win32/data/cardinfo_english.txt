@@ -305,6 +305,7 @@
 0x92	Heraldry	メダリオン
 0x93	Cyber	サイバー
 0x1093	Cyber Dragon	サイバー・ドラゴン
+0x2093	Cyber Angel	サイバー・エンジェル
 0x94	Cybernetic	サイバネティック
 0x95	Rank-Up-Magic	RUM
 0x96	Fishborg	フィッシュボーグ
@@ -325,7 +326,8 @@
 0x20a2	Magician Girl	マジシャン・ガール
 0x30a2	Dark Magician Girl	ブラック・マジシャン・ガール
 0xa3	Stardust	スターダスト
-0xa4	Winged Kuriboh	ハネクリボー
+0xa4	Kuriboh	クリボー
+0x10a4	Winged Kuriboh	ハネクリボー
 0xa5	Change	チェンジ
 0xa6	sprout	スプラウト
 0xa7	Artorigus	アルトリウス
@@ -398,4 +400,8 @@
 0xe2	Tramid	トラミッド
 0xe3	Cubic	方界
 0xe4	Celtic Guard	エルフの剣士
+0xe5	Cipher	サイファー
+0xe6	Cardian	花札衛
+0xe7	Silent Swordsman	サイレント・ソードマン
+0xe8	Silent Magician	サイレント・マジシャン
 #end
