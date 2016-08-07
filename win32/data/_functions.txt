@@ -1231,7 +1231,7 @@ available是所有可选属性的组合值
 ●bool Duel.IsPlayerCanFlipSummon(int player, Card c)
 检查玩家player是否可以反转召唤c
 ●bool Duel.IsPlayerCanSpecialSummonMonster(int player, int code, int setcode, int type, int atk, int def, int level, int race, int attribute
-[, integer pos=POS_FACEUP, integer target_player=player])
+[, integer pos=POS_FACEUP, integer target_player=player, int sumtype])
 检查玩家player是否可以以pos的表示形式特殊召唤给定参数的怪兽到target_player场上
 此函数通常用于判定是否可以特招token和陷阱怪兽
 ●bool Duel.IsPlayerCanSpecialSummonCount(int player, int count)

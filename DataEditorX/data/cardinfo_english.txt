@@ -396,7 +396,7 @@
 0xde	Exodia	エクゾディア
 0xdf	Lunalight	ムーンライト
 0xe0	Amorphage	アモルファージ
-0xe1	Metalphosis	メタルフォーゼ
+0xe1	Metalfoes	メタルフォーゼ
 0xe2	Tramid	トラミッド
 0xe3	Cubic	方界
 0xe4	Celtic Guard	エルフの剣士
@@ -404,4 +404,15 @@
 0xe6	Cardian	花札衛
 0xe7	Silent Swordsman	サイレント・ソードマン
 0xe8	Silent Magician	サイレント・マジシャン
+0xe9	Magna Warrior	磁石の戦士(じしゃくのせんし)
+0xea	Crystron	クリストロン
+0xeb	Chemical Beast	化合獣
+0xec	N/A	Abyss	魔界
+0x10ec	Abyss Actor	魔界劇団
+0x20ec	Abyss Script	魔界台本
+0xed	地底恐魔	Subterror
+0x10ed	地底恐魔 巨魔	Subterror Behemoth
+0xee	秘旋谍	SPYRAL
+0x10ee	秘旋谍装备	SPYRAL GEAR
+0xef	堕天使	Darklord
 #end
