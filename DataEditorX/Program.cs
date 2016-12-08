@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using DataEditorX.Config;
 using DataEditorX.Language;
 
+
 namespace DataEditorX
 {
 	internal sealed class Program

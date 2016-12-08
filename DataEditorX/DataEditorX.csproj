@@ -47,6 +47,9 @@
       <HintPath>DLL\FastColoredTextBox.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>DLL\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
@@ -69,6 +72,7 @@
     </Compile>
     <Compile Include="Common\CheckUpdate.cs" />
     <Compile Include="Common\ConfHelper.cs" />
+    <Compile Include="Common\MySortList.cs" />
     <Compile Include="Common\MyUtils.cs" />
     <Compile Include="Common\StrUtil.cs" />
     <Compile Include="Common\XMLReader.cs" />
@@ -115,6 +119,7 @@
     <Compile Include="Core\Mse\MSEConfig.cs" />
     <Compile Include="Core\MyTask.cs" />
     <Compile Include="Core\TaskHelper.cs" />
+    <Compile Include="Core\TCGEditor\CardSet.cs" />
     <Compile Include="Core\YGOUtil.cs" />
     <Compile Include="DataEditForm.cs">
       <SubType>Form</SubType>
@@ -222,6 +227,9 @@
     <Content Include="data\mse_Chinese-Simplified.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\TCGEditor" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
