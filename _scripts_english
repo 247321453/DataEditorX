@@ -1,0 +1,248 @@
+A prerequisite for scripting:
+1 to understand the lua knowledge (at least know the syntax, statements, the basic operations, Table and Metatable)
+2 familiar with the rules of the game king, including common and a variety of unusual rules
+3 A text editor.
+
+2. A brief architectural description of the scripting system
+The scripting system consists of four main libraries, Card, Effect, Group and Duel, which contain all of the basic functions required in the script. There is also a simple bit operation library bit and auxiliary library Auxiliary, contains a number of auxiliary functions. Specific function clear reference function manual.
+The scripting system contains three kinds of custom types (Userdata), including Card, Effect, Group. These types are the corresponding functions of the library as Metatable to achieve the simulation of OOP function. Effect and Group directly to the above-named function library as Metatable, Card is more than an intermediate template Metatable.
+For the Card type, the system will first create a template Table ('c' + 8-bit password) according to the card's unique code (8-digit password) for each card loaded, and then invoke the card's script file Those. Lua files) to initialize the template. It then generates a Card's Userdata as the new card's variable, and sets the template Table as the Metatable for the variable. Finally, this variable will be called as an argument to the initial_effect function of the template Table to initialize the card through the work. The card's static effects are registered in the initial_effect function. For normal monsters, this function is usually an empty function, not write this function is no problem, but will report a "function not found" error.
+For the Effect type, this type contains information about the effect of the card, details of which are described later in this section.
+Group type is the card group, as the name suggests is the use of more than one card. This type is commonly used for simultaneous operation of multiple cards. Group library provides a number of functions to add, delete, search for a specific card. Note that: 1, the cards in the Group of random order (but the operation will be sorted to meet the needs of the replay) 2, a group with a card can only exist once
+
+Three constants in some of the instructions
+--Locations
+LOCATION_DECK Card group
+LOCATION_HAND hand
+LOCATION_MZONE Monster Zone
+LOCATION_SZONE Magic Depression area
+LOCATION_GRAVE Cemetery
+LOCATION_REMOVED excluded
+LOCATION_EXTRA Extra
+LOCATION_OVERLAY stack card
+--Positions
+POS_FACEUP_ATTACK Side attack
+POS_FACEDOWN_ATTACK Side attack
+POS_FACEUP_DEFENCE Side of the table
+POS_FACEDOWN_DEFENCE Rear side garrison
+POS_FACEUP The table side
+POS_FACEDOWN The back side
+POS_ATTACK attack
+POS_DEFENCE fielding
+- Phase
+PHASE_DRAW Draw stage
+PHASE_STANDBY Preparation phase
+PHASE_MAIN1 Main Phase 1
+PHASE_BATTLE Battle phase
+PHASE_DAMAGE damage phase
+PHASE_DAMAGE_CAL damage calculation
+PHASE_MAIN2 Main Phase 2
+PHASE_END End of phase
+--Player
+PLAYER_NONE No players
+PLAYER_ALL
+Player ID: 0 = Player1, 1 = Player2
+
+Four Effects (effect) Xiangjie?
+Effect is the central part of the various effects. In this system, according to whether there is an effect of action (such as damage, injury, etc.), the effect of the card is divided into two kinds, one is the perpetual type, the other is the trigger type. Persistent type is generally expressed the effect of state changes, trigger type is generally required to have action or need to perform a specific function to achieve results. Of course, there are special cases, the specific reference to the effect of documentation.
+Effect can be created by two functions
+● Effect.CreateEffect () This function will suggest a new empty effect
+● Effect.Clone (e) This function creates a copy of the existing effect e
+Of course, Effect is not registered can not be effective. Effect can be registered to the card or global environment by the following two functions
+● Card.Register Effect (c, e) registers effect e to card c
+● Duel.RegisterEffect (e, player) will effect e as the player player to register the effect to the global environment
+Effect mainly contains the following needs to set the value:
+Description, code, type, category, range, target range, count limit, reset, property, label,
+Condition, target, cost, operation, value, owner player
+These properties are basically set and retrieved via the associated Set and Get functions. Refer to the function library for details.
+Two types of common attributes:
+● Description: Description of effects, most of the effects can not, from a number of effects to select a launch will use this attribute
+● Code: This attribute indicates the type of effect. Effects List Clear the effect manual.
+Category: Effect classification. Used only for those chained effects that are used to identify which effects are included in those effects. It should be noted that, as long as the inclusion of an effect, even if the effect of treatment will not deal with that effect, but also that the effect of classification added to this property. For example: the universe and the Avenue of Stars, these two cards "contain" the effect of special calls, if not necessarily special call. This attribute is used to determine the activation of certain cards (such as pinch).
+This attribute can be a combination of the following values:
+CATEGORY_DESTROY Damage effect
+CATEGORY_RELEASE liberation effect
+CATEGORY_REMOVE exception
+CATEGORY_TOHAND Send hand effect
+CATEGORY_TODECK sent to the card group effect
+CATEGORY_TOGRAVE sent to the cemetery effect
+CATEGORY_DECKDES Card group destruction effect
+CATEGORY_HANDES Hand Damage
+CATEGORY_SUMMON Summon effect
+CATEGORY_SPECIAL_SUMMON Special Summon Effect
+CATEGORY_TOKEN Generates Token effects
+CATEGORY_FLIP Reverse effect
+CATEGORY_POSITION Changes the representation effect
+CATEGORY_CONTROL Changes the control effect
+CATEGORY_DISABLE The effect of an invalid effect
+CATEGORY_DISABLE_SUMMON Invalid summon, special summon effect
+CATEGORY_DRAW drawing effect
+CATEGORY_SEARCH search results (typically card groups)
+CATEGORY_EQUIP equipment effect
+CATEGORY_DAMAGE direct damage effect
+CATEGORY_RECOVER Response effect
+CATEGORY_ATKCHANGE Attack change effect
+CATEGORY_DEFCHANGE Defeat change effect
+CATEGORY_COUNTER indicator-related effect
+CATEGORY_COIN The effect of a coin toss
+CATEGORY_DICE The effect of throwing a dice
+● Type: This attribute is used to indicate the classification of the effect. It can be a combination of the following values. The combination method is explained in the following categories.
+EFFECT_TYPE_SINGLE Monomer
+EFFECT_TYPE_FIELD community
+EFFECT_TYPE_EQUIP equipment
+EFFECT_TYPE_ACTIONS Trigger type
+EFFECT_TYPE_ACTIVATE is launched
+EFFECT_TYPE_FLIP Reverse
+EFFECT_TYPE_IGNITION starts
+EFFECT_TYPE_TRIGGER_O Induced (optional)
+EFFECT_TYPE_QUICK_O Induced Even if (optional)
+EFFECT_TYPE_TRIGGER_F Induced (Betfair)
+EFFECT_TYPE_QUICK_F Induced Instant (Betfair)
+EFFECT_TYPE_CONTINUOUS
+● Reset: This attribute is used to identify when the effect is Reset. This attribute can be a combination of the following values:
+RESET_DRAW Draw phase
+RESET_STANDBY Preparation phase
+RESET_MAIN1 Main phase 1
+RESET_BATTLE Battle phase
+RESET_DAMAGE damage phase
+RESET_DAMAGE_CAL Damage calculation phase
+RESET_MAIN2 Main Phase 2
+RESET_END The end phase
+RESET_SELF_TURN Our round
+RESET_OPPO_TURN Turn each other round
+RESET_PHASE At the end of the reset, this flag needs to be used in conjunction with the above values
+RESET_LABEL according to the label Reset
+RESET_EVENT Depending on the event Reset, this flag needs to be used in conjunction with the flag starting with RESET_DISABLE
+RESET_USE Reset after effect count becomes 0
+RESET_CODE Reset according to effect type
+RESET_COPY Reset effect
+RESET_DISABLE When inactive state
+RESET_TURN_SET Turns to the back side
+RESET_TOGRAVE When sent to the cemetery Reset
+Reset except for RESET_REMOVE (permanent)
+Reset (except for RESET_TEMP_REMOVE)
+RESET_TOHAND Reset the hand
+RESET_TODECK Reset when sending to card group
+RESET_LEAVE Reset when leaving
+RESET_TOFIELD Reset when playing
+RESET_CONTROL Reset control transition
+Scripts generally only need to use RESET_PHASE and RESET_EVENT and related values
+● Property: This property contains some additional information about the effect, and can be a combination of the following:
+EFFECT_FLAG_FUNC_VALUE The Value property of this effect is a function
+EFFECT_FLAG_COUNT_LIMIT This effect has a built-in limit
+EFFECT_FLAG_FIELD_ONLY This effect is registered to the global environment
+// The above three properties are built in to the system and can not be set in the script
+EFFECT_FLAG_CARD_TARGET This effect fetches the object
+EFFECT_FLAG_IGNORE_RANGE Ignore the Target Range property,
+EFFECT_FLAG_ABSOLUTE_TARGET Target Range does not change because of changes in control
+EFFECT_FLAG_IGNORE_IMMUNE Ignores the immune attribute
+EFFECT_FLAG_SET_AVAILABLE affects the card indicated on the back side
+EFFECT_FLAG_AUXILIARY (Reserved)
+EFFECT_FLAG_CANNOT_DISABLE The effect that can not be disabled
+EFFECT_FLAG_PLAYER_TARGET is for players
+EFFECT_FLAG_BOTH_SIDE Both sides can fire
+EFFECT_FLAG_COPY_INHERIT The Reset property that inherits the effect of the copy
+The EFFECT_FLAG_DAMAGE_STEP damage phase can be fired
+EFFECT_FLAG_DAMAGE_CAL damage calculation can be launched
+EFFECT_FLAG_DELAY Delay processing
+EFFECT_FLAG_SINGLE_RANGE Single effect
+EFFECT_FLAG_UNCOPYABLE can not be Panthers, Chaos Phantom, etc. card copy
+EFFECT_FLAG_OATH Contract effect
+EFFECT_FLAG_SPSUM_PARAM Special call parameters
+The use of some specific flags is explained in the category.
+● Label: This property is not used by the system. It is usually used for script passing or for saving simple integer parameters.
+● owner player: This attribute indicates that the effect belongs to that player. General registration effect, this property will be automatically set to the current effect is to launch the player. You can also set this value manually.
+
+The values ​​that need to be set are interpreted according to two different types
+1 sustainable type
+A persistent effect is a change in state. First, the Type attribute can only be one of EFFECT_TYPE_SINGLE, EFFECT_TYPE_FIELD, and EFFECT_TYPE_EQUIP. EFFECT_TYPE_SINGLE indicates that the effect only affects the registered card itself, EFFECT_TYPE_FIELD indicates that the effect of a region of the card, EFFECT_TYPE_EQUIP that the effect of the registration card is equipped with the card.
+● For the EFFECT_TYPE_FIELD effect, set the Range and Target Range properties. Where Range indicates where the registered card is in effect, and Target Range represents the card that affects that area. For example:
+Local e = Effect.CreateEffect (c)
+E: SetType (EFFECT_TYPE_FIELD)
+E: SetRange (LOCATION_SZONE) This effect takes effect in the trap area
+E: SetTargetRange (LOCATION_MZONE, LOCATION_MZONE) This effect affects both sides of the monster area
+C: RegisterEffect (e)
+If the Range property is set to a monster area or a magpie area, that card must be the side of the table to indicate that the effect is effective.
+Some additional property descriptions
+EFFECT_FLAG_IGNORE_RANGE: When this flag is set, the target range attribute will be ignored, and all areas of the card will be recovered
+EFFECT_FLAG_PLAYER_TARGET: When this flag is set, this effect is considered to affect the player. In this case, it is necessary to set the influence range by the following
+E: SetTargetRange (0,1) only affects the other player
+EFFECT_FLAG_PLAYER_TARGET: When this flag is set, the area affected by this effect does not change as the card's control is changed. Examples can refer to the "ritual magic devil" can not be special summoned effect.
+EFFECT_FLAG_SET_AVAILABLE: This effect affects the card on the inside of the field. By default, this is not affected. Such as "site protective cover" and "can not destroy" effect.
+● For the EFFECT_TYPE_SINGLE effect, there is no need to set the Range and Target range in general. The secondary effect is considered to be a temporary state change. If you set the EFFECT_FLAG_SINGLE_RANGE property, you need to set the Range property to indicate where this single effect will take effect. The single effect using the EFFECT_FLAG_SINGLE_RANGE flag is considered a perpetual effect.
+● EFFECT_TYPE_EQUIP No specific Property flag
+Condition Indicates the condition for this effect to take effect. If not set, it means that it will take effect permanently. This property requires a function as the basis for the decision to take effect. The function prototype is as follows:
+Function sample_condition (e)
+End
+Where the parameter e is the effect itself
+Target indicates the card's specific requirements for this effect. Can be considered as a detailed filtering function. If it is not set, all cards in the affected area are applicable. The single and equip types do not need to be set. This property also requires the need for a function to determine whether the card is affected by the basis. The prototype is as follows:
+Function sample_target (e, c)
+End
+Which parameter e is the effect itself, c is the need to determine the card
+Value is used to set the value of the effect, generally only used for numerical change effects and other specific effects. This property can be directly filled values, it can be a function, the prototype with the target, with the function can be set for different cards of different values.
+
+2 trigger type
+Triggered effects need to set the Type for the Type of EFFECT_TYPE_ACTIONS any of the following types, and set the system when the Type property will automatically add the EFFECT_TYPE_ACTIONS flag. In addition, EFFECT_TYPE_TRIGGER_O, EFFECT_TYPE_TRIGGER_F, and EFFECT_TYPE_CONTINUOUS require an additional EFFECT_TYPE_SINGLE or EFFECT_TYPE_FIELD. Trigger type of the code generally refers to the trigger event, such as EVENT_DESTROY said that the destruction of the trigger this effect. Some types do not require code.
+● EFFECT_TYPE_ACTIVATE: the card should be used to launch a set type. Non-Magic or Trap Cards Add this effect without any effect. This type does not need to set the Range, code is the launch point, if there is no time to start the card will be set to EVENT_FREE_CHAIN ​​code.
+● EFFECT_TYPE_FLIP: Reverse effect, do not need to set the code
+● EFFECT_TYPE_IGNITION: Activates the effect. This effect needs to set the Range to start the location of the launch effect. Atlantis, for example, is a soldier
+, The growth of the bulb is the cemetery. You do not need to set code.
+● EFFECT_TYPE_TRIGGER_O and EFFECT_TYPE_TRIGGER_F: Induced effects. The former said the election, which said the Betfair. Evoked effects need to be specified is a single or field type, said the card itself is the trigger event or other card trigger event. Simply said single type "when this card XXX" effect, field type is "when a card XXXX" effect. For example: the effect of the three blame is "when the card from the field sent to the cemetery" effect, it is EFFECT_TYPE_TRIGGER_F + EFFECT_TYPE_SINGLE; Wang Hu effect is "when a special call card" effect, it is EFFECT_TYPE_TRIGGER_F + EFFECT_TYOE_FIELD. The other difference is that the single type does not need to set Range, and the field type needs to be set to the position where the evoked effect is fired.
+EFFECT_TYPE_TRIGGER_O In general, if the operation will be interrupted after the operation such as dealing with the new chain, such as the behavior of the call will be missed when the point of time, the effect will not be the same time, . In the Property of the flag EFFECT_FLAG_DELAY can make this election effect of the induced effect of delay can not start at the wrong time, used to achieve "XXXX occasions" "can" launch effect. With this flag after the election results will wait until the current behavior of the new chain processing.
+● EFFECT_TYPE_QUICK_O: most of the induced real-time effects, settings and EFFECT_TYPE_ACTIVATE basically the same, the only difference is that this type needs to be set to specify the location of the Range Range, such as necromancy guards need to specify the cemetery.
+● EFFECT_TYPE_QUICK_F: Only a few cards have this type of effect (Necro Knight, light and dark dragon, blue ice night dragon, etc.). This effect forces an event to be interlocked for the last event that triggered this effect. Use this type of effect should pay attention to determine the conditions of the launch to avoid the formation of an unlimited chain (such as light dark dragon since the chain, each chain can only be launched once the reason).
+● EFFECT_TYPE_CONTINUOUS: Same as EFFECT_TYPE_TRIGGER_F, except that the effect of this type is handled immediately after the trigger event and does not enter the chain. Commonly used to achieve some secondary effects.
+Trigger type effects often use some of the Property value:
+EFFECT_FLAG_CARD_TARGET This effect takes an object, indicating that the effect takes an object
+EFFECT_FLAG_PLAYER_TARGET is targeted at the player and is typically used for drawing effects. Have the effect of this logo can be the wizard of the mirror chain.
+EFFECT_FLAG_BOTH_SIDE The effect that both sides can launch. Such as integration of the door, the palace of the spring pressure.
+The EFFECT_FLAG_DAMAGE_STEP damage phase can be fired
+EFFECT_FLAG_DAMAGE_CAL damage calculation can be launched
+EFFECT_FLAG_DELAY Delay processing
+Trigonometric effects of the concrete realization of the main depend on four properties: Condition, Cost, Target and Operation. These four must be functions, or leave blank. Which is used to launch the condition determination, Cost to launch the cost of satisfaction and specific cost behavior, Target for launching the object to determine (mainly to determine whether to meet the conditions of the object and the air to determine) and the specific operation of the specified object , Operation is in the effect of the implementation of the specific effects of operation.
+The function prototypes are:
+Function sample_condition (e, tp, eg, ep, ev, re, r, rp) end
+Function sample_cost (e, tp, eg, ep, ev, re, r, rp, chk) end
+Function sample_target (e, tp, eg, ep, ev, re, r, rp, chk, chkc) end
+Function sample_operation (e, tp, eg, ep, ev, re, r, rp) end
+The first eight parameters of these functions the same role, specifically explained as follows:
+E: the effect itself
+Tp: launch or ready to launch the effect of the players
+Eg: event group, event involving a deck
+Ep: event player, the players involved in the event
+Ev: event value, event related parameters
+Re: reason effect, the effect of the trigger event
+R: reason, the cause of the event description
+Rp: reason, the player that triggered the event
+The third 3-8 parameters record the trigger event information,
+For example: player 1 to launch an effect e1 on the player 2 caused 500 effect damage, then
+Empty
+Ep: 1 (= player 2)
+Ev: 500
+Re: e1
+R: REASON_EFFECT (effect damage)
+Rp: 0 (= player 1)
+The parameters that trigger the event are useful for specific reference event descriptions.
+Cost and target there is the first nine parameters chk. This parameter is determined by the row before the effect is launched. Judgment, chk will be set to 0 pass-in function, and then in the specific line cost operations or specify the target operation, chk will be set to 1 incoming. For example:
+Function c87910978.cost (e, tp, eg, ep, ev, re, r, rp, chk)
+If chk == 0 then return Duel.CheckLPCost (tp, 800) - Check the stage to see if it can pay 800LP of cost
+Else Duel.PayLPCost (tp, 800) end - Non-check phase, pay 800LP cost
+End
+If the effect is to specify the target, then the target will have the first 10 parameters chkc, used to determine whether a card is the correct object (mainly used for the six weapons of the Wu Wu and other objects of the transfer effect), and check is chk Is set to 0. Example:
+Function c87910978.target (e, tp, eg, ep, ev, re, r, rp, chk, chkc)
+If chk == 0 then
+If chkc then return chkc: GetLocation () == LOCATION_MZONE and chkc: GetControler () ~ = tp and c87910978.filter (chkc) end
+- If the 10th argument is present, then check if that card meets the requirements of the object for this effect. This determination is not required for effects of non-specified objects.
+Return Duel.IsExistingTarget (c87910978.filter, tp, 0, LOCATION_MZONE, 1, nil)
+- Otherwise the existence of the object is determined
+End
+- Perform object selection
+Local g = Duel.SelectTarget (tp, c87910978.filter, tp, 0, LOCATION_MZONE, 1,1, nil)
+Duel.SetOperationInfo (0, CATEGORY_CONTROL, g, 1,0,0)
+End
+It is to be noted that even if the effect of the object is not specified, the decision of the object is performed to prevent the empty transmission. Such as black holes need to check the existence of the field can damage the strange, pumping card system needs to determine whether there is enough card group card.
+Condition, cost, target need to return a boolean-type data, true that meet the conditions, false that does not meet. If you leave the space is considered to always meet the conditions. Operation in the actual effect of treatment, and do not need to return value.
+Some effects may have more additional parameters, specific reference to the effects of classification.
+
+● Supplementary explanation of contractual effect:
+If an effect is launched in the cost and target stage of the registration of a contract effect (including EFFECT_FLAG_OATH flag), then when the launch of this effect is invalid, the contract effect will be automatically reset. Such as strong desire to modest pot, etc. can not be special, can only be launched one round of the effect.
