@@ -120,7 +120,7 @@
 0x1	Ally of Justice	A・O・J
 0x2	Genex	ジェネクス
 0x1002	R-Genex	レアル・ジェネクス
-0x2002	Genex Ally	A・ジェネクス
+0x2002	N/A	Genex Ally	A・ジェネクス
 0x3	N/A
 0x4	Amazoness	アマゾネス
 0x5	Arcana Force	アルカナフォース
@@ -153,7 +153,9 @@
 0x16	oid	ロイド
 0x1016	Vehicroid	ビークロイド
 0x2016	Speedroid	スピードロイド
-0x17	Synchron	シンクロン
+0x17	Synchro	シンクロ
+0x1017	Synchron	シンクロン
+0x2017	Synchro Dragon	シンクロ・ドラゴン
 0x18	Cloudian	雲魔物
 0x19	Gladiator Beast	剣闘獣
 0x1a	Dark Scorpion	黒蠍
@@ -209,6 +211,7 @@
 0x45	Archfiend	デーモン
 0x1045	Red Dragon Archfiend 	レッド・デーモン
 0x46	Polymerization/Fusion	融合/フュージョン
+0x1046	Fusion Dragon	フュージョン・ドラゴン
 0x47	Gem-	ジェム
 0x1047	Gem-Knight	ジェムナイト
 0x48	Number	No.
@@ -264,6 +267,7 @@
 0x1072	Geargiano	ギアギアーノ
 0x73	Xyz	エクシーズ
 0x1073	CXyz	CX（カオスエクシーズ）
+0x2073	Xyz Dragon	エクシーズ・ドラゴン
 0x74	Mermail	水精鱗
 0x75	Abyss	アビス
 0x76	Heraldic Beast	紋章獣
@@ -313,6 +317,7 @@
 0x98	Magician	魔術師
 0x99	Odd-Eyes	异色眼
 0x9a	Superheavy Samurai	超重武者
+0x109a	Superheavy Samurai Soul	超重武者装留
 0x9b	Melodious	幻奏
 0x9c	tellarknight	テラナイト
 0x109c	Stellarknight	ステラナイト
@@ -379,8 +384,8 @@
 0xd0	Majespecter	マジェスペクター
 0xd1	Graydle	グレイドル
 0xd2	Kozmo
-0xd3	Kaiju
-0xd4	Burgesstoma	버제스토마
+0xd3	Kaiju	壊獣
+0xd4	Paleozoic	バージェストマ
 0xd5	Dante	ダンテ
 0xd6	Destruction Sword	破壊剣
 0xd7	Buster Blader	バスター・ブレイダー
@@ -401,7 +406,7 @@
 0xe3	Cubic	方界
 0xe4	Celtic Guard	エルフの剣士
 0xe5	Cipher	サイファー
-0xe6	Cardian	花札衛
+0xe6	Flower Cardian	花札衛
 0xe7	Silent Swordsman	サイレント・ソードマン
 0xe8	Silent Magician	サイレント・マジシャン
 0xe9	Magna Warrior	磁石の戦士(じしゃくのせんし)
@@ -410,9 +415,20 @@
 0xec	N/A	Abyss	魔界
 0x10ec	Abyss Actor	魔界劇団
 0x20ec	Abyss Script	魔界台本
-0xed	地底恐魔	Subterror
-0x10ed	地底恐魔 巨魔	Subterror Behemoth
-0xee	秘旋谍	SPYRAL
-0x10ee	秘旋谍装备	SPYRAL GEAR
-0xef	堕天使	Darklord
+0xed	Subterror
+0x10ed	Subterror Behemoth
+0xee	SPYRAL
+0x10ee	SPYRAL GEAR
+0x20ee	SPYRAL MISSION
+0xef	Darklord
+0xf0	Windwitch	WW（ウィンド・ウィッチ）
+0xf1	Zoodiac	十二獣
+0xf2	Pendulum	ペンデュラム
+0x10f2	Pendulum Dragon	ペンデュラム・ドラゴン
+0x20f2	Pendulumgraph	ペンデュラムグラフ
+0xf3	Predator	プレデター
+0x10f3	Predaplant	捕食植物
+0xf4	Invoked	召喚獣
+0xf5	Gandora	ガンドラ
+0xf6	Skyscraper	摩天楼
 #end

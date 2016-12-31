@@ -61,7 +61,9 @@ a与b的位异或
 ●bool Card.IsFusionCode(Card c, int code)
 检查c作为融合素材时能否当作卡号为code的卡
 ●bool Card.IsSetCard(Card c, int setname)
-检查c是否是名字含有setname的卡
+检查c是否是卡名含有setname的卡
+●bool Card.IsOriginalSetCard(Card c, int setname)
+检查c是否是原本卡名含有setname的卡
 ●bool Card.IsPreviousSetCard(Card c, int setname)
 检查c位置变化之前是否是名字含有setname的卡
 ●bool Card.IsFusionSetCard(Card c, int setname)
@@ -70,6 +72,8 @@ a与b的位异或
 返回c的当前类型
 ●int Card.GetOriginalType(Card c)
 返回c的卡片记载的类型
+●int Card.GetFusionType(Card c)
+返回c用作融合素材时的类型（与GetType的区别在于对于魔陷区的怪兽卡，返回其原本类型）
 ●int Card.GetLevel(Card c)
 返回c的当前等级
 ●int Card.GetRank(Card c)
@@ -99,6 +103,8 @@ a与b的位异或
 注：对某些多属性怪兽如光与暗之龙，此函数的返回值可能是几个属性的组合值
 ●int Card.GetOriginalAttribute(Card c)
 返回c的卡片记载的属性
+●int Card.GetFusionAttribute(Card c[, int player])
+返回c[由player融合召唤时]用作融合素材时的属性
 ●int Card.GetRace(Card c)
 返回c的当前种族
 注：对某些多种族怪兽如动画效果的魔术猿，此函数的返回值可能是几个种族的组合值
@@ -187,10 +193,14 @@ a与b的位异或
 检查c的卡号是否是code1[, 或者为code2...]
 ●bool Card.IsType(Card c, int type)
 检查c是否属于类型type
+●bool Card.IsFusionType(Card c, int type)
+检查c用作融合素材时是否属于类型type（与IsType的区别在于对于魔陷区的怪兽卡，用其原本类型作判断）
 ●bool Card.IsRace(Card c, int race)
 检查c是否属于种族race
 ●bool Card.IsAttribute(Card c, int attribute)
 检查c是否属于属性attribute
+●bool Card.IsFusionAttribute(Card c, int attribute[, int player])
+检查c[由player融合召唤时]用作融合素材是否属于属性attribute
 ●bool Card.IsReason(Card c, int reason)
 检查c是否包含原因reason
 ●bool Card.IsStatus(Card c, int status)
@@ -479,8 +489,8 @@ location的默认值与c的种类有关，灵摆怪兽需要指定能否在怪�
 检查c是否可以[逐个(singly=true)]放置count个countertype类型的指示物
 ●bool Card.IsCanRemoveCounter(Card c, int player, int countertype, int count, int reason)
 检查玩家player是否可以以原因reason移除c上的count个countertype类型的指示物
-●bool Card.IsCanBeFusionMaterial(Card c[, Card fc, bool ignore_mon=false])
-检查c是否可以成为[融合怪兽fc的]融合素材，ignore_mon=true则不检查c是否是怪兽
+●bool Card.IsCanBeFusionMaterial(Card c[, Card fc])
+检查c是否可以成为[融合怪兽fc的]融合素材
 ●bool Card.IsCanBeSynchroMaterial(Card c[, Card sc, Card tuner])
 检查c是否可以成为同调怪兽sc的同调素材
 ●bool Card.IsCanBeRitualMaterial(Card c[, Card sc])
@@ -753,8 +763,8 @@ f为返回一个interger值的函数，从g中筛选出具有最大的f的值的
 设置玩家player的当前LP为lp
 ●int Duel.GetTurnPlayer()
 返回当前的回合玩家
-●int Duel.GetTurnCount()
-返回当前的回合数
+●int Duel.GetTurnCount([int player])
+返回[player所经过的]当前的回合数
 ●int Duel.GetDrawCount(int player)
 返回玩家player每回合的规则抽卡数量
 ●void Duel.RegisterEffect(Effect e, int player)
@@ -906,8 +916,8 @@ is_step=true则是装备过程的分解，需要配合Duel.EquipComplete使用
 在调用Duel.Equip时，若is_step参数为true，则需调用此函数触发时点
 ●bool Duel.GetControl(Card|Group targets, int player[, int reset_phase=0, int reset_count=0])
 让玩家player得到targets的控制权，返回值表示是否成功
-●bool Duel.SwapControl(Card c1, Card c2[, int reset_phase=0, int reset_count=0])
-交换c1与c2的控制权，返回值表示是否成功
+●bool Duel.SwapControl(Card|Group targets1, Card|Group targets2[, int reset_phase=0, int reset_count=0])
+交换targets1与targets2的控制权，返回值表示是否成功
 ●bool Duel.CheckLPCost(int player, int cost)
 检查玩家player是否能支付cost点lp
 ●void Duel.PayLPCost(int player, int cost)
@@ -1062,6 +1072,8 @@ Duel.GetChainInfo(0,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TARGET_CARDS)
 返回[mg中]用于通常召唤c的祭品数量，ex=true则允许对方场上的怪兽（太阳神之翼神龙-球体形）
 此数量不一定等于Duel.GetTributeGroup的返回值中的卡片数量
 因为某些卡可以作为两个祭品来使用
+●Group Duel.CheckTribute(Card c, int min[, int max, Group mg, int toplayer])
+[为了召唤到toplayer场上，]判断[在mg中]是否存在用于通常召唤c的min[到max]个祭品
 ●Group Duel.SelectTribute(int player, Card c, int min, int max[, Group mg, bool ex=false])
 让玩家player[从mg中]选择用于通常召唤c的min-max个祭品，ex=true则允许对方场上的怪兽（太阳神之翼神龙-球体形）
 ●int Duel.GetTargetCount(function f, int player, int s, int o, Card ex|nil, ...)
@@ -1099,6 +1111,9 @@ f1是调整需要满足的过滤条件，f2是调整以外的部分需要满足�
 包含手上，场上可解放的以及墓地的仪式魔人等卡
 ●void Duel.ReleaseRitualMaterial(Group g)
 解放仪式用的素材g，如果是墓地的仪式魔人等卡则除外
+●Group Duel.GetFusionMaterial(int player)
+返回玩家player可用的用于融合召唤素材的卡片组
+包含手卡·场上的怪兽的以及万溶炼金术师的装备卡
 ●void Duel.SetSelectedCard(Card|Group cards)
 将cards设置为Group.SelectWithSumEqual或Group.SelectWithSumGreater已选择的卡片，
 ●void Duel.SetTargetCard(Card|Group targets)
@@ -1188,8 +1203,10 @@ available是所有可选种族的组合值
 available是所有可选属性的组合值
 ●int Duel.AnnounceLevel(int player)
 让玩家宣言一个等级
-●int Duel.AnnounceCard(int player[, type=TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP])
+●int Duel.AnnounceCard(int player[, int type=TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP])
 让玩家player宣言一个[type类型的]卡片代号
+●int Duel.AnnounceCardFilter(int player, ...)
+让玩家player宣言一个满足条件的卡片代号，条件用后缀表达式...表示
 ●int Duel.AnnounceType(int player)
 让玩家player宣言一个卡片类型
 ●int,int Duel.AnnounceNumber(int player, int number, ...)
@@ -1357,12 +1374,22 @@ active_effect=false则不注册灵摆卡“卡的发动”的效果
 ●void aux.EnableDualAttribute(Card c)
 为c添加二重怪兽属性
 ●bool aux.IsDualState(Effect e)
-检查二重怪兽e:GetHandler()是否是再度召唤状态
+检查二重怪兽e:GetHandler()是否是再度召唤状态（用于效果的Condition属性）
 常用于二重怪兽再度召唤获得的效果e的Condition属性
 ●bool aux.DualNormalCondition(Effect e)
-检查二重怪兽e:GetHandler()是否为被视为通常怪兽的状态
+检查二重怪兽e:GetHandler()是否为被视为通常怪兽的状态（用于效果的Condition属性）
 ●bool aux.IsNotDualState(Effect e)
-aux.IsDualState的反义
+aux.IsDualState的反义（用于效果的Condition属性）
+●bool aux.IsUnionState(Effect e)
+检查同盟怪兽e:GetHandler()是否处于同盟装备的状态（用于效果的Condition属性）
+●void aux.SetUnionState(Card c)
+为c添加同盟怪兽属性
+●bool aux.CheckUnionEquip(Card uc, Card tc)
+检查同盟怪兽uc能否作为同盟装备在怪兽tc上
+●void aux.EnableSpiritReturn(Card c, int event1,...)
+为c添加灵魂怪兽结束阶段回到手卡的效果（发生事件event1,...的回合，结束阶段回到手卡）
+●function aux.NecroValleyFilter(function f)
+根据过滤条件f返回一个新的过滤条件：满足f并且不受王家长眠之谷的影响的卡
 ●void aux.BeginPuzzle()
 开始残局
 ##此函数注册3个全局效果：
