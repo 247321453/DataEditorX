@@ -178,6 +178,7 @@
 0x29	Dragunity	ドラグニティ
 0x2a	Naturia	ナチュル
 0x2b	Ninja	忍者
+0x102b	Armor Ninja 機甲忍者
 0x2c	Flamvell	フレムベル
 0x2d	N/A
 0x2e	Gravekeeper's	墓守
@@ -252,6 +253,7 @@
 0x65	Infestation	侵略の
 0x66	Warrior	ウォリアー
 0x1066	Symphonic Warrior	音響戦士
+0x2066	Magnet Warrior  マグネット・ウォリアー
 0x67	N/A	Iron	アイアン
 0x68	N/A	Tin	ブリキ
 0x69	Hieratic	聖刻
@@ -368,10 +370,10 @@
 0xbb	Infernoid	インフェルノイド
 0xbc	Jinzo	人造人間
 0xbd	Gaia The Fierce Knight	暗黒騎士ガイア
-0xbe	Monarchs	帝王
+0xbe	Monarch 帝王
 0xbf	Charmer	霊使い
 0xc0	Familiar-Possessed	憑依装着
-0xc1	PSYFrame	PSYフレーム
+0xc1	PSY-Frame	PSYフレーム
 0xc2	Power Tool	パワー·ツール
 0xc3	Edge Imp	エッジインプ
 0xc4	Zefra	セフィラ
