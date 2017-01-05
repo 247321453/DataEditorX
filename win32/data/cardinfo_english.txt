@@ -7,15 +7,15 @@
 0x4	Anime/DIY
 ##attribute
 0x0	Attribute
-0x1	Earth
-0x2	Water
-0x4	Fire
-0x8	Wind
-0x10	Light
-0x20	Dark
-0x40	Divine
+0x1	EARTH
+0x2	WATER
+0x4	FIRE
+0x8	WIND
+0x10	LIGHT
+0x20	DARK
+0x40	DIVINE
 ##level
-0x0	Star
+0x0	Level/Rank
 0x1	1★
 0x2	2★
 0x3	3★
@@ -88,6 +88,7 @@
 0x200000	Divine-Beast
 0x400000	Creator God
 0x800000	Wyrm
+0x10000000  Yokai
 ##type
 0x1	Monster   
 0x2	Spell     
@@ -185,6 +186,7 @@
 0x31	Fortune Lady	フォーチュンレディ
 0x32	Volcanic	ヴォルカニック
 0x33	Blackwing	BF（ブラックフェザー）
+0x1033  Assault Blackwing A BF（ブラックフェザー）
 0x34	Crystal	宝玉
 0x1034	Crystal Beast	宝玉獣
 0x2034	Ultimate Gem God	究極宝玉神
@@ -224,7 +226,8 @@
 0x304e	Evoltile	エヴォルド
 0x604e	Evolsaur	エヴォルダ
 0x504e	Evolzar	エヴォルカイザー
-0x104f	/Assault	／バスター
+0xf4  N/A
+0x104f	/Assault Mode	／バスター
 0x50	Venom	ヴェノム
 0x51	Gadget	ガジェット
 0x52	Guardian	ガーディアン
@@ -256,6 +259,7 @@
 0x6b	Bounzer	バウンサー
 0x6c	N/A	Lightray	ライトレイ
 0x6d	Djinn	魔人
+0x106d  N/A Djinn of Rituals  儀式魔人
 0x6e	Prophecy	魔導
 0x106e	Spellbook	魔導書
 0x6f	Heroic	ヒロイック
@@ -274,9 +278,9 @@
 0x77	Atlantean	海皇
 0x78	Nimble	素早い
 0x79	Fire Fist	炎星
-0x7a	Nobel
-0x107a	NobelKnight
-0x207a	NobelArms
+0x7a	Noble	聖
+0x107a	Noble Knight	聖騎士
+0x207a	Noble Arms	聖剣
 0x7b	Galaxy	ギャラクシー
 0x107b	Galaxy-Eyes	ギャラクシーアイズ
 0x307b	Galaxy-Eyes Tachyon Dragon	ギャラクシーアイズ・タキオン・ドラゴン
@@ -319,6 +323,7 @@
 0x9a	Superheavy Samurai	超重武者
 0x109a	Superheavy Samurai Soul	超重武者装留
 0x9b	Melodious	幻奏
+0x109b	Melodious Maestra	幻奏の音姫
 0x9c	tellarknight	テラナイト
 0x109c	Stellarknight	ステラナイト
 0x9d	Shaddoll	影依
@@ -353,6 +358,7 @@
 0xb5	Ritual Beast	霊獣
 0x10b5	Ritual Beast Tamer	霊獣使い
 0x20b5	Spiritual Beast	精霊獣
+0x30b5	Spiritual Beast Tamer	精霊獣使い
 0x40b5	Ritual Beast Ulti-	聖霊獣騎
 0xb6	Outer Entity	外神
 0xb7	Elder Entity	旧神
@@ -383,7 +389,7 @@
 0x10cf	Black Luster Soldier	カオス・ソルジャー
 0xd0	Majespecter	マジェスペクター
 0xd1	Graydle	グレイドル
-0xd2	Kozmo
+0xd2	Kozmo Ｋｏｚｍｏ
 0xd3	Kaiju	壊獣
 0xd4	Paleozoic	バージェストマ
 0xd5	Dante	ダンテ
@@ -392,17 +398,17 @@
 0xd8	Dinomist	ダイナミスト
 0xd9	Shiranui	不知火
 0xda	Dracoverlord	竜魔王
-0xdb	Phantom	ファントム
-0x10db	Phantom Knights	幻影騎士団
-0xdc	Super Quantum	超量
-0x10dc	Super Quantum Mecha Pilot	超量士
-0x20dc	Super Quantum Mecha Beast	超量機獣
+0xdb	Phantom Knights	ファントム
+0x10db	The Phantom Knights	幻影騎士団
+0xdc	Super Quant	超量
+0x10dc	Super Quantum	超量士
+0x20dc	Super Quantal Mech Beast	超量機獣
 0xdd	Blue-Eyes	ブルーアイズ
 0xde	Exodia	エクゾディア
 0xdf	Lunalight	ムーンライト
 0xe0	Amorphage	アモルファージ
 0xe1	Metalfoes	メタルフォーゼ
-0xe2	Tramid	トラミッド
+0xe2	Triamid	トラミッド
 0xe3	Cubic	方界
 0xe4	Celtic Guard	エルフの剣士
 0xe5	Cipher	サイファー
@@ -411,7 +417,7 @@
 0xe8	Silent Magician	サイレント・マジシャン
 0xe9	Magna Warrior	磁石の戦士(じしゃくのせんし)
 0xea	Crystron	クリストロン
-0xeb	Chemical Beast	化合獣
+0xeb	Chemicritter	化合獣
 0xec	N/A	Abyss	魔界
 0x10ec	Abyss Actor	魔界劇団
 0x20ec	Abyss Script	魔界台本
@@ -420,13 +426,13 @@
 0xee	SPYRAL
 0x10ee	SPYRAL GEAR
 0x20ee	SPYRAL MISSION
-0xef	Darklord
+0xef	Darklord  堕天使
 0xf0	Windwitch	WW（ウィンド・ウィッチ）
 0xf1	Zoodiac	十二獣
 0xf2	Pendulum	ペンデュラム
 0x10f2	Pendulum Dragon	ペンデュラム・ドラゴン
 0x20f2	Pendulumgraph	ペンデュラムグラフ
-0xf3	Predator	プレデター
+0xf3	Preda	プレデター
 0x10f3	Predaplant	捕食植物
 0xf4	Invoked	召喚獣
 0xf5	Gandora	ガンドラ
