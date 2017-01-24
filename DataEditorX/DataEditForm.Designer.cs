@@ -130,6 +130,7 @@ namespace DataEditorX
         	this.lv_cardlist = new DataEditorX.DListView();
         	this.ch_cardcode = new System.Windows.Forms.ColumnHeader();
         	this.ch_cardname = new System.Windows.Forms.ColumnHeader();
+        	this.menuitem_autoreturn = new System.Windows.Forms.ToolStripMenuItem();
         	this.mainMenu.SuspendLayout();
         	this.SuspendLayout();
         	// 
@@ -307,7 +308,8 @@ namespace DataEditorX
 			this.menuitem_cutimages,
 			this.menuitem_convertimage,
 			this.tsep1,
-			this.menuitem_cancelTask});
+			this.menuitem_cancelTask,
+			this.menuitem_autoreturn});
         	this.menu_data.Name = "menu_data";
         	this.menu_data.Size = new System.Drawing.Size(62, 21);
         	this.menu_data.Text = "Data(&T)";
@@ -1064,6 +1066,13 @@ namespace DataEditorX
         	this.ch_cardname.Text = "Card Name";
         	this.ch_cardname.Width = 140;
         	// 
+        	// menuitem_autoreturn
+        	// 
+        	this.menuitem_autoreturn.Name = "menuitem_autoreturn";
+        	this.menuitem_autoreturn.Size = new System.Drawing.Size(212, 22);
+        	this.menuitem_autoreturn.Text = "*Auto return";
+        	this.menuitem_autoreturn.Click += new System.EventHandler(this.Menuitem_autoreturnClick);
+        	// 
         	// DataEditForm
         	// 
         	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1228,5 +1237,6 @@ namespace DataEditorX
 		private System.Windows.Forms.ToolStripMenuItem menuitem_language;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_export_select_sql;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_export_all_sql;
+		private System.Windows.Forms.ToolStripMenuItem menuitem_autoreturn;
     }
 }

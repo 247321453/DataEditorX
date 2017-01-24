@@ -12,6 +12,7 @@ CodeEditForm.mainMenu.menuitem_replace	Replace
 CodeEditForm.mainMenu.menuitem_setcard	Set DataBase
 CodeEditForm.mainMenu.menuitem_help	Help(&H)
 CodeEditForm.mainMenu.menuitem_about	About
+DataEditForm.mainMenu.menuitem_autoreturn	(*)Text auto return
 #
 DataEditForm.btn_img	Import Img
 DataEditForm.lb_types	Card type

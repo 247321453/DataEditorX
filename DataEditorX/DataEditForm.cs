@@ -1628,7 +1628,7 @@ namespace DataEditorX
 		}
 		void Menuitem_export_select_sqlClick(object sender, EventArgs e)
 		{
-				using(SaveFileDialog dlg = new SaveFileDialog()){
+			using(SaveFileDialog dlg = new SaveFileDialog()){
 				if(dlg.ShowDialog() == DialogResult.OK){
 					DataBase.exportSql(dlg.FileName, GetCardList(true));
 					MyMsg.Show("OK");
@@ -1641,6 +1641,36 @@ namespace DataEditorX
 				if(dlg.ShowDialog() == DialogResult.OK){
 					DataBase.exportSql(dlg.FileName, GetCardList(false));
 					MyMsg.Show("OK");
+				}
+			}
+		}
+		void Menuitem_autoreturnClick(object sender, EventArgs e)
+		{
+			if (!CheckOpen())
+				return;
+			using (SaveFileDialog dlg = new SaveFileDialog())
+			{
+				dlg.Title = LanguageHelper.GetMsg(LMSG.SelectDataBasePath);
+				dlg.Filter = LanguageHelper.GetMsg(LMSG.CdbType);
+				if (dlg.ShowDialog() == DialogResult.OK)
+				{
+					Card[] cards = DataBase.Read(nowCdbFile, true, "");
+					int count = cards.Length;
+					if (cards == null || cards.Length == 0)
+						return;
+					if (DataBase.Create(dlg.FileName))
+					{
+						//
+						int len = MyConfig.readInteger(MyConfig.TAG_AUTO_LEN, 30);
+						for (int i = 0; i < count; i++)
+						{
+							if(cards[i].desc!=null){
+								cards[i].desc = StrUtil.AutoEnter(cards[i].desc, len, ' ');
+							}
+						}
+						DataBase.CopyDB(dlg.FileName, false, cards);
+						MyMsg.Show(LMSG.CopyCardsToDBIsOK);
+					}
 				}
 			}
 		}
