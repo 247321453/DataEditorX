@@ -440,7 +440,7 @@
 0xf4	Invoked	召喚獣
 0xf5	Gandora	ガンドラ
 0xf6	Skyscraper	摩天楼
-0xf7	Lyrica Luscinia  LL(リリカル・ルスキニア)
+0xf7	Lyrical Luscinia  LL(リリカル・ルスキニア)
 0xf8	N/A	Supreme King  覇王
 0x10f8	Supreme King Gate 覇王門
 0x20f8	Supreme King Servant Dragon 覇王眷竜
