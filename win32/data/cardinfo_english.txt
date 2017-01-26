@@ -135,7 +135,7 @@
 0xa008	Masked HERO	M・HERO
 0x9	Neos	ネオス
 0xa	lswarm	ヴェルズ
-0x100a	Evilswarm	インヴェルズ
+0x100a	Steelswarm	インヴェルズ
 0xb	Infernity	インフェルニティ
 0xc	Alien	エーリアン
 0xd	Saber	セイバー
@@ -151,7 +151,7 @@
 0x6013	Meklord Army	機皇兵
 0x14	N/A
 0x15	B.E.S.	巨大戦艦
-0x16	oid	ロイド
+0x16	roid	ロイド
 0x1016	Vehicroid	ビークロイド
 0x2016	Speedroid	スピードロイド
 0x17	Synchro	シンクロ
@@ -206,7 +206,7 @@
 0x41	LV	LV（レベル）
 0x42	Nordic	極星
 0x3042	Nordic Ascendant	極星天
-0x6042	Nordic Beasts	極星獣
+0x6042	Nordic Beast	極星獣
 0xa042	Nordic Alfar	極星霊
 0x5042	Nordic Relic	極星宝
 0x43	Junk	ジャンク
@@ -246,7 +246,7 @@
 0x5e	N/A
 0x5f	N/A
 0x60	Bamboo Sword	竹光
-0x61	Ninjitsu	忍法
+0x61	Ninjitsu Art	忍法
 0x62	Toon	トゥーン
 0x63	Reactor	リアクター
 0x64	Harpie	ハーピィ
@@ -290,7 +290,7 @@
 0x7d	Hazy	ヘイズ
 0x107d	Hazy Flame	陽炎獣
 0x7e	ZW	ZW（ゼアル・ウェポン）
-0x7f	Utopi	ホープ
+0x7f	Utopic	ホープ
 0x107f	Utopia	希望皇ホープ
 0x80	Duston	ダストン
 0x81	Fire King	炎王
@@ -345,11 +345,12 @@
 0xa7	Artorigus	アルトリウス
 0xa8	Laundsallyn	ランスロット
 0xa9	Fluffal	ファーニマル
-0xaa	Qliphort	クリフォート
+0xaa	Qli	クリフォート
+0x10aa	Apoqliphort	アポクリフォート
 0xab	Deskbot	ブンボーグ
 0xac	Goblin	ゴブリン
 0xad	Frightfur	デストーイ
-0xae	Covenant	契約書
+0xae	Dark Contract	契約書
 0xaf	D/D	DD
 0x10af	D/D/D	DDD
 0xb0	Gottoms	ガトムズ
@@ -439,4 +440,10 @@
 0xf4	Invoked	召喚獣
 0xf5	Gandora	ガンドラ
 0xf6	Skyscraper	摩天楼
+0xf7	Lyrica Luscinia  LL(リリカル・ルスキニア)
+0xf8	N/A	Supreme King  覇王
+0x10f8	Supreme King Gate 覇王門
+0x20f8	Supreme King Servant Dragon 覇王眷竜
+0xf9	True King  真竜
+0xfa	Mythic Radiance Dragon  幻煌龍
 #end
