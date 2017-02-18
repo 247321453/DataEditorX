@@ -114,7 +114,8 @@
 0x200000	Flip      
 0x400000	Toon      
 0x800000	Xyz       
-0x1000000	Pendulum 
+0x1000000	Pendulum  
+0x2000000	SPSummon  
 ##setname
 -1	Custom
 0x0	Archetype

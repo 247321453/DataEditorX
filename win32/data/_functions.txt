@@ -7,7 +7,7 @@
 # Card:		卡片类
 # Effect:	效果类
 # Group:	卡片组类
-# nil:		空类型，也表示空的变量（只说明有意义的空返回值）
+# nil:		空类型，也表示空的变量
 # any:		任意类型
 # 为方便说明，采用类似C的函数表示方法说明
 # []表示有默认值可省略的参数
@@ -363,6 +363,8 @@ RESET_CARD        重置卡片的效果      reset_code为效果owner的卡号
 检查c是否是可破坏的
 ●bool Card.IsSummonableCard(Card c)
 检查c是否是可通常召唤的卡
+●bool Card.IsFusionSummonableCard(Card c)
+检查c是否是可融合召唤的卡
 ●bool Card.IsSpecialSummonable(Card c)
 检查是否可以对c进行特殊召唤手续
 ●bool Card.IsSynchroSummonable(Card c ,Card tuner|nil[, Group mg])
