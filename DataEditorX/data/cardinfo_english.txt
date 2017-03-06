@@ -88,7 +88,7 @@
 0x200000	Divine-Beast
 0x400000	Creator God
 0x800000	Wyrm
-0x10000000  Yokai
+0x1000000	Cybers
 ##type
 0x1	Monster   
 0x2	Spell     
