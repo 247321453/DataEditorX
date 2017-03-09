@@ -65,7 +65,7 @@ DataEditForm.mainMenu.menuitem_about	About
 DataEditForm.mainMenu.menuitem_language	Laguage
 DataEditForm.mainMenu.menuitem_checkupdate	Check Update
 DataEditForm.mainMenu.menuitem_autocheckupdate	Auto Check Update
-DataEditForm.mainMenu.menuitem_github	Sourse Code in GitHub
+DataEditForm.mainMenu.menuitem_github	Source Code in GitHub
 #
 MainForm.mainMenu.menuitem_file	File(&F)
 MainForm.mainMenu.menuitem_open	Open
