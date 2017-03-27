@@ -63,5 +63,7 @@ namespace DataEditorX.Core.Info
         RACE_CREATORGOD = 0x400000,
         ///<summary>幻龙</summary>
         RACE_WYRM = 0x800000,
+        ///<summary>电子界</summary>
+        RACE_CYBERSE = 0x1000000,
     }
 }

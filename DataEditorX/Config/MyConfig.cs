@@ -165,8 +165,12 @@ namespace DataEditorX.Config
         /// 系列名
         /// </summary>
         public const string TAG_SETNAME = "setname";
+        /// <summary>
+        /// 连接标志
+        /// </summary>
+        public const string TAG_MARKER = "link marker";
         #endregion
-        
+
         #region 读取内容
         /// <summary>
         /// 读取字符串值

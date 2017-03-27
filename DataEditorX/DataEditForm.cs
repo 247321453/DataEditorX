@@ -266,6 +266,9 @@ namespace DataEditorX
 			InitComboBox(cb_cardlevel, datacfg.dicCardLevels);
 			//卡片类型
 			InitCheckPanel(pl_cardtype, datacfg.dicCardTypes);
+            //连接标记
+            InitCheckPanel(pl_markers, datacfg.dicLinkMarkers);
+            SetEnabled(pl_markers, false);
 			//效果类型
 			InitCheckPanel(pl_category, datacfg.dicCardcategorys);
 			//系列名
@@ -290,14 +293,29 @@ namespace DataEditorX
 				_cbox.Text = dic[key];
 				_cbox.AutoSize = true;
 				_cbox.Margin = fpanel.Margin;
+                _cbox.CheckedChanged += _cbox_CheckedChanged;
 				//_cbox.Click += PanelOnCheckClick;
 				fpanel.Controls.Add(_cbox);
 			}
 			fpanel.ResumeLayout(false);
 			fpanel.PerformLayout();
 		}
-		//初始化ComboBox
-		void InitComboBox(ComboBox cb, Dictionary<long, string> tempdic)
+
+        private void _cbox_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cbox = (CheckBox)sender;
+            if(cbox.Parent== pl_cardtype)
+            {
+                if ((long)cbox.Tag == (long)Core.Info.CardType.TYPE_LINK)
+                {
+                    SetEnabled(pl_markers, cbox.Checked);
+                    tb_def.ReadOnly = cbox.Checked;
+                }
+            }
+        }
+
+        //初始化ComboBox
+        void InitComboBox(ComboBox cb, Dictionary<long, string> tempdic)
 		{
 			InitComboBox(cb, DataManager.GetKeys(tempdic),
 			             DataManager.GetValues(tempdic));
@@ -357,6 +375,14 @@ namespace DataEditorX
 			}
 			//return strType;
 		}
+        void SetEnabled(FlowLayoutPanel fpl, bool set)
+        {
+            foreach (Control c in fpl.Controls)
+            {
+                CheckBox cbox=(CheckBox)c;
+                cbox.Enabled = set;
+            }
+        }
 		//设置combobox
 		void SetSelect(ComboBox cb, long k)
 		{
@@ -482,13 +508,20 @@ namespace DataEditorX
 			tb_setcode4.Text = setcodes[3].ToString("x");
 			//type,category
 			SetCheck(pl_cardtype, c.type);
-			SetCheck(pl_category, c.category);
+            if (c.IsType(Core.Info.CardType.TYPE_LINK))
+                SetCheck(pl_markers, c.def);
+            else
+                SetCheck(pl_markers, 0);
+            SetCheck(pl_category, c.category);
 			//Pendulum
-			tb_pleft.Text = ((c.level >> 0x18) & 0xff).ToString();
-			tb_pright.Text = ((c.level >> 0x10) & 0xff).ToString();
+			tb_pleft.Text = ((c.level >> 24) & 0xff).ToString();
+			tb_pright.Text = ((c.level >> 16) & 0xff).ToString();
 			//atk，def
 			tb_atk.Text = (c.atk < 0) ? "?" : c.atk.ToString();
-			tb_def.Text = (c.def < 0) ? "?" : c.def.ToString();
+            if (c.IsType(Core.Info.CardType.TYPE_LINK))
+                tb_def.Text = "0";
+            else
+                tb_def.Text = (c.def < 0) ? "?" : c.def.ToString();
 			tb_cardcode.Text = c.id.ToString();
 			tb_cardalias.Text = c.alias.ToString();
 			SetImage(c.id.ToString());
@@ -520,21 +553,28 @@ namespace DataEditorX
 			c.category = GetCheck(pl_category);
 
 			int.TryParse(tb_pleft.Text, out temp);
-			c.level += (temp << 0x18);
+			c.level += (temp << 24);
 			int.TryParse(tb_pright.Text, out temp);
-			c.level += (temp << 0x10);
+			c.level += (temp << 16);
 			if (tb_atk.Text == "?" || tb_atk.Text == "？")
 				c.atk = -2;
 			else if (tb_atk.Text == ".")
 				c.atk = -1;
 			else
 				int.TryParse(tb_atk.Text, out c.atk);
-			if (tb_def.Text == "?" || tb_def.Text == "？")
-				c.def = -2;
-			else if (tb_def.Text == ".")
-				c.def = -1;
-			else
-				int.TryParse(tb_def.Text, out c.def);
+            if (c.IsType(Core.Info.CardType.TYPE_LINK))
+            {
+                c.def = (int)GetCheck(pl_markers);
+            }
+            else
+            {
+                if (tb_def.Text == "?" || tb_def.Text == "？")
+                    c.def = -2;
+                else if (tb_def.Text == ".")
+                    c.def = -1;
+                else
+                    int.TryParse(tb_def.Text, out c.def);
+            }
 			long.TryParse(tb_cardcode.Text, out c.id);
 			long.TryParse(tb_cardalias.Text, out c.alias);
 
@@ -633,16 +673,12 @@ namespace DataEditorX
 
 			return true;
 		}
-		//setcode, 灵摆刻度的搜索
+		//setcode的搜索
 		public bool CardFilter(Card c, Card sc)
 		{
 			bool res = true;
 			if (sc.setcode != 0)
 				res &= c.IsSetCode(sc.setcode & 0xffff);
-			if (sc.GetLeftScale() != 0 )
-				res &= (c.GetLeftScale() == sc.GetLeftScale());
-			if (sc.GetRightScale() != 0 )
-				res &= (c.GetRightScale() == sc.GetRightScale());
 			return res;
 		}
 		//设置卡片列表的结果
@@ -678,7 +714,7 @@ namespace DataEditorX
 				tb_pagenum.Text = pageNum.ToString();
 				cardlist.Clear();
 				lv_cardlist.Items.Clear();
-				SetCard(new Card(0));
+				//SetCard(new Card(0));
 			}
 		}
 		//搜索卡片

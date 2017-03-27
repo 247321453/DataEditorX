@@ -52,14 +52,18 @@ namespace DataEditorX.Core.Info
 		TYPE_FIELD			=0x80000	,
         ///<summary>反击</summary>
 		TYPE_COUNTER		=0x100000	,
-        ///<summary>翻转</summary>
+        ///<summary>反转</summary>
 		TYPE_FLIP			=0x200000	,
         ///<summary>卡通</summary>
 		TYPE_TOON			=0x400000	,
         ///<summary>超量</summary>
 		TYPE_XYZ			=0x800000	,
-        ///<summary>摇摆</summary>
-		TYPE_PENDULUM		=0x1000000	,
+        ///<summary>灵摆</summary>
+		TYPE_PENDULUM		=0x1000000  ,
+        ///<summary>特殊召唤</summary>
+		TYPE_SPSUMMON       =0x2000000  ,
+        ///<summary>连接</summary>
+		TYPE_LINK           =0x4000000  ,
 
-	}
+    }
 }

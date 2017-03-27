@@ -36,6 +36,7 @@ namespace DataEditorX.Config
                 dicCardRules = new Dictionary<long, string>();
                 dicSetnames = new Dictionary<long, string>();
                 dicCardTypes = new Dictionary<long, string>();
+                dicLinkMarkers = new Dictionary<long, string>();
                 dicCardcategorys = new Dictionary<long, string>();
                 dicCardAttributes = new Dictionary<long, string>();
                 dicCardRaces = new Dictionary<long, string>();
@@ -47,6 +48,7 @@ namespace DataEditorX.Config
             dicCardRules = DataManager.Read(text, MyConfig.TAG_RULE);
             dicSetnames = DataManager.Read(text, MyConfig.TAG_SETNAME);
             dicCardTypes = DataManager.Read(text, MyConfig.TAG_TYPE);
+            dicLinkMarkers = DataManager.Read(text, MyConfig.TAG_MARKER);
             dicCardcategorys = DataManager.Read(text, MyConfig.TAG_CATEGORY);
             dicCardAttributes = DataManager.Read(text, MyConfig.TAG_ATTRIBUTE);
             dicCardRaces = DataManager.Read(text, MyConfig.TAG_RACE);
@@ -77,6 +79,10 @@ namespace DataEditorX.Config
         /// 卡片类型
         /// </summary>
         public Dictionary<long, string> dicCardTypes = null;
+        /// <summary>
+        /// 连接标志
+        /// </summary>
+        public Dictionary<long, string> dicLinkMarkers = null;
         /// <summary>
         /// 效果类型
         /// </summary>

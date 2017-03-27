@@ -123,11 +123,11 @@ namespace DataEditorX.Core
         }
 		public long GetLeftScale()
 		{
-			return (this.level >> 0x18) & 0xff;
+			return (this.level >> 24) & 0xff;
 		}
 		public long GetRightScale()
 		{
-			return (this.level >> 0x10) & 0xff;
+			return (this.level >> 16) & 0xff;
 		}
         #endregion
 

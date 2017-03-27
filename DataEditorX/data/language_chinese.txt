@@ -15,6 +15,7 @@ CodeEditForm.mainMenu.menuitem_about	关于
 #
 DataEditForm.btn_img	导入图片
 DataEditForm.lb_types	卡片类型
+DataEditForm.lb_markers	连接标记
 DataEditForm.lb_tiptexts	脚本提示文字
 DataEditForm.lb_categorys	效果分类
 DataEditForm.lb_cardcode	卡片密码
