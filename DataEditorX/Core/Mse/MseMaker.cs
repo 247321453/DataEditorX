@@ -653,7 +653,7 @@ namespace DataEditorX.Core.Mse
 			                     GetValue(content, TAG_TYPE2),
 			                     GetValue(content, TAG_TYPE3),
 			                     GetValue(content, TAG_TYPE4),
-								 GetValue(content, TAG_TYPE5));
+					     GetValue(content, TAG_TYPE5));
 			long t = GetSpellTrapType(GetValue(content, TAG_LEVEL));
 			//不是魔法，陷阱卡片的星数
 			if (!(c.IsType(CardType.TYPE_SPELL)
