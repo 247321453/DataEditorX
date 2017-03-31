@@ -1,0 +1,82 @@
+﻿###########################
+# Magic Set Editor 2
+# Italian
+# \t = Tab \n = Enter [:space:] = Space
+########################### Chs 2 Cht 
+cn2tw = false
+########################### Setting
+maxcount = 0
+imagepath = ./Images
+########################### 中间图
+width = 544
+height = 544
+pwidth = 544
+pheight= 544
+########################### Spell/Trap
+spell = [Carta Magia%%]
+trap = [Carta Trappola%%]
+############################ language,style,other setting
+head = mse version: 0.3.8\r\ngame: yugioh\r\nstylesheet: standard\r\nset info:\r\n\tlanguage: IT\r\n\tedition: \r\n\tST mark is text: yes\r\n\tpendulum image is small: no
+end = version control:\n\ttype: none\napprentice code: 
+############################ Text
+text = Pendulum Text :\n%ptext%\nMonster Text :\n%text%\n
+############################
+pendulum-text = \[ Effetto Pendulum \]\s*\n(?:-n/a-)*([\S\s]*?)\n---
+monster-text = (?:Effetto Mostro|Testo Carta) \]\s*\n([\S\s]*)
+########################### Replace
+#replace = \s <sym-auto>^</sym-auto>
+#replace = ([A-Z]) <i>$1</i>
+###########################
+##race
+race 0x1 Guerriero
+race 0x2 Incantatore
+race 0x4 Fata
+race 0x8 Demone
+race 0x10 Zombie
+race 0x20 Macchina
+race 0x40 Acqua
+race 0x80 Pyro
+race 0x100 Roccia
+race 0x200 Bestia Alata
+race 0x400 Pianta
+race 0x800 Insetto
+race 0x1000 Tuono
+race 0x2000 Drago
+race 0x4000 Bestia
+race 0x8000 Guerriero-Bestia
+race 0x10000 Dinosauro
+race 0x20000 Pesce
+race 0x40000 Serpente Marino
+race 0x80000 Rettile
+race 0x100000 Psichico
+race 0x200000 Bestia-Divinità
+race 0x400000 Creatore Divino
+race 0x800000 Wyrm
+###########################
+##type
+type 0x1 Mostro   
+type 0x2 Magia     
+type 0x4 Trappola     
+type 0x8 N/A
+type 0x10 Normale   
+type 0x20 Effetto    
+type 0x40 Fusione    
+type 0x80 Rituale   
+type 0x100 T-Monster 
+type 0x200 Spirit
+type 0x400 Union	
+type 0x800 Gemello    
+type 0x1000 Tuner     
+type 0x2000 Synchro   
+type 0x4000 Segna-Mostro   
+type 0x8000 N/A
+type 0x10000 Quick-Play
+type 0x20000 Continuous
+type 0x40000 Equip     
+type 0x80000 Field     
+type 0x100000 Counter   
+type 0x200000 Scoperta      
+type 0x400000 Toon      
+type 0x800000 Xyz       
+type 0x1000000 Pendulum 
+##########################

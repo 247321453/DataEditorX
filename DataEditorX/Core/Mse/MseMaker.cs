@@ -42,6 +42,7 @@ namespace DataEditorX.Core.Mse
 		public const string TAG_TYPE3 = "type 3";
 		/// <summary>效果3</summary>
 		public const string TAG_TYPE4 = "type 4";
+		public const string TAG_TYPE5 = "type 5";
 		public const string TAG_TEXT = "rule text";
 		public const string TAG_ATK = "attack";
 		public const string TAG_DEF = "defense";
@@ -416,6 +417,7 @@ namespace DataEditorX.Core.Mse
 			sb.AppendLine(GetLine(TAG_TYPE2, cn2tw(types[1])));
 			sb.AppendLine(GetLine(TAG_TYPE3, cn2tw(types[2])));
 			sb.AppendLine(GetLine(TAG_TYPE4, cn2tw(types[3])));
+			sb.AppendLine(GetLine(TAG_TYPE5, cn2tw(types[4])));
 			if(cardpack!=null){
 				sb.AppendLine(GetLine(TAG_NUMBER, cardpack.pack_id));
 				if(rarity){
@@ -650,7 +652,8 @@ namespace DataEditorX.Core.Mse
 			c.type = GetCardType(GetValue(content, TAG_CARDTYPE), tmp,
 			                     GetValue(content, TAG_TYPE2),
 			                     GetValue(content, TAG_TYPE3),
-			                     GetValue(content, TAG_TYPE4));
+			                     GetValue(content, TAG_TYPE4),
+								 GetValue(content, TAG_TYPE5));
 			long t = GetSpellTrapType(GetValue(content, TAG_LEVEL));
 			//不是魔法，陷阱卡片的星数
 			if (!(c.IsType(CardType.TYPE_SPELL)
