@@ -615,18 +615,16 @@ namespace DataEditorX.Core.Mse
 			return type;
 		}
 		//卡片类型
-		long GetCardType(string cardtype, string level, string type1,
-		                 string type2, string type3)
+		long GetCardType(string cardtype, string level, params string[] types)
 		{
 			long type = 0;
 			//魔法陷阱
 			type |= GetSpellTrapType(level);
 			//怪兽
 			type |= GetMonsterType(cardtype);
-			//type2-4是识别怪兽效果类型
-			type |= GetTypeInt(type1);
-			type |= GetTypeInt(type2);
-			type |= GetTypeInt(type3);
+			//types是识别怪兽效果类型
+			foreach(string typ in types)
+				type |= GetTypeInt(typ);
 			return type;
 		}
 
