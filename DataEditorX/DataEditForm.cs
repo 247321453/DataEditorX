@@ -1339,7 +1339,9 @@ namespace DataEditorX
 				{
 					tasker.SetTask(MyTask.ExportData,
 					               GetCardList(false),
-					               ygopath.gamepath, dlg.FileName);
+					               ygopath.gamepath, 
+					               dlg.FileName,
+					               GetOpenFile());
 					Run(LanguageHelper.GetMsg(LMSG.ExportData));
 				}
 			}

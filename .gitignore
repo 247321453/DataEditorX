@@ -229,3 +229,4 @@ pip-log.txt
 #Mr Developer
 .mr.developer.cfg
 /win32/*.cdb
+/win32/data/history.txt

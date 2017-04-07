@@ -334,7 +334,7 @@ namespace DataEditorX.Core
 		#endregion
 
 		#region 导出数据
-		public void ExportData(string path, string zipname)
+		public void ExportData(string path, string zipname, string _cdbfile)
 		{
 			int i = 0;
 			Card[] cards = cardlist;
@@ -358,7 +358,7 @@ namespace DataEditorX.Core
 				File.Delete(zipname);
 			using (ZipStorer zips = ZipStorer.Create(zipname, ""))
 			{
-				zips.AddFile(cdbfile, name + ".cdb", "");
+				zips.AddFile(cdbfile,  Path.GetFileNameWithoutExtension(_cdbfile) + ".cdb", "");
 				if (File.Exists(readme))
 					zips.AddFile(readme, "readme_" + name + ".txt", "");
 				if (File.Exists(deckydk))
@@ -393,7 +393,7 @@ namespace DataEditorX.Core
 				case MyTask.ExportData:
 					if (mArgs != null && mArgs.Length >= 2)
 					{
-						ExportData(mArgs[0], mArgs[1]);
+						ExportData(mArgs[0], mArgs[1], mArgs[2]);
 					}
 					break;
 				case MyTask.CheckUpdate:
