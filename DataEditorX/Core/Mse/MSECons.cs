@@ -66,5 +66,9 @@ namespace DataEditorX.Core.Mse
         public const string CARD_SPELL = "spell card";
         /// <summary>陷阱</summary>
         public const string CARD_TRAP = "trap card";
+        /// <summary>
+        /// link
+        /// </summary>
+        public const string CARD_LINK = "link monster";
     }
 }

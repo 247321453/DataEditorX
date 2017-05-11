@@ -104,6 +104,7 @@
     <Compile Include="Core\Card.cs" />
     <Compile Include="Core\Info\CardAttribute.cs" />
     <Compile Include="Core\CardEdit.cs" />
+    <Compile Include="Core\Info\CardLink.cs" />
     <Compile Include="Core\Info\CardRace.cs" />
     <Compile Include="Core\Info\CardRule.cs" />
     <Compile Include="Core\Info\CardType.cs" />

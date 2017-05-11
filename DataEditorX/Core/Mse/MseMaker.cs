@@ -57,6 +57,16 @@ namespace DataEditorX.Core.Mse
 		public const int UNKNOWN_ATKDEF_VALUE = -2;
 		public const string TAG_REP_TEXT = "%text%";
 		public const string TAG_REP_PTEXT = "%ptext%";
+
+		public const string TAG_Link_Marker_Up = "Link Marker Up";
+		public const string TAG_Link_Marker_UL = "Link Marker UL";
+		public const string TAG_Link_Marker_UR = "Link Marker UR";
+		public const string TAG_Link_Marker_Down = "Link Marker Down";
+		public const string TAG_Link_Marker_DL = "Link Marker DL";
+		public const string TAG_Link_Marker_DR = "Link Marker DR";
+		public const string TAG_Link_Marker_Left = "Link Marker Left";
+		public const string TAG_Link_Marker_Right = "Link Marker Right";
+		public const string TAG_Link_Number = "link number";
 		#endregion
 
 		#region 成员，初始化
@@ -271,7 +281,9 @@ namespace DataEditorX.Core.Mse
 				MseCardType.CARD_NORMAL, "", "", "", "" };
 			if (c.IsType(CardType.TYPE_MONSTER))
 			{//卡片类型和第1效果
-				if (c.IsType(CardType.TYPE_XYZ))
+				if(c.IsType(CardType.TYPE_LINK)){
+					types[0] = MseCardType.CARD_LINK;
+				}else if (c.IsType(CardType.TYPE_XYZ))
 				{
 					types[0] = MseCardType.CARD_XYZ;
 					types[1] = GetType(CardType.TYPE_XYZ);
@@ -393,7 +405,7 @@ namespace DataEditorX.Core.Mse
 					if (c.IsType(CardType.TYPE_SPELL) || c.IsType(CardType.TYPE_TRAP))
 						sw.WriteLine(getSpellTrap(c, jpg, c.IsType(CardType.TYPE_SPELL), cardpack,rarity));
 					else
-						sw.WriteLine(getMonster(c, jpg, c.IsType(CardType.TYPE_PENDULUM),cardpack,rarity));
+						sw.WriteLine(getMonster(c, jpg, cardpack,rarity));
 				}
 				sw.WriteLine(cfg.end);
 				sw.Close();
@@ -401,8 +413,19 @@ namespace DataEditorX.Core.Mse
 
 			return list;
 		}
+		int getLinkNumber(long link){
+			string str = Convert.ToString(link, 2);
+			char[] cs  = str.ToCharArray();
+			int i = 0;
+			foreach(char c in cs){
+				if(c == '1'){
+					i++;
+				}
+			}
+			return i;
+		}
 		//怪兽，pendulum怪兽
-		string getMonster(Card c, string img, bool isPendulum,CardPack cardpack=null,bool rarity=true)
+		string getMonster(Card c, string img,CardPack cardpack=null,bool rarity=true)
 		{
 			StringBuilder sb = new StringBuilder();
 			string[] types = GetTypes(c);
@@ -424,27 +447,56 @@ namespace DataEditorX.Core.Mse
 					sb.AppendLine(GetLine(TAG_RARITY, cardpack.getMseRarity()));
 				}
 			}
-			if (isPendulum)//P怪兽
-			{
-				string text = GetDesc(c.desc, cfg.regx_monster);
-				if (string.IsNullOrEmpty(text))
-					text = c.desc;
-				sb.AppendLine("	" + TAG_TEXT + ":");
-				//sb.AppendLine(cfg.regx_monster + ":" + cfg.regx_pendulum);
-				sb.AppendLine("		" + ReText(reItalic(text)));
-				sb.AppendLine(GetLine(TAG_PENDULUM, "medium"));
-				sb.AppendLine(GetLine(TAG_PSCALE1, ((c.level >> 0x18) & 0xff).ToString()));
-				sb.AppendLine(GetLine(TAG_PSCALE2, ((c.level >> 0x10) & 0xff).ToString()));
-				sb.AppendLine("	" + TAG_PEND_TEXT + ":");
-				sb.AppendLine("		" + ReText(reItalic(GetDesc(c.desc, cfg.regx_pendulum))));
-			}
-			else//一般怪兽
-			{
+			if(c.IsType(CardType.TYPE_LINK)){
+				if(CardLink.isLink(c.def, CardLink.DownLeft)){
+					sb.AppendLine(GetLine(TAG_Link_Marker_DL, "yes"));
+				}
+				if(CardLink.isLink(c.def, CardLink.Down)){
+					sb.AppendLine(GetLine(TAG_Link_Marker_Down, "yes"));
+				}
+				if(CardLink.isLink(c.def, CardLink.DownRight)){
+					sb.AppendLine(GetLine(TAG_Link_Marker_DR, "yes"));
+				}
+				if(CardLink.isLink(c.def, CardLink.UpLeft)){
+					sb.AppendLine(GetLine(TAG_Link_Marker_UL, "yes"));
+				}
+				if(CardLink.isLink(c.def, CardLink.Up)){
+					sb.AppendLine(GetLine(TAG_Link_Marker_Up, "yes"));
+				}
+				if(CardLink.isLink(c.def, CardLink.UpRight)){
+					sb.AppendLine(GetLine(TAG_Link_Marker_UR, "yes"));
+				}
+				if(CardLink.isLink(c.def, CardLink.Left)){
+					sb.AppendLine(GetLine(TAG_Link_Marker_Left, "yes"));
+				}
+				if(CardLink.isLink(c.def, CardLink.Right)){
+					sb.AppendLine(GetLine(TAG_Link_Marker_Right, "yes"));
+				}
+				sb.AppendLine(GetLine(TAG_Link_Number, ""+getLinkNumber(c.def)));
 				sb.AppendLine("	" + TAG_TEXT + ":");
 				sb.AppendLine("		" + ReText(reItalic(c.desc)));
+			}else{
+				if (c.IsType(CardType.TYPE_PENDULUM))//P怪兽
+				{
+					string text = GetDesc(c.desc, cfg.regx_monster);
+					if (string.IsNullOrEmpty(text))
+						text = c.desc;
+					sb.AppendLine("	" + TAG_TEXT + ":");
+					//sb.AppendLine(cfg.regx_monster + ":" + cfg.regx_pendulum);
+					sb.AppendLine("		" + ReText(reItalic(text)));
+					sb.AppendLine(GetLine(TAG_PENDULUM, "medium"));
+					sb.AppendLine(GetLine(TAG_PSCALE1, ((c.level >> 0x18) & 0xff).ToString()));
+					sb.AppendLine(GetLine(TAG_PSCALE2, ((c.level >> 0x10) & 0xff).ToString()));
+					sb.AppendLine("	" + TAG_PEND_TEXT + ":");
+					sb.AppendLine("		" + ReText(reItalic(GetDesc(c.desc, cfg.regx_pendulum))));
+				}else//一般怪兽
+				{
+					sb.AppendLine("	" + TAG_TEXT + ":");
+					sb.AppendLine("		" + ReText(reItalic(c.desc)));
+				}
+				sb.AppendLine(GetLine(TAG_DEF, (c.def < 0) ? UNKNOWN_ATKDEF : c.def.ToString()));
 			}
 			sb.AppendLine(GetLine(TAG_ATK, (c.atk < 0) ? UNKNOWN_ATKDEF : c.atk.ToString()));
-			sb.AppendLine(GetLine(TAG_DEF, (c.def < 0) ? UNKNOWN_ATKDEF : c.def.ToString()));
 
 			sb.AppendLine(GetLine(TAG_CODE, c.idString));
 			return sb.ToString();
@@ -651,7 +703,7 @@ namespace DataEditorX.Core.Mse
 			                     GetValue(content, TAG_TYPE2),
 			                     GetValue(content, TAG_TYPE3),
 			                     GetValue(content, TAG_TYPE4),
-					     GetValue(content, TAG_TYPE5));
+			                     GetValue(content, TAG_TYPE5));
 			long t = GetSpellTrapType(GetValue(content, TAG_LEVEL));
 			//不是魔法，陷阱卡片的星数
 			if (!(c.IsType(CardType.TYPE_SPELL)
