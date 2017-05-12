@@ -14,23 +14,23 @@ CodeEditForm.mainMenu.menuitem_help	Help(&H)
 CodeEditForm.mainMenu.menuitem_about	About
 DataEditForm.mainMenu.menuitem_autoreturn	(*)Text auto return
 #
-DataEditForm.btn_img	Import Img
-DataEditForm.lb_types	Card type
-DataEditForm.lb_tiptexts	Script texts
-DataEditForm.lb_categorys	Category
-DataEditForm.lb_cardcode	Code
-DataEditForm.lb_cardalias	Alias
-DataEditForm.lb_atkdef	ATK/DEF
-DataEditForm.lb_pleft_right	Pscale
-DataEditForm.btn_reset	Reset
-DataEditForm.btn_lua	Script
-DataEditForm.btn_serach	Search
-DataEditForm.btn_del	Delete
-DataEditForm.btn_undo	Undo
-DataEditForm.btn_mod	Modify
-DataEditForm.btn_add	Add
-#DataEditForm.btn_PageDown	Page Down
-#DataEditForm.btn_PageUp	Page Up
+DataEditForm.pl_bottom.btn_img	Import Img
+DataEditForm.pl_main.lb_types	Card type
+DataEditForm.pl_main.lb_tiptexts	Script texts
+DataEditForm.pl_main.lb_categorys	Category
+DataEditForm.pl_main.lb_cardcode	Code
+DataEditForm.pl_main.lb_cardalias	Alias
+DataEditForm.pl_main.lb_atkdef	ATK/DEF
+DataEditForm.pl_main.lb_pleft_right	Pscale
+DataEditForm.pl_bottom.btn_reset	Reset
+DataEditForm.pl_bottom.btn_lua	Script
+DataEditForm.pl_bottom.btn_serach	Search
+DataEditForm.pl_bottom.btn_del	Delete
+DataEditForm.pl_bottom.btn_undo	Undo
+DataEditForm.pl_bottom.btn_mod	Modify
+DataEditForm.pl_bottom.btn_add	Add
+#DataEditForm.pl_bottom.btn_PageDown	Page Down
+#DataEditForm.pl_bottom.btn_PageUp	Page Up
 DataEditForm.lv_cardlist.0	Card Code
 DataEditForm.lv_cardlist.1	Card Name
 DataEditForm.mainMenu.menuitem_file	File(&F)

@@ -86,7 +86,7 @@ namespace DataEditorX
 			this.dockPanel1.Location = new System.Drawing.Point(0, 25);
 			this.dockPanel1.Margin = new System.Windows.Forms.Padding(0);
 			this.dockPanel1.Name = "dockPanel1";
-			this.dockPanel1.Size = new System.Drawing.Size(864, 617);
+			this.dockPanel1.Size = new System.Drawing.Size(864, 597);
 			dockPanelGradient1.EndColor = System.Drawing.SystemColors.ControlLight;
 			dockPanelGradient1.StartColor = System.Drawing.SystemColors.ControlLight;
 			autoHideStripSkin1.DockStripGradient = dockPanelGradient1;
@@ -335,7 +335,7 @@ namespace DataEditorX
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.BackColor = System.Drawing.SystemColors.Control;
-			this.ClientSize = new System.Drawing.Size(864, 642);
+			this.ClientSize = new System.Drawing.Size(864, 622);
 			this.Controls.Add(this.dockPanel1);
 			this.Controls.Add(this.mainMenu);
 			this.IsMdiContainer = true;

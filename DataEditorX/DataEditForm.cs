@@ -130,7 +130,7 @@ namespace DataEditorX
 		//窗体第一次加载
 		void DataEditFormLoad(object sender, EventArgs e)
 		{
-			InitListRows();//调整卡片列表的函数
+			//InitListRows();//调整卡片列表的函数
 			HideMenu();//是否需要隐藏菜单
 			SetTitle();//设置标题
 			//加载
@@ -347,7 +347,8 @@ namespace DataEditorX
 		//计算list最大行数
 		void InitListRows()
 		{
-			if (lv_cardlist.Items.Count == 0)
+			bool addTest = lv_cardlist.Items.Count == 0;
+			if (addTest)
 			{
 				ListViewItem item = new ListViewItem();
 				item.Text = "Test";
@@ -357,11 +358,15 @@ namespace DataEditorX
 			int itemH = lv_cardlist.Items[0].GetBounds(ItemBoundsPortion.ItemOnly).Height;
 			if (itemH > 0)
 			{
-				int n = (lv_cardlist.Height - headH - 4) / itemH;
-				if (n > 0)
+				int n = (lv_cardlist.Height - headH) / itemH;
+				if (n > 0){
 					MaxRow = n;
+				}
+				//MessageBox.Show("height="+lv_cardlist.Height+",item="+itemH+",head="+headH+",max="+MaxRow);
 			}
-			lv_cardlist.Items.Clear();
+			if(addTest){
+				lv_cardlist.Items.Clear();
+			}
 			if (MaxRow < 10)
 				MaxRow = 20;
 		}
@@ -1768,6 +1773,10 @@ namespace DataEditorX
 			}else{
 				text2LinkMarks(tb_link.Text);
 			}
+		}
+		void DataEditFormSizeChanged(object sender, EventArgs e)
+		{
+			InitListRows();
 		}
 		
 	}
