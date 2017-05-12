@@ -40,8 +40,7 @@ namespace DataEditorX.Core
 			if(rarity.Equals("rare") ||rarity.Equals("normal rare"))
 			{
 				return "rare";
-			}
-			else if(rarity.Contains("parallel") || rarity.Contains("Kaiba") || rarity.Contains("duel terminal"))
+			}else if(rarity.Contains("parallel") || rarity.Contains("Kaiba") || rarity.Contains("duel terminal"))
 			{
 				return "parallel rare";
 			}
@@ -89,7 +88,10 @@ namespace DataEditorX.Core
 			{
 				return "millenium rare";
 			}
-			return this.rarity.Split('/')[0];
+			if(this.rarity.Contains("/")){
+				return this.rarity.Split('/')[0];
+			}
+			return this.rarity;
 		}
 	}
 }

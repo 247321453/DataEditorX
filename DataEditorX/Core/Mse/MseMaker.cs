@@ -278,7 +278,7 @@ namespace DataEditorX.Core.Mse
 		{
 			//卡片类型，效果1，效果2，效果3
 			string[] types = new string[] {
-				MseCardType.CARD_NORMAL, "", "", "", "" };
+				MseCardType.CARD_NORMAL, "", "", "", ""};
 			if (c.IsType(CardType.TYPE_MONSTER))
 			{//卡片类型和第1效果
 				if(c.IsType(CardType.TYPE_LINK)){

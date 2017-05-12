@@ -230,3 +230,5 @@ pip-log.txt
 .mr.developer.cfg
 /win32/*.cdb
 /win32/data/history.txt
+/win32/*.mse-set
+/win32/set
