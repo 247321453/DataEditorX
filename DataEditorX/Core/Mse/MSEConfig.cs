@@ -49,6 +49,10 @@ namespace DataEditorX.Core.Mse
 		public const string TAG_IMAGE = "imagepath";
 		public const string TAG_REPALCE = "replace";
 		public const string TAG_TEXT = "text";
+		
+		public const string TAG_NO_TEN = "no10";
+		
+		public const string TAG_NO_START_CARDS="no_star_cards";
 
 		public const string TAG_REP = "%%";
 		public const string SEP_LINE = " ";
@@ -108,6 +112,19 @@ namespace DataEditorX.Core.Mse
 				}
 				else if (line.StartsWith(TAG_PEND_HEIGHT)){
 					pheight=ConfHelper.getIntegerValue(line,0);
+				}
+				else if(line.StartsWith(TAG_NO_TEN)){
+					no10 = ConfHelper.getBooleanValue(line);
+				}else if(line.StartsWith(TAG_NO_START_CARDS)){
+					string val = ConfHelper.getValue(line);
+					string[] cs = val.Split(',');
+					noStartCards=new long[cs.Length];
+					int i=0;
+					foreach(string str in cs){
+						long l = 0;
+						long.TryParse(str, out l);
+						noStartCards[i++] = l;
+					}
 				}
 				else if (line.StartsWith(TAG_IMAGE))
 				{
@@ -169,6 +186,10 @@ namespace DataEditorX.Core.Mse
 		public int pwidth;
 		public int pheight;
 		
+		//没星星的卡
+		public long[] noStartCards;
+		//第10期
+		public bool no10;
 		//每个存档最大数
 		public int maxcount;
 		//图片路径

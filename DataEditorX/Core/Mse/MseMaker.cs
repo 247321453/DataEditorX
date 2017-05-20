@@ -285,7 +285,7 @@ namespace DataEditorX.Core.Mse
 			}
 			if (c.IsType(CardType.TYPE_MONSTER))
 			{
-				CardType[] cardTypes = CardTypes.GetMonsterTypes(c.type);
+				CardType[] cardTypes = CardTypes.GetMonsterTypes(c.type, cfg.no10);
 				int count = cardTypes.Length;
 				for(int i=0; i<count && i<MAX_TYPE; i++){
 					types[i+1] = GetType(cardTypes[i]);
@@ -392,7 +392,18 @@ namespace DataEditorX.Core.Mse
 			sb.AppendLine(GetLine(TAG_CARDTYPE, types[0]));
 			sb.AppendLine(GetLine(TAG_NAME, reItalic(c.name)));
 			sb.AppendLine(GetLine(TAG_ATTRIBUTE, GetAttribute(c.attribute)));
-			sb.AppendLine(GetLine(TAG_LEVEL, GetStar(c.level)));
+			bool noStar = false;
+			if(cfg.noStartCards != null){
+				foreach(long id in cfg.noStartCards){
+					if(c.alias == id || c.id == id){
+						noStar = true;
+						break;
+					}
+				}
+			}
+			if(!noStar){
+				sb.AppendLine(GetLine(TAG_LEVEL, GetStar(c.level)));
+			}
 			sb.AppendLine(GetLine(TAG_IMAGE, img));
 			sb.AppendLine(GetLine(TAG_TYPE1, cn2tw(race)));
 			sb.AppendLine(GetLine(TAG_TYPE2, cn2tw(types[1])));
