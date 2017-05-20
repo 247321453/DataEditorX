@@ -322,6 +322,9 @@ namespace DataEditorX.Core.Mse
 					}
 					else{
 						types[0] = MseCardType.CARD_NORMAL;
+						if(cardTypes.Length==1){
+							//xxx/通常
+						}
 					}
 				}
 			}

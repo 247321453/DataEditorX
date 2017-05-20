@@ -112,7 +112,8 @@ namespace DataEditorX.Core.Info
 		};
 		public static readonly CardType[] TYPE4 ={
 			CardType.TYPE_TUNER,
-			CardType.TYPE_EFFECT
+			CardType.TYPE_EFFECT,
+//			CardType.TYPE_NORMAL,
 		};
 		public static CardType[] GetMonsterTypes(long type){
 			var list = new List<CardType>(5);
