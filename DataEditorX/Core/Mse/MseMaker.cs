@@ -277,20 +277,22 @@ namespace DataEditorX.Core.Mse
 		public string[] GetTypes(Card c)
 		{
 			//卡片类型，效果1，效果2，效果3
-			string[] types = {MseCardType.CARD_NORMAL, "", "", "", "",""};
+			int MAX_TYPE= 5;
+			var types = new string[MAX_TYPE+1];
+			types[0] = MseCardType.CARD_NORMAL;
+			for(int i=1;i<types.Length;i++){
+				types[i]="";
+			}
 			if (c.IsType(CardType.TYPE_MONSTER))
 			{
 				CardType[] cardTypes = CardTypes.GetMonsterTypes(c.type);
 				int count = cardTypes.Length;
-				for(int i=0; i<count && i<4; i++){
+				for(int i=0; i<count && i<MAX_TYPE; i++){
 					types[i+1] = GetType(cardTypes[i]);
 				}
 				if(cardTypes.Length>0){
 					if(c.IsType(CardType.TYPE_LINK)){
 						types[0] = MseCardType.CARD_LINK;
-					}else if (c.IsType(CardType.TYPE_XYZ))
-					{
-						types[0] = MseCardType.CARD_XYZ;
 					}
 					else if (c.IsType(CardType.TYPE_TOKEN))
 					{
@@ -309,6 +311,10 @@ namespace DataEditorX.Core.Mse
 					else if (c.IsType(CardType.TYPE_SYNCHRO))
 					{
 						types[0] = MseCardType.CARD_SYNCHRO;
+					}
+					else if (c.IsType(CardType.TYPE_XYZ))
+					{
+						types[0] = MseCardType.CARD_XYZ;
 					}
 					else if (c.IsType(CardType.TYPE_EFFECT))
 					{

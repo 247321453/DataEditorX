@@ -73,11 +73,12 @@ namespace DataEditorX.Core.Info
 	public static class CardTypes{
 		public static readonly CardType[] TYPE1 = {
 			CardType.TYPE_LINK,
+			CardType.TYPE_RITUAL,
+			CardType.TYPE_FUSION,
 			CardType.TYPE_XYZ,
 			CardType.TYPE_SYNCHRO,
 			CardType.TYPE_PENDULUM,
-			CardType.TYPE_RITUAL,
-			CardType.TYPE_FUSION,
+					
 			CardType.TYPE_SPIRIT,
 			CardType.TYPE_UNION,
 			CardType.TYPE_DUAL,
@@ -85,8 +86,10 @@ namespace DataEditorX.Core.Info
 			CardType.TYPE_TOON,
 		};
 		public static readonly CardType[] TYPE2 = {
-			CardType.TYPE_PENDULUM,
+			CardType.TYPE_XYZ,
 			CardType.TYPE_SYNCHRO,
+			CardType.TYPE_PENDULUM,
+			
 			CardType.TYPE_SPIRIT,
 			CardType.TYPE_UNION,
 			CardType.TYPE_DUAL,
@@ -94,17 +97,27 @@ namespace DataEditorX.Core.Info
 			CardType.TYPE_TOON
 		};
 		public static readonly CardType[] TYPE3 ={
+			CardType.TYPE_SYNCHRO,
+			CardType.TYPE_PENDULUM,
+			
+			CardType.TYPE_SPIRIT,
+			CardType.TYPE_UNION,
+			CardType.TYPE_DUAL,
+			CardType.TYPE_FLIP,
+			CardType.TYPE_TOON,
+		};
+		public static readonly CardType[] TYPE4 ={
 			CardType.TYPE_TUNER,
 			CardType.TYPE_EFFECT
 		};
 		public static CardType[] GetMonsterTypes(long type){
-			var list = new List<CardType>(4);
-			var typeList=new List<CardType[]>(4);
+			var list = new List<CardType>(5);
+			var typeList=new List<CardType[]>(5);
 			typeList.Add(TYPE1);
 			typeList.Add(TYPE2);
 			typeList.Add(TYPE3);
-			typeList.Add(TYPE3);
-			typeList.Add(TYPE3);
+			typeList.Add(TYPE4);
+			typeList.Add(TYPE4);
 			int count = typeList.Count;
 			for(int i=0;i<count;i++){
 				CardType[] types = typeList[i];
