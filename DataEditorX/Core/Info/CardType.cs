@@ -84,6 +84,7 @@ namespace DataEditorX.Core.Info
 			CardType.TYPE_DUAL,
 			CardType.TYPE_FLIP,
 			CardType.TYPE_TOON,
+			CardType.TYPE_SPSUMMON,
 		};
 		public static readonly CardType[] TYPE2 = {
 			CardType.TYPE_XYZ,
@@ -94,7 +95,8 @@ namespace DataEditorX.Core.Info
 			CardType.TYPE_UNION,
 			CardType.TYPE_DUAL,
 			CardType.TYPE_FLIP,
-			CardType.TYPE_TOON
+			CardType.TYPE_TOON,
+			CardType.TYPE_SPSUMMON,
 		};
 		public static readonly CardType[] TYPE3 ={
 			CardType.TYPE_SYNCHRO,
@@ -105,6 +107,8 @@ namespace DataEditorX.Core.Info
 			CardType.TYPE_DUAL,
 			CardType.TYPE_FLIP,
 			CardType.TYPE_TOON,
+			CardType.TYPE_SPSUMMON,
+			
 		};
 		public static readonly CardType[] TYPE4 ={
 			CardType.TYPE_TUNER,
