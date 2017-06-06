@@ -72,6 +72,7 @@ namespace DataEditorX.Core.Info
 	}
 	public static class CardTypes{
 		public static readonly CardType[] TYPE1 = {
+			CardType.TYPE_TOKEN,
 			CardType.TYPE_LINK,
 			CardType.TYPE_RITUAL,
 			CardType.TYPE_FUSION,
@@ -86,6 +87,7 @@ namespace DataEditorX.Core.Info
 			CardType.TYPE_TOON,
 		};
 		public static readonly CardType[] TYPE1_10 = {
+			CardType.TYPE_TOKEN,
 			CardType.TYPE_LINK,
 			CardType.TYPE_RITUAL,
 			CardType.TYPE_FUSION,
