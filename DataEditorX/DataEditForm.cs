@@ -354,21 +354,23 @@ namespace DataEditorX
 				item.Text = "Test";
 				lv_cardlist.Items.Add(item);
 			}
-			int headH = lv_cardlist.Items[0].GetBounds(ItemBoundsPortion.ItemOnly).Y;
 			int itemH = lv_cardlist.Items[0].GetBounds(ItemBoundsPortion.ItemOnly).Height;
 			if (itemH > 0)
 			{
-				int n = (lv_cardlist.Height - headH) / itemH;
+				int n = lv_cardlist.Height/ itemH;
 				if (n > 0){
 					MaxRow = n;
 				}
-				//MessageBox.Show("height="+lv_cardlist.Height+",item="+itemH+",head="+headH+",max="+MaxRow);
+				//MessageBox.Show("height="+lv_cardlist.Height+",item="+itemH+",max="+MaxRow);
+			}
+			if(MaxRow < 1){
+				MaxRow = 1;
 			}
 			if(addTest){
 				lv_cardlist.Items.Clear();
+			}else{
+				Search(true);
 			}
-			if (MaxRow < 10)
-				MaxRow = 20;
 		}
 		//设置checkbox
 		void SetCheck(FlowLayoutPanel fpl, long number)
@@ -738,7 +740,7 @@ namespace DataEditorX
 				tb_pagenum.Text = pageNum.ToString();
 
 				if (isfresh)//是否跳到之前页数
-					AddListView(page);
+					AddListView(Math.Min(page, pageNum));
 				else
 					AddListView(1);
 			}
