@@ -81,4 +81,5 @@ type 0x200000 Flip
 type 0x400000 Toon      
 type 0x800000 Xyz       
 type 0x1000000 Pendulum 
+type 0x4000000 Link
 ##########################
