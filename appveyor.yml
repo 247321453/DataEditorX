@@ -2,8 +2,8 @@ version: '{build}'
 skip_tags: true
 
 install:
-  - git clone https://github.com/Fluorohydride/ygopro-scripts 
-  - cp -rf constant.lua DataEditorX/data
+  - git clone https://github.com/Fluorohydride/ygopro-scripts
+  - cp -rf ygopro-scripts/constant.lua DataEditorX/data
   - git clone --branch link https://github.com/mercury233/ygopro
   - cp -rf ygopro/strings.conf DataEditorX/data
 
