@@ -21,10 +21,11 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace DataEditorX
 {
-	public partial class DataEditForm : DockContent, IDataForm
+    public partial class DataEditForm : DockContent, IDataForm
 	{
-		#region 成员变量/构造
-		TaskHelper tasker = null;
+        public string addrequire;
+        #region 成员变量/构造
+        TaskHelper tasker = null;
 		string taskname;
 		//目录
 		YgoPath ygopath;
@@ -62,7 +63,7 @@ namespace DataEditorX
 
 		string datapath, confcover;
 
-		public DataEditForm(string datapath, string cdbfile)
+        public DataEditForm(string datapath, string cdbfile)
 		{
 			Initialize(datapath);
 			nowCdbFile = cdbfile;
@@ -124,11 +125,11 @@ namespace DataEditorX
 		{
 			return true;
 		}
-		#endregion
+        #endregion
 
-		#region 窗体
-		//窗体第一次加载
-		void DataEditFormLoad(object sender, EventArgs e)
+        #region 窗体
+        //窗体第一次加载
+        void DataEditFormLoad(object sender, EventArgs e)
 		{
 			//InitListRows();//调整卡片列表的函数
 			HideMenu();//是否需要隐藏菜单
@@ -145,7 +146,10 @@ namespace DataEditorX
 			menuitem_openfileinthis.Checked = MyConfig.readBoolean(MyConfig.TAG_OPEN_IN_THIS);
 			//自动检查更新
 			menuitem_autocheckupdate.Checked = MyConfig.readBoolean(MyConfig.TAG_AUTO_CHECK_UPDATE);
-			if (nowCdbFile != null && File.Exists(nowCdbFile))
+            //add require automatically
+            addrequire = MyConfig.readString(MyConfig.TAG_ADD_REQUIRE);
+            menuitem_addrequire.Checked = (addrequire.Length > 0);
+            if (nowCdbFile != null && File.Exists(nowCdbFile))
 				Open(nowCdbFile);
 			//获取MSE配菜单
 			AddMenuItemFormMSE();
@@ -354,23 +358,21 @@ namespace DataEditorX
 				item.Text = "Test";
 				lv_cardlist.Items.Add(item);
 			}
+			int headH = lv_cardlist.Items[0].GetBounds(ItemBoundsPortion.ItemOnly).Y;
 			int itemH = lv_cardlist.Items[0].GetBounds(ItemBoundsPortion.ItemOnly).Height;
 			if (itemH > 0)
 			{
-				int n = lv_cardlist.Height/ itemH;
+				int n = (lv_cardlist.Height - headH) / itemH;
 				if (n > 0){
 					MaxRow = n;
 				}
-				//MessageBox.Show("height="+lv_cardlist.Height+",item="+itemH+",max="+MaxRow);
-			}
-			if(MaxRow < 1){
-				MaxRow = 1;
+				//MessageBox.Show("height="+lv_cardlist.Height+",item="+itemH+",head="+headH+",max="+MaxRow);
 			}
 			if(addTest){
 				lv_cardlist.Items.Clear();
-			}else{
-				Search(true);
 			}
+			if (MaxRow < 10)
+				MaxRow = 20;
 		}
 		//设置checkbox
 		void SetCheck(FlowLayoutPanel fpl, long number)
@@ -740,7 +742,7 @@ namespace DataEditorX
 				tb_pagenum.Text = pageNum.ToString();
 
 				if (isfresh)//是否跳到之前页数
-					AddListView(Math.Min(page, pageNum));
+					AddListView(page);
 				else
 					AddListView(1);
 			}
@@ -815,7 +817,7 @@ namespace DataEditorX
 		void Btn_luaClick(object sender, EventArgs e)
 		{
 			if (cardedit != null)
-				cardedit.OpenScript(menuitem_openfileinthis.Checked);
+				cardedit.OpenScript(menuitem_openfileinthis.Checked, addrequire);
 		}
 		//删除
 		void Btn_delClick(object sender, EventArgs e)
@@ -1622,10 +1624,17 @@ namespace DataEditorX
 			menuitem_autocheckupdate.Checked = !menuitem_autocheckupdate.Checked;
 			MyConfig.Save(MyConfig.TAG_AUTO_CHECK_UPDATE, menuitem_autocheckupdate.Checked.ToString().ToLower());
 		}
-		#endregion
+        //add require automatically
+        private void menuitem_addrequire_Click(object sender, EventArgs e)
+        {
+            addrequire = Microsoft.VisualBasic.Interaction.InputBox("Module script?\n\nPress \"Cancel\" to remove module script.", "", addrequire);   
+            menuitem_addrequire.Checked = (addrequire.Length>0);
+            MyConfig.Save(MyConfig.TAG_ADD_REQUIRE, addrequire);
+        }
+        #endregion
 
-		#region 语言菜单
-		void GetLanguageItem()
+        #region 语言菜单
+        void GetLanguageItem()
 		{
 			if (!Directory.Exists(datapath))
 				return;
@@ -1766,8 +1775,8 @@ namespace DataEditorX
 		{
 			text2LinkMarks(tb_link.Text);
 		}
-		
-		void Tb_linkKeyPress(object sender, KeyPressEventArgs e)
+
+        void Tb_linkKeyPress(object sender, KeyPressEventArgs e)
 		{
 			if(e.KeyChar != '0' && e.KeyChar != '1' && e.KeyChar != 1 && e.KeyChar!=22 && e.KeyChar!=3 && e.KeyChar != 8){
 //				MessageBox.Show("key="+(int)e.KeyChar);

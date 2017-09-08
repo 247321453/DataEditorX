@@ -253,20 +253,14 @@ namespace DataEditorX.Core
 
         #region 打开脚本
         //打开脚本
-        public bool OpenScript(bool openinthis)
+        public bool OpenScript(bool openinthis, string addrequire)
         {
             if (!dataform.CheckOpen())
                 return false;
             Card c = dataform.GetCard();
-            if (c.id <= 0 || c.IsType(CardType.TYPE_NORMAL) && !c.IsType(CardType.TYPE_PENDULUM))//卡片密码不能小于等于0, 非灵摆的通常怪兽无需脚本
+            if (c.id <= 0)//卡片密码不能小于等于0
                 return false;
 			long id = c.id;
-			if(c.alias != 0)
-			{
-				long dif = c.id - c.alias;
-				if (dif > -10 && dif < 10)
-					id = c.alias;
-			}
             string lua = dataform.GetPath().GetScript(id);
             if (!File.Exists(lua))
             {
@@ -278,7 +272,11 @@ namespace DataEditorX.Core
                     {
                         StreamWriter sw = new StreamWriter(fs, new UTF8Encoding(false));
                         sw.WriteLine("--" + c.name);
-                        sw.WriteLine("function c"+id.ToString()+".initial_effect(c)");
+                        sw.WriteLine("local m=" + id.ToString());
+                        sw.WriteLine("local cm=_G[\"c\"..m]");
+                        if (addrequire.Length > 0)
+                            sw.WriteLine("xpcall(function() require(\"expansions/script/" + addrequire + "\") end,function() require(\"script/" + addrequire + "\") end)");
+                        sw.WriteLine("function cm.initial_effect(c)");
                         sw.WriteLine("\t");
                         sw.WriteLine("end");
                         sw.Close();

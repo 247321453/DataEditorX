@@ -92,10 +92,14 @@ namespace DataEditorX.Config
 		/// 自动检查更新
 		/// </summary>
 		public const string TAG_AUTO_CHECK_UPDATE = "auto_check_update";
-		/// <summary>
-		/// 检查系统语言
-		/// </summary>
-		public const string TAG_CHECK_SYSLANG = "check_system_language";
+        /// <summary>
+        /// add require automatically
+        /// </summary>
+        public const string TAG_ADD_REQUIRE = "add_require";
+        /// <summary>
+        /// 检查系统语言
+        /// </summary>
+        public const string TAG_CHECK_SYSLANG = "check_system_language";
         /// <summary>
         /// 一般的裁剪
         /// </summary>

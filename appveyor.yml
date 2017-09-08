@@ -1,0 +1,19 @@
+version: '{build}'
+skip_tags: true
+
+install:
+  
+configuration: Release
+
+build: 
+    project: DataEditorX.sln
+    parallel: true
+
+after_build:
+  - 7z a DataEditorX-Koishi.7z win32/*
+
+test: off
+
+artifacts:
+  - path: DataEditorX-Koishi.7z
+    name: DataEditorX-Koishi

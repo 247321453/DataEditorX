@@ -44,6 +44,7 @@ DataEditForm.mainMenu.menu_image	MSE(&M)
 DataEditForm.mainMenu.menu_data	Data(&D)
 DataEditForm.mainMenu.menuitem_operacardsfile	Opera with Card's files
 DataEditForm.mainMenu.menuitem_openfileinthis	Open Script With CodeEditor
+DataEditForm.mainMenu.menuitem_addrequire	Add REQUIRE Automatically
 DataEditForm.mainMenu.menuitem_readydk	Read From ydk File(&Y)
 DataEditForm.mainMenu.menuitem_readimages	Read From Images Path(&I)
 DataEditForm.mainMenu.menuitem_compdb	Compress DataBase
