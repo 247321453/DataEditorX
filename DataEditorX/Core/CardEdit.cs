@@ -258,10 +258,15 @@ namespace DataEditorX.Core
 			if (!dataform.CheckOpen())
 				return false;
 			Card c = dataform.GetCard();
-			if (c.id <= 0)//卡片密码不能小于等于0
-				return false;
 			long id = c.id;
-			string lua = dataform.GetPath().GetScript(id);
+			string lua;
+			if (c.id > 0) {
+				lua = dataform.GetPath().GetScript(id);
+			} else if (addrequire.Length > 0) {
+				lua = dataform.GetPath().GetModuleScript(addrequire);
+			} else {
+				return false;
+			}
 			if (!File.Exists(lua))
 			{
 				MyPath.CreateDirByFile(lua);
@@ -271,14 +276,18 @@ namespace DataEditorX.Core
 						FileMode.OpenOrCreate,FileAccess.Write))
 					{
 						StreamWriter sw = new StreamWriter(fs, new UTF8Encoding(false));
-						sw.WriteLine("--" + c.name);
-						sw.WriteLine("local m=" + id.ToString());
-						sw.WriteLine("local cm=_G[\"c\"..m]");
-						if (addrequire.Length > 0)
-							sw.WriteLine("xpcall(function() require(\"expansions/script/" + addrequire + "\") end,function() require(\"script/" + addrequire + "\") end)");
-						sw.WriteLine("function cm.initial_effect(c)");
-						sw.WriteLine("\t");
-						sw.WriteLine("end");
+						if (c.id > 0) { //card script
+							sw.WriteLine("--" + c.name);
+							sw.WriteLine("local m=" + id.ToString());
+							sw.WriteLine("local cm=_G[\"c\"..m]");
+							if (addrequire.Length > 0)
+								sw.WriteLine("xpcall(function() require(\"expansions/script/" + addrequire + "\") end,function() require(\"script/" + addrequire + "\") end)");
+							sw.WriteLine("function cm.initial_effect(c)");
+							sw.WriteLine("\t");
+							sw.WriteLine("end");
+						} else { //module script
+							sw.WriteLine("--Module script \"" + addrequire + "\"");
+						}
 						sw.Close();
 						fs.Close();
 					}

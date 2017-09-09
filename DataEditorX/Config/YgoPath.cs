@@ -73,6 +73,10 @@ namespace DataEditorX.Config
 		{
 			return MyPath.Combine(luapath, "c" + id + ".lua");
 		}
+		public string GetModuleScript(string modulescript)
+		{
+			return MyPath.Combine(luapath, modulescript + ".lua");
+		}
 
 		public string[] GetCardfiles(long id)
 		{

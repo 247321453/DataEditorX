@@ -350,10 +350,9 @@ namespace DataEditorX.Core
 			//新卡ydk
 			string deckydk = ygopath.GetYdk(name);
 			//module scripts
-			string script_path = MyPath.Combine(path, "script");
 			string extra_script = "";
 			if (modulescript.Length > 0)
-				extra_script = MyPath.Combine(script_path, modulescript + ".lua");
+				extra_script = ygopath.GetModuleScript(modulescript);
 			
 			File.Delete(cdbfile);
 			DataBase.Create(cdbfile);
