@@ -8,25 +8,25 @@ using DataEditorX.Core.Info;
 
 namespace DataEditorX.Core
 {
-    public class CardEdit
-    {
-        IDataForm dataform;
+	public class CardEdit
+	{
+		IDataForm dataform;
 		public AddCommand addCard;
 		public ModCommand modCard;
 		public DelCommand delCard;
 		public CopyCommand copyCard;
 
-        public CardEdit(IDataForm dataform)
-        {
-            this.dataform = dataform;
+		public CardEdit(IDataForm dataform)
+		{
+			this.dataform = dataform;
 			this.addCard = new AddCommand(this);
 			this.modCard = new ModCommand(this);
 			this.delCard = new DelCommand(this);
 			this.copyCard = new CopyCommand(this);
-        }
+		}
 		
-        #region 添加
-        //添加
+		#region 添加
+		//添加
 		public class AddCommand: IBackableCommand
 		{
 			private string _undoSQL;
@@ -186,10 +186,10 @@ namespace DataEditorX.Core
 				return this.MemberwiseClone();
 			}
 		}
-        #endregion
+		#endregion
 
-        #region 删除
-        //删除
+		#region 删除
+		//删除
 		public class DelCommand : IBackableCommand
 		{
 			private string _undoSQL;
@@ -249,51 +249,51 @@ namespace DataEditorX.Core
 				return this.MemberwiseClone();
 			}
 		}
-        #endregion
+		#endregion
 
-        #region 打开脚本
-        //打开脚本
-        public bool OpenScript(bool openinthis, string addrequire)
-        {
-            if (!dataform.CheckOpen())
-                return false;
-            Card c = dataform.GetCard();
-            if (c.id <= 0)//卡片密码不能小于等于0
-                return false;
+		#region 打开脚本
+		//打开脚本
+		public bool OpenScript(bool openinthis, string addrequire)
+		{
+			if (!dataform.CheckOpen())
+				return false;
+			Card c = dataform.GetCard();
+			if (c.id <= 0)//卡片密码不能小于等于0
+				return false;
 			long id = c.id;
-            string lua = dataform.GetPath().GetScript(id);
-            if (!File.Exists(lua))
-            {
-                MyPath.CreateDirByFile(lua);
-                if (MyMsg.Question(LMSG.IfCreateScript))//是否创建脚本
-                {
-                    using (FileStream fs = new FileStream(lua,
-                        FileMode.OpenOrCreate,FileAccess.Write))
-                    {
-                        StreamWriter sw = new StreamWriter(fs, new UTF8Encoding(false));
-                        sw.WriteLine("--" + c.name);
-                        sw.WriteLine("local m=" + id.ToString());
-                        sw.WriteLine("local cm=_G[\"c\"..m]");
-                        if (addrequire.Length > 0)
-                            sw.WriteLine("xpcall(function() require(\"expansions/script/" + addrequire + "\") end,function() require(\"script/" + addrequire + "\") end)");
-                        sw.WriteLine("function cm.initial_effect(c)");
-                        sw.WriteLine("\t");
-                        sw.WriteLine("end");
-                        sw.Close();
-                        fs.Close();
-                    }
-                }
-            }
-            if (File.Exists(lua))//如果存在，则打开文件
-            {
-                if (openinthis)//是否用本程序打开
-                    MyConfig.OpenFileInThis(lua);
-                else
-                    System.Diagnostics.Process.Start(lua);
-                return true;
-            }
-            return false;
-        }
+			string lua = dataform.GetPath().GetScript(id);
+			if (!File.Exists(lua))
+			{
+				MyPath.CreateDirByFile(lua);
+				if (MyMsg.Question(LMSG.IfCreateScript))//是否创建脚本
+				{
+					using (FileStream fs = new FileStream(lua,
+						FileMode.OpenOrCreate,FileAccess.Write))
+					{
+						StreamWriter sw = new StreamWriter(fs, new UTF8Encoding(false));
+						sw.WriteLine("--" + c.name);
+						sw.WriteLine("local m=" + id.ToString());
+						sw.WriteLine("local cm=_G[\"c\"..m]");
+						if (addrequire.Length > 0)
+							sw.WriteLine("xpcall(function() require(\"expansions/script/" + addrequire + "\") end,function() require(\"script/" + addrequire + "\") end)");
+						sw.WriteLine("function cm.initial_effect(c)");
+						sw.WriteLine("\t");
+						sw.WriteLine("end");
+						sw.Close();
+						fs.Close();
+					}
+				}
+			}
+			if (File.Exists(lua))//如果存在，则打开文件
+			{
+				if (openinthis)//是否用本程序打开
+					MyConfig.OpenFileInThis(lua);
+				else
+					System.Diagnostics.Process.Start(lua);
+				return true;
+			}
+			return false;
+		}
 		#endregion
 
 		#region 复制卡片

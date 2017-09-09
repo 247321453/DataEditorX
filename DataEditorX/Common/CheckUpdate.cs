@@ -112,12 +112,12 @@ namespace DataEditorX.Common
 					(HttpWebRequest)WebRequest.Create(url);
 				httpWebRequest.Timeout = 15000;
 				using (HttpWebResponse httpWebResponse =
-				       (HttpWebResponse)httpWebRequest.GetResponse())
+					   (HttpWebResponse)httpWebRequest.GetResponse())
 				{
 					using (Stream stream = httpWebResponse.GetResponseStream())
 					{
 						using (StreamReader streamReader =
-						       new StreamReader(stream, Encoding.UTF8))
+							   new StreamReader(stream, Encoding.UTF8))
 						{
 							htmlContent = streamReader.ReadToEnd();
 							streamReader.Close();

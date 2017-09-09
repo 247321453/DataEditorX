@@ -21,11 +21,11 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace DataEditorX
 {
-    public partial class DataEditForm : DockContent, IDataForm
+	public partial class DataEditForm : DockContent, IDataForm
 	{
-        public string addrequire;
-        #region 成员变量/构造
-        TaskHelper tasker = null;
+		public string addrequire;
+		#region 成员变量/构造
+		TaskHelper tasker = null;
 		string taskname;
 		//目录
 		YgoPath ygopath;
@@ -63,7 +63,7 @@ namespace DataEditorX
 
 		string datapath, confcover;
 
-        public DataEditForm(string datapath, string cdbfile)
+		public DataEditForm(string datapath, string cdbfile)
 		{
 			Initialize(datapath);
 			nowCdbFile = cdbfile;
@@ -125,11 +125,11 @@ namespace DataEditorX
 		{
 			return true;
 		}
-        #endregion
+		#endregion
 
-        #region 窗体
-        //窗体第一次加载
-        void DataEditFormLoad(object sender, EventArgs e)
+		#region 窗体
+		//窗体第一次加载
+		void DataEditFormLoad(object sender, EventArgs e)
 		{
 			//InitListRows();//调整卡片列表的函数
 			HideMenu();//是否需要隐藏菜单
@@ -146,10 +146,10 @@ namespace DataEditorX
 			menuitem_openfileinthis.Checked = MyConfig.readBoolean(MyConfig.TAG_OPEN_IN_THIS);
 			//自动检查更新
 			menuitem_autocheckupdate.Checked = MyConfig.readBoolean(MyConfig.TAG_AUTO_CHECK_UPDATE);
-            //add require automatically
-            addrequire = MyConfig.readString(MyConfig.TAG_ADD_REQUIRE);
-            menuitem_addrequire.Checked = (addrequire.Length > 0);
-            if (nowCdbFile != null && File.Exists(nowCdbFile))
+			//add require automatically
+			addrequire = MyConfig.readString(MyConfig.TAG_ADD_REQUIRE);
+			menuitem_addrequire.Checked = (addrequire.Length > 0);
+			if (nowCdbFile != null && File.Exists(nowCdbFile))
 				Open(nowCdbFile);
 			//获取MSE配菜单
 			AddMenuItemFormMSE();
@@ -338,7 +338,7 @@ namespace DataEditorX
 		void InitComboBox(ComboBox cb, Dictionary<long, string> tempdic)
 		{
 			InitComboBox(cb, DataManager.GetKeys(tempdic),
-			             DataManager.GetValues(tempdic));
+						 DataManager.GetValues(tempdic));
 		}
 		//初始化ComboBox
 		void InitComboBox(ComboBox cb, List<long> keys, string[] values)
@@ -771,7 +771,7 @@ namespace DataEditorX
 			if (tmpCodes.Count > 0)
 			{
 				Card[] mcards = DataBase.Read(nowCdbFile,
-				                              true, tmpCodes.ToArray());
+											  true, tmpCodes.ToArray());
 				SetCards(getCompCards(), true);
 			}
 			else
@@ -1016,7 +1016,7 @@ namespace DataEditorX
 					string[] ids = YGOUtil.ReadYDK(dlg.FileName);
 					tmpCodes.AddRange(ids);
 					SetCards(DataBase.Read(nowCdbFile, true,
-					                       ids), false);
+										   ids), false);
 				}
 			}
 		}
@@ -1034,7 +1034,7 @@ namespace DataEditorX
 					string[] ids = YGOUtil.ReadImage(fdlg.SelectedPath);
 					tmpCodes.AddRange(ids);
 					SetCards(DataBase.Read(nowCdbFile, true,
-					                       ids), false);
+										   ids), false);
 				}
 			}
 		}
@@ -1074,10 +1074,10 @@ namespace DataEditorX
 		void BgWorker1ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
 		{
 			title = string.Format("{0} ({1}-{2})",
-			                      RemoveTag(title),
-			                      taskname,
-			                      // e.ProgressPercentage,
-			                      e.UserState);
+								  RemoveTag(title),
+								  taskname,
+								  // e.ProgressPercentage,
+								  e.UserState);
 			SetTitle();
 		}
 		//任务完成
@@ -1215,7 +1215,7 @@ namespace DataEditorX
 				return;
 			bool isreplace = MyMsg.Question(LMSG.IfReplaceExistingImage);
 			tasker.SetTask(MyTask.CutImages, cardlist.ToArray(),
-			               ygopath.picpath, isreplace.ToString());
+						   ygopath.picpath, isreplace.ToString());
 			Run(LanguageHelper.GetMsg(LMSG.CutImage));
 		}
 		void Menuitem_saveasmse_selectClick(object sender, EventArgs e)
@@ -1250,7 +1250,7 @@ namespace DataEditorX
 					isUpdate=MyMsg.Question(LMSG.OnlySet);
 					#endif
 					tasker.SetTask(MyTask.SaveAsMSE, cards,
-					               dlg.FileName, isUpdate.ToString());
+								   dlg.FileName, isUpdate.ToString());
 					Run(LanguageHelper.GetMsg(LMSG.SaveMse));
 				}
 			}
@@ -1302,7 +1302,7 @@ namespace DataEditorX
 		{
 			string f;
 			if (pl_image.BackgroundImage != null
-			    && pl_image.BackgroundImage != m_cover)
+				&& pl_image.BackgroundImage != m_cover)
 			{//释放图片资源
 				pl_image.BackgroundImage.Dispose();
 				pl_image.BackgroundImage = m_cover;
@@ -1317,7 +1317,7 @@ namespace DataEditorX
 			else
 			{
 				tasker.ToImg(file, ygopath.GetImage(tid),
-				             ygopath.GetImageThum(tid));
+							 ygopath.GetImageThum(tid));
 			}
 			SetImage(tid);
 		}
@@ -1358,7 +1358,7 @@ namespace DataEditorX
 				{
 					bool isreplace = MyMsg.Question(LMSG.IfReplaceExistingImage);
 					tasker.SetTask(MyTask.ConvertImages, null,
-					               fdlg.SelectedPath, ygopath.gamepath, isreplace.ToString());
+								   fdlg.SelectedPath, ygopath.gamepath, isreplace.ToString());
 					Run(LanguageHelper.GetMsg(LMSG.ConvertImage));
 				}
 			}
@@ -1379,10 +1379,10 @@ namespace DataEditorX
 				if (dlg.ShowDialog() == DialogResult.OK)
 				{
 					tasker.SetTask(MyTask.ExportData,
-					               GetCardList(false),
-					               ygopath.gamepath,
-					               dlg.FileName,
-					               GetOpenFile(),
+								   GetCardList(false),
+								   ygopath.gamepath,
+								   dlg.FileName,
+								   GetOpenFile(),
 								   addrequire);
 					Run(LanguageHelper.GetMsg(LMSG.ExportData));
 				}
@@ -1589,7 +1589,7 @@ namespace DataEditorX
 					bool isUpdate = false;//是否替换存在的图片
 					isUpdate = MyMsg.Question(LMSG.IfReplaceExistingImage);
 					tasker.SetTask(MyTask.ReadMSE, null,
-					               dlg.FileName, isUpdate.ToString());
+								   dlg.FileName, isUpdate.ToString());
 					Run(LanguageHelper.GetMsg(LMSG.ReadMSE));
 				}
 			}
@@ -1625,17 +1625,17 @@ namespace DataEditorX
 			menuitem_autocheckupdate.Checked = !menuitem_autocheckupdate.Checked;
 			MyConfig.Save(MyConfig.TAG_AUTO_CHECK_UPDATE, menuitem_autocheckupdate.Checked.ToString().ToLower());
 		}
-        //add require automatically
-        private void menuitem_addrequire_Click(object sender, EventArgs e)
-        {
-            addrequire = Microsoft.VisualBasic.Interaction.InputBox("Module script?\n\nPress \"Cancel\" to remove module script.", "", addrequire);   
-            menuitem_addrequire.Checked = (addrequire.Length > 0);
-            MyConfig.Save(MyConfig.TAG_ADD_REQUIRE, addrequire);
-        }
-        #endregion
+		//add require automatically
+		private void menuitem_addrequire_Click(object sender, EventArgs e)
+		{
+			addrequire = Microsoft.VisualBasic.Interaction.InputBox("Module script?\n\nPress \"Cancel\" to remove module script.", "", addrequire);   
+			menuitem_addrequire.Checked = (addrequire.Length > 0);
+			MyConfig.Save(MyConfig.TAG_ADD_REQUIRE, addrequire);
+		}
+		#endregion
 
-        #region 语言菜单
-        void GetLanguageItem()
+		#region 语言菜单
+		void GetLanguageItem()
 		{
 			if (!Directory.Exists(datapath))
 				return;
@@ -1698,8 +1698,8 @@ namespace DataEditorX
 					string mseset=dlg.FileName;
 					string exportpath=MyPath.GetRealPath(MyConfig.readString(MyConfig.TAG_MSE_EXPORT));
 					MseMaker.exportSet(msepath, mseset, exportpath, delegate{
-					                   	menuitem_exportMSEimage.Checked=false;
-					                   });
+									   	menuitem_exportMSEimage.Checked=false;
+									   });
 					menuitem_exportMSEimage.Checked=true;
 				}else{
 					menuitem_exportMSEimage.Checked=false;
@@ -1777,7 +1777,7 @@ namespace DataEditorX
 			text2LinkMarks(tb_link.Text);
 		}
 
-        void Tb_linkKeyPress(object sender, KeyPressEventArgs e)
+		void Tb_linkKeyPress(object sender, KeyPressEventArgs e)
 		{
 			if(e.KeyChar != '0' && e.KeyChar != '1' && e.KeyChar != 1 && e.KeyChar!=22 && e.KeyChar!=3 && e.KeyChar != 8){
 //				MessageBox.Show("key="+(int)e.KeyChar);

@@ -122,9 +122,9 @@ namespace DataEditorX.Core
 				return;
 			Bitmap bmp = new Bitmap(img);
 			MyBitmap.SaveAsJPEG(MyBitmap.Zoom(bmp, imgSet.W, imgSet.H),
-			                    saveimg1, imgSet.quilty);
+								saveimg1, imgSet.quilty);
 			MyBitmap.SaveAsJPEG(MyBitmap.Zoom(bmp, imgSet.w, imgSet.h),
-			                    saveimg2, imgSet.quilty);
+								saveimg2, imgSet.quilty);
 			bmp.Dispose();
 		}
 		#endregion
@@ -232,13 +232,13 @@ namespace DataEditorX.Core
 						{
 
 							MyBitmap.SaveAsJPEG(MyBitmap.Zoom(bmp, imgSet.W, imgSet.H),
-							                    jpg_b, imgSet.quilty);
+												jpg_b, imgSet.quilty);
 						}
 						//小图，如果替换，或者不存在
 						if (isreplace || !File.Exists(jpg_s))
 						{
 							MyBitmap.SaveAsJPEG(MyBitmap.Zoom(bmp, imgSet.w, imgSet.h),
-							                    jpg_s, imgSet.quilty);
+												jpg_s, imgSet.quilty);
 
 						}
 					}

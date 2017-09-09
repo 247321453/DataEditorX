@@ -342,11 +342,11 @@ namespace DataEditorX.Core
 				sb.Append(" and datas.attribute = "+c.attribute.ToString());
 			if ((c.level & 0xff) > 0)
 				sb.Append(" and (datas.level & 255) = "+toInt(c.level & 0xff));
-            if ((c.level & 0xff000000) > 0)
-                sb.Append(" and (datas.level & 4278190080) = " + toInt(c.level & 0xff000000));
-            if ((c.level & 0xff0000) > 0)
-                sb.Append(" and (datas.level & 16711680) = " + toInt(c.level & 0xff0000));
-            if (c.race>0)
+			if ((c.level & 0xff000000) > 0)
+				sb.Append(" and (datas.level & 4278190080) = " + toInt(c.level & 0xff000000));
+			if ((c.level & 0xff0000) > 0)
+				sb.Append(" and (datas.level & 16711680) = " + toInt(c.level & 0xff0000));
+			if (c.race>0)
 				sb.Append(" and datas.race = "+toInt(c.race));
 			if(c.type>0)
 				sb.Append(" and datas.type & "+toInt(c.type)+" = "+toInt(c.type));
@@ -357,17 +357,17 @@ namespace DataEditorX.Core
 				sb.Append(" and datas.type & 1 = 1 and datas.atk = 0");
 			else if(c.atk<0 || c.atk>0)
 				sb.Append(" and datas.atk = "+c.atk.ToString());
-            if (c.IsType(Info.CardType.TYPE_LINK))
-            {
-                sb.Append(" and datas.def &" + c.def.ToString() + "=" + c.def.ToString());
-            }
-            else
-            {
-                if (c.def == -1)
-                    sb.Append(" and datas.type & 1 = 1 and datas.def = 0");
-                else if (c.def < 0 || c.def > 0)
-                    sb.Append(" and datas.def = " + c.def.ToString());
-            }
+			if (c.IsType(Info.CardType.TYPE_LINK))
+			{
+				sb.Append(" and datas.def &" + c.def.ToString() + "=" + c.def.ToString());
+			}
+			else
+			{
+				if (c.def == -1)
+					sb.Append(" and datas.type & 1 = 1 and datas.def = 0");
+				else if (c.def < 0 || c.def > 0)
+					sb.Append(" and datas.def = " + c.def.ToString());
+			}
 			
 			if(c.id>0 && c.alias>0)
 				sb.Append(" and datas.id BETWEEN "+c.alias.ToString()+" and "+c.id.ToString());
