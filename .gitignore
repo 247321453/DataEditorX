@@ -232,3 +232,5 @@ pip-log.txt
 /win32/data/history.txt
 /win32/*.mse-set
 /win32/set
+
+/temp

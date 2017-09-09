@@ -334,7 +334,7 @@ namespace DataEditorX.Core
 		#endregion
 
 		#region 导出数据
-		public void ExportData(string path, string zipname, string _cdbfile)
+		public void ExportData(string path, string zipname, string _cdbfile, string modulescript)
 		{
 			int i = 0;
 			Card[] cards = cardlist;
@@ -349,11 +349,15 @@ namespace DataEditorX.Core
 			string readme = MyPath.Combine(path, name + ".txt");
 			//新卡ydk
 			string deckydk = ygopath.GetYdk(name);
-
+			//module scripts
+			string script_path = MyPath.Combine(path, "script");
+			string extra_script = "";
+			if (modulescript.Length > 0)
+				extra_script = MyPath.Combine(script_path, modulescript + ".lua");
+			
 			File.Delete(cdbfile);
 			DataBase.Create(cdbfile);
 			DataBase.CopyDB(cdbfile, false, cardlist);
-
 			if (File.Exists(zipname))
 				File.Delete(zipname);
 			using (ZipStorer zips = ZipStorer.Create(zipname, ""))
@@ -363,6 +367,8 @@ namespace DataEditorX.Core
 					zips.AddFile(readme, "readme_" + name + ".txt", "");
 				if (File.Exists(deckydk))
 					zips.AddFile(deckydk, "deck/" + name + ".ydk", "");
+				if (modulescript.Length > 0 && File.Exists(extra_script))
+					zips.AddFile(extra_script, extra_script.Replace(path, ""), "");
 				foreach (Card c in cards)
 				{
 					i++;
@@ -370,9 +376,9 @@ namespace DataEditorX.Core
 					string[] files = ygopath.GetCardfiles(c.id);
 					foreach (string file in files)
 					{
-						if (File.Exists(file))
+						if (!String.Equals(file, extra_script) && File.Exists(file))
 						{
-							zips.AddFile(file, file.Replace(path,""),"");
+							zips.AddFile(file, file.Replace(path,""), "");
 						}
 					}
 				}
@@ -391,9 +397,9 @@ namespace DataEditorX.Core
 			switch (nowTask)
 			{
 				case MyTask.ExportData:
-					if (mArgs != null && mArgs.Length >= 2)
+					if (mArgs != null && mArgs.Length >= 3)
 					{
-						ExportData(mArgs[0], mArgs[1], mArgs[2]);
+						ExportData(mArgs[0], mArgs[1], mArgs[2], mArgs[3]);
 					}
 					break;
 				case MyTask.CheckUpdate:

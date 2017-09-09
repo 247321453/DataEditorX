@@ -1382,7 +1382,8 @@ namespace DataEditorX
 					               GetCardList(false),
 					               ygopath.gamepath,
 					               dlg.FileName,
-					               GetOpenFile());
+					               GetOpenFile(),
+								   addrequire);
 					Run(LanguageHelper.GetMsg(LMSG.ExportData));
 				}
 			}
@@ -1628,7 +1629,7 @@ namespace DataEditorX
         private void menuitem_addrequire_Click(object sender, EventArgs e)
         {
             addrequire = Microsoft.VisualBasic.Interaction.InputBox("Module script?\n\nPress \"Cancel\" to remove module script.", "", addrequire);   
-            menuitem_addrequire.Checked = (addrequire.Length>0);
+            menuitem_addrequire.Checked = (addrequire.Length > 0);
             MyConfig.Save(MyConfig.TAG_ADD_REQUIRE, addrequire);
         }
         #endregion
