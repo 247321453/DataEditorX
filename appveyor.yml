@@ -2,7 +2,11 @@ version: '{build}'
 skip_tags: true
 
 install:
-  
+  - git clone https://github.com/Fluorohydride/ygopro-scripts
+  - cp -rf ygopro-scripts/constant.lua DataEditorX/data
+  - git clone --branch link https://github.com/mercury233/ygopro
+  - cp -rf ygopro/strings.conf DataEditorX/data
+
 configuration: Release
 
 build: 
@@ -10,7 +14,10 @@ build:
     parallel: true
 
 after_build:
-  - 7z a DataEditorX-Koishi.7z win32/*
+  - mkdir DataEditorX-Koishi
+  - cp -rf win32/* DataEditorX-Koishi
+  - git clone https://github.com/Fluorohydride/ygopro-core ocgcore
+  - 7z a DataEditorX-Koishi.7z DataEditorX-Koishi ocgcore -xr!.git*
 
 test: off
 
