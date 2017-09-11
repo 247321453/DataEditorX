@@ -238,7 +238,7 @@ namespace DataEditorX.Core
 						}
 						//小图，如果替换，或者不存在
 						//if (isreplace || !File.Exists(jpg_s))
-						{
+						//{
 						//	MyBitmap.SaveAsJPEG(MyBitmap.Zoom(bmp, imgSet.w, imgSet.h),
 						//						jpg_s, imgSet.quilty);
 
