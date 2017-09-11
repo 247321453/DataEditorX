@@ -116,15 +116,16 @@ namespace DataEditorX.Core
 			mArgs = args;
 		}
 		//转换图片
-		public void ToImg(string img, string saveimg1, string saveimg2)
+		//public void ToImg(string img, string saveimg1, string saveimg2)
+		public void ToImg(string img, string saveimg1)
 		{
 			if (!File.Exists(img))
 				return;
 			Bitmap bmp = new Bitmap(img);
 			MyBitmap.SaveAsJPEG(MyBitmap.Zoom(bmp, imgSet.W, imgSet.H),
 								saveimg1, imgSet.quilty);
-			MyBitmap.SaveAsJPEG(MyBitmap.Zoom(bmp, imgSet.w, imgSet.h),
-								saveimg2, imgSet.quilty);
+			//MyBitmap.SaveAsJPEG(MyBitmap.Zoom(bmp, imgSet.w, imgSet.h),
+			//					saveimg2, imgSet.quilty);
 			bmp.Dispose();
 		}
 		#endregion
@@ -203,11 +204,12 @@ namespace DataEditorX.Core
 		}
 		#endregion
 		
+		//removed thumbnail
 		#region 转换图片
 		public void ConvertImages(string imgpath, string gamepath, bool isreplace)
 		{
 			string picspath = MyPath.Combine(gamepath, "pics");
-			string thubpath = MyPath.Combine(picspath, "thumbnail");
+			//string thubpath = MyPath.Combine(picspath, "thumbnail");
 			string[] files = Directory.GetFiles(imgpath);
 			int i = 0;
 			int count = files.Length;
@@ -221,7 +223,7 @@ namespace DataEditorX.Core
 				string ex = Path.GetExtension(f).ToLower();
 				string name = Path.GetFileNameWithoutExtension(f);
 				string jpg_b = MyPath.Combine(picspath, name + ".jpg");
-				string jpg_s = MyPath.Combine(thubpath, name + ".jpg");
+				//string jpg_s = MyPath.Combine(thubpath, name + ".jpg");
 				if (ex == ".jpg" || ex == ".png" || ex == ".bmp")
 				{
 					if (File.Exists(f))
@@ -235,12 +237,12 @@ namespace DataEditorX.Core
 												jpg_b, imgSet.quilty);
 						}
 						//小图，如果替换，或者不存在
-						if (isreplace || !File.Exists(jpg_s))
-						{
-							MyBitmap.SaveAsJPEG(MyBitmap.Zoom(bmp, imgSet.w, imgSet.h),
-												jpg_s, imgSet.quilty);
+						//if (isreplace || !File.Exists(jpg_s))
+						//{
+						//	MyBitmap.SaveAsJPEG(MyBitmap.Zoom(bmp, imgSet.w, imgSet.h),
+						//						jpg_s, imgSet.quilty);
 
-						}
+						//}
 					}
 				}
 			}

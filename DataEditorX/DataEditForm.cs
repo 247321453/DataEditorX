@@ -1316,8 +1316,9 @@ namespace DataEditorX
 			}
 			else
 			{
-				tasker.ToImg(file, ygopath.GetImage(tid),
-							 ygopath.GetImageThum(tid));
+			//	tasker.ToImg(file, ygopath.GetImage(tid),
+			//				 ygopath.GetImageThum(tid));
+				tasker.ToImg(file, ygopath.GetImage(tid));
 			}
 			SetImage(tid);
 		}
