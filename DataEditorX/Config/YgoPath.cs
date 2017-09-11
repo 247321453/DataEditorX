@@ -40,10 +40,10 @@ namespace DataEditorX.Config
 		{
 			return GetImage(id.ToString());
 		}
-		public string GetImageThum(long id)
-		{
-			return GetImageThum(id.ToString());
-		}
+		//public string GetImageThum(long id)
+		//{
+		//	return GetImageThum(id.ToString());
+		//}
 		public string GetImageField(long id)
 		{
 			return GetImageField(id.ToString());//场地图
@@ -61,10 +61,10 @@ namespace DataEditorX.Config
 		{
 			return MyPath.Combine(picpath, id + ".jpg");
 		}
-		public string GetImageThum(string id)
-		{
-			return MyPath.Combine(picpath2, id + ".jpg");
-		}
+		//public string GetImageThum(string id)
+		//{
+		//	return MyPath.Combine(picpath2, id + ".jpg");
+		//}
 		public string GetImageField(string id)
 		{
 			return MyPath.Combine(fieldpath, id+ ".png");//场地图
@@ -82,7 +82,7 @@ namespace DataEditorX.Config
 		{
 			string[] files = new string[]{
 				GetImage(id),//大图
-				GetImageThum(id),//小图
+				//GetImageThum(id),//小图
 				GetImageField(id),//场地图
 				GetScript(id)
 		   };
@@ -92,7 +92,7 @@ namespace DataEditorX.Config
 		{
 			string[] files = new string[]{
 				GetImage(id),//大图
-				GetImageThum(id),//小图
+				//GetImageThum(id),//小图
 				GetImageField(id),//场地图
 				GetScript(id)
 		   };
