@@ -223,7 +223,7 @@ namespace DataEditorX.Core
 				string ex = Path.GetExtension(f).ToLower();
 				string name = Path.GetFileNameWithoutExtension(f);
 				string jpg_b = MyPath.Combine(picspath, name + ".jpg");
-				string jpg_s = MyPath.Combine(thubpath, name + ".jpg");
+				//string jpg_s = MyPath.Combine(thubpath, name + ".jpg");
 				if (ex == ".jpg" || ex == ".png" || ex == ".bmp")
 				{
 					if (File.Exists(f))
