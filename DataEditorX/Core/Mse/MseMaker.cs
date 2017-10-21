@@ -233,7 +233,7 @@ namespace DataEditorX.Core.Mse
 			Match mc = regex.Match(desc);
 			if (mc.Success)
 				return ((mc.Groups.Count > 1) ?
-						mc.Groups[1].Value : mc.Groups[0].Value);
+				        mc.Groups[1].Value : mc.Groups[0].Value);
 			return "";
 		}
 
@@ -318,10 +318,10 @@ namespace DataEditorX.Core.Mse
 					types[0] = MseCardType.CARD_NORMAL;
 				//同调
 				if (types[0] == MseCardType.CARD_SYNCHRO
-					|| types[0] == MseCardType.CARD_TOKEN)
+				    || types[0] == MseCardType.CARD_TOKEN)
 				{
 					if (c.IsType(CardType.TYPE_TUNER)
-						&& c.IsType(CardType.TYPE_EFFECT))
+					    && c.IsType(CardType.TYPE_EFFECT))
 					{//调整效果
 						types[2] = GetType(CardType.TYPE_TUNER);
 						types[3] = GetType(CardType.TYPE_EFFECT);
@@ -389,7 +389,7 @@ namespace DataEditorX.Core.Mse
 			Dictionary<Card, string> list = new Dictionary<Card, string>();
 			string pic = cfg.imagepath;
 			using (FileStream fs = new FileStream(file,
-												  FileMode.Create, FileAccess.Write))
+			                                      FileMode.Create, FileAccess.Write))
 			{
 				StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
 				sw.WriteLine(cfg.head);
@@ -700,14 +700,14 @@ namespace DataEditorX.Core.Mse
 			c.race = GetRaceInt(GetValue(content, TAG_TYPE1));
 			//卡片类型
 			c.type = GetCardType(GetValue(content, TAG_CARDTYPE), tmp,
-								 GetValue(content, TAG_TYPE2),
-								 GetValue(content, TAG_TYPE3),
-								 GetValue(content, TAG_TYPE4),
-								 GetValue(content, TAG_TYPE5));
+			                     GetValue(content, TAG_TYPE2),
+			                     GetValue(content, TAG_TYPE3),
+			                     GetValue(content, TAG_TYPE4),
+			                     GetValue(content, TAG_TYPE5));
 			long t = GetSpellTrapType(GetValue(content, TAG_LEVEL));
 			//不是魔法，陷阱卡片的星数
 			if (!(c.IsType(CardType.TYPE_SPELL)
-				  || c.IsType(CardType.TYPE_TRAP)) && t == 0)
+			      || c.IsType(CardType.TYPE_TRAP)) && t == 0)
 				c.level = GetValue(content, TAG_LEVEL).Length;
 
 			//属性
@@ -732,9 +732,9 @@ namespace DataEditorX.Core.Mse
 			if (c.IsType(CardType.TYPE_PENDULUM))
 			{//根据预设的模版，替换内容
 				tmp = cfg.temp_text.Replace(TAG_REP_TEXT,
-											GetMultiValue(content,TAG_TEXT));
+				                            GetMultiValue(content,TAG_TEXT));
 				tmp = tmp.Replace(TAG_REP_PTEXT,
-								  GetMultiValue(content, TAG_PEND_TEXT));
+				                  GetMultiValue(content, TAG_PEND_TEXT));
 				c.desc = tmp;
 			}
 			else
@@ -755,7 +755,7 @@ namespace DataEditorX.Core.Mse
 			string allcontent = File.ReadAllText(set, Encoding.UTF8);
 
 			Regex regx = new Regex(@"^card:[\S\s]+?gamecode:[\S\s]+?$",
-								   RegexOptions.Multiline);
+			                       RegexOptions.Multiline);
 			MatchCollection matchs = regx.Matches(allcontent);
 			int i = 0;
 			

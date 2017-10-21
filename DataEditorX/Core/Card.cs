@@ -12,8 +12,8 @@ namespace DataEditorX.Core
 {
 	public struct Card : IEquatable<Card>
 	{
-		public const int STR_MAX = 0x10;
-		public const int SETCODE_MAX = 4;
+        public const int STR_MAX = 0x10;
+        public const int SETCODE_MAX = 4;
 
 		#region 构造
 		/// <summary>
@@ -23,22 +23,22 @@ namespace DataEditorX.Core
 		/// <param name="cardName">名字</param>
 		public Card(long cardCode)
 		{
-			this.id = cardCode;
-			this.name = "";
-			this.ot = 0;
-			this.alias = 0;
-			this.setcode = 0;
-			this.type = 0;
-			this.atk = 0;
-			this.def = 0;
-			this.level = 0;
-			this.race = 0;
-			this.attribute = 0;
-			this.category = 0;
-			this.desc = "";
-			this.str = new string[STR_MAX];
-			for (int i = 0; i < STR_MAX; i++)
-				this.str[i] = "";
+            this.id = cardCode;
+            this.name = "";
+            this.ot = 0;
+            this.alias = 0;
+            this.setcode = 0;
+            this.type = 0;
+            this.atk = 0;
+            this.def = 0;
+            this.level = 0;
+            this.race = 0;
+            this.attribute = 0;
+            this.category = 0;
+            this.desc = "";
+            this.str = new string[STR_MAX];
+            for (int i = 0; i < STR_MAX; i++)
+                this.str[i] = "";
 		}
 		#endregion
 
@@ -69,58 +69,58 @@ namespace DataEditorX.Core
 		public string name;
 		/// <summary>描述文本</summary>
 		public string desc;
-		string[] str;
+        string[] str;
 		/// <summary>脚本文件文字</summary>
-		public string[] Str
-		{
-			get {
-				if (this.str == null)
-					{
-						this.str = new string[STR_MAX];
-						for (int i = 0; i < STR_MAX; i++)
-							this.str[i] = "";
-					}
-				return this.str;
-				}
-			set { this.str = value; }
-		}
-		public long[] GetSetCode()
-		{
-			long[] setcodes = new long[SETCODE_MAX];
-			for (int i = 0,k = 0; i < SETCODE_MAX; k += 0x10, i++)
-			{
-				setcodes[i] = (this.setcode >> k) & 0xffff;
-			}
-			return setcodes;
-		}
-		public void SetSetCode(params long[] setcodes)
-		{
-			int i = 0;
-			this.setcode = 0;
-			if (setcodes != null)
-			{
-				foreach (long sc in setcodes)
-				{
-					this.setcode += (sc << i);
-					i += 0x10;
-				}
-			}
-		}
-		public void SetSetCode(params string[] setcodes)
-		{
-			int i = 0;
-			this.setcode = 0;
-			long temp;
-			if (setcodes != null)
-			{
-				foreach (string sc in setcodes)
-				{
-					long.TryParse(sc, NumberStyles.HexNumber, null, out temp);
-					this.setcode += (temp << i);
-					i += 0x10;
-				}
-			}
-		}
+        public string[] Str
+        {
+            get {
+                if (this.str == null)
+                    {
+                        this.str = new string[STR_MAX];
+                        for (int i = 0; i < STR_MAX; i++)
+                            this.str[i] = "";
+                    }
+                return this.str;
+                }
+            set { this.str = value; }
+        }
+        public long[] GetSetCode()
+        {
+            long[] setcodes = new long[SETCODE_MAX];
+            for (int i = 0,k = 0; i < SETCODE_MAX; k += 0x10, i++)
+            {
+                setcodes[i] = (this.setcode >> k) & 0xffff;
+            }
+            return setcodes;
+        }
+        public void SetSetCode(params long[] setcodes)
+        {
+            int i = 0;
+            this.setcode = 0;
+            if (setcodes != null)
+            {
+                foreach (long sc in setcodes)
+                {
+                    this.setcode += (sc << i);
+                    i += 0x10;
+                }
+            }
+        }
+        public void SetSetCode(params string[] setcodes)
+        {
+            int i = 0;
+            this.setcode = 0;
+            long temp;
+            if (setcodes != null)
+            {
+                foreach (string sc in setcodes)
+                {
+                    long.TryParse(sc, NumberStyles.HexNumber, null, out temp);
+                    this.setcode += (temp << i);
+                    i += 0x10;
+                }
+            }
+        }
 		public long GetLeftScale()
 		{
 			return (this.level >> 24) & 0xff;
@@ -129,7 +129,7 @@ namespace DataEditorX.Core
 		{
 			return (this.level >> 16) & 0xff;
 		}
-		#endregion
+        #endregion
 
 		#region 比较、哈希值、操作符
 		/// <summary>
@@ -149,7 +149,7 @@ namespace DataEditorX.Core
 		/// </summary>
 		/// <param name="other"></param>
 		/// <returns></returns>
-		public bool EqualsData(Card other)
+        public bool EqualsData(Card other)
 		{
 			bool equalBool = true;
 			if (this.id != other.id)
@@ -223,33 +223,33 @@ namespace DataEditorX.Core
 		{
 			return left.Equals(right);
 		}
-		/// <summary>
-		/// 是否是某类型
-		/// </summary>
-		/// <param name="type"></param>
-		/// <returns></returns>
+        /// <summary>
+        /// 是否是某类型
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
 		public bool IsType(CardType type){
 			if((this.type & (long)type) == (long)type)
 				return true;
 			return false;
 		}
-		/// <summary>
-		/// 是否是某系列
-		/// </summary>
-		/// <param name="sc"></param>
-		/// <returns></returns>
+        /// <summary>
+        /// 是否是某系列
+        /// </summary>
+        /// <param name="sc"></param>
+        /// <returns></returns>
 		public bool IsSetCode(long sc)
 		{
-			long settype = sc & 0xfff;
-			long setsubtype = sc & 0xf000;
-			long setcode = this.setcode;
-			while (setcode != 0)
-			{
-				if ((setcode & 0xfff) == settype && (setcode & 0xf000 & setsubtype) == setsubtype)
-					return true;
-				setcode = setcode >> 0x10;
-			}
-			return false;
+            long settype = sc & 0xfff;
+            long setsubtype = sc & 0xf000;
+            long setcode = this.setcode;
+            while (setcode != 0)
+            {
+                if ((setcode & 0xfff) == settype && (setcode & 0xf000 & setsubtype) == setsubtype)
+                    return true;
+                setcode = setcode >> 0x10;
+            }
+            return false;
 		}
 		/// <summary>
 		/// 卡片是否不相等
@@ -260,56 +260,56 @@ namespace DataEditorX.Core
 		}
 		#endregion
 
-		#region 卡片文字信息
-		/// <summary>
-		/// 密码字符串
-		/// </summary>
-		public string idString
-		{
-			get { return id.ToString("00000000"); }
-		}
-		/// <summary>
-		/// 字符串化
-		/// </summary>
-		public override string ToString()
-		{
-			string str = "";
-			if (IsType(CardType.TYPE_MONSTER)){
-				str = name + "[" + idString + "]\n["
-					+ YGOUtil.GetTypeString(type) + "] "
-					+ YGOUtil.GetRace(race) + "/" + YGOUtil.GetAttributeString(attribute)
-					+ "\n" + levelString() + " " + atk + "/" + def + "\n" + redesc();
-			}else
-				str = name +"[" +idString +"]\n["+YGOUtil.GetTypeString(type)+"]\n"+redesc();
-			return str;
-		}
-		public string ToShortString(){
-			return this.name+" ["+idString+"]";
-		}
-		public string ToLongString(){
-			return ToString();
-		}
+        #region 卡片文字信息
+        /// <summary>
+        /// 密码字符串
+        /// </summary>
+        public string idString
+        {
+            get { return id.ToString("00000000"); }
+        }
+        /// <summary>
+        /// 字符串化
+        /// </summary>
+        public override string ToString()
+        {
+            string str = "";
+            if (IsType(CardType.TYPE_MONSTER)){
+                str = name + "[" + idString + "]\n["
+                    + YGOUtil.GetTypeString(type) + "] "
+                    + YGOUtil.GetRace(race) + "/" + YGOUtil.GetAttributeString(attribute)
+                    + "\n" + levelString() + " " + atk + "/" + def + "\n" + redesc();
+            }else
+                str = name +"[" +idString +"]\n["+YGOUtil.GetTypeString(type)+"]\n"+redesc();
+            return str;
+        }
+        public string ToShortString(){
+            return this.name+" ["+idString+"]";
+        }
+        public string ToLongString(){
+            return ToString();
+        }
 
-		string levelString()
-		{
-			string star = "[";
-			long i = 0, j = level & 0xff;
-			for (i = 0; i < j; i++)
-			{
-				if (i > 0 && (i % 4) == 0)
-					star += " ";
-				star += "★";
-			}
-			return star + "]";
-		}
-		string redesc()
-		{
-			string str = desc.Replace(Environment.NewLine, "\n");
-			str = Regex.Replace(str, "([。|？|?])", "$1\n");
-			str = str.Replace("\n\n", "\n");
-			return str;
-		}
-		#endregion
-	}
+        string levelString()
+        {
+            string star = "[";
+            long i = 0, j = level & 0xff;
+            for (i = 0; i < j; i++)
+            {
+                if (i > 0 && (i % 4) == 0)
+                    star += " ";
+                star += "★";
+            }
+            return star + "]";
+        }
+        string redesc()
+        {
+            string str = desc.Replace(Environment.NewLine, "\n");
+            str = Regex.Replace(str, "([。|？|?])", "$1\n");
+            str = str.Replace("\n\n", "\n");
+            return str;
+        }
+        #endregion
+    }
 	
 }

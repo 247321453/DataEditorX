@@ -19,8 +19,8 @@ namespace FastColoredTextBoxNS
  
 		public FastColoredTextBoxEx() : base()
 		{
-			this.SyntaxHighlighter = new MySyntaxHighlighter();
-			this.TextChangedDelayed += FctbTextChangedDelayed;
+            this.SyntaxHighlighter = new MySyntaxHighlighter();
+            this.TextChangedDelayed += FctbTextChangedDelayed;
 
 		}
 		public new event EventHandler<ToolTipNeededEventArgs> ToolTipNeeded;
@@ -43,7 +43,7 @@ namespace FastColoredTextBoxNS
 			//check distance
 			Point p = PlaceToPoint(place);
 			if (Math.Abs(p.X - lastMouseCoord.X) > CharWidth*2 ||
-				Math.Abs(p.Y - lastMouseCoord.Y) > CharHeight*2)
+			    Math.Abs(p.Y - lastMouseCoord.Y) > CharHeight*2)
 				return;
 			//get word under mouse
 			var r = new Range(this, place, place);
@@ -61,30 +61,30 @@ namespace FastColoredTextBoxNS
 				ToolTip.Show(ea.ToolTipText, this, new Point(lastMouseCoord.X, lastMouseCoord.Y + CharHeight));
 			}
 		}
-		//高亮当前词
-		void FctbTextChangedDelayed(object sender, TextChangedEventArgs e)
-		{
-			//delete all markers
-			this.Range.ClearFoldingMarkers();
+        //高亮当前词
+        void FctbTextChangedDelayed(object sender, TextChangedEventArgs e)
+        {
+            //delete all markers
+            this.Range.ClearFoldingMarkers();
 
-			var currentIndent = 0;
-			var lastNonEmptyLine = 0;
+            var currentIndent = 0;
+            var lastNonEmptyLine = 0;
 
-			for (int i = 0; i < this.LinesCount; i++)
-			{
-				var line = this[i];
-				var spacesCount = line.StartSpacesCount;
-				if (spacesCount == line.Count) //empty line
-					continue;
-				if (currentIndent < spacesCount)
-					//append start folding marker
-					this[lastNonEmptyLine].FoldingStartMarker = "m" + currentIndent;
-				else if (currentIndent > spacesCount)
-					//append end folding marker
-					this[lastNonEmptyLine].FoldingEndMarker = "m" + spacesCount;
-				currentIndent = spacesCount;
-				lastNonEmptyLine = i;
-			}
-		}
+            for (int i = 0; i < this.LinesCount; i++)
+            {
+                var line = this[i];
+                var spacesCount = line.StartSpacesCount;
+                if (spacesCount == line.Count) //empty line
+                    continue;
+                if (currentIndent < spacesCount)
+                    //append start folding marker
+                    this[lastNonEmptyLine].FoldingStartMarker = "m" + currentIndent;
+                else if (currentIndent > spacesCount)
+                    //append end folding marker
+                    this[lastNonEmptyLine].FoldingEndMarker = "m" + spacesCount;
+                currentIndent = spacesCount;
+                lastNonEmptyLine = i;
+            }
+        }
 	}
 }

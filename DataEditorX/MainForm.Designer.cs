@@ -374,8 +374,8 @@ namespace DataEditorX
 		private System.Windows.Forms.ToolStripMenuItem menuitem_file;
 		private System.Windows.Forms.MenuStrip mainMenu;
 		private WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel1;
-		private System.Windows.Forms.ToolStripMenuItem menuitem_shistory;
-		private System.ComponentModel.BackgroundWorker bgWorker1;
+        private System.Windows.Forms.ToolStripMenuItem menuitem_shistory;
+        private System.ComponentModel.BackgroundWorker bgWorker1;
 	
 	}
 }

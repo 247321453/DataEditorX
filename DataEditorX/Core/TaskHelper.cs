@@ -234,7 +234,7 @@ namespace DataEditorX.Core
 						{
 
 							MyBitmap.SaveAsJPEG(MyBitmap.Zoom(bmp, imgSet.W, imgSet.H),
-												jpg_b, imgSet.quilty);
+							                    jpg_b, imgSet.quilty);
 						}
 						//小图，如果替换，或者不存在
 						//if (isreplace || !File.Exists(jpg_s))

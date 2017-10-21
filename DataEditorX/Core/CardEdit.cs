@@ -8,25 +8,25 @@ using DataEditorX.Core.Info;
 
 namespace DataEditorX.Core
 {
-	public class CardEdit
-	{
-		IDataForm dataform;
+    public class CardEdit
+    {
+        IDataForm dataform;
 		public AddCommand addCard;
 		public ModCommand modCard;
 		public DelCommand delCard;
 		public CopyCommand copyCard;
 
-		public CardEdit(IDataForm dataform)
-		{
-			this.dataform = dataform;
+        public CardEdit(IDataForm dataform)
+        {
+            this.dataform = dataform;
 			this.addCard = new AddCommand(this);
 			this.modCard = new ModCommand(this);
 			this.delCard = new DelCommand(this);
 			this.copyCard = new CopyCommand(this);
-		}
+        }
 		
-		#region 添加
-		//添加
+        #region 添加
+        //添加
 		public class AddCommand: IBackableCommand
 		{
 			private string _undoSQL;
@@ -186,10 +186,10 @@ namespace DataEditorX.Core
 				return this.MemberwiseClone();
 			}
 		}
-		#endregion
+        #endregion
 
-		#region 删除
-		//删除
+        #region 删除
+        //删除
 		public class DelCommand : IBackableCommand
 		{
 			private string _undoSQL;
@@ -249,7 +249,7 @@ namespace DataEditorX.Core
 				return this.MemberwiseClone();
 			}
 		}
-		#endregion
+        #endregion
 
 		#region 打开脚本
 		//打开脚本

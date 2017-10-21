@@ -30,12 +30,12 @@ namespace DataEditorX
 		#endregion
 		
 		#region old functions 
-		static string oldfun;
-		static string logtxt;
-		static string funclisttxt;
+        static string oldfun;
+        static string logtxt;
+        static string funclisttxt;
 		static SortedList<string,string> funclist=new SortedList<string,string>();
-		//读取旧函数
-		public static void Read(string funtxt)
+        //读取旧函数
+        public static void Read(string funtxt)
 		{
 			funclist.Clear();
 			oldfun=funtxt;
@@ -54,7 +54,7 @@ namespace DataEditorX
 					if(line.StartsWith("●"))
 					{
 						//添加之前的函数
-						AddOldFun(name, desc);
+                        AddOldFun(name, desc);
 						int w=line.IndexOf("(");
 						int t=line.IndexOf(" ");
 						//获取当前名字
@@ -68,32 +68,32 @@ namespace DataEditorX
 						desc+=Environment.NewLine+line;
 					}
 				}
-				AddOldFun(name, desc);
+                AddOldFun(name, desc);
 			}
 			//return list;
 		}
-		static void AddOldFun(string name, string desc)
-		{
-			if (!string.IsNullOrEmpty(name))
-			{
-				if (funclist.ContainsKey(name))//存在，则添加注释
-				{
-					funclist[name] += Environment.NewLine + desc;
-				}
-				else
-				{//不存在，则添加函数
-					funclist.Add(name, desc);
-				}
-			}
-		}
+        static void AddOldFun(string name, string desc)
+        {
+            if (!string.IsNullOrEmpty(name))
+            {
+                if (funclist.ContainsKey(name))//存在，则添加注释
+                {
+                    funclist[name] += Environment.NewLine + desc;
+                }
+                else
+                {//不存在，则添加函数
+                    funclist.Add(name, desc);
+                }
+            }
+        }
 		#endregion
 		
 		#region find libs
-		/// <summary>
-		/// 查找lua函数
-		/// </summary>
-		/// <param name="path"></param>
-		/// <returns></returns>
+        /// <summary>
+        /// 查找lua函数
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
 		public static bool Find(string path)
 		{
 			string name="interpreter.cpp";
@@ -116,7 +116,7 @@ namespace DataEditorX
 			}
 			string texts=File.ReadAllText(file);
 			Regex libRex=new Regex(@"\sluaL_Reg\s([a-z]*?)lib\[\]([\s\S]*?)^\}"
-								   ,RegexOptions.Multiline);
+			                       ,RegexOptions.Multiline);
 			MatchCollection libsMatch=libRex.Matches(texts);
 			Log("log:count "+libsMatch.Count.ToString());
 			foreach ( Match m in libsMatch )//获取lib函数库
@@ -124,32 +124,32 @@ namespace DataEditorX
 				if(m.Groups.Count>2){
 					string word=m.Groups[1].Value;
 					Log("log:find "+word);
-					//分别去获取函数库的函数
+                    //分别去获取函数库的函数
 					GetFunctions(word, m.Groups[2].Value,
-								 Path.Combine(path,"lib"+word+".cpp"));
+					             Path.Combine(path,"lib"+word+".cpp"));
 				}
 			}
 			Save();
 			return true;
 		}
-		//保存
-		static void Save()
-		{
-			if (string.IsNullOrEmpty(oldfun))
-				return;
-			using (FileStream fs = new FileStream(oldfun + "_sort.txt",
-											   FileMode.Create,
-											   FileAccess.Write))
-			{
-				StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
-				foreach (string k in funclist.Keys)
-				{
-					sw.WriteLine("●" + funclist[k]);
-				}
-				sw.Close();
-			}
+        //保存
+        static void Save()
+        {
+            if (string.IsNullOrEmpty(oldfun))
+                return;
+            using (FileStream fs = new FileStream(oldfun + "_sort.txt",
+                                               FileMode.Create,
+                                               FileAccess.Write))
+            {
+                StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
+                foreach (string k in funclist.Keys)
+                {
+                    sw.WriteLine("●" + funclist[k]);
+                }
+                sw.Close();
+            }
 
-		}
+        }
 		#endregion
 		
 		#region find function name
@@ -157,7 +157,7 @@ namespace DataEditorX
 		{
 			return str.Substring(0, 1).ToUpper()+str.Substring(1);
 		}
-		//获取函数库的lua函数名,和对应的c++函数
+        //获取函数库的lua函数名,和对应的c++函数
 		static Dictionary<string,string> GetFunctionNames(string texts,string name)
 		{
 			Dictionary<string,string> dic=new Dictionary<string, string>();
@@ -179,12 +179,12 @@ namespace DataEditorX
 		#endregion
 		
 		#region find code
-		//查找c++代码
+        //查找c++代码
 		static string FindCode(string texts,string name)
 		{
 			Regex reg=new Regex(@"int32\s+?"+name
-								+@"[\s\S]+?\{([\s\S]*?^)\}",
-								RegexOptions.Multiline);
+			                    +@"[\s\S]+?\{([\s\S]*?^)\}",
+			                    RegexOptions.Multiline);
 			Match mc=reg.Match(texts);
 			if(mc.Success)
 			{
@@ -199,7 +199,7 @@ namespace DataEditorX
 		#endregion
 		
 		#region find return
-		//查找返回类型
+        //查找返回类型
 		static string FindReturn(string texts,string name)
 		{
 			string restr="";
@@ -231,7 +231,7 @@ namespace DataEditorX
 		#endregion
 		
 		#region find args
-		//查找参数
+        //查找参数
 		static string getUserType(string str)
 		{
 			if(str.IndexOf("card")>=0)
@@ -283,8 +283,8 @@ namespace DataEditorX
 			}
 			//function
 			AddArgs(texts
-					,@"interpreter::get_function_handle\(L,\s+(\d+)\)"
-					,"function",dic);
+			        ,@"interpreter::get_function_handle\(L,\s+(\d+)\)"
+			        ,"function",dic);
 			//int
 			AddArgs(texts,@"lua_tointeger\(L,\s+(\d+)\)","integer",dic);
 			//string
@@ -305,7 +305,7 @@ namespace DataEditorX
 		#endregion
 		
 		#region find old
-		//查找旧函数的描述
+        //查找旧函数的描述
 		static string FindOldDesc(string name)
 		{
 			if(funclist.ContainsKey(name))
@@ -315,7 +315,7 @@ namespace DataEditorX
 		#endregion
 		
 		#region Save Functions
-		//保存函数
+        //保存函数
 		public static void GetFunctions(string name,string texts,string file)
 		{
 			if(!File.Exists(file)){
@@ -332,12 +332,12 @@ namespace DataEditorX
 			Log("log: find functions "+name+":"+fun.Count.ToString());
 
 			using(FileStream fs=new FileStream(file+".txt",
-											   FileMode.Create,
-											   FileAccess.Write))
+			                                   FileMode.Create,
+			                                   FileAccess.Write))
 			{
 				StreamWriter sw=new StreamWriter(fs, Encoding.UTF8);
 				sw.WriteLine("========== "+name+" ==========");
-				File.AppendAllText(funclisttxt, "========== " + name + " ==========" + Environment.NewLine);
+                File.AppendAllText(funclisttxt, "========== " + name + " ==========" + Environment.NewLine);
 				foreach(string k in fun.Keys)
 				{
 					string v=fun[k];

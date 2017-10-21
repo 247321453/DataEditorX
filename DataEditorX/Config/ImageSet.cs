@@ -12,63 +12,63 @@ using DataEditorX.Common;
 
 namespace DataEditorX.Config
 {
-	/// <summary>
-	/// 裁剪图片是、配置
-	/// </summary>
+    /// <summary>
+    /// 裁剪图片是、配置
+    /// </summary>
 	public class ImageSet
 	{
 		public ImageSet(){
-			Init();
+            Init();
 		}
-		//初始化
+        //初始化
 		void Init()
 		{
-			this.normalArea = MyConfig.readArea(MyConfig.TAG_IMAGE_OTHER);
+            this.normalArea = MyConfig.readArea(MyConfig.TAG_IMAGE_OTHER);
 
-			this.xyzArea = MyConfig.readArea(MyConfig.TAG_IMAGE_XYZ);
+            this.xyzArea = MyConfig.readArea(MyConfig.TAG_IMAGE_XYZ);
 
-			this.pendulumArea = MyConfig.readArea(MyConfig.TAG_IMAGE_PENDULUM);
+            this.pendulumArea = MyConfig.readArea(MyConfig.TAG_IMAGE_PENDULUM);
 
-			int[] ints = MyConfig.readIntegers(MyConfig.TAG_IMAGE_SIZE, 4);
+            int[] ints = MyConfig.readIntegers(MyConfig.TAG_IMAGE_SIZE, 4);
 
-			this.w = ints[0];
-			this.h = ints[1];
-			this.W = ints[2];
-			this.H = ints[3];
+            this.w = ints[0];
+            this.h = ints[1];
+            this.W = ints[2];
+            this.H = ints[3];
 
-			this.quilty = MyConfig.readInteger(MyConfig.TAG_IMAGE_QUILTY, 95);
+            this.quilty = MyConfig.readInteger(MyConfig.TAG_IMAGE_QUILTY, 95);
 		}
-		/// <summary>
-		/// jpeg质量
-		/// </summary>
+        /// <summary>
+        /// jpeg质量
+        /// </summary>
 		public int quilty;
-		/// <summary>
-		/// 小图的宽
-		/// </summary>
-		public int w;
-		/// <summary>
-		/// 小图的高
-		/// </summary>
-		public int h;
-		/// <summary>
-		/// 大图的宽
-		/// </summary>
-		public int W;
-		/// <summary>
-		/// 大图的高
-		/// </summary>
-		public int H;
-		/// <summary>
-		/// 怪兽的中间图
-		/// </summary>
-		public Area normalArea;
-		/// <summary>
-		/// xyz怪兽的中间图
-		/// </summary>
-		public Area xyzArea;
-		/// <summary>
-		/// p怪的中间图
-		/// </summary>
-		public Area pendulumArea;
+        /// <summary>
+        /// 小图的宽
+        /// </summary>
+        public int w;
+        /// <summary>
+        /// 小图的高
+        /// </summary>
+        public int h;
+        /// <summary>
+        /// 大图的宽
+        /// </summary>
+        public int W;
+        /// <summary>
+        /// 大图的高
+        /// </summary>
+        public int H;
+        /// <summary>
+        /// 怪兽的中间图
+        /// </summary>
+        public Area normalArea;
+        /// <summary>
+        /// xyz怪兽的中间图
+        /// </summary>
+        public Area xyzArea;
+        /// <summary>
+        /// p怪的中间图
+        /// </summary>
+        public Area pendulumArea;
 	}
 }
