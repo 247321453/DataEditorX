@@ -4,8 +4,8 @@ skip_tags: true
 install:
   - git clone https://github.com/Fluorohydride/ygopro-scripts
   - cp -rf ygopro-scripts/constant.lua DataEditorX/data
-  - git clone --branch link https://github.com/mercury233/ygopro
-  - cp -rf ygopro/strings.conf DataEditorX/data
+  - curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/purerosefallen/ygopro-7210srv/raw/master/strings.conf
+  - cp -rf strings.conf DataEditorX/data
 
 configuration: Release
 
