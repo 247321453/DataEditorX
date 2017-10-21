@@ -14,13 +14,22 @@ build:
     parallel: true
 
 after_build:
-  - mkdir DataEditorX-Koishi
-  - cp -rf win32/* DataEditorX-Koishi
-  - git clone https://github.com/Fluorohydride/ygopro-core ocgcore
-  - 7z a DataEditorX-Koishi.7z DataEditorX-Koishi ocgcore -xr!.git*
+  - cd win32 && 7z a ../win32.zip ./* -xr!.git* -mx9 && cd ..
+
+  - git config --global user.name "Smile-DK"
+  - git config --global user.email "2236141431@qq.com"
+
+  - git clone https://github.com/Smile-DK/ygopro-svrelease
+  - cp -rf win32.zip ygopro-svrelease
+
+  - cd ygopro-svrelease
+  - git add . -A
+  - git commit -m "Windbot pushed by Appveyor"
+  - git push https://%Smile%@github.com/Smile-DK/ygopro-svrelease master
+  - cd ..
 
 test: off
 
 artifacts:
-  - path: DataEditorX-Koishi.7z
+  - path: win32.zip
     name: DataEditorX-Koishi

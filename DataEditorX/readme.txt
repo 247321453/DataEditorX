@@ -1,5 +1,5 @@
-﻿[DataEditorX]2.4.3.1[DataEditorX]
-[URL]https://github.com/purerosefallen/DataEditorX/raw/master/win32/win32.zip[URL]
+﻿[DataEditorX]2.4.3.6[DataEditorX]
+[URL]https://github.com/Smile-DK/ygopro-svrelease/raw/master/win32.zip[URL]
 
 ★运行环境(Environment)
 本程序基于.Net framework 2.0(3.5)开发
