@@ -36,7 +36,9 @@ replace = ([·]) ・
 #replace = ([鮟|鱇|・|·]) <i>$1</i>
 #replace = \s <sym-auto>^</sym-auto>
 #replace = ([A-Z]) <i>$1</i>
-###########################
+########################### no.10's card
+no10 = false
+no_star_cards = 1686814,52653092,65305468
 ##race
 race 0x1 戦士族
 race 0x2 魔法使い族

@@ -27,7 +27,9 @@ monster-text = (?:Monster Effect|Flavor Text) \]\s*\n([\S\s]*)
 ########################### Replace
 #replace = \s <sym-auto>^</sym-auto>
 #replace = ([A-Z]) <i>$1</i>
-###########################
+########################### no.10's card
+no10 = false
+no_star_cards = 1686814,52653092,65305468
 ##race
 race 0x1 Warrior
 race 0x2 Spellcaster
@@ -81,5 +83,6 @@ type 0x200000 Flip
 type 0x400000 Toon      
 type 0x800000 Xyz       
 type 0x1000000 Pendulum 
+type 0x2000000 Special Summon
 type 0x4000000 Link
 ##########################

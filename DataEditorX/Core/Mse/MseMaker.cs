@@ -277,105 +277,63 @@ namespace DataEditorX.Core.Mse
 		public string[] GetTypes(Card c)
 		{
 			//卡片类型，效果1，效果2，效果3
-			string[] types = new string[] {
-				MseCardType.CARD_NORMAL, "", "", "", ""};
+			int MAX_TYPE= 5;
+			var types = new string[MAX_TYPE+1];
+			types[0] = MseCardType.CARD_NORMAL;
+			for(int i=1;i<types.Length;i++){
+				types[i]="";
+			}
 			if (c.IsType(CardType.TYPE_MONSTER))
-			{//卡片类型和第1效果
-				if(c.IsType(CardType.TYPE_LINK)){
-					types[0] = MseCardType.CARD_LINK;
-				}else if (c.IsType(CardType.TYPE_XYZ))
-				{
-					types[0] = MseCardType.CARD_XYZ;
-					types[1] = GetType(CardType.TYPE_XYZ);
+			{
+				CardType[] cardTypes = CardTypes.GetMonsterTypes(c.type, cfg.no10);
+				int count = cardTypes.Length;
+				for(int i=0; i<count && i<MAX_TYPE; i++){
+					types[i+1] = GetType(cardTypes[i]);
 				}
-				else if (c.IsType(CardType.TYPE_TOKEN))
-				{
-					types[0] = (c.race == 0) ?
-						MseCardType.CARD_TOKEN2
-						: MseCardType.CARD_TOKEN;
-					types[1] = GetType(CardType.TYPE_TOKEN);
-				}
-				else if (c.IsType(CardType.TYPE_RITUAL))
-				{
-					types[0] = MseCardType.CARD_RITUAL;
-					types[1] = GetType(CardType.TYPE_RITUAL);
-				}
-				else if (c.IsType(CardType.TYPE_FUSION))
-				{
-					types[0] = MseCardType.CARD_FUSION;
-					types[1] = GetType(CardType.TYPE_FUSION);
-				}
-				else if (c.IsType(CardType.TYPE_SYNCHRO))
-				{
-					types[0] = MseCardType.CARD_SYNCHRO;
-					types[1] = GetType(CardType.TYPE_SYNCHRO);
-				}
-				else if (c.IsType(CardType.TYPE_EFFECT))
-				{
-					types[0] = MseCardType.CARD_EFFECT;
-				}
-				else
-					types[0] = MseCardType.CARD_NORMAL;
-				//同调
-				if (types[0] == MseCardType.CARD_SYNCHRO
-				    || types[0] == MseCardType.CARD_TOKEN)
-				{
-					if (c.IsType(CardType.TYPE_TUNER)
-					    && c.IsType(CardType.TYPE_EFFECT))
-					{//调整效果
-						types[2] = GetType(CardType.TYPE_TUNER);
-						types[3] = GetType(CardType.TYPE_EFFECT);
+				if(cardTypes.Length>0){
+					if(c.IsType(CardType.TYPE_LINK)){
+						types[0] = MseCardType.CARD_LINK;
 					}
-					else if (c.IsType(CardType.TYPE_TUNER))
+					else if (c.IsType(CardType.TYPE_TOKEN))
 					{
-						types[2] = GetType(CardType.TYPE_TUNER);
+						types[0] = (c.race == 0) ?
+							MseCardType.CARD_TOKEN2
+							: MseCardType.CARD_TOKEN;
+					}
+					else if (c.IsType(CardType.TYPE_RITUAL))
+					{
+						types[0] = MseCardType.CARD_RITUAL;
+					}
+					else if (c.IsType(CardType.TYPE_FUSION))
+					{
+						types[0] = MseCardType.CARD_FUSION;
+					}
+					else if (c.IsType(CardType.TYPE_SYNCHRO))
+					{
+						types[0] = MseCardType.CARD_SYNCHRO;
+					}
+					else if (c.IsType(CardType.TYPE_XYZ))
+					{
+						types[0] = MseCardType.CARD_XYZ;
 					}
 					else if (c.IsType(CardType.TYPE_EFFECT))
 					{
-						types[2] = GetType(CardType.TYPE_EFFECT);
+						types[0] = MseCardType.CARD_EFFECT;
+					}
+					else{
+						types[0] = MseCardType.CARD_NORMAL;
+						if(cardTypes.Length==1){
+							//xxx/通常
+						}
 					}
 				}
-				else if (types[0] == MseCardType.CARD_NORMAL)
-				{
-					if (c.IsType(CardType.TYPE_PENDULUM))//灵摆
-						types[1] = GetType(CardType.TYPE_PENDULUM);
-					else if (c.IsType(CardType.TYPE_TUNER))//调整
-						types[1] = GetType(CardType.TYPE_TUNER);
-				}
-				else if (types[0] != MseCardType.CARD_EFFECT)
-				{//效果
-					if (c.IsType(CardType.TYPE_EFFECT))
-						types[2] = GetType(CardType.TYPE_EFFECT);
-				}
-				else
-				{//效果怪兽
-					types[2] = GetType(CardType.TYPE_EFFECT);
-					if (c.IsType(CardType.TYPE_PENDULUM))
-						types[1] = GetType(CardType.TYPE_PENDULUM);
-					else if (c.IsType(CardType.TYPE_TUNER))
-						types[1] = GetType(CardType.TYPE_TUNER);
-					else if (c.IsType(CardType.TYPE_SPIRIT))
-						types[1] = GetType(CardType.TYPE_SPIRIT);
-					else if (c.IsType(CardType.TYPE_TOON))
-						types[1] = GetType(CardType.TYPE_TOON);
-					else if (c.IsType(CardType.TYPE_UNION))
-						types[1] = GetType(CardType.TYPE_UNION);
-					else if (c.IsType(CardType.TYPE_DUAL))
-						types[1] = GetType(CardType.TYPE_DUAL);
-					else if (c.IsType(CardType.TYPE_FLIP))
-						types[1] = GetType(CardType.TYPE_FLIP);
-					else
-					{
-						types[1] = GetType(CardType.TYPE_EFFECT);
-						types[2] = "";
-					}
-				}
-
 			}
 			if (c.race == 0)//如果没有种族
 			{
 				types[1] = "";
 				types[2] = "";
+				types[3] = "";
+				types[4] = "";
 			}
 			return types;
 		}
@@ -434,7 +392,18 @@ namespace DataEditorX.Core.Mse
 			sb.AppendLine(GetLine(TAG_CARDTYPE, types[0]));
 			sb.AppendLine(GetLine(TAG_NAME, reItalic(c.name)));
 			sb.AppendLine(GetLine(TAG_ATTRIBUTE, GetAttribute(c.attribute)));
-			sb.AppendLine(GetLine(TAG_LEVEL, GetStar(c.level)));
+			bool noStar = false;
+			if(cfg.noStartCards != null){
+				foreach(long id in cfg.noStartCards){
+					if(c.alias == id || c.id == id){
+						noStar = true;
+						break;
+					}
+				}
+			}
+			if(!noStar){
+				sb.AppendLine(GetLine(TAG_LEVEL, GetStar(c.level)));
+			}
 			sb.AppendLine(GetLine(TAG_IMAGE, img));
 			sb.AppendLine(GetLine(TAG_TYPE1, cn2tw(race)));
 			sb.AppendLine(GetLine(TAG_TYPE2, cn2tw(types[1])));
