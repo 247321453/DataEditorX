@@ -9,7 +9,7 @@ This program based on .Net2.0/winXP(need .Net2.0)/win7(with.Net2.0)/win8(need.Ne
 Click file with right mouse button, Open with, Browse Files, Choose confirm(Yes）
 
 ★Feedback
-If you has problems, please report on https://github.com/247321453/DataEditorX/issues
+If you has problems, please report on https://github.com/purerosefallen/DataEditorX/issues
 Title：DataEditorX X.X.X.X
 Text：
 The error message text: If there is a error message box, please press Ctrl+C, then paste in someplace.
