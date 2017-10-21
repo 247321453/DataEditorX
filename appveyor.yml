@@ -24,7 +24,7 @@ after_build:
 
   - cd ygopro-svrelease
   - git add . -A
-  - git commit -m "Windbot pushed by Appveyor"
+  - git commit -m "DataEditorX pushed by Appveyor"
   - git push https://%Smile%@github.com/Smile-DK/ygopro-svrelease master
   - cd ..
 
