@@ -21,7 +21,7 @@ DataEditForm.pl_main.lb_categorys	效果分类
 DataEditForm.pl_main.lb_cardcode	卡片密码
 DataEditForm.pl_main.lb_cardalias	同名卡
 DataEditForm.pl_main.lb_atkdef	ATK/DEF
-DataEditForm.lb_pleft_right	灵摆刻度
+DataEditForm.pl_main.lb_pleft_right	灵摆刻度
 DataEditForm.pl_bottom.btn_reset	重置
 DataEditForm.pl_bottom.btn_lua	脚本
 DataEditForm.pl_bottom.btn_serach	搜索
