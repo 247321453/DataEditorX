@@ -23,7 +23,28 @@ namespace DataEditorX
 {
     public partial class DataEditForm : DockContent, IDataForm
 	{
-        public string addrequire;
+        private string addrequire_str;
+
+        public string addrequire
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(addrequire_str))
+                    return addrequire_str;
+                else
+                {
+                    string cdbName = Path.GetFileNameWithoutExtension(nowCdbFile);
+                    if (cdbName.Length > 0 && File.Exists(GetPath().GetModuleScript(cdbName)))
+                        return cdbName;
+                }
+                return "";
+            }
+            set
+            {
+                addrequire_str = value;
+            }
+        }
+
         #region 成员变量/构造
         TaskHelper tasker = null;
 		string taskname;

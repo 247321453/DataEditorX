@@ -276,18 +276,29 @@ namespace DataEditorX.Core
 						FileMode.OpenOrCreate,FileAccess.Write))
 					{
 						StreamWriter sw = new StreamWriter(fs, new UTF8Encoding(false));
-						if (c.id > 0) { //card script
-							sw.WriteLine("--" + c.name);
-							sw.WriteLine("local m=" + id.ToString());
-							sw.WriteLine("local cm=_G[\"c\"..m]");
-							if (addrequire.Length > 0)
-								sw.WriteLine("xpcall(function() require(\"expansions/script/" + addrequire + "\") end,function() require(\"script/" + addrequire + "\") end)");
-							sw.WriteLine("function cm.initial_effect(c)");
-							sw.WriteLine("\t");
-							sw.WriteLine("end");
-						} else { //module script
-							sw.WriteLine("--Module script \"" + addrequire + "\"");
-						}
+                        if (string.IsNullOrEmpty(addrequire))
+                        {
+                            // OCG script
+                            sw.WriteLine("--" + c.name);
+                            sw.WriteLine("function c" + id.ToString() + ".initial_effect(c)");
+                            sw.WriteLine("\t");
+                            sw.WriteLine("end");
+                        }
+                        else
+                        {
+                            // DIY script
+                            sw.WriteLine("--" + c.name);
+                            sw.WriteLine("local m=" + id.ToString());
+                            sw.WriteLine("local cm=_G[\"c\"..m]");
+                            sw.WriteLine("xpcall(function() require(\"expansions/script/" + addrequire + "\") end,function() require(\"script/" + addrequire + "\") end)");
+                            sw.WriteLine("function cm.initial_effect(c)");
+                            sw.WriteLine("\t");
+                            sw.WriteLine("end");
+                        }
+                        /*else
+                        { //module script
+                            sw.WriteLine("--Module script \"" + addrequire + "\"");
+                        }*/
 						sw.Close();
 						fs.Close();
 					}
