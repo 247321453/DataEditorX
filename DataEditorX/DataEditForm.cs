@@ -1784,6 +1784,38 @@ namespace DataEditorX
 			}
 		}
 		
+        void Menuitem_replaceClick(object sender, EventArgs e)
+        {
+            if (!CheckOpen())
+                return;
+            using (SaveFileDialog dlg = new SaveFileDialog())
+            {
+                dlg.Title = LanguageHelper.GetMsg(LMSG.SelectDataBasePath);
+                dlg.Filter = LanguageHelper.GetMsg(LMSG.CdbType);
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    Card[] cards = DataBase.Read(nowCdbFile, true, "");
+                    int count = cards.Length;
+                    if (cards == null || cards.Length == 0)
+                        return;
+                    if (DataBase.Create(dlg.FileName))
+                    {
+                        //
+                        int len = MyConfig.readInteger(MyConfig.TAG_AUTO_LEN, 30);
+                        for (int i = 0; i < count; i++)
+                        {
+                            if (cards[i].desc != null)
+                            {
+                                cards[i].desc = tasker.MseHelper.ReplaceText(cards[i].desc, cards[i].name);
+                            }
+                        }
+                        DataBase.CopyDB(dlg.FileName, false, cards);
+                        MyMsg.Show(LMSG.CopyCardsToDBIsOK);
+                    }
+                }
+            }
+        }
+		
 		private void text2LinkMarks(string text)
 		{
 			try{

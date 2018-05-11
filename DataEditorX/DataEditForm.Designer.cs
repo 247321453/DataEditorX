@@ -75,6 +75,7 @@ namespace DataEditorX
             this.tsep1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuitem_cancelTask = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_autoreturn = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuitem_replace = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_help = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_about = new System.Windows.Forms.ToolStripMenuItem();
             this.menuitem_language = new System.Windows.Forms.ToolStripMenuItem();
@@ -318,7 +319,9 @@ namespace DataEditorX
             this.menuitem_convertimage,
             this.tsep1,
             this.menuitem_cancelTask,
-            this.menuitem_autoreturn});
+            this.menuitem_autoreturn,
+            this.menuitem_replace
+            });
             this.menu_data.Name = "menu_data";
             this.menu_data.Size = new System.Drawing.Size(62, 21);
             this.menu_data.Text = "Data(&T)";
@@ -440,6 +443,13 @@ namespace DataEditorX
             this.menuitem_autoreturn.Size = new System.Drawing.Size(228, 22);
             this.menuitem_autoreturn.Text = "*Auto return";
             this.menuitem_autoreturn.Click += new System.EventHandler(this.Menuitem_autoreturnClick);
+            // 
+            // menuitem_replace
+            // 
+            this.menuitem_replace.Name = "menuitem_replace";
+            this.menuitem_replace.Size = new System.Drawing.Size(228, 22);
+            this.menuitem_replace.Text = "*Auto replace";
+            this.menuitem_replace.Click += new System.EventHandler(this.Menuitem_replaceClick);
             // 
             // menuitem_help
             // 
@@ -1324,6 +1334,7 @@ namespace DataEditorX
 		private System.Windows.Forms.ToolStripMenuItem menuitem_export_select_sql;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_export_all_sql;
 		private System.Windows.Forms.ToolStripMenuItem menuitem_autoreturn;
+        private System.Windows.Forms.ToolStripMenuItem menuitem_replace;
         private System.Windows.Forms.Label lb_markers;
         private DFlowLayoutPanel pl_markers;
         private System.Windows.Forms.TextBox tb_link;

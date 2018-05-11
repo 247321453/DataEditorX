@@ -863,20 +863,101 @@ namespace DataEditorX.Core.Mse
 		}
 		#endregion
 		
-		#region test
-		public void testPendulum(string desc){
-			if(string.IsNullOrEmpty(desc)){
-				MessageBox.Show("desc is null", "info");
-			}else{
-				string ptext=GetDesc(desc, cfg.regx_pendulum);
-				MessageBox.Show(reItalic(ptext), "pendulum");
-				string text = GetDesc(desc, cfg.regx_monster);
-				if (string.IsNullOrEmpty(text))
-					text = desc;
-				MessageBox.Show(reItalic(text), "effect");
-			}
+        public void testPendulum(string desc)
+        {
+            List<string> table = GetMPText(desc);
+            if (table == null && table.Count != 2)
+            {
+                MessageBox.Show("desc is null", "info");
+            }
+            else
+            {
+                MessageBox.Show(reItalic(table[0]), "Monster Effect");
+                MessageBox.Show(reItalic(table[1]), "Pendulum Effect");
+            }
+        }
+		
+        public List<string> GetMPText(string desc)
+        {
+            if (string.IsNullOrEmpty(desc))
+            {
+                MessageBox.Show("desc is null", "info");
+                return null;
+            }
+            else
+            {
+                string ptext = null;
+                string text = null;
+                if (Regex.IsMatch(desc, "【灵摆】"))
+                {
+                    ptext = GetDesc(desc, @"\A←[ ]*\d*[ ]*【灵摆】[ ]*\d*[ ]*→[\r\n]*([\S\s]*?)[\r\n]*【");
+                    text = GetDesc(desc, @"【[^【】\r\n]{3,}】[\r\n]*([\S\s]*?)\z");
+                }
+                else
+                {
+                    ptext = GetDesc(desc, @"\A[\S\s]*?[\r\n]*【灵摆效果】[\r\n]*([\S\s]*?)\z");
+                    text = GetDesc(desc, @"\A([\S\s]*?)[\r\n]*【灵摆效果】[\r\n]*[\S\s]*?\z");
+                }
+                if (string.IsNullOrEmpty(text))
+                    text = desc;
+                List<string> val = new List<string>();
+                val.Add(text);
+                val.Add(ptext);
+                return val;
+            }
+        }
 
-		}
-		#endregion
+        public string ConvertPTextOld(string text, string ptext, bool normal, int pscale_l, int pscale_r)
+        {
+            string str = normal ? "【怪兽描述】" : "【怪兽效果】";
+            if (string.IsNullOrEmpty(ptext))
+                return string.Format("←{0} 【灵摆】 {1}→\r\n{2}\r\n{3}", pscale_l, pscale_r, str, text);
+            else
+                return string.Format("←{0} 【灵摆】 {1}→\r\n{2}\r\n{3}\r\n{4}", pscale_l, pscale_r, ptext, str, text);
+        }
+
+        public string ConvertPTextNew(string text, string ptext)
+        {
+            if (string.IsNullOrEmpty(ptext))
+                return text;
+            else
+                return string.Format("{0}\r\n\r\n【灵摆效果】\r\n{1}", text, ptext);
+        }
+
+        public string ReplaceText(string text, string name)
+        {
+            // pendulum format
+            if (Regex.IsMatch(text, @"【灵摆】"))
+            {
+                List<string> table = GetMPText(text);
+                if (table != null)
+                    text = ConvertPTextNew(table[0], table[1]);
+            }
+
+            // give
+            text = text.Replace("给与", "给予");
+
+            // set name
+            text = Regex.Replace(text, @"名字带有「([^「」]+)」的", "「$1」");
+
+            if (Regex.IsMatch(text, "①"))
+            {
+                // this card name
+                string thisname = string.Format("「{0}」", name);
+                text = Regex.Replace(text, thisname + @"在1回合", "这个卡名的卡在1回合");
+                text = Regex.Replace(text, thisname + @"在决斗中", "这个卡名的卡在决斗中");
+                text = Regex.Replace(text, thisname + @"的效果1回合", "这个卡名的效果1回合");
+                text = Regex.Replace(text, thisname + @"的效果在决斗中", "这个卡名的效果在决斗中");
+                text = Regex.Replace(text, thisname + @"的怪兽效果1回合", "这个卡名的怪兽效果1回合");
+                text = Regex.Replace(text, thisname + @"的怪兽效果在决斗中", "这个卡名的怪兽效果在决斗中");
+                text = Regex.Replace(text, thisname + @"的灵摆效果1回合", "这个卡名的灵摆效果1回合");
+                text = Regex.Replace(text, thisname + @"的灵摆效果在决斗中", "这个卡名的灵摆效果在决斗中");
+                text = Regex.Replace(text, thisname + @"的([①②③④⑤⑥⑦⑧⑨⑩]+)的", "这个卡名的$1的");
+                text = Regex.Replace(text, thisname + @"的([①②③④⑤⑥⑦⑧⑨⑩]+)的", "这个卡名的$1的");
+				text = Regex.Replace(text, @"作为([①②③④⑤⑥⑦⑧⑨⑩]+)的", "$1的");
+            }
+
+            return text;
+        }
 	}
 }
