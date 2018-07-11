@@ -339,8 +339,12 @@ namespace DataEditorX.Core.Mse
 				{
 					if (c.IsType(CardType.TYPE_PENDULUM))//灵摆
 						types[1] = GetType(CardType.TYPE_PENDULUM);
+						types[2] = GetType(CardType.TYPE_NORMAL);
 					else if (c.IsType(CardType.TYPE_TUNER))//调整
 						types[1] = GetType(CardType.TYPE_TUNER);
+						types[2] = GetType(CardType.TYPE_NORMAL);
+					else
+						types[1] = GetType(CardType.TYPE_NORMAL);
 				}
 				else if (types[0] != MseCardType.CARD_EFFECT)
 				{//效果
