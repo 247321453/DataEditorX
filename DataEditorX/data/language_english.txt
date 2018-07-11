@@ -106,7 +106,7 @@ MainForm.mainMenu.menuitem_closeall	Close All
 0xf	It's up to date.\nDo you want to download it again?
 0x10	Check update fail. Please Check Network.
 0x11	Find a new version,\nIf Download it?
-0x12	File doesn't exists!
+0x12	File doesn't exist!
 0x13	No selected database!
 0x14	select database file
 0x15	select ydk file
@@ -137,7 +137,7 @@ MainForm.mainMenu.menuitem_closeall	Close All
 0x2e	Cutting Images...
 0x2f	Cut Images OK
 0x30	No Selected Cards
-0x31	Replace image when it exists?
+0x31	Replace Image when it exists?
 0x32	Converting Images
 0x33	Convert Images OK
 0x34	Compression DataBase OK

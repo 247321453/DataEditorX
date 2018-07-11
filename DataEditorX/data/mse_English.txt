@@ -5,19 +5,19 @@
 ########################### Chs 2 Cht 
 cn2tw = false
 ########################### Setting
-maxcount = 200
+maxcount = 3000
 imagepath = ./Images
 ########################### Artwork
 reimage = false
-width = 319
-height = 317
-pwidth = 363
-pheight= 275
+width = 618
+height = 618
+pwidth = 710
+pheight= 530
 ########################### Spell/Trap
-spell = [Spell Card%%]
-trap = [Trap Card%%]
+spell = %%
+trap = %%
 ############################ language,style,other setting
-head = mse version: 0.3.8\r\ngame: yugioh\r\nstylesheet: standard\r\nset info:\r\n\tlanguage: EN\r\n\tedition: \r\n\tST mark is text: no\r\n\tpendulum image is small: yes
+head = mse version: 0.3.8\r\ngame: yugioh\r\nstylesheet: standard\r\nset info:\r\n\tlanguage: EN\r\n\tedition: \r\n\tST mark is text: yes\r\n\tpendulum image is small: yes
 end = version control:\n\ttype: none\napprentice code: 
 ############################ Text
 text = Pendulum Text :\n%ptext%\nMonster Text :\n%text%\n
@@ -55,34 +55,33 @@ race 0x100000 Psychic
 race 0x200000 Divine-Beast
 race 0x400000 Creator God
 race 0x800000 Wyrm
-race 0x1000000 Charisma
+race 0x1000000 Cyberse
 ###########################
 ##type
-type 0x1 Monster   
-type 0x2 Spell     
-type 0x4 Trap      
+type 0x1 Monster
+type 0x2 Spell   
+type 0x4 Trap     
 type 0x8 N/A
-type 0x10 Normal    
-type 0x20 Effect    
-type 0x40 Fusion    
-type 0x80 Ritual    
-type 0x100 T-Monster 
-type 0x200 Spirit    
-type 0x400 Union     
-type 0x800 Gemini    
-type 0x1000 Tuner     
-type 0x2000 Synchro   
-type 0x4000 Token     
+type 0x10 Normal
+type 0x20 Effect
+type 0x40 Fusion
+type 0x80 Ritual
+type 0x100 T-Monster
+type 0x200 Spirit
+type 0x400 Union
+type 0x800 Gemini
+type 0x1000 Tuner
+type 0x2000 Synchro
+type 0x4000 Token
 type 0x8000 N/A
 type 0x10000 Quick-Play
 type 0x20000 Continuous
-type 0x40000 Equip     
-type 0x80000 Field     
-type 0x100000 Counter   
-type 0x200000 Flip      
-type 0x400000 Toon      
-type 0x800000 Xyz       
-type 0x1000000 Pendulum 
-type 0x2000000 Special Summon
+type 0x40000 Equip
+type 0x80000 Field
+type 0x100000 Counter
+type 0x200000 Flip
+type 0x400000 Toon
+type 0x800000 Xyz
+type 0x1000000 Pendulum
 type 0x4000000 Link
 ##########################

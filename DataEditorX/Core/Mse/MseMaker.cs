@@ -277,63 +277,109 @@ namespace DataEditorX.Core.Mse
 		public string[] GetTypes(Card c)
 		{
 			//卡片类型，效果1，效果2，效果3
-			int MAX_TYPE= 5;
-			var types = new string[MAX_TYPE+1];
-			types[0] = MseCardType.CARD_NORMAL;
-			for(int i=1;i<types.Length;i++){
-				types[i]="";
-			}
+			string[] types = new string[] {
+				MseCardType.CARD_NORMAL, "", "", "", ""};
 			if (c.IsType(CardType.TYPE_MONSTER))
-			{
-				CardType[] cardTypes = CardTypes.GetMonsterTypes(c.type, cfg.no10);
-				int count = cardTypes.Length;
-				for(int i=0; i<count && i<MAX_TYPE; i++){
-					types[i+1] = GetType(cardTypes[i]);
+			{//卡片类型和第1效果
+				if(c.IsType(CardType.TYPE_LINK)){
+					types[0] = MseCardType.CARD_LINK;
+				}else if (c.IsType(CardType.TYPE_XYZ))
+				{
+					types[0] = MseCardType.CARD_XYZ;
+					types[1] = GetType(CardType.TYPE_XYZ);
 				}
-				if(cardTypes.Length>0){
-					if(c.IsType(CardType.TYPE_LINK)){
-						types[0] = MseCardType.CARD_LINK;
+				else if (c.IsType(CardType.TYPE_TOKEN))
+				{
+					types[0] = (c.race == 0) ?
+						MseCardType.CARD_TOKEN2
+						: MseCardType.CARD_TOKEN;
+					types[1] = GetType(CardType.TYPE_TOKEN);
+				}
+				else if (c.IsType(CardType.TYPE_RITUAL))
+				{
+					types[0] = MseCardType.CARD_RITUAL;
+					types[1] = GetType(CardType.TYPE_RITUAL);
+				}
+				else if (c.IsType(CardType.TYPE_FUSION))
+				{
+					types[0] = MseCardType.CARD_FUSION;
+					types[1] = GetType(CardType.TYPE_FUSION);
+				}
+				else if (c.IsType(CardType.TYPE_SYNCHRO))
+				{
+					types[0] = MseCardType.CARD_SYNCHRO;
+					types[1] = GetType(CardType.TYPE_SYNCHRO);
+				}
+				else if (c.IsType(CardType.TYPE_EFFECT))
+				{
+					types[0] = MseCardType.CARD_EFFECT;
+				}
+				else
+					types[0] = MseCardType.CARD_NORMAL;
+				//同调
+				if (types[0] == MseCardType.CARD_SYNCHRO
+				    || types[0] == MseCardType.CARD_TOKEN)
+				{
+					if (c.IsType(CardType.TYPE_TUNER)
+					    && c.IsType(CardType.TYPE_EFFECT))
+					{//调整效果
+						types[2] = GetType(CardType.TYPE_TUNER);
+						types[3] = GetType(CardType.TYPE_EFFECT);
 					}
-					else if (c.IsType(CardType.TYPE_TOKEN))
+					else if (c.IsType(CardType.TYPE_TUNER))
 					{
-						types[0] = (c.race == 0) ?
-							MseCardType.CARD_TOKEN2
-							: MseCardType.CARD_TOKEN;
-					}
-					else if (c.IsType(CardType.TYPE_RITUAL))
-					{
-						types[0] = MseCardType.CARD_RITUAL;
-					}
-					else if (c.IsType(CardType.TYPE_FUSION))
-					{
-						types[0] = MseCardType.CARD_FUSION;
-					}
-					else if (c.IsType(CardType.TYPE_SYNCHRO))
-					{
-						types[0] = MseCardType.CARD_SYNCHRO;
-					}
-					else if (c.IsType(CardType.TYPE_XYZ))
-					{
-						types[0] = MseCardType.CARD_XYZ;
+						types[2] = GetType(CardType.TYPE_TUNER);
 					}
 					else if (c.IsType(CardType.TYPE_EFFECT))
 					{
-						types[0] = MseCardType.CARD_EFFECT;
-					}
-					else{
-						types[0] = MseCardType.CARD_NORMAL;
-						if(cardTypes.Length==1){
-							//xxx/通常
-						}
+						types[2] = GetType(CardType.TYPE_EFFECT);
 					}
 				}
+				else if (types[0] == MseCardType.CARD_NORMAL)
+				{
+					if (c.IsType(CardType.TYPE_PENDULUM))//灵摆
+						types[1] = GetType(CardType.TYPE_PENDULUM);
+						types[2] = GetType(CardType.TYPE_NORMAL);
+					else if (c.IsType(CardType.TYPE_TUNER))//调整
+						types[1] = GetType(CardType.TYPE_TUNER);
+						types[2] = GetType(CardType.TYPE_NORMAL);
+					else
+						types[1] = GetType(CardType.TYPE_NORMAL);
+				}
+				else if (types[0] != MseCardType.CARD_EFFECT)
+				{//效果
+					if (c.IsType(CardType.TYPE_EFFECT))
+						types[2] = GetType(CardType.TYPE_EFFECT);
+				}
+				else
+				{//效果怪兽
+					types[2] = GetType(CardType.TYPE_EFFECT);
+					if (c.IsType(CardType.TYPE_PENDULUM))
+						types[1] = GetType(CardType.TYPE_PENDULUM);
+					else if (c.IsType(CardType.TYPE_TUNER))
+						types[1] = GetType(CardType.TYPE_TUNER);
+					else if (c.IsType(CardType.TYPE_SPIRIT))
+						types[1] = GetType(CardType.TYPE_SPIRIT);
+					else if (c.IsType(CardType.TYPE_TOON))
+						types[1] = GetType(CardType.TYPE_TOON);
+					else if (c.IsType(CardType.TYPE_UNION))
+						types[1] = GetType(CardType.TYPE_UNION);
+					else if (c.IsType(CardType.TYPE_DUAL))
+						types[1] = GetType(CardType.TYPE_DUAL);
+					else if (c.IsType(CardType.TYPE_FLIP))
+						types[1] = GetType(CardType.TYPE_FLIP);
+					else
+					{
+						types[1] = GetType(CardType.TYPE_EFFECT);
+						types[2] = "";
+					}
+				}
+
 			}
 			if (c.race == 0)//如果没有种族
 			{
 				types[1] = "";
 				types[2] = "";
-				types[3] = "";
-				types[4] = "";
 			}
 			return types;
 		}
@@ -392,18 +438,7 @@ namespace DataEditorX.Core.Mse
 			sb.AppendLine(GetLine(TAG_CARDTYPE, types[0]));
 			sb.AppendLine(GetLine(TAG_NAME, reItalic(c.name)));
 			sb.AppendLine(GetLine(TAG_ATTRIBUTE, GetAttribute(c.attribute)));
-			bool noStar = false;
-			if(cfg.noStartCards != null){
-				foreach(long id in cfg.noStartCards){
-					if(c.alias == id || c.id == id){
-						noStar = true;
-						break;
-					}
-				}
-			}
-			if(!noStar){
-				sb.AppendLine(GetLine(TAG_LEVEL, GetStar(c.level)));
-			}
+			sb.AppendLine(GetLine(TAG_LEVEL, GetStar(c.level)));
 			sb.AppendLine(GetLine(TAG_IMAGE, img));
 			sb.AppendLine(GetLine(TAG_TYPE1, cn2tw(race)));
 			sb.AppendLine(GetLine(TAG_TYPE2, cn2tw(types[1])));
@@ -863,101 +898,20 @@ namespace DataEditorX.Core.Mse
 		}
 		#endregion
 		
-        public void testPendulum(string desc)
-        {
-            List<string> table = GetMPText(desc);
-            if (table == null && table.Count != 2)
-            {
-                MessageBox.Show("desc is null", "info");
-            }
-            else
-            {
-                MessageBox.Show(reItalic(table[0]), "Monster Effect");
-                MessageBox.Show(reItalic(table[1]), "Pendulum Effect");
-            }
-        }
-		
-        public List<string> GetMPText(string desc)
-        {
-            if (string.IsNullOrEmpty(desc))
-            {
-                MessageBox.Show("desc is null", "info");
-                return null;
-            }
-            else
-            {
-                string ptext = null;
-                string text = null;
-                if (Regex.IsMatch(desc, "【灵摆】"))
-                {
-                    ptext = GetDesc(desc, @"\A←[ ]*\d*[ ]*【灵摆】[ ]*\d*[ ]*→[\r\n]*([\S\s]*?)[\r\n]*【");
-                    text = GetDesc(desc, @"【[^【】\r\n]{3,}】[\r\n]*([\S\s]*?)\z");
-                }
-                else
-                {
-                    ptext = GetDesc(desc, @"\A[\S\s]*?[\r\n]*【灵摆效果】[\r\n]*([\S\s]*?)\z");
-                    text = GetDesc(desc, @"\A([\S\s]*?)[\r\n]*【灵摆效果】[\r\n]*[\S\s]*?\z");
-                }
-                if (string.IsNullOrEmpty(text))
-                    text = desc;
-                List<string> val = new List<string>();
-                val.Add(text);
-                val.Add(ptext);
-                return val;
-            }
-        }
+		#region test
+		public void testPendulum(string desc){
+			if(string.IsNullOrEmpty(desc)){
+				MessageBox.Show("desc is null", "info");
+			}else{
+				string ptext=GetDesc(desc, cfg.regx_pendulum);
+				MessageBox.Show(reItalic(ptext), "pendulum");
+				string text = GetDesc(desc, cfg.regx_monster);
+				if (string.IsNullOrEmpty(text))
+					text = desc;
+				MessageBox.Show(reItalic(text), "effect");
+			}
 
-        public string ConvertPTextOld(string text, string ptext, bool normal, int pscale_l, int pscale_r)
-        {
-            string str = normal ? "【怪兽描述】" : "【怪兽效果】";
-            if (string.IsNullOrEmpty(ptext))
-                return string.Format("←{0} 【灵摆】 {1}→\r\n{2}\r\n{3}", pscale_l, pscale_r, str, text);
-            else
-                return string.Format("←{0} 【灵摆】 {1}→\r\n{2}\r\n{3}\r\n{4}", pscale_l, pscale_r, ptext, str, text);
-        }
-
-        public string ConvertPTextNew(string text, string ptext)
-        {
-            if (string.IsNullOrEmpty(ptext))
-                return text;
-            else
-                return string.Format("{0}\r\n\r\n【灵摆效果】\r\n{1}", text, ptext);
-        }
-
-        public string ReplaceText(string text, string name)
-        {
-            // pendulum format
-            if (Regex.IsMatch(text, @"【灵摆】"))
-            {
-                List<string> table = GetMPText(text);
-                if (table != null)
-                    text = ConvertPTextNew(table[0], table[1]);
-            }
-
-            // give
-            text = text.Replace("给与", "给予");
-
-            // set name
-            text = Regex.Replace(text, @"名字带有「([^「」]+)」的", "「$1」");
-
-            if (Regex.IsMatch(text, "①"))
-            {
-                // this card name
-                string thisname = string.Format("「{0}」", name);
-                text = Regex.Replace(text, thisname + @"在1回合", "这个卡名的卡在1回合");
-                text = Regex.Replace(text, thisname + @"在决斗中", "这个卡名的卡在决斗中");
-                text = Regex.Replace(text, thisname + @"的效果1回合", "这个卡名的效果1回合");
-                text = Regex.Replace(text, thisname + @"的效果在决斗中", "这个卡名的效果在决斗中");
-                text = Regex.Replace(text, thisname + @"的怪兽效果1回合", "这个卡名的怪兽效果1回合");
-                text = Regex.Replace(text, thisname + @"的怪兽效果在决斗中", "这个卡名的怪兽效果在决斗中");
-                text = Regex.Replace(text, thisname + @"的灵摆效果1回合", "这个卡名的灵摆效果1回合");
-                text = Regex.Replace(text, thisname + @"的灵摆效果在决斗中", "这个卡名的灵摆效果在决斗中");
-                text = Regex.Replace(text, thisname + @"的([①②③④⑤⑥⑦⑧⑨⑩]+)的", "这个卡名的$1的");
-                text = Regex.Replace(text, thisname + @"的([①②③④⑤⑥⑦⑧⑨⑩]+)的", "这个卡名的$1的");
-				text = Regex.Replace(text, @"作为([①②③④⑤⑥⑦⑧⑨⑩]+)的", "$1的");
-            }
-
-            return text;
-        }
+		}
+		#endregion
 	}
 }
