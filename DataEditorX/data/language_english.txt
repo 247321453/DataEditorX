@@ -100,7 +100,7 @@ MainForm.mainMenu.menuitem_closeall	Close All
 0xb	If delete Card(s)?
 0xc	If create script file?
 0xd	If open database?
-0xe	If replace exitis cards?
+0xe	If exists, replace cards?
 0xf	It's up to date.\nDo you want to download it again?
 0x10	Check update fail. Please Check Network.
 0x11	Find a new version,\nIf Download it?
@@ -135,7 +135,7 @@ MainForm.mainMenu.menuitem_closeall	Close All
 0x2e	Cutting Images...
 0x2f	Cut Images OK
 0x30	No Selected Cards
-0x31	If Replace Image When it's exist?
+0x31	Replace Image when it exists?
 0x32	Converting Images
 0x33	Convert Images OK
 0x34	Compression DataBase OK
