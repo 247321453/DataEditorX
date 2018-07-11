@@ -1,4 +1,4 @@
-﻿[DataEditorX]2.4.3.6[DataEditorX]
+﻿[DataEditorX]2.4.3.7[DataEditorX]
 [URL]https://github.com/Smile-DK/ygopro-svrelease/raw/master/win32.zip[URL]
 
 ★运行环境(Environment)
