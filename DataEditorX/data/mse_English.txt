@@ -56,7 +56,6 @@ race 0x200000 Divine-Beast
 race 0x400000 Creator God
 race 0x800000 Wyrm
 race 0x1000000 Cyberse
-race 0x100000000 Charisma
 ###########################
 ##type
 type 0x1 Monster
