@@ -1144,7 +1144,7 @@ EFFECT_TYPE_QUICK_F			=0x0400		--诱发即时必发效果（熊猫龙等）
 ●int Effect.GetRange(Effect e)
 返回e的Range属性。
 
-●int[, int] Effect.GetCountLimit(Effect e)
+●int[,int] Effect.GetCountLimit(Effect e)
 返回e的CountLimit属性。
 
 ========== Group ==========
