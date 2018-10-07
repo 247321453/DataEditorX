@@ -925,6 +925,41 @@ ASSUME_DEFENSE      守备力
 设置c一回合只能进行1次特殊召唤（灵兽，波动龙）
 相同的spsummon_code共用1个次数
 
+●bool Card.IsRitualType(Card c)
+返回c的仪式召唤的种类。
+
+●bool Card.SetEntityCode(Card c, int code[, bool no_alias=false])
+把c的卡图，卡名，信息全部改成卡号为code的卡的信息，但是不改变效果。常用于卡片变身类效果。返回是否成功。
+no_alias=true会把变身后c的同名卡信息去除。用于双面卡的处理。
+
+●void Card.SetCardData(Card c, int type, int value)
+把c的type的信息在本次决斗中永久性更改为value，如同更改卡片数据库一般。
+type可以是以下之一：
+CARDDATA_CODE			1
+CARDDATA_ALIAS			2
+CARDDATA_SETCODE		3
+CARDDATA_TYPE			4
+CARDDATA_LEVEL			5
+CARDDATA_ATTRIBUTE		6
+CARDDATA_RACE			7
+CARDDATA_ATTACK			8
+CARDDATA_DEFENSE		9
+CARDDATA_LSCALE			10
+CARDDATA_RSCALE			11
+CARDDATA_LINK_MARKER	12
+
+●int Card.GetLinkMarker(Card c)
+返回c的连接标记。
+
+●int Card.GetOriginalLinkMarker(Card c)
+返回c的原本连接标记。
+
+●bool Card.IsXyzSummonableByRose(Card c, Card c1, Card c2)
+返回c是否可以用c1和c2这2张卡为素材超量召唤。超量召唤时，c1的等级当作和c2相同。
+
+●int Card.GetRemovedOverlayCount(Card c)
+返回c本回合被取除的超量素材数量。
+
 ========== Effect ==========
 ●Effect Effect.CreateEffect(Card c)
 新建一个空效果
@@ -1102,6 +1137,15 @@ EFFECT_TYPE_QUICK_F			=0x0400		--诱发即时必发效果（熊猫龙等）
 
 ●void Effect.UseCountLimit(Effect e, int p[, int count=1, bool oath_only=false])
 手动减少玩家 p 对效果 e 的 count 个可用次数[ oath_only 为 该效果是否是 EFFECT_FLAG_OATH]
+
+●void Effect.SetOwner(Effect e, Card c)
+将e的Owner属性设置为c。
+
+●int Effect.GetRange(Effect e)
+返回e的Range属性。
+
+●int[, int] Effect.GetCountLimit(Effect e)
+返回e的CountLimit属性。
 
 ========== Group ==========
 ●Group Group.CreateGroup()
@@ -2143,6 +2187,48 @@ ACTIVITY_CHAIN          =7	--发动效果
 ●void Duel.MajesticCopy(Card c1, Card c2)
 救世星龙专用。把c2记述的效果复制给c1
 强制发动的效果可以选择是否发动
+
+●int Duel.GetMasterRule()
+返回当前决斗规则（大师规则X）。
+
+●int,int,.. Duel.ReadCard(int|Card target, int type, int type2, ..)
+返回卡片target（或是卡号为target的卡）的type的信息。
+type可以是以下之一：
+CARDDATA_CODE			1
+CARDDATA_ALIAS			2
+CARDDATA_SETCODE		3
+CARDDATA_TYPE			4
+CARDDATA_LEVEL			5
+CARDDATA_ATTRIBUTE		6
+CARDDATA_RACE			7
+CARDDATA_ATTACK			8
+CARDDATA_DEFENSE		9
+CARDDATA_LSCALE			10
+CARDDATA_RSCALE			11
+CARDDATA_LINK_MARKER	12
+
+●int Duel.Exile(Card|Group target, int reason)
+以reason的原因把target直接消灭。返回被消灭的卡的数量。
+
+●void Duel.DisableActionCheck(bool enabled)
+打开或关闭DisableActionCheck模式。
+在DisableActionCheck模式下，可以在禁止进行决斗操作的处理（如condition以及target的chk==0的部分）进行决斗操作，不会出现Action is not allowed的报错。
+
+●void Duel.SetMetatable(Card|Group|Effect target, table mt)
+将target的元表属性设置为mt。
+此函数用途和lua内置函数setmetatable相同，只是针对YGOPro内的userdata属性而设计的。
+
+●void Duel.MoveTurnCount()
+把回合数直接向前推进1回合。此操作会改变双方的客户端显示，以及加时赛的处理。
+
+●Group Duel.GetCardsInZone(int player, int zone)
+获取以player的视野，zone区域的所有卡。
+
+●bool Duel.XyzSummonByRose(int player, Card xyzcard, Card c1, Card c2)
+用c1和c2这2张卡为素材把xyzcard超量召唤。超量召唤时，c1的等级当作和c2相同。
+
+●void Duel.LoadScript(string filename)
+加载文件名是filename的脚本。该函数会自动在脚本目录下搜索脚本文件进行加载。
 
 ========== aux ============
 ##只说明常用的函数
