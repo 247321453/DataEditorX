@@ -130,332 +130,385 @@
 ##setname
 -1	Custom
 0x0	Archetype
-0x1	Ally of Justice	A・O・J
-0x2	Genex	ジェネクス
-0x1002	R-Genex	レアル・ジェネクス
-0x2002	N/A	Genex Ally	A・ジェネクス
-0x3	N/A
-0x4	Amazoness	アマゾネス
-0x5	Arcana Force	アルカナフォース
-0x6	Dark World	暗黒界
-0x7	Ancient Gear	アンティーク・ギア
-0x8	HERO	HERO
-0x3008	Elemental HERO	E・HERO
-0x6008	N/A	Evil HERO	E-HERO
-0xc008	Destiny HERO	D-HERO
-0x5008	N/A	Vision HERO	V・HERO
-0xa008	Masked HERO	M・HERO
-0x9	Neos	ネオス
-0xa	lswarm	ヴェルズ
-0x100a	Steelswarm	インヴェルズ
-0xb	Infernity	インフェルニティ
-0xc	Alien	エーリアン
-0xd	Saber	セイバー
-0x100d	X-Saber	X－セイバー
-0x300d	N/A	XX-Saber	XX－セイバー
-0xe	Watt	エレキ
-0xf	Ojama	おジャマ
-0x10	Gusto	ガスタ
-0x11	Karakuri	カラクリ
-0x12	Frog	ガエル
-0x13	Meklord	機皇
-0x3013	Meklord Emperor	機皇帝
-0x6013	Meklord Army	機皇兵
-0x14	N/A
-0x15	B.E.S.	巨大戦艦
-0x16	roid	ロイド
-0x1016	Vehicroid	ビークロイド
-0x2016	Speedroid	スピードロイド
-0x17	Synchro	シンクロ
-0x1017	Synchron	シンクロン
-0x2017	Synchro Dragon	シンクロ・ドラゴン
-0x18	Cloudian	雲魔物
-0x19	Gladiator Beast	剣闘獣
-0x1a	Dark Scorpion	黒蠍
-0x1b	Phantom Beast	幻獣
-0x101b	Mecha Phantom Beast	幻獣機
-0x1c	N/A
-0x1d	Koa'ki Meiru	コアキメイル
-0x1e	Chrysalis	C（コクーン）
-0x1f	Neo-Spacian	N（ネオスペーシアン）
-0x20	Shien	紫炎
-0x21	Earthbound Immortal	地縛神
-0x22	Jurrac	ジュラック
-0x23	Malefic	Sin
-0x24	Scrap	スクラップ
-0x25	Iron Chain	C（チェーン）
-0x26	Morphtronic	D（ディフォーマー）
-0x27	T.G.	TG（テックジーナス）
-0x28	Batteryman	電池メン
-0x29	Dragunity	ドラグニティ
-0x2a	Naturia	ナチュル
-0x2b	Ninja	忍者
-0x102b	Armor Ninja 機甲忍者
-0x2c	Flamvell	フレムベル
-0x2d	N/A
-0x2e	Gravekeeper's	墓守
-0x2f	Ice Barrier	氷結界
-0x30	Vylon	ヴァイロン
-0x31	Fortune Lady	フォーチュンレディ
-0x32	Volcanic	ヴォルカニック
-0x33	Blackwing	BF（ブラックフェザー）
-0x1033  Assault Blackwing A BF（ブラックフェザー）
-0x34	Crystal	宝玉
-0x1034	Crystal Beast	宝玉獣
-0x2034	Ultimate Gem God	究極宝玉神
-0x35	Fabled	魔轟神
-0x36	Machina	マシンナーズ
-0x37	Mist Valley	霞の谷
-0x38	Lightsworn	ライトロード
-0x39	Laval	ラヴァル
-0x3a	Gishki	リチュア
-0x3b	Red-Eyes	レッドアイズ
-0x3c	Reptilianne	レプティレス
-0x3d	Six Samurai	六武衆
-0x3e	Worm	ワーム
-0x3f	Majestic	セイヴァー
-0x40	Forbidden One	封印されし
-0x41	LV	LV（レベル）
-0x42	Nordic	極星
-0x3042	Nordic Ascendant	極星天
-0x6042	Nordic Beast	極星獣
-0xa042	Nordic Alfar	極星霊
-0x5042	Nordic Relic	極星宝
-0x43	Junk	ジャンク
-0x44	The Agent	代行者
-0x45	Archfiend	デーモン
-0x1045	Red Dragon Archfiend 	レッド・デーモン
-0x46	Polymerization/Fusion	融合/フュージョン
-0x1046	Fusion Dragon	フュージョン・ドラゴン
-0x47	Gem-	ジェム
-0x1047	Gem-Knight	ジェムナイト
-0x48	Number	No.
-0x1048	Number C	CNo.
-0x49	Skyblaster	銃士
-0x4a	N/A	Timelord	時械神
-0x4b	Aesir	極神
-0x4c	Trap Hole	落とし穴
-0x4e	Evol	エヴォル
-0x304e	Evoltile	エヴォルド
-0x604e	Evolsaur	エヴォルダ
-0x504e	Evolzar	エヴォルカイザー
-0xf4  N/A
-0x104f	/Assault Mode	／バスター
-0x50	Venom	ヴェノム
-0x51	Gadget	ガジェット
-0x52	Guardian	ガーディアン
-0x53	Constellar	セイクリッド
-0x54	Gagaga	ガガガ
-0x55	Photon	フォトン
-0x56	Inzektor	甲虫装機
-0x57	Resonator	リゾネーター
-0x58	Wind-Up	ゼンマイ
-0x59	Gogogo	ゴゴゴ
-0x5a	Penguin	ペンギン
-0x5b	Inmato	トマボー
-0x5c	Sphinx	スフィンクス
+0x1	Ally of Justice
+0x2	Genex
+0x1002	R-Genex
+0x2002	Genex Ally
+0x3	Horus the Black Flame Dragon
+0x4	Amazoness
+0x5	Arcana Force
+0x6	Dark World
+0x7	Ancient Gear
+0x8	HERO
+0x3008	Elemental HERO
+0x5008	Vision HERO
+0x6008	Evil HERO
+0xa008	Masked HERO
+0xc008	Destiny HERO
+0x9	Neos
+0xa	lswarm
+0x100a	Steelswarm
+0xb	Infernity
+0xc	Alien
+0xd	Saber
+0x100d	X-Saber
+0x300d	XX-Saber
+0x400d	Elementsaber
+0xe	Watt
+0xf	Ojama
+0x10	Gusto
+0x11	Karakuri
+0x12	Frog
+0x13	Meklord
+0x3013	Meklord Emperor
+0x6013	Meklord Army
+0x14	Allure Queen
+0x15	B.E.S.
+0x16	roid
+0x1016	Vehicroid
+0x2016	Speedroid
+0x17	Synchro
+0x1017	Synchron
+0x2017	Synchro Dragon
+0x18	Cloudian
+0x19	Gladiator Beast
+0x1a	Dark Scorpion
+0x1b	Phantom Beast
+0x101b	Mecha Phantom Beast
+0x1c	Spirit Message
+0x1d	Koa'ki Meiru
+0x1e	Chrysalis
+0x1f	Neo-Spacian
+0x20	Shien
+0x21	Earthbound Immortal
+0x22	Jurrac
+0x23	Malefic
+0x24	Scrap
+0x25	Iron Chain
+0x26	Morphtronic
+0x27	T.G.
+0x28	Batteryman
+0x29	Dragunity
+0x2a	Naturia
+0x2b	Ninja
+0x102b	Armor Ninja
+0x2c	Flamvell
+0x2d	Nitro
+0x2e	Gravekeeper's
+0x2f	Ice Barrier
+0x30	Vylon
+0x31	Fortune Lady
+0x32	Volcanic
+0x33	Blackwing
+0x1033	Assault Blackwing
+0x34	Crystal
+0x1034	Crystal Beast
+0x2034	Ultimate Crystal
+0x35	Fabled
+0x36	Machina
+0x37	Mist Valley
+0x38	Lightsworn
+0x39	Laval
+0x3a	Gishki
+0x3b	Red-Eyes
+0x3c	Reptilianne
+0x3d	Six Samurai
+0x103d	Secret Six Samurai
+0x3e	Worm
+0x3f	Majestic
+0x40	Forbidden One
+0x41	LV
+0x42	Nordic
+0x3042	Nordic Ascendant
+0x6042	Nordic Beast
+0xa042	Nordic Alfar
+0x5042	Nordic Relic
+0x43	Junk
+0x44	The Agent
+0x45	Archfiend
+0x1045	Red Dragon Archfiend
+0x46	Polymerization/Fusion
+0x1046	Fusion Dragon
+0x47	Gem-
+0x1047	Gem-Knight
+0x48	Number
+0x1048	Number C
+0x5048	Number C39
+0x49	Skyblaster
+0x4a	Timelord
+0x4b	Aesir
+0x4c	Trap Hole
+0x4d	Beast's Battle
+0x4e	Evol
+0x304e	Evoltile
+0x604e	Evolsaur
+0x504e	Evolzar
+0x4f	N/A
+0x104f	/Assault Mode
+0x50	Venom
+0x1050	Starving Venom
+0x51	Gadget
+0x52	Guardian
+0x53	Constellar
+0x54	Gagaga
+0x55	Photon
+0x56	Inzektor
+0x57	Resonator
+0x58	Wind-Up
+0x59	Gogogo
+0x5a	Penguin
+0x5b	Inmato
+0x5c	Sphinx
 0x5d	N/A
 0x5e	N/A
 0x5f	N/A
-0x60	Bamboo Sword	竹光
-0x61	Ninjitsu Art	忍法
-0x62	Toon	トゥーン
-0x63	Reactor	リアクター
-0x64	Harpie	ハーピィ
-0x65	Infestation	侵略の
-0x66	Warrior	ウォリアー
-0x1066	Symphonic Warrior	音響戦士
-0x2066	Magnet Warrior  マグネット・ウォリアー
-0x67	N/A	Iron	アイアン
-0x68	N/A	Tin	ブリキ
-0x69	Hieratic	聖刻
-0x6a	Butterspy	幻蝶の刺客
-0x6b	Bounzer	バウンサー
-0x6c	N/A	Lightray	ライトレイ
-0x6d	Djinn	魔人
-0x106d  N/A Djinn of Rituals  儀式魔人
-0x6e	Prophecy	魔導
-0x106e	Spellbook	魔導書
-0x6f	Heroic	ヒロイック
-0x106f	Heroic Challenger	H・C	
-0x206f	N/A	Heroic Champion	H－C
-0x70	Chronomaly	先史遺産
-0x71	Madolche	マドルチェ
-0x72	Geargia	ギアギア
-0x1072	Geargiano	ギアギアーノ
-0x73	Xyz	エクシーズ
-0x1073	CXyz	CX（カオスエクシーズ）
-0x2073	Xyz Dragon	エクシーズ・ドラゴン
-0x74	Mermail	水精鱗
-0x75	Abyss-	アビス
-0x76	Heraldic Beast	紋章獣
-0x77	Atlantean	海皇
-0x78	Nimble	素早い
-0x79	Fire Fist	炎星
-0x7a	Noble	聖
-0x107a	Noble Knight	聖騎士
-0x207a	Noble Arms	聖剣
-0x7b	Galaxy	ギャラクシー
-0x107b	Galaxy-Eyes	ギャラクシーアイズ
-0x307b	Galaxy-Eyes Tachyon Dragon	ギャラクシーアイズ・タキオン・ドラゴン
-0x7c	Fire Formation	炎舞
-0x7d	Hazy	ヘイズ
-0x107d	Hazy Flame	陽炎獣
-0x7e	ZW	ZW（ゼアル・ウェポン）
-0x7f	Utopic	ホープ
-0x107f	Utopia	希望皇ホープ
-0x80	Duston	ダストン
-0x81	Fire King	炎王
-0x1081	Fire King Avatar	炎王獣
-0x82	Dododo	ドドド
-0x83	Gimmick Puppet	ギミック・パペット
-0x84	Battlin' Boxer	BK（バーニングナックラー）
-0x85	Super Defense Robot	SDロボ
-0x86	Star Seraph	光天使
-0x87	Umbral Horror	アンブラル
-0x88	Bujin	武神
-0x89	Hole	ホール
-0x8a	N/A	蟲惑
-0x108a	Traptrix	蟲惑魔
-0x8b	Malicevorous	マリスボラス
-0x8c	N/A	Druid	ドルイド
-0x8d	Ghostrick	ゴーストリック
-0x8e	Vampire	ヴァンパイア
-0x8f	Zubaba	ズババ
-0x90	Sylvan	森羅
-0x91	Necrovalley	ネクロバレー
-0x92	Heraldry	メダリオン
-0x93	Cyber	サイバー
-0x1093	Cyber Dragon	サイバー・ドラゴン
-0x2093	Cyber Angel	サイバー・エンジェル
-0x94	Cybernetic	サイバネティック
-0x95	Rank-Up-Magic	RUM
-0x96	Fishborg	フィッシュボーグ
-0x97	Artifact	アーティファクト
-0x98	Magician	魔術師
-0x99	Odd-Eyes	异色眼
-0x9a	Superheavy Samurai	超重武者
-0x109a	Superheavy Samurai Soul	超重武者装留
-0x9b	Melodious	幻奏
-0x109b	Melodious Maestra	幻奏の音姫
-0x9c	tellarknight	テラナイト
-0x109c	Stellarknight	ステラナイト
-0x9d	Shaddoll	影依
-0x9e	Yang Zing	龙星
-0x9f	Performapal	EM（エンタメイト）
-0xa0	Legendary Knight	伝説の騎士
-0xa1	Legendary Dragon	伝説の竜
-0xa2	N/A	Magician	マジシャン
-0x10a2	Dark Magician	ブラック・マジシャン
-0x20a2	Magician Girl	マジシャン・ガール
-0x30a2	Dark Magician Girl	ブラック・マジシャン・ガール
-0xa3	Stardust	スターダスト
-0xa4	Kuriboh	クリボー
-0x10a4	Winged Kuriboh	ハネクリボー
-0xa5	Change	チェンジ
-0xa6	sprout	スプラウト
-0xa7	Artorigus	アルトリウス
-0xa8	Laundsallyn	ランスロット
-0xa9	Fluffal	ファーニマル
-0xaa	Qli	クリフォート
-0x10aa	Apoqliphort	アポクリフォート
-0xab	Deskbot	ブンボーグ
-0xac	Goblin	ゴブリン
-0xad	Frightfur	デストーイ
-0xae	Dark Contract	契約書
-0xaf	D/D	DD
-0x10af	D/D/D	DDD
-0xb0	Gottoms	ガトムズ
-0xb1	Burning	Abyss	彼岸
-0xb2	U.A.	U.A.
-0xb3	Yosenju	妖仙獣
-0xb4	Nekroz	影霊衣
-0xb5	Ritual Beast	霊獣
-0x10b5	Ritual Beast Tamer	霊獣使い
-0x20b5	Spiritual Beast	精霊獣
-0x30b5	Spiritual Beast Tamer	精霊獣使い
-0x40b5	Ritual Beast Ulti-	聖霊獣騎
-0xb6	Outer Entity	外神
-0xb7	Elder Entity	旧神
-0xb8	Old Entity	古神
-0xb9	Blaze Accelerator	ブレイズ・キャノン
-0xba	Raidraptor	RR（レイド・ラプターズ）
-0xbb	Infernoid	インフェルノイド
-0xbc	Jinzo	人造人間
-0xbd	Gaia The Fierce Knight	暗黒騎士ガイア
-0xbe	Monarch 帝王
-0xbf	Charmer	霊使い
-0xc0	Familiar-Possessed	憑依装着
-0xc1	PSY-Frame	PSYフレーム
-0xc2	Power Tool	パワー·ツール
-0xc3	Edge Imp	エッジインプ
-0xc4	Zefra	セフィラ
-0xc5	Void	煉獄
-0xc6	Performage	Em（エンタメイジ）
-0xc7	Dracoslayer	竜剣士
-0xc8	Igknight	イグナイト
-0xc9	Aroma	アロマ
-0xca	Empowered Warrior	魔装戦士
-0xcb	Aether	イーサルウェポン
-0xcc	Prediction Princess	占術姫
-0xcd	Aquaactress	アクアアクトレス
-0xce	Aquarium 	アクアリウム
-0xcf	Chaos	カオス
-0x10cf	Black Luster Soldier	カオス・ソルジャー
-0xd0	Majespecter	マジェスペクター
-0xd1	Graydle	グレイドル
-0xd2	Kozmo Ｋｏｚｍｏ
-0xd3	Kaiju	壊獣
-0xd4	Paleozoic	バージェストマ
-0xd5	Dante	ダンテ
-0xd6	Destruction Sword	破壊剣
-0xd7	Buster Blader	バスター・ブレイダー
-0xd8	Dinomist	ダイナミスト
-0xd9	Shiranui	不知火
-0xda	Dracoverlord	竜魔王
-0xdb	Phantom Knights	ファントム
-0x10db	The Phantom Knights	幻影騎士団
-0xdc	Super Quant	超量
-0x10dc	Super Quantum	超量士
-0x20dc	Super Quantal Mech Beast	超量機獣
-0xdd	Blue-Eyes	ブルーアイズ
-0xde	Exodia	エクゾディア
-0xdf	Lunalight	ムーンライト
-0xe0	Amorphage	アモルファージ
-0xe1	Metalfoes	メタルフォーゼ
-0xe2	Triamid	トラミッド
-0xe3	Cubic	方界
-0xe4	Celtic Guard	エルフの剣士
-0xe5	Cipher	サイファー
-0xe6	Flower Cardian	花札衛
-0xe7	Silent Swordsman	サイレント・ソードマン
-0xe8	Silent Magician	サイレント・マジシャン
-0xe9	Magna Warrior	磁石の戦士(じしゃくのせんし)
-0xea	Crystron	クリストロン
-0xeb	Chemicritter	化合獣
-0xec	N/A	Abyss	魔界
-0x10ec	Abyss Actor	魔界劇団
-0x20ec	Abyss Script	魔界台本
+0x60	Bamboo Sword
+0x61	Ninjitsu Art
+0x62	Toon
+0x63	Reactor
+0x64	Harpie
+0x65	Infestation
+0x66	Warrior
+0x1066	Symphonic Warrior
+0x2066	Magnet Warrior
+0x67	Iron
+0x68	Tin
+0x69	Hieratic
+0x6a	Butterspy
+0x6b	Bounzer
+0x6c	Lightray
+0x6d	Djinn
+0x106d	Djinn of Rituals
+0x6e	Prophecy
+0x106e	Spellbook
+0x6f	Heroic
+0x106f	Heroic Challenger 
+0x206f	Heroic Champion
+0x70	Chronomaly
+0x71	Madolche
+0x72	Geargia
+0x1072	Geargiano
+0x73	Xyz
+0x1073	CXyz 
+0x2073	Xyz Dragon
+0x74	Mermail
+0x75	Abyss-
+0x76	Heraldic Beast
+0x77	Atlantean
+0x78	Nimble
+0x79	Fire Fist
+0x7a	Noble
+0x107a	Noble Knight
+0x207a	Noble Arms
+0x7b	Galaxy
+0x107b	Galaxy-Eyes
+0x307b	Galaxy-Eyes Tachyon Dragon
+0x7c	Fire Formation
+0x7d	Hazy
+0x107d	Hazy Flame
+0x7e	ZW
+0x7f	Utopi/c
+0x107f	Utopia
+0x80	Duston
+0x81	Fire King
+0x1081	Fire King Avatar
+0x82	Dododo
+0x83	Gimmick Puppet
+0x84	Battlin' Boxer
+0x85	Super Defense Robot
+0x86	Star Seraph
+0x87	Umbral Horror
+0x88	Bujin
+0x89	Hole
+0x8a	Envy
+0x108a	Traptrix
+0x8b	Malicevorous
+0x8c	Druid
+0x8d	Ghostrick
+0x8e	Vampire
+0x8f	Zubaba
+0x90	Sylvan
+0x91	Necrovalley
+0x92	Heraldry
+0x93	Cyber
+0x1093	Cyber Dragon
+0x2093	Cyber Angel
+0x4093	Cyberdark
+0x94	Cybernetic
+0x95	Rank-Up-Magic
+0x96	Fishborg
+0x97	Artifact
+0x98	Magician
+0x99	Odd-Eyes
+0x9a	Superheavy Samurai
+0x109a	Superheavy Samurai Soul
+0x9b	Melodious
+0x109b	Melodious Maestra
+0x9c	tellarknight
+0x109c	Stellarknight
+0x9d	Shaddoll
+0x9e	Yang Zing
+0x9f	Performapal
+0xa0	Legendary Knight
+0xa1	Legendary Dragon
+0xa2	Magician (DM DMG)
+0x10a2	Dark Magician
+0x20a2	Magician Girl
+0x30a2	Dark Magician Girl
+0xa3	Stardust
+0xa4	Kuriboh
+0x10a4	Winged Kuriboh
+0xa5	Change
+0xa6	sprout
+0xa7	Artorigus
+0xa8	Laundsallyn
+0xa9	Fluffal
+0xaa	Qli
+0x10aa	Apoqliphort
+0xab	Deskbot
+0xac	Goblin
+0xad	Frightfur
+0xae	Dark Contract
+0xaf	D/D
+0x10af	D/D/D
+0xb0	Gottoms
+0xb1	Burning Abyss
+0xb2	U.A.
+0xb3	Yosenju
+0xb4	Nekroz
+0xb5	Ritual Beast
+0x10b5	Ritual Beast Tamer
+0x20b5	Spiritual Beast
+0x30b5	Spiritual Beast Tamer
+0x40b5	Ritual Beast Ulti-
+0xb7	Entity
+0x10b7	Outer Entity
+0x20b7	Elder Entity
+0x40b7	Old Entity
+0xb9	Blaze Accelerator
+0xba	Raidraptor
+0xbb	Infernoid
+0xbc	Jinzo
+0xbd	Gaia The Fierce Knight
+0xbe	Monarch
+0xbf	Charmer
+0xc0	Familiar-Possessed 
+0xc1	PSY-Frame
+0x10c1	PSY-Framegear
+0xc2	Power Tool
+0xc3	Edge Imp
+0xc4	Zefra
+0xc5	Void
+0xc6	Performage
+0xc7	Dracoslayer
+0xc8	Igknight
+0xc9	Aroma
+0xca	Empowered Warrior
+0xcb	Aether
+0xcc	Prediction Princess
+0xcd	Aqua
+0x10cd	Aquaactress
+0x20cd	Aquarium
+0xcf	Chaos
+0x10cf	Black Luster Soldier
+0xd0	Majespecter
+0xd1	Graydle
+0xd2	Kozmo
+0xd3	Kaiju
+0xd4	Paleozoic
+0xd5	Dante
+0xd6	Destruction Sword
+0xd7	Buster Blader
+0xd8	Dinomist
+0xd9	Shiranui
+0x10d9	Shiranui Spectralsword
+0xda	Dracoverlord
+0xdb	Phantom Knights
+0x10db	The Phantom Knights
+0xdc	Super Quant
+0x10dc	Super Quantum
+0x20dc	Super Quantal Mech Beast
+0xdd	Blue-Eyes
+0xde	Exodia
+0xdf	Lunalight
+0xe0	Amorphage
+0xe1	Metalfoes
+0xe2	Triamid
+0xe3	Cubic
+0xe4	Celtic Guard
+0xe5	Cipher
+0xe6	Flower Cardian
+0xe7	Silent Swordsman
+0xe8	Silent Magician
+0xe9	Magna Warrior
+0xea	Crystron
+0xeb	Chemicritter
+0xec	Abyss
+0x10ec	Abyss Actor
+0x20ec	Abyss Script
 0xed	Subterror
 0x10ed	Subterror Behemoth
 0xee	SPYRAL
 0x10ee	SPYRAL GEAR
 0x20ee	SPYRAL MISSION
-0xef	Darklord  堕天使
-0xf0	Windwitch	WW（ウィンド・ウィッチ）
-0xf1	Zoodiac	十二獣
-0xf2	Pendulum	ペンデュラム
-0x10f2	Pendulum Dragon	ペンデュラム・ドラゴン
-0x20f2	Pendulumgraph	ペンデュラムグラフ
-0xf3	Preda	プレデター
-0x10f3	Predaplant	捕食植物
-0xf4	Invoked	召喚獣
-0xf5	Gandora	ガンドラ
-0xf6	Skyscraper	摩天楼
-0xf7	Lyrical Luscinia  LL(リリカル・ルスキニア)
-0xf8	N/A	Supreme King  覇王
-0x10f8	Supreme King Gate 覇王門
-0x20f8	Supreme King Servant Dragon 覇王眷竜
-0xf9	True King  真竜
-0xfa	Mythic Radiance Dragon  幻煌龍
+0xef	Darklord
+0xf0	Windwitch
+0xf1	Zoodiac
+0xf2	Pendulum
+0x10f2	Pendulum Dragon
+0x20f2	Pendulumgraph
+0xf3	Predap
+0x10f3	Predaplant
+0xf4	Invoked
+0xf5	Gandora
+0xf6	Skyscraper
+0xf7	Lyrilusc
+0xf8	Supreme King
+0x10f8	Supreme King Gate
+0x20f8	Supreme King Dragon
+0xf9	True King
+0xfa	Phantasm Spiral
+0xfc	Gouki
+0xfb	Trickstar
+0xfd	World Chalice
+0xfe	World Legacy
+0xff	Clear Wing
+0x100	Bonding -
+0x101	Code Talker
+0x102	Rokket
+0x103	Altergeist
+0x104	Krawler
+0x105	Metaphys
+0x106	Vendread
+0x107	F.A.
+0x108	Magical Musket
+0x109	The Weather
+0x10a	Parshath
+0x10b	Tindangle
+0x10c	Mekk-Knight
+0x10d	Mythical Beast
+0x10e	Evolution Pill
+0x10f	Borrel
+0x110	Eyes Restrict
+0x111	Armed Dragon
+0x112	Knightmare
+0x113	Elemental Lord
+0x114	Fur Hire
+0x115	Sky Striker
+0x1115	Sky Striker Ace
+0x116	Crusadia
+0x117	Impcantation
+0x118	Cynet
+0x119	Salamangreat
+0x11a	Dinowrestler
+0x11b	Orcust
+0x11c	Thunder Dragon
+0x11d	Forbidden
+0x11e	Danger!
+0x11f	Nephthys
+0x120	Prank-Kids
+0x121	Mayakashi
+0x122	Valkyrie
+0x123	Rose Dragon
+0x124	Machine Angel
 #end
