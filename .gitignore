@@ -1,16 +1,7 @@
 Images/
 Images_backup/
 *.tmp
-win32/Magic Set Editor 2/data/
-win32/Magic Set Editor 2/develop/
-win32/Magic Set Editor 2/font/
-win32/Magic Set Editor 2/fix don't open.bat
-win32/Magic Set Editor 2/mse.com
-win32/Magic Set Editor 2/mse.exe
-win32/Magic Set Editor 2/README.md
-win32/Magic Set Editor 2/readme.txt
-win32/Magic Set Editor 2/update/*.txt
-win32/Magic Set Editor 2/update/*.bat
+/win32
 mse-set.txt
 #################
 ## Eclipse
