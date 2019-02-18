@@ -801,6 +801,11 @@ namespace DataEditorX
 				string sql = DataBase.GetSelectSQL(c);
 				SetCards(DataBase.Read(nowCdbFile, true, sql), isfresh);
 			}
+            if (lv_cardlist.Items.Count > 0)
+            {
+                lv_cardlist.SelectedIndices.Clear();
+                lv_cardlist.SelectedIndices.Add(0);
+            }
 		}
 		//更新临时卡片
 		public void Reset()
@@ -890,6 +895,10 @@ namespace DataEditorX
 					Search(c, false);
 				}
 			}
+            if (e.KeyCode == Keys.R && e.Control)
+            {
+                Btn_resetClick(null, null);
+            }
 		}
 		//卡片描述编辑
 		void Setscripttext(string str)
@@ -1830,6 +1839,15 @@ namespace DataEditorX
 		{
 			text2LinkMarks(tb_link.Text);
 		}
+
+        private void DataEditForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.F)
+            {
+                tb_cardname.Focus();
+                tb_cardname.SelectAll();
+            }
+        }
 
         void Tb_linkKeyPress(object sender, KeyPressEventArgs e)
 		{

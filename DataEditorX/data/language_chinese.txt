@@ -14,14 +14,16 @@ CodeEditForm.mainMenu.menuitem_help	帮助(&H)
 CodeEditForm.mainMenu.menuitem_about	关于
 #
 DataEditForm.pl_bottom.btn_img	导入图片
-DataEditForm.pl_main.lb_types	卡片类型
-DataEditForm.pl_main.lb_markers	连接标记
-DataEditForm.pl_main.lb_tiptexts	脚本提示文字
-DataEditForm.pl_main.lb_categorys	效果分类
-DataEditForm.pl_main.lb_cardcode	卡片密码
-DataEditForm.pl_main.lb_cardalias	同名卡
-DataEditForm.pl_main.lb_atkdef	ATK/DEF
-DataEditForm.pl_main.lb_pleft_right	灵摆刻度
+DataEditForm.pl_main.splitContainer..lb_types	卡片类型
+DataEditForm.pl_main.splitContainer..lb_markers	连接标记
+DataEditForm.pl_main.splitContainer..lb_tiptexts	脚本提示文字
+DataEditForm.pl_main.splitContainer..lb_categorys	效果分类
+DataEditForm.pl_main.splitContainer..lb_cardcode	卡片密码
+DataEditForm.pl_main.splitContainer..lb_cardalias	同名卡
+DataEditForm.pl_main.splitContainer..lb_atkdef	ATK/DEF
+DataEditForm.pl_main.splitContainer..lb_pleft_right	灵摆刻度
+DataEditForm.pl_main.splitContainer..lv_cardlist.0	卡片编码
+DataEditForm.pl_main.splitContainer..lv_cardlist.1	卡片名称
 DataEditForm.pl_bottom.btn_reset	重置
 DataEditForm.pl_bottom.btn_lua	脚本
 DataEditForm.pl_bottom.btn_serach	搜索
